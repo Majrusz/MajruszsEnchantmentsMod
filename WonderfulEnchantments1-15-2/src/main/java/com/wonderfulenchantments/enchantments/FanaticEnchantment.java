@@ -17,6 +17,7 @@ import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -62,6 +63,18 @@ public class FanaticEnchantment extends Enchantment {
     @Override
     public float calcDamageByCreature( int level, CreatureAttribute creature ) {
         return ( float )level * 1.0F;
+    }
+
+    @Override
+    public ITextComponent getDisplayName( int level ) {
+        if( level == this.getMaxLevel() ) {
+            StringTextComponent message = new StringTextComponent( TextFormatting.GRAY + new TranslationTextComponent( "wonderful_enchantments.true_level" ).getUnformattedComponentText() );
+            message.appendSibling( new StringTextComponent( TextFormatting.GRAY + " " + new TranslationTextComponent( this.getName() ).getUnformattedComponentText() ) );
+
+            return message;
+
+        } else
+            return super.getDisplayName( level );
     }
 
     @SubscribeEvent
@@ -134,7 +147,7 @@ public class FanaticEnchantment extends Enchantment {
         ItemStack fishingRod = player.getHeldItemMainhand();
         int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FISHING_FANATIC.get(), player );
         double increaseChance = ( RegistryHandler.FISHING_FANATIC.get().getMaxLevel() - enchantmentLevel )/100.0D;
-        System.out.println( increaseChance );
+
         boolean shouldIncreaseLevel = ( WonderfulEnchantments.RANDOM.nextDouble() < increaseChance );
 
         if( shouldIncreaseLevel && ( enchantmentLevel < RegistryHandler.FISHING_FANATIC.get().getMaxLevel() ) ) {

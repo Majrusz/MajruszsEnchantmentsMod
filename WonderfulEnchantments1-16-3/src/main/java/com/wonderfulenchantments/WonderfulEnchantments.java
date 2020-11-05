@@ -29,7 +29,7 @@ public class WonderfulEnchantments {
 
     }
 
-    public static final String MODID = "wonderful_enchantments", VERSION = "0.1.1";
+    public static final String MODID = "wonderful_enchantments", VERSION = "0.2.0";
     public static final Logger LOGGER = LogManager.getLogger();
     public static final Random RANDOM = new Random();
 }

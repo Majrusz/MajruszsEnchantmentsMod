@@ -8,7 +8,6 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -67,16 +66,15 @@ public class DodgeEnchantment extends Enchantment {
                 );
             }
 
-            for( ItemStack itemstack : entity.getArmorInventoryList() ) {
-                ListNBT nbt = itemstack.getEnchantmentTagList();
+            for( ItemStack armor : entity.getArmorInventoryList() ) {
+                int level = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.DODGE.get(), armor );
 
-                for( int i = 0; i < nbt.size(); ++i )
-                    if( nbt.getCompound( i ).getString( "id" ).contains( "wonderful_enchantments:dodge" ) ) {
-                        itemstack.damageItem( ( int )event.getAmount(), entity, ( e ) -> {
-                            e.sendBreakAnimation( EquipmentSlotType.LEGS );
-                        } );
-                        break;
-                    }
+                if( level > 0 ) {
+                    armor.damageItem( ( int )event.getAmount(), entity, ( e ) -> {
+                        e.sendBreakAnimation( EquipmentSlotType.LEGS );
+                    } );
+                    break;
+                }
             }
 
             event.setCanceled( true );

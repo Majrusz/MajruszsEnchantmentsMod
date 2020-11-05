@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class HumanSlayerEnchantment extends DamageEnchantment {
     public HumanSlayerEnchantment() {
-        super( Enchantment.Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND );
+        super( Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND );
     }
 
     @Override
@@ -35,6 +35,11 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
     @Override
     public int getMaxEnchantability( int enchantmentLevel ) {
         return this.getMinEnchantability( enchantmentLevel ) + 20;
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 5;
     }
 
     @Override
@@ -69,11 +74,11 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
                 entity instanceof AbstractIllagerEntity) && enchantmentLevel > 0 ) {
 
                 ( ( ServerWorld ) entitySource.getEntityWorld() ).spawnParticle(
-                    ParticleTypes.DRAGON_BREATH,
-                    entity.getPosX(), entity.getPosYHeight( 0.5D ), entity.getPosZ(),
-                    2+3*enchantmentLevel,
-                    0.125D, 0.0D, 0.125D,
-                    0.075D
+                    ParticleTypes.ENCHANTED_HIT,
+                    entity.getPosX(), entity.getPosYHeight( 0.625D ), entity.getPosZ(),
+                    24,
+                    0.125D, 0.25D, 0.125D,
+                    0.5D
                 );
                 event.setAmount( extraDamage + event.getAmount() );
             }

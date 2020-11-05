@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class HumanSlayerEnchantment extends DamageEnchantment {
     public HumanSlayerEnchantment() {
-        super( Enchantment.Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND );
+        super( Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND );
     }
 
     @Override
@@ -35,6 +35,11 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
     @Override
     public int getMaxEnchantability( int enchantmentLevel ) {
         return this.getMinEnchantability( enchantmentLevel ) + 20;
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 5;
     }
 
     @Override
