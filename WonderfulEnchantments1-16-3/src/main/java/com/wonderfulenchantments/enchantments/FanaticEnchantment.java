@@ -32,7 +32,12 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 @Mod.EventBusSubscriber
 public class FanaticEnchantment extends Enchantment {
     public FanaticEnchantment() {
-        super( Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND } );
+        super( Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 6;
     }
 
     @Override
@@ -46,13 +51,16 @@ public class FanaticEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMaxLevel() {
-        return 6;
+    public float calcDamageByCreature( int level, CreatureAttribute creature ) {
+        return ( float )level * 1.0F;
     }
 
     @Override
-    protected boolean canApplyTogether( Enchantment enchant ) {
-        return super.canApplyTogether( enchant );
+    public ITextComponent getDisplayName( int level ) {
+        if( level == this.getMaxLevel() )
+            return new StringTextComponent( TextFormatting.GRAY + new TranslationTextComponent( "wonderful_enchantments.true_level" ).getUnformattedComponentText() + " " + new TranslationTextComponent( this.getName() ).getUnformattedComponentText() );
+        else
+            return super.getDisplayName( level );
     }
 
     @Override
@@ -60,32 +68,12 @@ public class FanaticEnchantment extends Enchantment {
         return true;
     }
 
-    @Override
-    public float calcDamageByCreature( int level, CreatureAttribute creature ) {
-        return ( float )level * 1.0F;
-    }
-
-    @Override
-    public ITextComponent getDisplayName(int level ) {
-        if( level == this.getMaxLevel() ) {
-            StringTextComponent message = new StringTextComponent( TextFormatting.GRAY + new TranslationTextComponent( "wonderful_enchantments.true_level" ).getUnformattedComponentText() );
-            message.func_230529_a_( new StringTextComponent( TextFormatting.GRAY + " " + new TranslationTextComponent( this.getName() ).getUnformattedComponentText() ) );
-
-            return message;
-        } else
-            return super.getDisplayName( level );
-    }
-
     @SubscribeEvent
     public static void fishingFanaticEvent( ItemFishedEvent event ) {
         PlayerEntity player = event.getPlayer();
         World world = player.getEntityWorld();
 
-        LootContext.Builder lootContext$builder = ( new LootContext.Builder( (ServerWorld)world ) )
-                .withParameter( LootParameters.field_237457_g_, player.getPositionVec() ) // position -> field_237457_g_, getPosition() -> getPositionVec()
-                .withParameter( LootParameters.TOOL, player.getHeldItemMainhand() )
-                .withRandom( WonderfulEnchantments.RANDOM )
-                .withLuck( player.getLuck() );
+        LootContext.Builder lootContext$builder = ( new LootContext.Builder( ( ServerWorld )world ) ).withParameter( LootParameters.field_237457_g_, player.getPositionVec() ).withParameter( LootParameters.TOOL, player.getHeldItemMainhand() ).withRandom( WonderfulEnchantments.RANDOM ).withLuck( player.getLuck() );
 
         LootTable loottable = ServerLifecycleHooks.getCurrentServer().getLootTableManager().getLootTableFromLocation( LootTables.GAMEPLAY_FISHING );
 
@@ -100,23 +88,11 @@ public class FanaticEnchantment extends Enchantment {
         for( int i = 0; i < fanaticLevel; i++ ) {
             if( WonderfulEnchantments.RANDOM.nextFloat() < 0.33334f )
                 for( ItemStack itemstack : loottable.generate( lootContext$builder.build( LootParameterSets.FISHING ) ) ) {
-                    ItemEntity entityItem = new ItemEntity(
-                        world,
-                        fishingBobber.getPosX() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(),
-                        fishingBobber.getPosY() + 0.25D * WonderfulEnchantments.RANDOM.nextDouble(),
-                        fishingBobber.getPosZ() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(),
-                        itemstack
-                    );
+                    ItemEntity entityItem = new ItemEntity( world, fishingBobber.getPosX() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), fishingBobber.getPosY() + 0.25D * WonderfulEnchantments.RANDOM.nextDouble(), fishingBobber.getPosZ() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), itemstack );
 
-                    double	deltaX = player.getPosX()-entityItem.getPosX(),
-                            deltaY = player.getPosY()-entityItem.getPosY(),
-                            deltaZ = player.getPosZ()-entityItem.getPosZ();
+                    double deltaX = player.getPosX() - entityItem.getPosX(), deltaY = player.getPosY() - entityItem.getPosY(), deltaZ = player.getPosZ() - entityItem.getPosZ();
 
-                    entityItem.setMotion(
-                        0.1D * deltaX,
-                        0.1D * deltaY + Math.pow( Math.pow( deltaX, 2 ) + Math.pow( deltaY, 2 ) + Math.pow( deltaZ, 2 ), 0.25D ) * 0.08D,
-                        0.1D * deltaZ
-                    );
+                    entityItem.setMotion( 0.1D * deltaX, 0.1D * deltaY + Math.pow( Math.pow( deltaX, 2 ) + Math.pow( deltaY, 2 ) + Math.pow( deltaZ, 2 ), 0.25D ) * 0.08D, 0.1D * deltaZ );
                     world.addEntity( entityItem );
 
                     rewards.add( entityItem.getDisplayName().getString() );
@@ -125,27 +101,20 @@ public class FanaticEnchantment extends Enchantment {
         }
 
         if( tryIncreaseFishingFanaticLevel( player ) )
-            player.sendStatusMessage( new StringTextComponent(
-            TextFormatting.BOLD + new TranslationTextComponent( "wonderful_enchantments.fanatic_level_up" ).getUnformattedComponentText()
-            ), true );
+            player.sendStatusMessage( new StringTextComponent( TextFormatting.BOLD + new TranslationTextComponent( "wonderful_enchantments.fanatic_level_up" ).getUnformattedComponentText() ), true );
 
         else if( rewards.size() > 1 )
             notifyPlayerAboutRewards( reward, rewards, player );
 
         event.damageRodBy( event.getRodDamage() + extraItemsCounter );
-        world.addEntity( new ExperienceOrbEntity(
-            world,
-            player.getPosX(),
-            player.getPosY() + 0.5D,
-            player.getPosZ() + 0.5D,
-            extraItemsCounter + WonderfulEnchantments.RANDOM.nextInt( 2*extraItemsCounter+1 )
-        ) );
+        world.addEntity( new ExperienceOrbEntity( world, player.getPosX(), player.getPosY() + 0.5D, player.getPosZ() + 0.5D, extraItemsCounter + WonderfulEnchantments.RANDOM.nextInt( 2 * extraItemsCounter + 1 ) ) );
     }
 
     private static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player ) {
         ItemStack fishingRod = player.getHeldItemMainhand();
         int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FISHING_FANATIC.get(), player );
-        double increaseChance = ( RegistryHandler.FISHING_FANATIC.get().getMaxLevel() - enchantmentLevel )/100.0D;
+        double increaseChance = ( RegistryHandler.FISHING_FANATIC.get().getMaxLevel() - enchantmentLevel ) / 100.0D;
+
         boolean shouldIncreaseLevel = ( WonderfulEnchantments.RANDOM.nextDouble() < increaseChance );
 
         if( shouldIncreaseLevel && ( enchantmentLevel < RegistryHandler.FISHING_FANATIC.get().getMaxLevel() ) ) {
@@ -169,19 +138,16 @@ public class FanaticEnchantment extends Enchantment {
     }
 
     private static void notifyPlayerAboutRewards( String reward, Multiset< String > rewards, PlayerEntity player ) {
-        // appendSibling -> func_230529_a_
-        StringTextComponent message = new StringTextComponent( TextFormatting.WHITE + "(" );
+        StringTextComponent message = new StringTextComponent( TextFormatting.WHITE + "(" ); // appendSibling -> func_230529_a_
 
         ImmutableList< String > rewardList = Multisets.copyHighestCountFirst( rewards ).elementSet().asList();
         for( int i = 0; i < rewardList.size(); i++ ) {
-            message.func_230529_a_( new StringTextComponent(
-                ( ( i == 0 ) ? TextFormatting.WHITE : TextFormatting.GOLD ) + rewardList.get( i )
-            ) );
+            message.func_230529_a_( new StringTextComponent( ( ( i == 0 ) ? TextFormatting.WHITE : TextFormatting.GOLD ) + rewardList.get( i ) ) );
 
             if( rewards.count( rewardList.get( i ) ) > 1 )
                 message.func_230529_a_( new StringTextComponent( TextFormatting.GOLD + " x" + rewards.count( rewardList.get( i ) ) ) );
 
-            if( i != rewardList.size()-1 )
+            if( i != rewardList.size() - 1 )
                 message.func_230529_a_( new StringTextComponent( TextFormatting.WHITE + ", " ) );
         }
 

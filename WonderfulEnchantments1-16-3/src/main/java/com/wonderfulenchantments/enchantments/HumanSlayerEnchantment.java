@@ -2,7 +2,6 @@ package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
@@ -29,7 +28,7 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 
     @Override
     public int getMinEnchantability( int enchantmentLevel ) {
-        return 5 + ( enchantmentLevel-1 ) * 8;
+        return 5 + ( enchantmentLevel - 1 ) * 8;
     }
 
     @Override
@@ -38,18 +37,8 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
     }
 
     @Override
-    public int getMaxLevel() {
-        return 5;
-    }
-
-    @Override
     public float calcDamageByCreature( int level, CreatureAttribute creatureType ) {
         return 0.0F;
-    }
-
-    @Override
-    public boolean canApplyTogether( Enchantment enchantment ) {
-        return !( enchantment instanceof DamageEnchantment );
     }
 
     @Override
@@ -62,26 +51,18 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
         Entity damageSource = event.getSource().getImmediateSource();
 
         if( damageSource instanceof LivingEntity ) {
-            Entity entity = event.getEntity();
-            LivingEntity entitySource = (LivingEntity)damageSource;
-            int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), entitySource );
-            float extraDamage = ( float )Math.floor( enchantmentLevel * 2.0D );
+            LivingEntity entity = event.getEntityLiving(), entitySource = ( LivingEntity )damageSource;
 
-            if((entity instanceof VillagerEntity ||
-                entity instanceof WanderingTraderEntity ||
-                entity instanceof PlayerEntity ||
-                entity instanceof WitchEntity ||
-                entity instanceof AbstractIllagerEntity) && enchantmentLevel > 0 ) {
+            float extraDamage = ( float )Math.floor( 2.0F * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), entitySource ) );
 
-                ( ( ServerWorld ) entitySource.getEntityWorld() ).spawnParticle(
-                    ParticleTypes.ENCHANTED_HIT,
-                    entity.getPosX(), entity.getPosYHeight( 0.625D ), entity.getPosZ(),
-                    24,
-                    0.125D, 0.25D, 0.125D,
-                    0.5D
-                );
+            if( isHuman( entity ) && extraDamage > 0.0F ) {
+                ( ( ServerWorld )entitySource.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, entity.getPosX(), entity.getPosYHeight( 0.625D ), entity.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D );
                 event.setAmount( extraDamage + event.getAmount() );
             }
         }
+    }
+
+    private static boolean isHuman( Entity entity ) {
+        return ( entity instanceof VillagerEntity || entity instanceof WanderingTraderEntity || entity instanceof PlayerEntity || entity instanceof WitchEntity || entity instanceof AbstractIllagerEntity );
     }
 }

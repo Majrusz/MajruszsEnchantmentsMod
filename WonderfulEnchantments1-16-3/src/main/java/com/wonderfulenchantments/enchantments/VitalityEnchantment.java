@@ -1,98 +1,68 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.EnchantmentTypes;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber
 public class VitalityEnchantment extends Enchantment {
-    public VitalityEnchantment() {
-        super( Rarity.RARE, RegistryHandler.EnchantmentTypes.SHIELD, new EquipmentSlotType[]{ EquipmentSlotType.OFFHAND } );
-    }
+	protected static final UUID MODIFIER_UUID = UUID.fromString( "575cb29a-1ee4-11eb-adc1-0242ac120002" );
+	protected static final String MODIFIER_NAME = "VitalityBonus";
 
-    @Override
-    public int getMinEnchantability( int level ) {
-        return 5 + 8 * ( level );
-    }
+	public VitalityEnchantment() {
+		super( Rarity.RARE, EnchantmentTypes.SHIELD, new EquipmentSlotType[]{ EquipmentSlotType.OFFHAND } );
+	}
 
-    @Override
-    public int getMaxEnchantability( int level ) {
-        return this.getMinEnchantability( level ) + 20;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 3;
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 3;
-    }
+	@Override
+	public int getMinEnchantability( int level ) {
+		return 5 + 8 * ( level );
+	}
 
-    @Override
-    protected boolean canApplyTogether( Enchantment enchant ) {
-        return super.canApplyTogether( enchant );
-    }
+	@Override
+	public int getMaxEnchantability( int level ) {
+		return this.getMinEnchantability( level ) + 10;
+	}
 
-    @SubscribeEvent
-    public static void checkIfPlayerHasShield( TickEvent.PlayerTickEvent event ) {
-        PlayerEntity player = event.player;
-        String nickname = player.getDisplayName().getString();
+	@SubscribeEvent
+	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
+		LivingEntity entity = event.getEntityLiving();
 
-        if( !bonuses.containsKey( nickname ) )
-            VitalityEnchantment.bonuses.put( nickname, 0 );
+		ModifiableAttributeInstance maxHealth = entity.getAttribute( Attributes.field_233818_a_ ); // IAttributeInstance -> ModifiableAttributeInstance   ||   field_233818_a_ -> MAX_HEALTH
 
-        int totalVitality = getVitalityBonus( player );
-        int currentMaxHealthBonus = getMaxHealthBonus( nickname );
+		maxHealth.removeModifier( MODIFIER_UUID );
+		AttributeModifier modifier = new AttributeModifier( MODIFIER_UUID, MODIFIER_NAME, 2 * getVitalityBonus( entity ), AttributeModifier.Operation.ADDITION );
+		maxHealth.func_233767_b_( modifier ); // func_233767_b_ -> applyModifier
+	}
 
-        if( totalVitality != currentMaxHealthBonus ) {
-            setMaxHealthBonus( nickname, totalVitality );
-            updateMaxHealthBonus( player );
-        }
-    }
+	private static int getVitalityBonus( LivingEntity entity ) {
+		int sum = 0;
 
-    private static int getVitalityBonus( PlayerEntity player ) {
-        int sum = 0;
+		ItemStack item1 = entity.getHeldItemMainhand(), item2 = entity.getHeldItemOffhand();
 
-        ItemStack   item1 = player.getHeldItemMainhand(),
-                    item2 = player.getHeldItemOffhand();
+		if( item1.getItem() instanceof ShieldItem )
+			sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.VITALITY.get(), item1 );
 
-        if( item1.getItem() instanceof ShieldItem )
-            sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.VITALITY.get(), item1 );
+		if( item2.getItem() instanceof ShieldItem )
+			sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.VITALITY.get(), item2 );
 
-        if( item2.getItem() instanceof ShieldItem )
-            sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.VITALITY.get(), item2 );
-
-        return sum;
-    }
-
-    protected static HashMap< String, Integer > bonuses = new HashMap<>();
-    protected static final UUID MODIFIER_UUID = UUID.fromString( "575cb29a-1ee4-11eb-adc1-0242ac120002" );
-    protected static final String MODIFIER_NAME = "VitalityBonus";
-    private static void updateMaxHealthBonus( PlayerEntity player ) {
-        String nickname = player.getDisplayName().getString();
-        ModifiableAttributeInstance maxHealth = player.getAttribute( Attributes.field_233818_a_ );
-        // IAttributeInstance -> ModifiableAttributeInstance   ||   field_233818_a_ -> MAX_HEALTH
-
-        maxHealth.removeModifier( MODIFIER_UUID );
-        AttributeModifier modifier = new AttributeModifier( MODIFIER_UUID, MODIFIER_NAME, 2*getMaxHealthBonus( nickname ), AttributeModifier.Operation.ADDITION );
-        maxHealth.func_233767_b_( modifier ); // func_233763_a_ -> applyModifier
-    }
-
-    private static void setMaxHealthBonus( String nickname, int value ) {
-        VitalityEnchantment.bonuses.replace( nickname, value );
-    }
-
-    private static int getMaxHealthBonus( String nickname ) {
-        return VitalityEnchantment.bonuses.get( nickname );
-    }
+		return sum;
+	}
 }

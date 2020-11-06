@@ -5,10 +5,7 @@ import net.minecraft.item.ShieldItem;
 
 public class ShieldReplacementItem extends ShieldItem {
     public ShieldReplacementItem() {
-        super( ( new Properties() )
-            .maxDamage( 336 )
-            .group( ItemGroup.COMBAT )
-        );
+        super( ( new Properties() ).maxDamage( 336 ).group( ItemGroup.COMBAT ) );
     }
 
     @Override
