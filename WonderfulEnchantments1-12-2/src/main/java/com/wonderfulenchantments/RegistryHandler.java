@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber( modid = WonderfulEnchantments.MODID )
+@Mod.EventBusSubscriber( modid = WonderfulEnchantments.MOD_ID )
 public class RegistryHandler {
     public static final List< Enchantment > ENCHANTMENTS = new ArrayList<>();
     public static final List< Item > ITEMS = new ArrayList<>();
@@ -21,7 +21,8 @@ public class RegistryHandler {
         HUMAN_SLAYER        = new HumanSlayerEnchantment( "human_slayer" ),
         DODGE               = new DodgeEnchantment( "dodge" ),
         ENLIGHTENMENT       = new EnlightenmentEnchantment( "enlightenment" ),
-        VITALITY            = new VitalityEnchantment( "vitality" );
+        VITALITY            = new VitalityEnchantment( "vitality" ),
+        PHOENIX_DIVE        = new PhoenixDiveEnchantment( "phoenix_dive" );
 
     public static final Item
         SHIELD_REPLACEMENT = new ShieldReplacementItem( "shield" );
