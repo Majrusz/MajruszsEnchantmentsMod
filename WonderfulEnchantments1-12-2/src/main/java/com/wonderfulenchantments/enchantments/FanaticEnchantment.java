@@ -66,13 +66,10 @@ public class FanaticEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public String getTranslatedName( int level ) {
-		if( level == this.getMaxLevel() ) {
-			String message = TextFormatting.GRAY + new TextComponentTranslation( "wonderful_enchantments.true_level" ).getUnformattedText();
-			message += TextFormatting.GRAY + " " + new TextComponentTranslation( this.getName() ).getUnformattedText();
+		if( level == this.getMaxLevel() )
+			return TextFormatting.GRAY + new TextComponentTranslation( "wonderful_enchantments.true_level" ).getUnformattedText() + " " + new TextComponentTranslation( this.getName() ).getUnformattedText();
 
-			return message;
-		} else
-			return super.getTranslatedName( level );
+		return super.getTranslatedName( level );
 	}
 
 	@Override

@@ -2,10 +2,10 @@ package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentDamage;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.passive.EntityVillager;
@@ -51,28 +51,23 @@ public class HumanSlayerEnchantment extends EnchantmentDamage {
 	}
 
 	@Override
-	public boolean canApplyTogether( Enchantment enchantment ) {
-		return !( enchantment instanceof EnchantmentDamage );
-	}
-
-	@Override
 	public boolean canApply( ItemStack stack ) {
 		return stack.getItem() instanceof ItemAxe ? true : super.canApply( stack );
 	}
 
 	@SubscribeEvent
 	public static void onEntityHurt( LivingHurtEvent event ) {
-		Entity damageSource = event.getSource().getImmediateSource();
+		Entity entitySource = event.getSource().getImmediateSource();
 
-		if( damageSource instanceof EntityPlayer ) {
-			Entity entity = event.getEntityLiving();
-			EntityPlayer entitySource = ( EntityPlayer )damageSource;
-			int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER, entitySource );
+		if( entitySource instanceof EntityPlayer ) {
+			EntityLivingBase target = event.getEntityLiving();
+
+			EntityPlayer attacker = ( EntityPlayer )entitySource;
+			int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER, attacker );
 			float extraDamage = ( float )Math.floor( enchantmentLevel * 2.0D );
 
-			if( isHuman( entity ) && enchantmentLevel > 0 ) {
-
-				( ( WorldServer )entitySource.getEntityWorld() ).spawnParticle( EnumParticleTypes.CRIT_MAGIC, entity.posX, entity.posY + entity.height * ( 0.625D ), entity.posZ, 24, 0.125D, 0.25D, 0.125D, 0.5D );
+			if( isHuman( target ) && enchantmentLevel > 0 ) {
+				( ( WorldServer )attacker.getEntityWorld() ).spawnParticle( EnumParticleTypes.CRIT_MAGIC, target.posX, target.posY + target.height * ( 0.625D ), target.posZ, 24, 0.125D, 0.25D, 0.125D, 0.5D );
 				event.setAmount( extraDamage + event.getAmount() );
 			}
 		}

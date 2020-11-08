@@ -10,9 +10,11 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -54,25 +56,40 @@ public class DodgeEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public static void onEntityHurt( LivingDamageEvent event ) {
-		EntityLivingBase entity = event.getEntityLiving();
-		ItemStack pants = entity.getItemStackFromSlot( EntityEquipmentSlot.LEGS );
-		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.DODGE, entity );
+		EntityLivingBase entityLiving = event.getEntityLiving();
+		ItemStack pants = entityLiving.getItemStackFromSlot( EntityEquipmentSlot.LEGS );
+		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.DODGE, entityLiving );
 
 		if( enchantmentLevel > 0 ) {
 			if( !( WonderfulEnchantments.RANDOM.nextDouble() < ( double )enchantmentLevel * 0.125D ) )
 				return;
 
+			WorldServer world = ( WorldServer )entityLiving.getEntityWorld();
 			for( double d = 0.0D; d < 3.0D; d++ ) {
-				( ( WorldServer )entity.getEntityWorld() ).spawnParticle( EnumParticleTypes.SMOKE_NORMAL, entity.posX, entity.posY + entity.height * ( 0.25D * ( d + 1.0D ) ), entity.posZ, 32, 0.125D, 0.0D, 0.125D, 0.075D );
-				( ( WorldServer )entity.getEntityWorld() ).spawnParticle( EnumParticleTypes.SMOKE_LARGE, entity.posX, entity.posY + entity.height * ( 0.25D * ( d + 1.0D ) ), entity.posZ, 16, 0.125D, 0.0D, 0.125D, 0.025D );
+				world.spawnParticle( EnumParticleTypes.SMOKE_NORMAL, entityLiving.posX, entityLiving.posY + entityLiving.height * ( 0.25D * ( d + 1.0D ) ), entityLiving.posZ, 32, 0.125D, 0.0D, 0.125D, 0.075D );
+				world.spawnParticle( EnumParticleTypes.SMOKE_LARGE, entityLiving.posX, entityLiving.posY + entityLiving.height * ( 0.25D * ( d + 1.0D ) ), entityLiving.posZ, 16, 0.125D, 0.0D, 0.125D, 0.025D );
 			}
+			world.playSound( null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.AMBIENT, 1.0F, 1.0F );
 
-			pants.damageItem( ( int )event.getAmount(), entity);
-			if( entity instanceof EntityPlayer )
-				setImmunity( ( EntityPlayer )( entity ), 100 );
+			pants.damageItem( ( int )event.getAmount(), entityLiving );
+			if( entityLiving instanceof EntityPlayer )
+				setImmunity( ( EntityPlayer )( entityLiving ), 50 * enchantmentLevel );
 
 			event.setCanceled( true );
 		}
+	}
+
+	@SubscribeEvent
+	public static void checkPlayersKnockBackImmunity( TickEvent.PlayerTickEvent event ) {
+		EntityPlayer player = event.player;
+		String nickname = player.getDisplayName().getUnformattedText();
+
+		if( !modifiers.containsKey( nickname ) )
+			modifiers.put( nickname, 0 );
+
+		applyImmunity( player );
+
+		modifiers.replace( nickname, Math.max( modifiers.get( nickname ) - 1, 0 ) );
 	}
 
 	private static void setImmunity( EntityPlayer player, int ticks ) {
@@ -93,18 +110,5 @@ public class DodgeEnchantment extends Enchantment {
 		resistance.removeModifier( MODIFIER_UUID );
 		AttributeModifier modifier = new AttributeModifier( MODIFIER_UUID, MODIFIER_NAME, ( modifiers.get( nickname ) > 0 ) ? 1.0D : 0.0D, Constants.AttributeModifierOperation.ADD );
 		resistance.applyModifier( modifier );
-	}
-
-	@SubscribeEvent
-	public static void checkPlayersKnockBackImmunity( TickEvent.PlayerTickEvent event ) {
-		EntityPlayer player = event.player;
-		String nickname = player.getDisplayName().getUnformattedText();
-
-		if( !modifiers.containsKey( nickname ) )
-			modifiers.put( nickname, 0 );
-
-		applyImmunity( player );
-
-		modifiers.replace( nickname, Math.max( modifiers.get( nickname ) - 1, 0 ) );
 	}
 }

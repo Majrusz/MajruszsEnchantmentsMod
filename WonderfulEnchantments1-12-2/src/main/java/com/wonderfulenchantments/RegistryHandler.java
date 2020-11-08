@@ -17,15 +17,16 @@ public class RegistryHandler {
     public static final List< Item > ITEMS = new ArrayList<>();
 
     public static final Enchantment
-        FISHING_FANATIC     = new FanaticEnchantment( "fishing_fanatic" ),
-        HUMAN_SLAYER        = new HumanSlayerEnchantment( "human_slayer" ),
-        DODGE               = new DodgeEnchantment( "dodge" ),
-        ENLIGHTENMENT       = new EnlightenmentEnchantment( "enlightenment" ),
-        VITALITY            = new VitalityEnchantment( "vitality" ),
-        PHOENIX_DIVE        = new PhoenixDiveEnchantment( "phoenix_dive" );
+        FISHING_FANATIC         = new FanaticEnchantment( "fishing_fanatic" ),
+        HUMAN_SLAYER            = new HumanSlayerEnchantment( "human_slayer" ),
+        DODGE                   = new DodgeEnchantment( "dodge" ),
+        ENLIGHTENMENT           = new EnlightenmentEnchantment( "enlightenment" ),
+        VITALITY                = new VitalityEnchantment( "vitality" ),
+        PHOENIX_DIVE            = new PhoenixDiveEnchantment( "phoenix_dive" ),
+        PUFFERFISH_VENGEANCE    = new PufferfishVengeanceEnchantment( "pufferfish_vengeance" );
 
     public static final Item
-        SHIELD_REPLACEMENT = new ShieldReplacementItem( "shield" );
+        SHIELD_REPLACEMENT      = new ShieldReplacementItem( "shield" );
 
     @SubscribeEvent
     public static void onEnchantmentRegister( RegistryEvent.Register< Enchantment > event ) {
