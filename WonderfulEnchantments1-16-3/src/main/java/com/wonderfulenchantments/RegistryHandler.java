@@ -35,7 +35,8 @@ public class RegistryHandler {
             DODGE               = ENCHANTMENTS.register( "dodge", DodgeEnchantment::new ),
             ENLIGHTENMENT       = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment::new ),
             VITALITY            = ENCHANTMENTS.register( "vitality", VitalityEnchantment::new ),
-            PHOENIX_DIVE        = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new );
+            PHOENIX_DIVE        = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new ),
+            PUFFERFISH_VENGEANCE    = ENCHANTMENTS.register( "pufferfish_vengeance", PufferfishVengeanceEnchantment::new );
 
     // Particles
     public static final RegistryObject< BasicParticleType >
