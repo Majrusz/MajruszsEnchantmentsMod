@@ -59,8 +59,8 @@ public class FanaticEnchantment extends Enchantment {
 	public ITextComponent getDisplayName( int level ) {
 		if( level == this.getMaxLevel() )
 			return new StringTextComponent( TextFormatting.GRAY + new TranslationTextComponent( "wonderful_enchantments.true_level" ).getUnformattedComponentText() + " " + new TranslationTextComponent( this.getName() ).getUnformattedComponentText() );
-		else
-			return super.getDisplayName( level );
+
+		return super.getDisplayName( level );
 	}
 
 	@Override

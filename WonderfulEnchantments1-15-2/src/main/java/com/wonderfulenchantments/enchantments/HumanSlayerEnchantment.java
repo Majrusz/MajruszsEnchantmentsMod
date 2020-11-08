@@ -48,15 +48,14 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 
 	@SubscribeEvent
 	public static void onEntityHurt( LivingHurtEvent event ) {
-		Entity damageSource = event.getSource().getImmediateSource();
+		Entity entitySource = event.getSource().getImmediateSource();
+		if( entitySource instanceof LivingEntity ) {
+			LivingEntity target = event.getEntityLiving(), attacker = ( LivingEntity )entitySource;
 
-		if( damageSource instanceof LivingEntity ) {
-			LivingEntity entity = event.getEntityLiving(), entitySource = ( LivingEntity )damageSource;
+			float extraDamage = ( float )Math.floor( 2.0F * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
 
-			float extraDamage = ( float )Math.floor( 2.0F * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), entitySource ) );
-
-			if( isHuman( entity ) && extraDamage > 0.0F ) {
-				( ( ServerWorld )entitySource.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, entity.getPosX(), entity.getPosYHeight( 0.625D ), entity.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D );
+			if( isHuman( target ) && extraDamage > 0.0F ) {
+				( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ), target.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D );
 				event.setAmount( extraDamage + event.getAmount() );
 			}
 		}
