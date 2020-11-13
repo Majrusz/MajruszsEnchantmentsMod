@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
+import net.minecraft.client.particle.TotemOfUndyingParticle;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -17,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,7 +71,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 				for( Entity entity : entities )
 					if( entity instanceof LivingEntity ) {
 						LivingEntity target = ( LivingEntity )entity;
-						target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
+						target.setRevengeTarget( attacker );
 						target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * distance ) );
 						target.setFireTimer( 20 * ( 2 * enchantmentLevel ) );
 					}
