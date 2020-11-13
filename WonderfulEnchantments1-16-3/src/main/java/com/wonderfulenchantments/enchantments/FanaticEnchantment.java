@@ -18,10 +18,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.*;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
@@ -57,8 +54,14 @@ public class FanaticEnchantment extends Enchantment {
 
     @Override
     public ITextComponent getDisplayName( int level ) {
-        if( level == this.getMaxLevel() )
-            return new StringTextComponent( TextFormatting.GRAY + new TranslationTextComponent( "wonderful_enchantments.true_level" ).getUnformattedComponentText() + " " + new TranslationTextComponent( this.getName() ).getUnformattedComponentText() );
+        if( level == this.getMaxLevel() ) {
+            IFormattableTextComponent text = new TranslationTextComponent( "wonderful_enchantments.true_level" );
+
+            text.func_240699_a_( TextFormatting.GRAY );
+            text.func_240702_b_(" ").func_230529_a_( new TranslationTextComponent( this.getName() ) );
+
+            return text;
+        }
 
         return super.getDisplayName( level );
     }

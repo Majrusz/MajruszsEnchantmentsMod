@@ -1,5 +1,6 @@
 package com.wonderfulenchantments;
 
+import com.wonderfulenchantments.curses.SlownessCurse;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.ShieldReplacementItem;
 import net.minecraft.enchantment.Enchantment;
@@ -30,13 +31,18 @@ public class RegistryHandler {
 
     // Enchantments
     public static final RegistryObject< Enchantment >
-            FISHING_FANATIC     = ENCHANTMENTS.register( "fishing_fanatic", FanaticEnchantment::new ),
-            HUMAN_SLAYER        = ENCHANTMENTS.register( "human_slayer", HumanSlayerEnchantment::new ),
-            DODGE               = ENCHANTMENTS.register( "dodge", DodgeEnchantment::new ),
-            ENLIGHTENMENT       = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment::new ),
-            VITALITY            = ENCHANTMENTS.register( "vitality", VitalityEnchantment::new ),
-            PHOENIX_DIVE        = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new ),
-            PUFFERFISH_VENGEANCE    = ENCHANTMENTS.register( "pufferfish_vengeance", PufferfishVengeanceEnchantment::new );
+            FISHING_FANATIC         = ENCHANTMENTS.register( "fishing_fanatic", FanaticEnchantment::new ),
+            HUMAN_SLAYER            = ENCHANTMENTS.register( "human_slayer", HumanSlayerEnchantment::new ),
+            DODGE                   = ENCHANTMENTS.register( "dodge", DodgeEnchantment::new ),
+            ENLIGHTENMENT           = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment::new ),
+            VITALITY                = ENCHANTMENTS.register( "vitality", VitalityEnchantment::new ),
+            PHOENIX_DIVE            = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new ),
+            PUFFERFISH_VENGEANCE    = ENCHANTMENTS.register( "pufferfish_vengeance", PufferfishVengeanceEnchantment::new ),
+            IMMORTALITY             = ENCHANTMENTS.register( "immortality", ImmortalityEnchantment::new );
+
+    // Curses
+    public static final RegistryObject< Enchantment >
+            SLOWNESS                = ENCHANTMENTS.register( "slowness_curse", SlownessCurse::new );
 
     // Particles
     public static final RegistryObject< BasicParticleType >
