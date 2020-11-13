@@ -1,5 +1,6 @@
 package com.wonderfulenchantments;
 
+import com.wonderfulenchantments.curses.SlownessCurse;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.ShieldReplacementItem;
 import net.minecraft.enchantment.Enchantment;
@@ -16,6 +17,7 @@ public class RegistryHandler {
     public static final List< Enchantment > ENCHANTMENTS = new ArrayList<>();
     public static final List< Item > ITEMS = new ArrayList<>();
 
+    // Enchantments
     public static final Enchantment
         FISHING_FANATIC         = new FanaticEnchantment( "fishing_fanatic" ),
         HUMAN_SLAYER            = new HumanSlayerEnchantment( "human_slayer" ),
@@ -23,8 +25,14 @@ public class RegistryHandler {
         ENLIGHTENMENT           = new EnlightenmentEnchantment( "enlightenment" ),
         VITALITY                = new VitalityEnchantment( "vitality" ),
         PHOENIX_DIVE            = new PhoenixDiveEnchantment( "phoenix_dive" ),
-        PUFFERFISH_VENGEANCE    = new PufferfishVengeanceEnchantment( "pufferfish_vengeance" );
+        PUFFERFISH_VENGEANCE    = new PufferfishVengeanceEnchantment( "pufferfish_vengeance" ),
+        IMMORTALITY             = new ImmortalityEnchantment( "immortality" );
 
+    // Curses
+    public static final Enchantment
+        SLOWNESS                = new SlownessCurse( "slowness_curse" );
+
+    // Items to replace
     public static final Item
         SHIELD_REPLACEMENT      = new ShieldReplacementItem( "shield" );
 
