@@ -1,5 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.EntityEquipmentSlots;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -25,7 +27,7 @@ public class VitalityEnchantment extends Enchantment {
 	protected static final String MODIFIER_NAME = "VitalityBonus";
 
 	public VitalityEnchantment( String name ) {
-		super( Rarity.RARE, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{ EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND } );
+		super( Rarity.RARE, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlots.BOTH_HANDS );
 
 		this.setName( name );
 		this.setRegistryName( WonderfulEnchantments.MOD_ID, name );
@@ -39,7 +41,7 @@ public class VitalityEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 5 + 8 * ( level );
+		return 5 + 8 * ( level ) + ( ConfigHandler.Enchantments.VITALITY ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

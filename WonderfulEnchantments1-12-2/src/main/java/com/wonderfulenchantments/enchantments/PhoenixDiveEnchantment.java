@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -33,7 +34,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 	protected static List< Vec3d > positionsToGenerateParticles = new ArrayList<>();
 
 	public PhoenixDiveEnchantment( String name ) {
-		super( Rarity.RARE, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{ EntityEquipmentSlot.MAINHAND } );
+		super( Rarity.RARE, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{ EntityEquipmentSlot.FEET } );
 
 		this.setName( name );
 		this.setRegistryName( WonderfulEnchantments.MOD_ID, name );
@@ -47,7 +48,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 + 10 * ( level );
+		return 10 + 10 * ( level ) + ( ConfigHandler.Enchantments.PHOENIX_DIVE ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

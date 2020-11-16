@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -46,7 +47,7 @@ public class FanaticEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 * ( level );
+		return 10 * ( level ) + ( ConfigHandler.Enchantments.FISHING_FANATIC ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class FanaticEnchantment extends Enchantment {
 		Multiset< String > rewards = HashMultiset.create();
 		rewards.add( reward );
 		int extraItemsCounter = 0;
-		for( int i = 0; i < fanaticLevel; i++ ) {
+		for( int i = 0; i < fanaticLevel && ConfigHandler.Enchantments.FISHING_FANATIC; i++ ) {
 			if( WonderfulEnchantments.RANDOM.nextFloat() < 0.33334f )
 				for( ItemStack itemstack : loottable.generateLootForPools( WonderfulEnchantments.RANDOM, lootContext$builder.build() ) ) {
 					EntityItem entityItem = new EntityItem( world, fishingBobber.posX + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), fishingBobber.posY + 0.25D * WonderfulEnchantments.RANDOM.nextDouble(), fishingBobber.posZ + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), itemstack );

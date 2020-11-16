@@ -1,5 +1,7 @@
 package com.wonderfulenchantments.curses;
 
+import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.EntityEquipmentSlots;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -9,7 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.Constants;
@@ -25,7 +26,7 @@ public class SlownessCurse extends Enchantment {
 	protected static final String MODIFIER_NAME = "SlownessCurse";
 
 	public SlownessCurse( String name ) {
-		super( Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{ EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND, EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET } );
+		super( Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlots.ARMOR_AND_HANDS );
 
 		this.setName( name );
 		this.setRegistryName( WonderfulEnchantments.MOD_ID, name );
@@ -39,12 +40,12 @@ public class SlownessCurse extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 25;
+		return 25 + ( ConfigHandler.Curses.SLOWNESS ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override
 	public int getMaxEnchantability( int level ) {
-		return 50;
+		return this.getMinEnchantability( level ) + 25;
 	}
 
 	@Override

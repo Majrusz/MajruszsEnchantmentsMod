@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -46,7 +47,7 @@ public class DodgeEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 14 * ( level );
+		return 14 * ( level ) + ( ConfigHandler.Enchantments.DODGE ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.EntityEquipmentSlots;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -20,7 +22,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber
 public class ImmortalityEnchantment extends Enchantment {
 	public ImmortalityEnchantment( String name ) {
-		super( Rarity.RARE, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{ EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND } );
+		super( Rarity.RARE, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlots.BOTH_HANDS );
 
 		this.setName( name );
 		this.setRegistryName( WonderfulEnchantments.MOD_ID, name );
@@ -34,7 +36,7 @@ public class ImmortalityEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 20;
+		return 20 + ( ConfigHandler.Enchantments.IMMORTALITY ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

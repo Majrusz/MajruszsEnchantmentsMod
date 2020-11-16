@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.EnchantmentDamage;
@@ -32,7 +33,7 @@ public class HumanSlayerEnchantment extends EnchantmentDamage {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + ( enchantmentLevel - 1 ) * 8;
+		return 5 + ( enchantmentLevel - 1 ) * 8 + ( ConfigHandler.Enchantments.HUMAN_SLAYER ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

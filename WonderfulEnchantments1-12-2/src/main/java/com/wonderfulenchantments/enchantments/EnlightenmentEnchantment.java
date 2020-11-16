@@ -1,5 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.EntityEquipmentSlots;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -14,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber
 public class EnlightenmentEnchantment extends Enchantment {
 	public EnlightenmentEnchantment( String name ) {
-		super( Rarity.RARE, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[]{ EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET } );
+		super( Rarity.RARE, EnumEnchantmentType.ARMOR, EntityEquipmentSlots.ARMOR );
 
 		this.setName( name );
 		this.setRegistryName( WonderfulEnchantments.MOD_ID, name );
@@ -28,7 +30,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 6 + enchantmentLevel * 12;
+		return 6 + enchantmentLevel * 12 + ( ConfigHandler.Enchantments.ENLIGHTENMENT ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

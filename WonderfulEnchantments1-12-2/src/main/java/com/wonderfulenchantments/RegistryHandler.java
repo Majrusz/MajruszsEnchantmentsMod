@@ -45,4 +45,6 @@ public class RegistryHandler {
     public static void onItemRegister( RegistryEvent.Register< Item > event ) {
         event.getRegistry().registerAll( ITEMS.toArray( new Item[ 0 ] ) );
     }
+
+    public static final int disableEnchantmentValue = 9001;
 }
