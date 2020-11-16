@@ -1,11 +1,12 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.EquipmentSlotTypes;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class EnlightenmentEnchantment extends Enchantment {
 	public EnlightenmentEnchantment() {
-		super( Rarity.RARE, EnchantmentType.ARMOR, new EquipmentSlotType[]{ EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET } );
+		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR );
 	}
 
 	@Override
@@ -24,7 +25,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 6 + enchantmentLevel * 12;
+		return 6 + enchantmentLevel * 12 + ( ConfigHandler.Values.ENLIGHTENMENT.get() ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

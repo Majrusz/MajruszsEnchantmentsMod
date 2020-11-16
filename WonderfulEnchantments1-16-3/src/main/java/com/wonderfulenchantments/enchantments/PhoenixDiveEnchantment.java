@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -40,7 +41,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 + 10 * ( level );
+		return 10 + 10 * ( level ) + ( ConfigHandler.Values.PHOENIX_DIVE.get() ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

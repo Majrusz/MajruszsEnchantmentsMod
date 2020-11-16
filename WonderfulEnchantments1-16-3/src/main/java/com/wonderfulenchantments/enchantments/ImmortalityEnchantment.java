@@ -1,6 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.EnchantmentTypes;
+import com.wonderfulenchantments.EquipmentSlotTypes;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class ImmortalityEnchantment extends Enchantment {
 	public ImmortalityEnchantment() {
-		super( Rarity.RARE, EnchantmentTypes.SHIELD, new EquipmentSlotType[]{ EquipmentSlotType.OFFHAND } );
+		super( Rarity.RARE, EnchantmentTypes.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class ImmortalityEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 20;
+		return 20 + ( ConfigHandler.Values.IMMORTALITY.get() ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override
@@ -62,7 +64,7 @@ public class ImmortalityEnchantment extends Enchantment {
 			world.spawnParticle( ParticleTypes.TOTEM_OF_UNDYING, target.getPosX(), target.getPosYHeight( 0.75D ), target.getPosZ(), 64, 0.25D, 0.5D, 0.25D, 0.5D );
 			world.playSound( null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ITEM_TOTEM_USE, SoundCategory.AMBIENT, 1.0F, 1.0F );
 
-			itemStack.damageItem( 999999, target, (entity)->entity.sendBreakAnimation( EquipmentSlotType.OFFHAND ) );
+			itemStack.damageItem( 999999, target, ( entity )->entity.sendBreakAnimation( EquipmentSlotType.OFFHAND ) );
 
 			return true;
 		}
