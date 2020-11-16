@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.EquipmentSlotTypes;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class EnlightenmentEnchantment extends Enchantment {
 	public EnlightenmentEnchantment() {
-		super( Rarity.RARE, EnchantmentType.ARMOR, new EquipmentSlotType[]{ EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET } );
+		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR );
 	}
 
 	@Override

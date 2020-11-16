@@ -86,7 +86,7 @@ public class FanaticEnchantment extends Enchantment {
 		Multiset< String > rewards = HashMultiset.create();
 		rewards.add( reward );
 		int extraItemsCounter = 0;
-		for( int i = 0; i < fanaticLevel; i++ ) {
+		for( int i = 0; i < fanaticLevel && ConfigHandler.Values.FISHING_FANATIC.get(); i++ ) {
 			if( WonderfulEnchantments.RANDOM.nextFloat() < 0.33334f )
 				for( ItemStack itemstack : loottable.generate( lootContext$builder.build( LootParameterSets.FISHING ) ) ) {
 					ItemEntity entityItem = new ItemEntity( world, fishingBobber.getPosX() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), fishingBobber.getPosY() + 0.25D * WonderfulEnchantments.RANDOM.nextDouble(), fishingBobber.getPosZ() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), itemstack );
