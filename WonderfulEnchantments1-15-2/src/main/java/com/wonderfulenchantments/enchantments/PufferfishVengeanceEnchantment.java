@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -32,7 +33,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + enchantmentLevel * 12;
+		return 5 + enchantmentLevel * 12 + ( ConfigHandler.Values.PUFFERFISH_VENGEANCE.get() ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

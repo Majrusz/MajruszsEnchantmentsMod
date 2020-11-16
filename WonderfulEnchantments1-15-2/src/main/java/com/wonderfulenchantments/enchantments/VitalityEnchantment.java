@@ -1,6 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.EnchantmentTypes;
+import com.wonderfulenchantments.EquipmentSlotTypes;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -8,7 +10,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -23,7 +24,7 @@ public class VitalityEnchantment extends Enchantment {
 	protected static final String MODIFIER_NAME = "VitalityBonus";
 
 	public VitalityEnchantment() {
-		super( Rarity.RARE, EnchantmentTypes.SHIELD, new EquipmentSlotType[]{ EquipmentSlotType.OFFHAND } );
+		super( Rarity.RARE, EnchantmentTypes.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
 	}
 
 	@Override
@@ -33,7 +34,7 @@ public class VitalityEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 5 + 8 * ( level );
+		return 5 + 8 * ( level ) + ( ConfigHandler.Values.VITALITY.get() ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

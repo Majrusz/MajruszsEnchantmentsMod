@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -24,7 +25,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 6 + enchantmentLevel * 12;
+		return 6 + enchantmentLevel * 12 + ( ConfigHandler.Values.ENLIGHTENMENT.get() ? 0 : RegistryHandler.disableEnchantmentValue );
 	}
 
 	@Override

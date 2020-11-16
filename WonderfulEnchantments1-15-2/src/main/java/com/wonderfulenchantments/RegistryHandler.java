@@ -51,4 +51,6 @@ public class RegistryHandler {
     // Items to replace
     public static final RegistryObject< Item >
         SHIELD_REPLACEMENT  = ITEMS_TO_REPLACE.register( "shield", ShieldReplacementItem::new );
+
+    public static final int disableEnchantmentValue = 9001;
 }
