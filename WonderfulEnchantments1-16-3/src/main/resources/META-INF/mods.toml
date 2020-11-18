@@ -10,7 +10,11 @@ issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantm
 
 modId="wonderful_enchantments"
 
+<<<<<<< Updated upstream
 version="1.16.3-0.4.0"
+=======
+version="1.16.3-0.6.0"
+>>>>>>> Stashed changes
 
 displayName="Wonderful Enchantments"
 

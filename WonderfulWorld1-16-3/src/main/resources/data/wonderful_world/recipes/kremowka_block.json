@@ -1,0 +1,20 @@
+{ 
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[ 
+		"kk",
+		"kk"
+	],
+	"key":
+	{ 
+		"k":
+		{ 
+			"item": "wonderful_world:kremowka"
+		}
+	},
+	"result":
+	{ 
+		"item": "wonderful_world:kremowka_block",
+		"count": 1
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"type": "wonderful_world:fishing_new_items",
+	"conditions": [ 
+		{ 
+			"condition": "random_chance",
+			"chance": 0.5
+		}
+	],
+	"items": [ 
+		{ 
+			"name": "wonderful_world:bass",
+			"weight": 6
+		},
+		{ 
+			"name": "wonderful_world:herring",
+			"weight": 3
+		},
+		{ 
+			"name": "wonderful_world:tin",
+			"weight": 1
+		}
+	],
+	"replacement": "minecraft:cod"
+}

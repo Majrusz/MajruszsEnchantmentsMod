@@ -1,0 +1,20 @@
+{ 
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[ 
+		"ss",
+		"ss"
+	],
+	"key":
+	{ 
+		"s":
+		{ 
+			"item": "wonderful_world:cake_slice"
+		}
+	},
+	"result":
+	{ 
+		"item": "minecraft:cake",
+		"count": 1
+	}
+}

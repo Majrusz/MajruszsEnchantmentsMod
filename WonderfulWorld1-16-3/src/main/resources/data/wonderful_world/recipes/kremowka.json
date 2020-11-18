@@ -1,0 +1,34 @@
+{ 
+	"type": "minecraft:crafting_shaped",
+	"group": "kremowka",
+	"pattern":
+	[ 
+		"sme",
+		"sme",
+		"www"
+	],
+	"key":
+	{ 
+		"w":
+		{ 
+			"item": "minecraft:wheat"
+		},
+		"s":
+		{ 
+			"item": "minecraft:sugar"
+		},
+		"m":
+		{ 
+			"item": "minecraft:milk_bucket"
+		},
+		"e":
+		{ 
+			"item": "minecraft:egg"
+		}
+	},
+	"result":
+	{ 
+		"item": "wonderful_world:kremowka",
+		"count": 6
+	}
+}
