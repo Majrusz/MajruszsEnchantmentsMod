@@ -16,15 +16,9 @@ public class WonderfulEnchantments {
     }
 
     public static final String
-<<<<<<< Updated upstream
             MOD_ID      = "wonderful_enchantments",
             NAME        = "Wonderful Enchantments",
             VERSION     = "0.4.0";
-=======
-        MOD_ID      = "wonderful_enchantments",
-        NAME        = "Wonderful Enchantments",
-        VERSION     = "0.6.0";
->>>>>>> Stashed changes
     public static final Logger LOGGER = LogManager.getLogger();
     public static final Random RANDOM = new Random();
 }

@@ -1,9 +1,0 @@
-{ 
-	"type": "minecraft:smelting",
-	"ingredient": { 
-		"item": "wonderful_world:bass"
-	},
-	"result": "wonderful_world:cooked_bass",
-	"experience": 0.35,
-	"cookingtime": 200
-}

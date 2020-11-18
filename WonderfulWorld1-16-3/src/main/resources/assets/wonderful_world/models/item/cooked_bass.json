@@ -1,6 +1,0 @@
-{ 
-	"parent": "item/generated",
-	"textures": { 
-		"layer0": "wonderful_world:items/cooked_bass"
-	}
-}

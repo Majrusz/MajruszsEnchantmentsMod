@@ -1,7 +1,0 @@
-{ 
-	"parent": "block/cube_column",
-	"textures": { 
-		"end": "wonderful_world:blocks/kremowka_block_top",
-		"side": "wonderful_world:blocks/kremowka_block"
-	}
-}

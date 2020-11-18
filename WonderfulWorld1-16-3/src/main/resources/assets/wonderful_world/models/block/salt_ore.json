@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "wonderful_world:blocks/salt_ore"
-  }
-}
