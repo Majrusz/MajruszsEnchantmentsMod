@@ -11,9 +11,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PhoenixParticle extends SpriteTexturedParticle {
 	public PhoenixParticle( ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed ) {
 		super( world, x, y, z, xSpeed, ySpeed, zSpeed );
-		this.motionX = this.motionX * ( double )0.01F + xSpeed;
-		this.motionY = this.motionY * ( double )0.01F + ySpeed * 0.0F;
-		this.motionZ = this.motionZ * ( double )0.01F + zSpeed;
+		this.motionX = this.motionX * 0.01D + xSpeed;
+		this.motionY = this.motionY * 0.01D + ySpeed * 0.0D;
+		this.motionZ = this.motionZ * 0.01D + zSpeed;
 
 		this.maxAge = ( 20 + WonderfulEnchantments.RANDOM.nextInt( 10 ) );
 	}
@@ -35,12 +35,12 @@ public class PhoenixParticle extends SpriteTexturedParticle {
 
 		else {
 			this.move( this.motionX, this.motionY, this.motionZ );
-			this.motionX *= ( double )0.75F;
-			this.motionY *= ( double )0.75F;
-			this.motionZ *= ( double )0.75F;
+			this.motionX *= 0.75D;
+			this.motionY *= 0.75D;
+			this.motionZ *= 0.75D;
 			if( this.onGround ) {
-				this.motionX *= ( double )0.5F;
-				this.motionZ *= ( double )0.5F;
+				this.motionX *= 0.5D;
+				this.motionZ *= 0.5D;
 			}
 		}
 	}
