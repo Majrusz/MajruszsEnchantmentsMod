@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
@@ -12,8 +13,6 @@ import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.entity.monster.WitchEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -28,7 +27,7 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + ( enchantmentLevel - 1 ) * 8;
+		return 5 + ( enchantmentLevel - 1 ) * 8 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -38,30 +37,25 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 
 	@Override
 	public float calcDamageByCreature( int level, CreatureAttribute creatureType ) {
-		return 0.0F;
-	}
-
-	@Override
-	public boolean canApply( ItemStack stack ) {
-		return stack.getItem() instanceof AxeItem ? true : super.canApply( stack );
+		return 0.0f;
 	}
 
 	@SubscribeEvent
 	public static void onEntityHurt( LivingHurtEvent event ) {
 		Entity entitySource = event.getSource().getImmediateSource();
+
 		if( entitySource instanceof LivingEntity ) {
 			LivingEntity target = event.getEntityLiving(), attacker = ( LivingEntity )entitySource;
+			float extraDamage = ( float )Math.floor( 2.5F * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
 
-			float extraDamage = ( float )Math.floor( 2.0F * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
-
-			if( isHuman( target ) && extraDamage > 0.0F ) {
+			if( extraDamage > 0.0F && isHuman( target ) ) {
 				( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ), target.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D );
-				event.setAmount( extraDamage + event.getAmount() );
+				event.setAmount( event.getAmount() + extraDamage );
 			}
 		}
 	}
 
-	private static boolean isHuman( Entity entity ) {
+	protected static boolean isHuman( Entity entity ) {
 		return ( entity instanceof VillagerEntity || entity instanceof WanderingTraderEntity || entity instanceof PlayerEntity || entity instanceof WitchEntity || entity instanceof AbstractIllagerEntity );
 	}
 }

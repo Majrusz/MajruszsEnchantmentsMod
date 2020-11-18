@@ -1,6 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
+import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -10,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -17,17 +20,21 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends Enchantment {
 	protected static List< Vec3d > positionsToGenerateParticles = new ArrayList<>();
+	protected static HashMap< Integer, Integer > particleTimers = new HashMap<>(); // holding pair (entityID, ticks since last creating particle)
 
 	public PhoenixDiveEnchantment() {
 		super( Rarity.RARE, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{ EquipmentSlotType.FEET } );
@@ -40,7 +47,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 + 10 * ( level );
+		return 10 * ( level + 1 ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -91,6 +98,21 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 			positionsToGenerateParticles.clear();
 		}
+
+		for( Map.Entry< Integer, Integer > pair : particleTimers.entrySet() ) {
+			Entity entity = event.world.getEntityByID( pair.getKey() );
+
+			int ticks = pair.getValue() + 1;
+			if( entity != null && ticks > 3 ) {
+				ticks -= 3;
+				spawnFootParticle( entity );
+			}
+			pair.setValue( Math.max( ticks, 0 ) );
+		}
+
+		for( Map.Entry< Integer, Integer > pair : particleTimers.entrySet() )
+			if( event.world.getEntityByID( pair.getKey() ) == null )
+				particleTimers.values().remove( pair.getKey() );
 	}
 
 	@SubscribeEvent
@@ -111,4 +133,26 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			}
 		}
 	}
+
+	@SubscribeEvent
+	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
+		LivingEntity livingEntity = event.getEntityLiving();
+		Integer entityID = livingEntity.getEntityId();
+
+		if( EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), livingEntity ) > 0 )
+			particleTimers.put( livingEntity.getEntityId(), 0 );
+		else
+			particleTimers.remove( entityID );
+	}
+
+	protected static void spawnFootParticle( Entity entity ) {
+		if( entity instanceof LivingEntity ) {
+			World world = entity.getEntityWorld();
+			double leftLegRotation = ( WonderfulEnchantments.RANDOM.nextBoolean() ? 180.0D : 0.0D );
+			double angleInRadians = Math.toRadians( entity.rotationYaw + 90.0D + leftLegRotation );
+			if( world instanceof ServerWorld )
+				( ( ServerWorld )world ).spawnParticle( ParticleTypes.FLAME, entity.getPosX() + 0.1875D * Math.sin( -angleInRadians ), entity.getPosY(), entity.getPosZ() + 0.1875D * Math.cos( -angleInRadians ), 1, 0.0D, 0.125D * Math.cos( angleInRadians ), 0.00D, 0.0D );
+		}
+	}
+
 }

@@ -1,11 +1,36 @@
 {
 	"enchantment.wonderful_enchantments.fishing_fanatic": "Fanatyk wędkarstwa",
+	"enchantment.wonderful_enchantments.fishing_fanatic.desc": "Daje szansę na wyłowienie dodatkowych przedmiotów z łowienia.",
 	"wonderful_enchantments.fanatic_level_up": "Stałeś się większym fanatykiem wędkarstwa!",
 	"wonderful_enchantments.true_level": "Prawdziwy",
+
 	"enchantment.wonderful_enchantments.human_slayer": "Zaklęcie przeciwko ludzkości",
+	"enchantment.wonderful_enchantments.human_slayer.desc": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
+
 	"enchantment.wonderful_enchantments.dodge": "Unik",
+	"enchantment.wonderful_enchantments.dodge.desc": "Daje szansę na uniknięcie otrzymania obrażeń.",
+
 	"enchantment.wonderful_enchantments.enlightenment": "Oświecenie",
+	"enchantment.wonderful_enchantments.enlightenment.desc": "Zwiększa doświadczenie zdobywane ze wszystkich źródeł.",
+
 	"enchantment.wonderful_enchantments.vitality": "Witalność",
+	"enchantment.wonderful_enchantments.vitality.desc": "Zwiększa zdrowie gracza.",
+
 	"enchantment.wonderful_enchantments.phoenix_dive": "Skok feniksa",
-	"enchantment.wonderful_enchantments.pufferfish_vengeance": "Zemsta rozdymki"
+	"enchantment.wonderful_enchantments.phoenix_dive.desc": "Upadek z wysokości wypuszcza falę ognia podpalającą i raniącą wszystkich w pobliżu. Również z przytrzymanym klawiszem skradania się (dom. SHIFT) skacze się wyżej!",
+
+	"enchantment.wonderful_enchantments.pufferfish_vengeance": "Zemsta rozdymki",
+	"enchantment.wonderful_enchantments.pufferfish_vengeance.desc": "Każdy atak nakłada na przeciwnika kilka efektów.",
+
+	"enchantment.wonderful_enchantments.immortality": "Nieśmiertelność",
+	"enchantment.wonderful_enchantments.immortality.desc": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
+
+	"enchantment.wonderful_enchantments.smelter": "Hutnik",
+	"enchantment.wonderful_enchantments.smelter.desc": "Daje szansę na automatycznie przepalenie bloku podczas zniszczenia go.",
+
+	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
+	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
+
+	"enchantment.wonderful_enchantments.fatigue_curse": "Klątwa zmęczenia",
+	"enchantment.wonderful_enchantments.fatigue_curse.desc": "Zmniejsza prędkość wydobywania bloków."
 }

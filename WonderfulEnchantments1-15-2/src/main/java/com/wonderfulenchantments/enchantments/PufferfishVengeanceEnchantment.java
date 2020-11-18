@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -13,8 +14,6 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,7 +31,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + enchantmentLevel * 12;
+		return 5 + enchantmentLevel * 12 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApply( ItemStack stack ) {
-		return stack.getItem() instanceof AxeItem ? true : super.canApply( stack );
+		return stack.getItem() instanceof AxeItem || super.canApply( stack );
 	}
 
 	@SubscribeEvent
@@ -55,15 +54,13 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 			if( enchantmentLevel > 0 ) {
 				LivingEntity target = event.getEntityLiving();
 
-				int duration = 20 * ( 2 * enchantmentLevel + 1 );
+				int durationInTicks = 20 * ( 2 * enchantmentLevel + 1 );
 
-				target.addPotionEffect( new EffectInstance( Effects.HUNGER, duration, 2 ) );
-				target.addPotionEffect( new EffectInstance( Effects.POISON, duration, 3 ) );
-				target.addPotionEffect( new EffectInstance( Effects.NAUSEA, duration, 0 ) );
+				target.addPotionEffect( new EffectInstance( Effects.HUNGER, durationInTicks, 2 ) );
+				target.addPotionEffect( new EffectInstance( Effects.POISON, durationInTicks, 3 ) );
+				target.addPotionEffect( new EffectInstance( Effects.NAUSEA, durationInTicks, 0 ) );
 
-				World world = attacker.getEntityWorld();
-				if( world instanceof ServerWorld )
-					( ( ServerWorld )attacker.getEntityWorld() ).playSound( null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT, SoundCategory.AMBIENT, 1.0F, 1.0F );
+				attacker.getEntityWorld().playSound( null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT, SoundCategory.AMBIENT, 1.0F, 1.0F );
 			}
 		}
 	}
