@@ -1,12 +1,11 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.EquipmentSlotTypes;
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -14,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber
 public class EnlightenmentEnchantment extends Enchantment {
 	public EnlightenmentEnchantment( String name ) {
-		super( Rarity.RARE, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[]{ EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET } );
+		super( Rarity.RARE, EnumEnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR );
 
 		this.setName( name );
 		this.setRegistryName( WonderfulEnchantments.MOD_ID, name );
@@ -28,7 +27,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 6 + enchantmentLevel * 12;
+		return 6 + enchantmentLevel * 12 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -38,12 +37,10 @@ public class EnlightenmentEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public static void onXPPickUp( PlayerPickupXpEvent event ) {
-		int levelSum = 0;
-		for( ItemStack armor : event.getEntityPlayer().getArmorInventoryList() )
-			levelSum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.ENLIGHTENMENT, armor );
+		int enlightenmentSum = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.ENLIGHTENMENT, event.getEntityPlayer(), EquipmentSlotTypes.ARMOR );
 
-		if( levelSum > 0 ) {
-			double bonusRatio = 0.25D * ( double )levelSum;
+		if( enlightenmentSum > 0 ) {
+			double bonusRatio = 0.25D * ( double )enlightenmentSum;
 			double randomBonus = bonusRatio * WonderfulEnchantments.RANDOM.nextDouble();
 			int bonusExp = ( int )( Math.round( randomBonus * ( double )event.getOrb().getXpValue() ) );
 

@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentFrostWalker;
@@ -19,6 +20,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,14 +28,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends Enchantment {
 	protected static List< Vec3d > positionsToGenerateParticles = new ArrayList<>();
+	protected static HashMap< Integer, Integer > particleTimers = new HashMap<>(); // holding pair (entityID, ticks since last creating particle)
 
 	public PhoenixDiveEnchantment( String name ) {
-		super( Rarity.RARE, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{ EntityEquipmentSlot.MAINHAND } );
+		super( Rarity.RARE, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{ EntityEquipmentSlot.FEET } );
 
 		this.setName( name );
 		this.setRegistryName( WonderfulEnchantments.MOD_ID, name );
@@ -47,7 +52,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 + 10 * ( level );
+		return 10 * ( level + 1 ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -57,7 +62,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyTogether( Enchantment enchantment ) {
-		return !( enchantment instanceof EnchantmentFrostWalker );
+		return !( enchantment instanceof EnchantmentFrostWalker ) && super.canApplyTogether( enchantment );
 	}
 
 	@SubscribeEvent
@@ -100,6 +105,21 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 			positionsToGenerateParticles.clear();
 		}
+
+		for( Map.Entry< Integer, Integer > pair : particleTimers.entrySet() ) {
+			Entity entity = event.world.getEntityByID( pair.getKey() );
+
+			int ticks = pair.getValue() + 1;
+			if( entity != null && ticks > 3 ) {
+				ticks -= 3;
+				spawnFootParticle( entity );
+			}
+			pair.setValue( Math.max( ticks, 0 ) );
+		}
+
+		for( Map.Entry< Integer, Integer > pair : particleTimers.entrySet() )
+			if( event.world.getEntityByID( pair.getKey() ) == null )
+				particleTimers.values().remove( pair.getKey() );
 	}
 
 	@SubscribeEvent
@@ -118,6 +138,27 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 				boots.damageItem( 3, player );
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
+		EntityLivingBase entityLivingBase = event.getEntityLiving();
+		Integer entityID = entityLivingBase.getEntityId();
+
+		if( EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.PHOENIX_DIVE, entityLivingBase ) > 0 )
+			particleTimers.put( entityID, 0 );
+		else
+			particleTimers.remove( entityID );
+	}
+
+	protected static void spawnFootParticle( Entity entity ) {
+		if( entity instanceof EntityLivingBase ) {
+			World world = entity.getEntityWorld();
+			double leftLegRotation = ( WonderfulEnchantments.RANDOM.nextBoolean() ? 180.0D : 0.0D );
+			double angleInRadians = Math.toRadians( entity.rotationYaw + 90.0D + leftLegRotation );
+			if( world instanceof WorldServer )
+				( ( WorldServer )world ).spawnParticle( EnumParticleTypes.FLAME, entity.posX + 0.1875D * Math.sin( -angleInRadians ), entity.posY, entity.posZ + 0.1875D * Math.cos( -angleInRadians ), 1, 0.0D, 0.125D * Math.cos( angleInRadians ), 0.00D, 0.0D );
 		}
 	}
 }

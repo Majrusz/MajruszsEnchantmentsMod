@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -33,7 +34,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + enchantmentLevel * 12;
+		return 5 + enchantmentLevel * 12 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApply( ItemStack stack ) {
-		return stack.getItem() instanceof ItemAxe ? true : super.canApply( stack );
+		return stack.getItem() instanceof ItemAxe || super.canApply( stack );
 	}
 
 	@SubscribeEvent

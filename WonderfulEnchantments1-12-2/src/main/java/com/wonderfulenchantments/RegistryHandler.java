@@ -1,5 +1,7 @@
 package com.wonderfulenchantments;
 
+import com.wonderfulenchantments.curses.FatigueCurse;
+import com.wonderfulenchantments.curses.SlownessCurse;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.ShieldReplacementItem;
 import net.minecraft.enchantment.Enchantment;
@@ -23,7 +25,13 @@ public class RegistryHandler {
         ENLIGHTENMENT           = new EnlightenmentEnchantment( "enlightenment" ),
         VITALITY                = new VitalityEnchantment( "vitality" ),
         PHOENIX_DIVE            = new PhoenixDiveEnchantment( "phoenix_dive" ),
-        PUFFERFISH_VENGEANCE    = new PufferfishVengeanceEnchantment( "pufferfish_vengeance" );
+        PUFFERFISH_VENGEANCE    = new PufferfishVengeanceEnchantment( "pufferfish_vengeance" ),
+        IMMORTALITY             = new ImmortalityEnchantment( "immortality" ),
+        SMELTER                 = new SmelterEnchantment( "smelter" );
+
+    public static final Enchantment
+        SLOWNESS                = new SlownessCurse( "slowness_curse" ),
+        FATIGUE                 = new FatigueCurse( "fatigue_curse" );
 
     public static final Item
         SHIELD_REPLACEMENT      = new ShieldReplacementItem( "shield" );
