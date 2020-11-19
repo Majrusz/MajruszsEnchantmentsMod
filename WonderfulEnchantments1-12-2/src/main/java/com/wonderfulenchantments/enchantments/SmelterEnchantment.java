@@ -53,10 +53,10 @@ public class SmelterEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public static void onBlockDestroy( BlockEvent.HarvestDropsEvent event ) {
-		if( !( event.getWorld() instanceof WorldServer ) )
+		if( !( event.getWorld() instanceof WorldServer && event.getHarvester() != null ) )
 			return;
 
-		int smelterLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.SMELTER, event.getHarvester() );
+		int smelterLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.SMELTER, event.getHarvester().getActiveItemStack() );
 		WorldServer world = ( WorldServer )event.getWorld();
 
 		List< ItemStack > output = new ArrayList<>();
