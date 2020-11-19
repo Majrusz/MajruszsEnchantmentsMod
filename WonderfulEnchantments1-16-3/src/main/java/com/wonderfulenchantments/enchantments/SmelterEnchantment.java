@@ -30,6 +30,6 @@ public class SmelterEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyTogether( Enchantment enchantment ) {
-		return !( enchantment instanceof SilkTouchEnchantment );
+		return !( enchantment instanceof SilkTouchEnchantment ) && super.canApplyTogether( enchantment );
 	}
 }

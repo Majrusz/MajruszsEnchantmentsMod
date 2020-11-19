@@ -2,6 +2,7 @@ package com.wonderfulenchantments.curses;
 
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
+import net.minecraft.enchantment.EfficiencyEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -29,6 +30,11 @@ public class FatigueCurse extends Enchantment {
 	@Override
 	public int getMaxEnchantability( int level ) {
 		return this.getMinEnchantability( level ) + 40;
+	}
+
+	@Override
+	public boolean canApplyTogether( Enchantment enchantment ) {
+		return !( enchantment instanceof EfficiencyEnchantment ) && super.canApplyTogether( enchantment );
 	}
 
 	@Override

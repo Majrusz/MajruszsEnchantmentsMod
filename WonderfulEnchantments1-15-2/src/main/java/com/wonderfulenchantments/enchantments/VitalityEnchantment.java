@@ -1,11 +1,13 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.*;
+import com.wonderfulenchantments.AttributeHelper;
+import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ShieldItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

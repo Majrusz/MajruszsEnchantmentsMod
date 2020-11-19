@@ -3,10 +3,7 @@ package com.wonderfulenchantments.enchantments;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.FrostWalkerEnchantment;
+import net.minecraft.enchantment.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,7 +54,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyTogether( Enchantment enchantment ) {
-		return !( enchantment instanceof FrostWalkerEnchantment );
+		return !( enchantment instanceof FrostWalkerEnchantment ) && super.canApplyTogether( enchantment );
 	}
 
 	@SubscribeEvent

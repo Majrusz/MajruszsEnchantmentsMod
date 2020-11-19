@@ -57,7 +57,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyTogether( Enchantment enchantment ) {
-		return !( enchantment instanceof FrostWalkerEnchantment );
+		return !( enchantment instanceof FrostWalkerEnchantment ) && super.canApplyTogether( enchantment );
 	}
 
 	@SubscribeEvent
@@ -140,7 +140,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		Integer entityID = livingEntity.getEntityId();
 
 		if( EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), livingEntity ) > 0 )
-			particleTimers.put( livingEntity.getEntityId(), 0 );
+			particleTimers.put( entityID, 0 );
 		else
 			particleTimers.remove( entityID );
 	}

@@ -46,7 +46,7 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 
 		if( entitySource instanceof LivingEntity ) {
 			LivingEntity target = event.getEntityLiving(), attacker = ( LivingEntity )entitySource;
-			float extraDamage = ( float )Math.floor( 2.5F * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
+			float extraDamage = ( float )Math.floor( 2.5D * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
 
 			if( extraDamage > 0.0F && isHuman( target ) ) {
 				( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ), target.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D );
