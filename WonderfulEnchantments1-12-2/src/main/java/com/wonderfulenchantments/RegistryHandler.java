@@ -1,5 +1,6 @@
 package com.wonderfulenchantments;
 
+import com.wonderfulenchantments.curses.FatigueCurse;
 import com.wonderfulenchantments.curses.SlownessCurse;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.ShieldReplacementItem;
@@ -17,7 +18,6 @@ public class RegistryHandler {
     public static final List< Enchantment > ENCHANTMENTS = new ArrayList<>();
     public static final List< Item > ITEMS = new ArrayList<>();
 
-    // Enchantments
     public static final Enchantment
         FISHING_FANATIC         = new FanaticEnchantment( "fishing_fanatic" ),
         HUMAN_SLAYER            = new HumanSlayerEnchantment( "human_slayer" ),
@@ -26,13 +26,13 @@ public class RegistryHandler {
         VITALITY                = new VitalityEnchantment( "vitality" ),
         PHOENIX_DIVE            = new PhoenixDiveEnchantment( "phoenix_dive" ),
         PUFFERFISH_VENGEANCE    = new PufferfishVengeanceEnchantment( "pufferfish_vengeance" ),
-        IMMORTALITY             = new ImmortalityEnchantment( "immortality" );
+        IMMORTALITY             = new ImmortalityEnchantment( "immortality" ),
+        SMELTER                 = new SmelterEnchantment( "smelter" );
 
-    // Curses
     public static final Enchantment
-        SLOWNESS                = new SlownessCurse( "slowness_curse" );
+        SLOWNESS                = new SlownessCurse( "slowness_curse" ),
+        FATIGUE                 = new FatigueCurse( "fatigue_curse" );
 
-    // Items to replace
     public static final Item
         SHIELD_REPLACEMENT      = new ShieldReplacementItem( "shield" );
 
@@ -45,6 +45,4 @@ public class RegistryHandler {
     public static void onItemRegister( RegistryEvent.Register< Item > event ) {
         event.getRegistry().registerAll( ITEMS.toArray( new Item[ 0 ] ) );
     }
-
-    public static final int disableEnchantmentValue = 9001;
 }

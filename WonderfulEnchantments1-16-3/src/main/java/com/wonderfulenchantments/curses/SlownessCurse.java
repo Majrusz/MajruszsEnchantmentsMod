@@ -1,30 +1,26 @@
 package com.wonderfulenchantments.curses;
 
-import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.AttributeHelper;
 import com.wonderfulenchantments.EquipmentSlotTypes;
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.UUID;
-
 @Mod.EventBusSubscriber
 public class SlownessCurse extends Enchantment {
-	protected static final UUID MODIFIER_UUID = UUID.fromString( "760f7b82-76c7-4875-821e-ef0579b881e0" );
-	protected static final String MODIFIER_NAME = "SlownessCurse";
+	protected static final AttributeHelper attributeHelper = new AttributeHelper( "760f7b82-76c7-4875-821e-ef0579b881e0", "SlownessCurse", Attributes.field_233821_d_, AttributeModifier.Operation.MULTIPLY_TOTAL );
+	protected static final float slownessMultiplierPerLevel = 0.125f;
 
 	public SlownessCurse() {
-		super( Rarity.UNCOMMON, EnchantmentType.BREAKABLE, EquipmentSlotTypes.ARMOR_AND_HANDS );
+		super( Rarity.RARE, EnchantmentType.BREAKABLE, EquipmentSlotTypes.ARMOR_AND_HANDS );
 	}
 
 	@Override
@@ -34,12 +30,12 @@ public class SlownessCurse extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 25 + ( ConfigHandler.Values.SLOWNESS.get() ? 0 : RegistryHandler.disableEnchantmentValue );
+		return 10 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
 	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 25;
+		return this.getMinEnchantability( level ) + 40;
 	}
 
 	@Override
@@ -54,29 +50,17 @@ public class SlownessCurse extends Enchantment {
 
 	@SubscribeEvent
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
-		LivingEntity entity = event.getEntityLiving();
+		LivingEntity livingEntity = event.getEntityLiving();
 
-		ModifiableAttributeInstance movementSpeed = entity.getAttribute( Attributes.field_233821_d_ );
-
-		movementSpeed.removeModifier( MODIFIER_UUID );
-		AttributeModifier modifier = new AttributeModifier( MODIFIER_UUID, MODIFIER_NAME, getSlownessBonus( entity ), AttributeModifier.Operation.MULTIPLY_TOTAL );
-		movementSpeed.func_233767_b_( modifier );
+		attributeHelper.setValue( getTotalSlownessMultiplier( livingEntity ) ).apply( livingEntity );
 	}
 
-	private static double getSlownessBonus( LivingEntity entity ) {
+	private static float getTotalSlownessMultiplier( LivingEntity livingEntity ) {
 		int sum = 0;
 
-		ItemStack item1 = entity.getHeldItemMainhand(), item2 = entity.getHeldItemOffhand();
+		sum += WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.SLOWNESS.get(), livingEntity, EquipmentSlotTypes.ARMOR );
+		sum += WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.SLOWNESS.get(), livingEntity, EquipmentSlotTypes.BOTH_HANDS, ShieldItem.class );
 
-		if( item1.getItem() instanceof ShieldItem )
-			sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.SLOWNESS.get(), item1 );
-
-		if( item2.getItem() instanceof ShieldItem )
-			sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.SLOWNESS.get(), item2 );
-
-		for( ItemStack stack : entity.getArmorInventoryList() )
-			sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.SLOWNESS.get(), stack );
-
-		return -( ( double )( sum ) * 0.125D );
+		return -( ( float )( sum ) * slownessMultiplierPerLevel );
 	}
 }

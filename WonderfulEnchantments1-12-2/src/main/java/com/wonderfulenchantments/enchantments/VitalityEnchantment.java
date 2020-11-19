@@ -1,17 +1,10 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler;
-import com.wonderfulenchantments.EntityEquipmentSlots;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantments;
+import com.wonderfulenchantments.*;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.Constants;
@@ -19,15 +12,13 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.UUID;
-
 @Mod.EventBusSubscriber
 public class VitalityEnchantment extends Enchantment {
-	protected static final UUID MODIFIER_UUID = UUID.fromString( "575cb29a-1ee4-11eb-adc1-0242ac120002" );
-	protected static final String MODIFIER_NAME = "VitalityBonus";
+	protected static final AttributeHelper attributeHelper = new AttributeHelper( "575cb29a-1ee4-11eb-adc1-0242ac120002", "VitalityBonus", SharedMonsterAttributes.MAX_HEALTH, Constants.AttributeModifierOperation.ADD );
+	protected static final double healthPerLevel = 2.0D;
 
 	public VitalityEnchantment( String name ) {
-		super( Rarity.RARE, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlots.BOTH_HANDS );
+		super( Rarity.RARE, EnumEnchantmentType.BREAKABLE, EquipmentSlotTypes.BOTH_HANDS );
 
 		this.setName( name );
 		this.setRegistryName( WonderfulEnchantments.MOD_ID, name );
@@ -41,7 +32,7 @@ public class VitalityEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 5 + 8 * ( level ) + ( ConfigHandler.Enchantments.VITALITY ? 0 : RegistryHandler.disableEnchantmentValue );
+		return 5 + 8 * ( level ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -50,37 +41,20 @@ public class VitalityEnchantment extends Enchantment {
 	}
 
 	@Override
-	protected boolean canApplyTogether( Enchantment enchant ) {
-		return super.canApplyTogether( enchant );
-	}
-
-	@Override
-	public boolean canApply( ItemStack stack ) {
-		return super.canApply( stack ) && ( stack.getItem() instanceof ItemShield );
+	public boolean canApplyAtEnchantingTable( ItemStack stack ) {
+		return ( stack.getItem() instanceof ItemShield ) && super.canApplyAtEnchantingTable( stack );
 	}
 
 	@SubscribeEvent
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
-		EntityLivingBase entity = event.getEntityLiving();
+		EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-		IAttributeInstance maxHealth = entity.getEntityAttribute( SharedMonsterAttributes.MAX_HEALTH );
-
-		maxHealth.removeModifier( MODIFIER_UUID );
-		AttributeModifier modifier = new AttributeModifier( MODIFIER_UUID, MODIFIER_NAME, 2 * getVitalityBonus( entity ), Constants.AttributeModifierOperation.ADD );
-		maxHealth.applyModifier( modifier );
+		attributeHelper.setValue( getHealthBonus( entityLivingBase ) ).apply( entityLivingBase );
 	}
 
-	private static int getVitalityBonus( EntityLivingBase entity ) {
-		int sum = 0;
+	protected static double getHealthBonus( EntityLivingBase entityLivingBase ) {
+		int sum = WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.VITALITY, entityLivingBase, EquipmentSlotTypes.BOTH_HANDS, ItemShield.class );
 
-		ItemStack item1 = entity.getHeldItemMainhand(), item2 = entity.getHeldItemOffhand();
-
-		if( item1.getItem() instanceof ItemShield )
-			sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.VITALITY, item1 );
-
-		if( item2.getItem() instanceof ItemShield )
-			sum += EnchantmentHelper.getEnchantmentLevel( RegistryHandler.VITALITY, item2 );
-
-		return sum;
+		return sum * healthPerLevel;
 	}
 }

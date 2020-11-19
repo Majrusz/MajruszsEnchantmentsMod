@@ -15,15 +15,13 @@ public class WonderfulEnchantments {
 
     @Mod.EventHandler
     public void init( FMLInitializationEvent event ) {
-        //ConfigHandler.register();
-
         MinecraftForge.EVENT_BUS.register( this );
     }
 
     public static final String
         MOD_ID              = "wonderful_enchantments",
         NAME                = "Wonderful Enchantments",
-        VERSION             = "0.5.1";
+        VERSION             = "0.6.0";
 
     public static final Logger LOGGER = LogManager.getLogger();
     public static final Random RANDOM = new Random();

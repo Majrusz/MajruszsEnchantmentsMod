@@ -1,16 +1,15 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.AttributeHelper;
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -23,14 +22,14 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import javax.annotation.Nonnegative;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class DodgeEnchantment extends Enchantment {
-	protected static final UUID MODIFIER_UUID = UUID.fromString( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444" );
-	protected static final String MODIFIER_NAME = "KnockBackImmunityTime";
-	protected static HashMap< String, Integer > modifiers = new HashMap<>();
+	protected static final AttributeHelper attributeHelper = new AttributeHelper( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444", "KnockBackImmunityTime", SharedMonsterAttributes.KNOCKBACK_RESISTANCE, Constants.AttributeModifierOperation.ADD );
+	protected static HashMap< Integer, Integer > immunitiesLeft = new HashMap<>(); // holding pair (entityID, ticks left)
 
 	public DodgeEnchantment( String name ) {
 		super( Rarity.RARE, EnumEnchantmentType.ARMOR_LEGS, new EntityEquipmentSlot[]{ EntityEquipmentSlot.LEGS } );
@@ -47,7 +46,7 @@ public class DodgeEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 14 * ( level ) + ( ConfigHandler.Enchantments.DODGE ? 0 : RegistryHandler.disableEnchantmentValue );
+		return 14 * ( level ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -57,59 +56,54 @@ public class DodgeEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public static void onEntityHurt( LivingDamageEvent event ) {
-		EntityLivingBase entityLiving = event.getEntityLiving();
-		ItemStack pants = entityLiving.getItemStackFromSlot( EntityEquipmentSlot.LEGS );
-		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.DODGE, entityLiving );
+		EntityLivingBase entityLivingBase = event.getEntityLiving();
+		ItemStack pants = entityLivingBase.getItemStackFromSlot( EntityEquipmentSlot.LEGS );
+		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.DODGE, entityLivingBase );
 
 		if( enchantmentLevel > 0 ) {
 			if( !( WonderfulEnchantments.RANDOM.nextDouble() < ( double )enchantmentLevel * 0.125D ) )
 				return;
 
-			WorldServer world = ( WorldServer )entityLiving.getEntityWorld();
-			for( double d = 0.0D; d < 3.0D; d++ ) {
-				world.spawnParticle( EnumParticleTypes.SMOKE_NORMAL, entityLiving.posX, entityLiving.posY + entityLiving.height * ( 0.25D * ( d + 1.0D ) ), entityLiving.posZ, 32, 0.125D, 0.0D, 0.125D, 0.075D );
-				world.spawnParticle( EnumParticleTypes.SMOKE_LARGE, entityLiving.posX, entityLiving.posY + entityLiving.height * ( 0.25D * ( d + 1.0D ) ), entityLiving.posZ, 16, 0.125D, 0.0D, 0.125D, 0.025D );
-			}
-			world.playSound( null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.AMBIENT, 1.0F, 1.0F );
-
-			pants.damageItem( ( int )event.getAmount(), entityLiving );
-			if( entityLiving instanceof EntityPlayer )
-				setImmunity( ( EntityPlayer )( entityLiving ), 50 * enchantmentLevel );
+			spawnParticlesAndPlaySounds( entityLivingBase );
+			pants.damageItem( ( int )event.getAmount(), entityLivingBase );
+			setImmunity( entityLivingBase, 50 * enchantmentLevel );
 
 			event.setCanceled( true );
 		}
 	}
 
 	@SubscribeEvent
-	public static void checkPlayersKnockBackImmunity( TickEvent.PlayerTickEvent event ) {
-		EntityPlayer player = event.player;
-		String nickname = player.getDisplayName().getUnformattedText();
+	public static void updateEntitiesKnockBackImmunity( TickEvent.WorldTickEvent event ) {
+		for( Map.Entry< Integer, Integer > pair : immunitiesLeft.entrySet() ) {
+			Entity entity = event.world.getEntityByID( pair.getKey() );
 
-		if( !modifiers.containsKey( nickname ) )
-			modifiers.put( nickname, 0 );
+			if( entity instanceof EntityLivingBase )
+				updateImmunity( ( EntityLivingBase )entity );
 
-		applyImmunity( player );
+			pair.setValue( Math.max( pair.getValue() - 1, 0 ) );
+		}
 
-		modifiers.replace( nickname, Math.max( modifiers.get( nickname ) - 1, 0 ) );
+		immunitiesLeft.values().removeIf( value->( value == 0 ) );
 	}
 
-	private static void setImmunity( EntityPlayer player, int ticks ) {
-		String nickname = player.getDisplayName().getUnformattedText();
+	protected static void setImmunity( EntityLivingBase entityLivingBase, @Nonnegative int ticks ) {
+		immunitiesLeft.put( entityLivingBase.getEntityId(), ticks );
 
-		if( !modifiers.containsKey( nickname ) )
-			modifiers.put( nickname, 0 );
-
-		modifiers.replace( nickname, ticks );
-
-		applyImmunity( player );
+		updateImmunity( entityLivingBase );
 	}
 
-	private static void applyImmunity( EntityPlayer player ) {
-		String nickname = player.getDisplayName().getUnformattedText();
+	protected static void updateImmunity( EntityLivingBase entityLivingBase ) {
+		double immunity = ( immunitiesLeft.get( entityLivingBase.getEntityId() ) > 0 ) ? 1.0D : 0.0D;
 
-		IAttributeInstance resistance = player.getEntityAttribute( SharedMonsterAttributes.KNOCKBACK_RESISTANCE );
-		resistance.removeModifier( MODIFIER_UUID );
-		AttributeModifier modifier = new AttributeModifier( MODIFIER_UUID, MODIFIER_NAME, ( modifiers.get( nickname ) > 0 ) ? 1.0D : 0.0D, Constants.AttributeModifierOperation.ADD );
-		resistance.applyModifier( modifier );
+		attributeHelper.setValue( immunity ).apply( entityLivingBase );
+	}
+
+	protected static void spawnParticlesAndPlaySounds( EntityLivingBase entityLivingBase ) {
+		WorldServer world = ( WorldServer )entityLivingBase.getEntityWorld();
+		for( double d = 0.0D; d < 3.0D; d++ ) {
+			world.spawnParticle( EnumParticleTypes.SMOKE_NORMAL, entityLivingBase.posX, entityLivingBase.posY + entityLivingBase.height * ( 0.25D * ( d + 1.0D ) ), entityLivingBase.posZ, 32, 0.125D, 0.0D, 0.125D, 0.075D );
+			world.spawnParticle( EnumParticleTypes.SMOKE_LARGE, entityLivingBase.posX, entityLivingBase.posY + entityLivingBase.height * ( 0.25D * ( d + 1.0D ) ), entityLivingBase.posZ, 16, 0.125D, 0.0D, 0.125D, 0.025D );
+		}
+		world.playSound( null, entityLivingBase.posX, entityLivingBase.posY, entityLivingBase.posZ, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.AMBIENT, 1.0F, 1.0F );
 	}
 }
