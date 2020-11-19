@@ -20,10 +20,12 @@ public class ConfigHandler {
 		Values.PHOENIX_DIVE				= createConfigSpec( "phoenix_dive", "Phoenix Dive" );
 		Values.PUFFERFISH_VENGEANCE		= createConfigSpec( "pufferfish_vengeance", "Vengeance of Pufferfish" );
 		Values.IMMORTALITY				= createConfigSpec( "immortality", "Immortality" );
+		Values.SMELTER					= createConfigSpec( "smelter", "Smelter" );
 		BUILDER.pop();
 
 		BUILDER.push( "Curses" );
 		Values.SLOWNESS					= createConfigSpec( "slowness", "Curse of Slowness" );
+		Values.FATIGUE					= createConfigSpec( "fatigue", "Curse of Fatigue" );
 		BUILDER.pop();
 
 		CONFIG = BUILDER.build();
@@ -45,16 +47,19 @@ public class ConfigHandler {
 			VITALITY,
 			PHOENIX_DIVE,
 			PUFFERFISH_VENGEANCE,
-			IMMORTALITY;
+			IMMORTALITY,
+			SMELTER;
 
 		// Curses
 		public static ForgeConfigSpec.BooleanValue
-			SLOWNESS;
+			SLOWNESS,
+			FATIGUE;
 	}
 
 	private static ForgeConfigSpec.BooleanValue createConfigSpec( String enchantmentLanguageName, String enchantmentName ) {
 		return BUILDER
 			.comment( String.format( "Makes '%s' obtainable in survival mode.", enchantmentName ) )
+			.worldRestart()
 			.define( enchantmentLanguageName, true );
 	}
 }
