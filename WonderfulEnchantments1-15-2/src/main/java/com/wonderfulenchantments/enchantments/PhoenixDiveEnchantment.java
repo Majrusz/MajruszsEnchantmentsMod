@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
+
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends Enchantment {
 	protected static List< Vec3d > positionsToGenerateParticles = new ArrayList<>();
@@ -47,7 +49,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 * ( level + 1 ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 10 * ( level + 1 ) + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -78,7 +80,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 						LivingEntity target = ( LivingEntity )entity;
 						target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
 						target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * distance ) );
-						target.setFireTimer( 20 * ( 2 * enchantmentLevel ) );
+						target.setFireTimer( WonderfulEnchantmentHelper.secondsToTicks( 2 * enchantmentLevel ) );
 					}
 
 				positionsToGenerateParticles.add( attacker.getPositionVector() );
@@ -110,9 +112,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			pair.setValue( Math.max( ticks, 0 ) );
 		}
 
-		for( Map.Entry< Integer, Integer > pair : particleTimers.entrySet() )
-			if( event.world.getEntityByID( pair.getKey() ) == null )
-				particleTimers.values().remove( pair.getKey() );
+		particleTimers.entrySet().removeIf( ( pair )->( event.world.getEntityByID( pair.getKey() ) == null ) );
 	}
 
 	@SubscribeEvent

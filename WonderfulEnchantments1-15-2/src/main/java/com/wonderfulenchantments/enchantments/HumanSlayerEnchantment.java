@@ -19,6 +19,8 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
+
 @Mod.EventBusSubscriber
 public class HumanSlayerEnchantment extends DamageEnchantment {
 	public HumanSlayerEnchantment() {
@@ -27,7 +29,7 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + ( enchantmentLevel - 1 ) * 8 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 5 + ( enchantmentLevel - 1 ) * 8 + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -42,16 +44,16 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 
 	@SubscribeEvent
 	public static void onEntityHurt( LivingHurtEvent event ) {
-		Entity entitySource = event.getSource().getImmediateSource();
+		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
+			return;
 
-		if( entitySource instanceof LivingEntity ) {
-			LivingEntity target = event.getEntityLiving(), attacker = ( LivingEntity )entitySource;
-			float extraDamage = ( float )Math.floor( 2.5D * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
+		LivingEntity attacker = ( LivingEntity )event.getSource().getImmediateSource();
+		LivingEntity target = event.getEntityLiving();
+		float extraDamage = ( float )Math.floor( 2.5D * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
 
-			if( extraDamage > 0.0F && isHuman( target ) ) {
-				( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ), target.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D );
-				event.setAmount( event.getAmount() + extraDamage );
-			}
+		if( extraDamage > 0.0F && isHuman( target ) ) {
+			( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ), target.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D );
+			event.setAmount( event.getAmount() + extraDamage );
 		}
 	}
 

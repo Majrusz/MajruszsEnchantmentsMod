@@ -28,6 +28,12 @@
 	"enchantment.wonderful_enchantments.smelter": "Smelter",
 	"enchantment.wonderful_enchantments.smelter.desc": "Gives a chance to smelt a block when destroyed.",
 
+	"enchantment.wonderful_enchantments.gotta_mine_fast": "Gotta Mine Fast",
+	"enchantment.wonderful_enchantments.gotta_mine_fast.desc": "Increases the digging speed the longer you hold the left mouse button.",
+
+	"enchantment.wonderful_enchantments.leech": "Leech",
+	"enchantment.wonderful_enchantments.leech.desc": "Gives a chance to steal positive effects or health from opponents.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Curse of Slowness",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Decreases the player's movement speed.",
 

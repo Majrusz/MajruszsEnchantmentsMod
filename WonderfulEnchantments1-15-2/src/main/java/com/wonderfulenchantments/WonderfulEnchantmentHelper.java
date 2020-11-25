@@ -12,6 +12,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.ForgeConfigSpec;
+
+import java.util.function.Function;
 
 public class WonderfulEnchantmentHelper {
 	public static final EnchantmentType SHIELD = EnchantmentType.create( "shield", ( Item item )->item instanceof ShieldItem );
@@ -46,39 +50,61 @@ public class WonderfulEnchantmentHelper {
 		return sum;
 	}
 
+	public static final int ticksInSecond = 20;
+	public static int secondsToTicks( double seconds ) {
+		return (int)( seconds*ticksInSecond );
+	}
+
+	public static final int ticksInMinute = ticksInSecond*60;
+	public static int minutesToTicks( double minutes ) {
+		return (int)( minutes*ticksInMinute );
+	}
+
+	public static boolean isDirectDamageFromLivingEntity( DamageSource source ) {
+		return source.getTrueSource() instanceof LivingEntity && source.getImmediateSource() instanceof LivingEntity;
+	}
+
 	public static int increaseLevelIfEnchantmentIsDisabled( Enchantment enchantment ) {
+		Function< ForgeConfigSpec.BooleanValue, Integer > checkEnchantment = ( value )->( value.get() ? 0 : disableEnchantmentValue );
+
 		if( enchantment instanceof FanaticEnchantment )
-			return ( ConfigHandler.Values.FISHING_FANATIC.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.FISHING_FANATIC );
 
 		if( enchantment instanceof HumanSlayerEnchantment )
-			return ( ConfigHandler.Values.HUMAN_SLAYER.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.HUMAN_SLAYER );
 
 		if( enchantment instanceof DodgeEnchantment )
-			return ( ConfigHandler.Values.DODGE.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.DODGE );
 
 		if( enchantment instanceof EnlightenmentEnchantment )
-			return ( ConfigHandler.Values.ENLIGHTENMENT.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.ENLIGHTENMENT );
 
 		if( enchantment instanceof VitalityEnchantment )
-			return ( ConfigHandler.Values.VITALITY.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.VITALITY );
 
 		if( enchantment instanceof PhoenixDiveEnchantment )
-			return ( ConfigHandler.Values.PHOENIX_DIVE.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.PHOENIX_DIVE );
 
 		if( enchantment instanceof PufferfishVengeanceEnchantment )
-			return ( ConfigHandler.Values.PUFFERFISH_VENGEANCE.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.PUFFERFISH_VENGEANCE );
 
 		if( enchantment instanceof ImmortalityEnchantment )
-			return ( ConfigHandler.Values.IMMORTALITY.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.IMMORTALITY );
 
 		if( enchantment instanceof SmelterEnchantment )
-			return ( ConfigHandler.Values.SMELTER.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.SMELTER );
+
+		if( enchantment instanceof GottaMineFastEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Values.GOTTA_MINE_FAST );
+
+		if( enchantment instanceof LeechEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Values.LEECH );
 
 		if( enchantment instanceof SlownessCurse )
-			return ( ConfigHandler.Values.SLOWNESS.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.SLOWNESS );
 
 		if( enchantment instanceof FatigueCurse )
-			return ( ConfigHandler.Values.FATIGUE.get() ? 0 : disableEnchantmentValue );
+			return checkEnchantment.apply( ConfigHandler.Values.FATIGUE );
 
 		return 0;
 	}
