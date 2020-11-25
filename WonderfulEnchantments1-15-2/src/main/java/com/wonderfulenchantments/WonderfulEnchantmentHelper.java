@@ -51,13 +51,15 @@ public class WonderfulEnchantmentHelper {
 	}
 
 	public static final int ticksInSecond = 20;
+
 	public static int secondsToTicks( double seconds ) {
-		return (int)( seconds*ticksInSecond );
+		return ( int )( seconds * ticksInSecond );
 	}
 
-	public static final int ticksInMinute = ticksInSecond*60;
+	public static final int ticksInMinute = ticksInSecond * 60;
+
 	public static int minutesToTicks( double minutes ) {
-		return (int)( minutes*ticksInMinute );
+		return ( int )( minutes * ticksInMinute );
 	}
 
 	public static boolean isDirectDamageFromLivingEntity( DamageSource source ) {
