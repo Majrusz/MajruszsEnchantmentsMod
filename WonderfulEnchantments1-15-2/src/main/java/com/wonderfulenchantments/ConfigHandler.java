@@ -21,6 +21,8 @@ public class ConfigHandler {
 		Values.PUFFERFISH_VENGEANCE		= createConfigSpec( "pufferfish_vengeance", "Vengeance of Pufferfish" );
 		Values.IMMORTALITY				= createConfigSpec( "immortality", "Immortality" );
 		Values.SMELTER					= createConfigSpec( "smelter", "Smelter" );
+		Values.GOTTA_MINE_FAST			= createConfigSpec( "gotta_mine_fast", "Gotta Mine Fast" );
+		Values.LEECH					= createConfigSpec( "leech", "Leech" );
 		BUILDER.pop();
 
 		BUILDER.push( "Curses" );
@@ -48,7 +50,9 @@ public class ConfigHandler {
 			PHOENIX_DIVE,
 			PUFFERFISH_VENGEANCE,
 			IMMORTALITY,
-			SMELTER;
+			SMELTER,
+			GOTTA_MINE_FAST,
+			LEECH;
 
 		// Curses
 		public static ForgeConfigSpec.BooleanValue

@@ -6,7 +6,6 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,6 +30,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
+
 @Mod.EventBusSubscriber
 public class FanaticEnchantment extends Enchantment {
 	protected static final double extraCatchChance = 0.33334D, levelIncreaseChanceMultiplier = 0.01D;
@@ -46,7 +47,7 @@ public class FanaticEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 * ( level ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 10 * level + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -116,10 +117,7 @@ public class FanaticEnchantment extends Enchantment {
 
 	protected static LootContext generateLootContext( PlayerEntity player ) {
 		LootContext.Builder lootContextBuilder = new LootContext.Builder( ( ServerWorld )player.getEntityWorld() );
-		lootContextBuilder.withParameter( LootParameters.POSITION, player.getPosition() )
-			.withParameter( LootParameters.TOOL, player.getHeldItemMainhand() )
-			.withRandom( WonderfulEnchantments.RANDOM )
-			.withLuck( player.getLuck() );
+		lootContextBuilder.withParameter( LootParameters.POSITION, player.getPosition() ).withParameter( LootParameters.TOOL, player.getHeldItemMainhand() ).withRandom( WonderfulEnchantments.RANDOM ).withLuck( player.getLuck() );
 
 		return lootContextBuilder.build( LootParameterSets.FISHING );
 	}

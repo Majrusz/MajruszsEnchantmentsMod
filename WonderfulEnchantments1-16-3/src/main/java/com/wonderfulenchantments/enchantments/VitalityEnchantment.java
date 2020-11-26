@@ -13,13 +13,15 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
+
 @Mod.EventBusSubscriber
 public class VitalityEnchantment extends Enchantment {
 	protected static final AttributeHelper attributeHelper = new AttributeHelper( "575cb29a-1ee4-11eb-adc1-0242ac120002", "VitalityBonus", Attributes.field_233818_a_, AttributeModifier.Operation.ADDITION );
 	protected static final double healthPerLevel = 2.0D;
 
 	public VitalityEnchantment() {
-		super( Rarity.RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
+		super( Rarity.UNCOMMON, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class VitalityEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 5 + 8 * ( level ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 5 + 8 * level + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override

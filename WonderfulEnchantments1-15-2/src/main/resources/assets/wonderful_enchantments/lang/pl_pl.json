@@ -28,6 +28,12 @@
 	"enchantment.wonderful_enchantments.smelter": "Hutnik",
 	"enchantment.wonderful_enchantments.smelter.desc": "Daje szansę na automatycznie przepalenie bloku podczas zniszczenia go.",
 
+	"enchantment.wonderful_enchantments.gotta_mine_fast": "Muszę kopać szybko",
+	"enchantment.wonderful_enchantments.gotta_mine_fast.desc": "Zwiększa prędkość kopania w zależności od tego jak długo trzymasz lewy przycisk myszy.",
+
+	"enchantment.wonderful_enchantments.leech": "Pijawka",
+	"enchantment.wonderful_enchantments.leech.desc": "Daje szansę na kradzież pozytywnych efektów lub zdrowia z przeciwników.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
 

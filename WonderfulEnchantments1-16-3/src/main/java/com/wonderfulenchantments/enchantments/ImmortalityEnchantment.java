@@ -17,6 +17,8 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
+
 @Mod.EventBusSubscriber
 public class ImmortalityEnchantment extends Enchantment {
 	protected static final int damageOnUse = 9001;
@@ -32,7 +34,7 @@ public class ImmortalityEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 20 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 20 + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class ImmortalityEnchantment extends Enchantment {
 	public static void onEntityHurt( LivingHurtEvent event ) {
 		LivingEntity target = event.getEntityLiving();
 
-		if( ( target.getHealth() - event.getAmount() ) <= 0.0F ) {
+		if( ( target.getHealth() - event.getAmount() ) < 1.0F ) {
 
 			if( tryCheatDeath( target, target.getHeldItemMainhand() ) )
 				event.setCanceled( true );

@@ -22,7 +22,7 @@ public class RegistryHandler {
     public static void init() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // replacing standard minecraft shield with the new one could be enchanted
+        // replacing standard minecraft shield with the new one which could be enchanted
         ITEMS_TO_REPLACE.register( "shield", ShieldReplacementItem::new );
 
         ENCHANTMENTS.register( modEventBus );
@@ -42,7 +42,9 @@ public class RegistryHandler {
         PHOENIX_DIVE            = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new ),
         PUFFERFISH_VENGEANCE    = ENCHANTMENTS.register( "pufferfish_vengeance", PufferfishVengeanceEnchantment::new ),
         IMMORTALITY             = ENCHANTMENTS.register( "immortality", ImmortalityEnchantment::new ),
-        SMELTER                 = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new );
+        SMELTER                 = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new ),
+        GOTTA_MINE_FAST         = ENCHANTMENTS.register( "gotta_mine_fast", GottaMineFastEnchantment::new ),
+        LEECH                   = ENCHANTMENTS.register( "leech", LeechEnchantment::new );
 
     // Curses
     public static final RegistryObject< Enchantment >

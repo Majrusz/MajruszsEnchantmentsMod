@@ -1,5 +1,3 @@
-
-
 package com.wonderfulenchantments.enchantments;
 
 import com.google.common.collect.HashMultiset;
@@ -8,7 +6,6 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,16 +19,15 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.*;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
+
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 @Mod.EventBusSubscriber
 public class FanaticEnchantment extends Enchantment {
@@ -48,7 +44,7 @@ public class FanaticEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 * ( level ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 10 * level + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -64,13 +60,10 @@ public class FanaticEnchantment extends Enchantment {
 	@Override
 	public ITextComponent getDisplayName( int level ) {
 		if( level == this.getMaxLevel() ) {
-			String name;
-			String enchantmentName = new TranslationTextComponent( this.getName() ).getUnformattedComponentText();
-			String prefix = new TranslationTextComponent( "wonderful_enchantments.true_level" ).getUnformattedComponentText();
-
-			name = String.format( "%s %s", prefix, enchantmentName );
-
-			ITextComponent output = new StringTextComponent( TextFormatting.GRAY + name );
+			IFormattableTextComponent output = new TranslationTextComponent( "wonderful_enchantments.true_level" );
+			output.func_240702_b_( " " );
+			output.func_230529_a_( new TranslationTextComponent( this.getName() ) );
+			output.func_240699_a_( TextFormatting.GRAY );
 
 			return output;
 		}

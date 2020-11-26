@@ -1,7 +1,6 @@
 package com.wonderfulenchantments.curses;
 
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.EfficiencyEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -10,6 +9,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 @Mod.EventBusSubscriber
 public class FatigueCurse extends Enchantment {
@@ -24,7 +25,7 @@ public class FatigueCurse extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 10 + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override

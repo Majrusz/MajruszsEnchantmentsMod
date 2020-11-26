@@ -1,6 +1,9 @@
 package com.wonderfulenchantments.curses;
 
-import com.wonderfulenchantments.*;
+import com.wonderfulenchantments.AttributeHelper;
+import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
@@ -10,6 +13,8 @@ import net.minecraft.item.ShieldItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 @Mod.EventBusSubscriber
 public class SlownessCurse extends Enchantment {
@@ -27,7 +32,7 @@ public class SlownessCurse extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 10 + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override

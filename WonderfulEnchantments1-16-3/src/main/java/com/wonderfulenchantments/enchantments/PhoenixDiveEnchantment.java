@@ -3,7 +3,10 @@ package com.wonderfulenchantments.enchantments;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.enchantment.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.FrostWalkerEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
+
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends Enchantment {
 	protected static List< Vector3d > positionsToGenerateParticles = new ArrayList<>();
@@ -44,7 +49,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 * ( level + 1 ) + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 10 * ( level + 1 ) + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -75,7 +80,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 						LivingEntity target = ( LivingEntity )entity;
 						target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
 						target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * distance ) );
-						target.setFire( 20 * ( 2 * enchantmentLevel ) );
+						target.setFire( WonderfulEnchantmentHelper.secondsToTicks( 2 * enchantmentLevel ) );
 					}
 
 				positionsToGenerateParticles.add( attacker.getPositionVec() );
@@ -107,9 +112,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			pair.setValue( Math.max( ticks, 0 ) );
 		}
 
-		for( Map.Entry< Integer, Integer > pair : particleTimers.entrySet() )
-			if( event.world.getEntityByID( pair.getKey() ) == null )
-				particleTimers.values().remove( pair.getKey() );
+		particleTimers.entrySet().removeIf( ( pair )->( event.world.getEntityByID( pair.getKey() ) == null ) );
 	}
 
 	@SubscribeEvent
