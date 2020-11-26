@@ -18,6 +18,8 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
+
 @Mod.EventBusSubscriber
 public class PufferfishVengeanceEnchantment extends Enchantment {
 	public PufferfishVengeanceEnchantment() {
@@ -31,7 +33,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + enchantmentLevel * 12 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 5 + enchantmentLevel * 12 + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 			if( enchantmentLevel > 0 ) {
 				LivingEntity target = event.getEntityLiving();
 
-				int durationInTicks = 20 * ( 2 * enchantmentLevel + 1 );
+				int durationInTicks = WonderfulEnchantmentHelper.secondsToTicks( 2 * enchantmentLevel + 1 );
 
 				target.addPotionEffect( new EffectInstance( Effects.HUNGER, durationInTicks, 2 ) );
 				target.addPotionEffect( new EffectInstance( Effects.POISON, durationInTicks, 3 ) );

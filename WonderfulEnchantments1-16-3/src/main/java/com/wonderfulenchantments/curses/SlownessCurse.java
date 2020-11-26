@@ -14,6 +14,8 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
+
 @Mod.EventBusSubscriber
 public class SlownessCurse extends Enchantment {
 	protected static final AttributeHelper attributeHelper = new AttributeHelper( "760f7b82-76c7-4875-821e-ef0579b881e0", "SlownessCurse", Attributes.field_233821_d_, AttributeModifier.Operation.MULTIPLY_TOTAL );
@@ -30,7 +32,7 @@ public class SlownessCurse extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 10 + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 10 + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override

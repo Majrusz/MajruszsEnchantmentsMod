@@ -41,7 +41,11 @@ public class LootModifiers {
 		@Nonnull
 		@Override
 		public List< ItemStack > doApply( List< ItemStack > generatedLoot, LootContext context ) {
-			int smelterLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.SMELTER.get(), context.get( LootParameters.TOOL ) );
+			ItemStack tool = context.get( LootParameters.TOOL );
+			if( tool == null )
+				return generatedLoot;
+
+			int smelterLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.SMELTER.get(), tool );
 			ServerWorld world = context.getWorld();
 
 			ArrayList< ItemStack > output = new ArrayList<>();

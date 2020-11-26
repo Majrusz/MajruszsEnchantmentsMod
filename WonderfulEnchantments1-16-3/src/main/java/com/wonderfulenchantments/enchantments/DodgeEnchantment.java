@@ -2,7 +2,6 @@ package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.AttributeHelper;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -25,6 +25,8 @@ import net.minecraftforge.fml.common.Mod;
 import javax.annotation.Nonnegative;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 @Mod.EventBusSubscriber
 public class DodgeEnchantment extends Enchantment {
@@ -42,7 +44,7 @@ public class DodgeEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 14 * level + WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled( this );
+		return 14 * level + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
@@ -96,8 +98,9 @@ public class DodgeEnchantment extends Enchantment {
 	protected static void spawnParticlesAndPlaySounds( LivingEntity livingEntity ) {
 		ServerWorld world = ( ServerWorld )livingEntity.getEntityWorld();
 		for( double d = 0.0D; d < 3.0D; d++ ) {
-			world.spawnParticle( ParticleTypes.SMOKE, livingEntity.getPosX(), livingEntity.getPosYHeight( 0.25D * ( d + 1.0D ) ), livingEntity.getPosZ(), 32, 0.125D, 0.0D, 0.125D, 0.075D );
-			world.spawnParticle( ParticleTypes.LARGE_SMOKE, livingEntity.getPosX(), livingEntity.getPosYHeight( 0.25D * ( d + 1.0D ) ), livingEntity.getPosZ(), 16, 0.125D, 0.0D, 0.125D, 0.025D );
+			Vector3d emitterPosition = new Vector3d( 0.0D, livingEntity.getHeight() * 0.25D * ( d + 1.0D ), 0.0D ).add( livingEntity.getPositionVec() );
+			for( int i = 0; i < 2; i++ )
+				world.spawnParticle( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, emitterPosition.getX(), emitterPosition.getY(), emitterPosition.getZ(), 16 * i, 0.125D, 0.0D, 0.125D, 0.075D );
 		}
 		world.playSound( null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.AMBIENT, 1.0F, 1.0F );
 	}
