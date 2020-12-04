@@ -38,27 +38,35 @@ public class EnlightenmentEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public static void onXPPickUp( PlayerXpEvent.PickupXp event ) {
-		int enlightenmentSum = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.ENLIGHTENMENT.get(), event.getPlayer(), EquipmentSlotTypes.ARMOR );
+		int enlightenmentSum = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.ENLIGHTENMENT.get(), event.getPlayer(),
+			EquipmentSlotTypes.ARMOR
+		);
 
 		if( enlightenmentSum > 0 ) {
 			double bonusRatio = 0.25D * ( double )enlightenmentSum;
 			double randomBonus = bonusRatio * WonderfulEnchantments.RANDOM.nextDouble();
-			int bonusExp = ( int )( Math.round( randomBonus * ( double )event.getOrb().getXpValue() ) );
+			int bonusExp = ( int )( Math.round( randomBonus * ( double )event.getOrb()
+				.getXpValue() )
+			);
 
-			event.getPlayer().giveExperiencePoints( bonusExp );
+			event.getPlayer()
+				.giveExperiencePoints( bonusExp );
 		}
 	}
 
 	@SubscribeEvent
 	public static void onCalculatingEnchantmentLevels( EnchantmentLevelSetEvent event ) {
 		BlockPos position = event.getPos();
-		PlayerEntity player = event.getWorld().getClosestPlayer( position.getX(), position.getY(), position.getZ() );
+		PlayerEntity player = event.getWorld()
+			.getClosestPlayer( position.getX(), position.getY(), position.getZ() );
 
 		Enchantment enchantment = RegistryHandler.ENLIGHTENMENT.get();
 		int enlightenmentSum = WonderfulEnchantmentHelper.calculateEnchantmentSum( enchantment, player, EquipmentSlotTypes.ARMOR );
 
 		if( enlightenmentSum > 0 ) {
-			int bonus = Math.max( 0, Math.min( event.getLevel() * enlightenmentSum / ( enchantment.getMaxLevel() * 4 ), 30 - event.getLevel() ) ); // gives 0%-100% level bonus (capped at 30lvl)
+			int bonus = Math.max( 0,
+				Math.min( event.getLevel() * enlightenmentSum / ( enchantment.getMaxLevel() * 4 ), 30 - event.getLevel() )
+			); // gives 0%-100% level bonus (capped at 30lvl)
 
 			event.setLevel( event.getLevel() + bonus );
 		}

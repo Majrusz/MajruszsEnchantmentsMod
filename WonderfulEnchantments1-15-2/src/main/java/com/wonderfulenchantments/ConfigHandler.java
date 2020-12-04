@@ -23,6 +23,9 @@ public class ConfigHandler {
 		Values.SMELTER					= createConfigSpec( "smelter", "Smelter" );
 		Values.GOTTA_MINE_FAST			= createConfigSpec( "gotta_mine_fast", "Gotta Mine Fast" );
 		Values.LEECH					= createConfigSpec( "leech", "Leech" );
+		Values.MAGIC_PROTECTION			= createConfigSpec( "magic_protection", "Magic Protection" );
+		Values.SWIFTNESS				= createConfigSpec( "swiftness", "Swiftness" );
+		Values.HORSE_PROTECTION			= createConfigSpec( "horse_protection", "Horse Protection" );
 		BUILDER.pop();
 
 		BUILDER.push( "Curses" );
@@ -52,7 +55,10 @@ public class ConfigHandler {
 			IMMORTALITY,
 			SMELTER,
 			GOTTA_MINE_FAST,
-			LEECH;
+			LEECH,
+			MAGIC_PROTECTION,
+			SWIFTNESS,
+			HORSE_PROTECTION;
 
 		// Curses
 		public static ForgeConfigSpec.BooleanValue
