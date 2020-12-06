@@ -8,10 +8,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
+import net.minecraft.item.*;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -19,17 +16,24 @@ import java.util.function.Function;
 
 public class WonderfulEnchantmentHelper {
 	public static final EnchantmentType SHIELD = EnchantmentType.create( "shield", ( Item item )->item instanceof ShieldItem );
+	public static final EnchantmentType HORSE_ARMOR = EnchantmentType.create( "horse_armor", ( Item item )->item instanceof HorseArmorItem );
 	private static final int disableEnchantmentValue = 9001;
 
 	public static void addTypeToItemGroup( EnchantmentType type, ItemGroup itemGroup ) {
 		EnchantmentType[] group = itemGroup.getRelevantEnchantmentTypes();
+		if( group.length == 0 ) {
+			itemGroup.setRelevantEnchantmentTypes( type );
+			return;
+		}
 		EnchantmentType[] temporary = new EnchantmentType[ group.length + 1 ];
 		System.arraycopy( group, 0, temporary, 0, group.length );
 		temporary[ group.length - 1 ] = type;
 		itemGroup.setRelevantEnchantmentTypes( temporary );
 	}
 
-	public static < InstanceType > int calculateEnchantmentSumIfIsInstanceOf( Enchantment enchantment, LivingEntity livingEntity, EquipmentSlotType[] slotTypes, Class< InstanceType > type ) {
+	public static < InstanceType > int calculateEnchantmentSumIfIsInstanceOf( Enchantment enchantment, LivingEntity livingEntity,
+		EquipmentSlotType[] slotTypes, Class< InstanceType > type
+	) {
 		int sum = 0;
 
 		for( EquipmentSlotType slotType : slotTypes ) {
@@ -46,6 +50,15 @@ public class WonderfulEnchantmentHelper {
 
 		for( EquipmentSlotType slotType : slotTypes )
 			sum += EnchantmentHelper.getEnchantmentLevel( enchantment, livingEntity.getItemStackFromSlot( slotType ) );
+
+		return sum;
+	}
+
+	public static int calculateEnchantmentSum( Enchantment enchantment, Iterable< ItemStack > itemStacks ) {
+		int sum = 0;
+
+		for( ItemStack itemStack : itemStacks )
+			sum += EnchantmentHelper.getEnchantmentLevel( enchantment, itemStack );
 
 		return sum;
 	}
@@ -101,6 +114,15 @@ public class WonderfulEnchantmentHelper {
 
 		if( enchantment instanceof LeechEnchantment )
 			return checkEnchantment.apply( ConfigHandler.Values.LEECH );
+
+		if( enchantment instanceof MagicProtectionEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Values.MAGIC_PROTECTION );
+
+		if( enchantment instanceof SwiftnessEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Values.SWIFTNESS );
+
+		if( enchantment instanceof HorseProtectionEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Values.HORSE_PROTECTION );
 
 		if( enchantment instanceof SlownessCurse )
 			return checkEnchantment.apply( ConfigHandler.Values.SLOWNESS );

@@ -70,17 +70,21 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			LivingEntity attacker = event.getEntityLiving();
 			World world = attacker.getEntityWorld();
 
-			int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), attacker.getItemStackFromSlot( EquipmentSlotType.FEET ) );
+			int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(),
+				attacker.getItemStackFromSlot( EquipmentSlotType.FEET )
+			);
 
 			if( enchantmentLevel > 0 ) {
 				double range = 5.0D;
-				List< Entity > entities = world.getEntitiesWithinAABBExcludingEntity( attacker.getEntity(), attacker.getBoundingBox().offset( -range, -attacker.getHeight() * 0.5D, -range ).expand( range * 2.0D, 0, range * 2.0D ) );
+				List< Entity > entities = world.getEntitiesWithinAABBExcludingEntity( attacker.getEntity(), attacker.getBoundingBox()
+					.offset( -range, -attacker.getHeight() * 0.5D, -range )
+					.expand( range * 2.0D, 0, range * 2.0D ) );
 				for( Entity entity : entities )
 					if( entity instanceof LivingEntity ) {
 						LivingEntity target = ( LivingEntity )entity;
+						target.setFireTimer( WonderfulEnchantmentHelper.secondsToTicks( 2 * enchantmentLevel ) );
 						target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
 						target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * distance ) );
-						target.setFireTimer( WonderfulEnchantmentHelper.secondsToTicks( 2 * enchantmentLevel ) );
 					}
 
 				positionsToGenerateParticles.add( attacker.getPositionVector() );
@@ -94,8 +98,12 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			for( Vec3d position : positionsToGenerateParticles )
 				for( double d = 0.0D; d < 3.0D; d++ ) {
 					ServerWorld world = ( ServerWorld )event.world;
-					world.spawnParticle( RegistryHandler.PHOENIX_PARTICLE.get(), position.getX(), position.getY(), position.getZ(), ( int )Math.pow( 5.0D, d + 1.0D ), 0.0625D, 0.125D, 0.0625D, ( 0.125D + 0.0625D ) * ( d + 1.0D ) );
-					world.playSound( null, position.getX(), position.getY(), position.getZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.25F, 1.0F );
+					world.spawnParticle( RegistryHandler.PHOENIX_PARTICLE.get(), position.getX(), position.getY(), position.getZ(),
+						( int )Math.pow( 5.0D, d + 1.0D ), 0.0625D, 0.125D, 0.0625D, ( 0.125D + 0.0625D ) * ( d + 1.0D )
+					);
+					world.playSound( null, position.getX(), position.getY(), position.getZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT,
+						0.25F, 1.0F
+					);
 				}
 
 			positionsToGenerateParticles.clear();
@@ -112,7 +120,8 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			pair.setValue( Math.max( ticks, 0 ) );
 		}
 
-		particleTimers.entrySet().removeIf( ( pair )->( event.world.getEntityByID( pair.getKey() ) == null ) );
+		particleTimers.entrySet()
+			.removeIf( ( pair )->( event.world.getEntityByID( pair.getKey() ) == null ) );
 	}
 
 	@SubscribeEvent
@@ -127,7 +136,9 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			if( player.isCrouching() && enchantmentLevel > 0 ) {
 				double angleInRadians = Math.toRadians( player.rotationYaw + 90.0D );
 				double factor = ( enchantmentLevel + 1 ) * 0.33334D;
-				player.setMotion( player.getMotion().mul( new Vec3d( 0.0D, 1.0D + factor, 0.0D ) ).add( factor * Math.cos( angleInRadians ), 0.0D, factor * Math.sin( angleInRadians ) ) );
+				player.setMotion( player.getMotion()
+					.mul( new Vec3d( 0.0D, 1.0D + factor, 0.0D ) )
+					.add( factor * Math.cos( angleInRadians ), 0.0D, factor * Math.sin( angleInRadians ) ) );
 
 				boots.damageItem( 3, player, ( e )->e.sendBreakAnimation( EquipmentSlotType.FEET ) );
 			}
@@ -151,7 +162,10 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			double leftLegRotation = ( WonderfulEnchantments.RANDOM.nextBoolean() ? 180.0D : 0.0D );
 			double angleInRadians = Math.toRadians( entity.rotationYaw + 90.0D + leftLegRotation );
 			if( world instanceof ServerWorld )
-				( ( ServerWorld )world ).spawnParticle( ParticleTypes.FLAME, entity.getPosX() + 0.1875D * Math.sin( -angleInRadians ), entity.getPosY(), entity.getPosZ() + 0.1875D * Math.cos( -angleInRadians ), 1, 0.0D, 0.125D * Math.cos( angleInRadians ), 0.00D, 0.0D );
+				( ( ServerWorld )world ).spawnParticle( ParticleTypes.FLAME, entity.getPosX() + 0.1875D * Math.sin( -angleInRadians ),
+					entity.getPosY(), entity.getPosZ() + 0.1875D * Math.cos( -angleInRadians ), 1, 0.0D, 0.125D * Math.cos( angleInRadians ), 0.00D,
+					0.0D
+				);
 		}
 	}
 

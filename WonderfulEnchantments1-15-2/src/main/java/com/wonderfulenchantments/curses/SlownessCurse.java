@@ -18,7 +18,9 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 
 @Mod.EventBusSubscriber
 public class SlownessCurse extends Enchantment {
-	protected static final AttributeHelper attributeHelper = new AttributeHelper( "760f7b82-76c7-4875-821e-ef0579b881e0", "SlownessCurse", SharedMonsterAttributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
+	protected static final AttributeHelper attributeHelper = new AttributeHelper( "760f7b82-76c7-4875-821e-ef0579b881e0", "SlownessCurse",
+		SharedMonsterAttributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL
+	);
 	protected static final float slownessMultiplierPerLevel = 0.125f;
 
 	public SlownessCurse() {
@@ -54,14 +56,17 @@ public class SlownessCurse extends Enchantment {
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
 		LivingEntity livingEntity = event.getEntityLiving();
 
-		attributeHelper.setValue( getTotalSlownessMultiplier( livingEntity ) ).apply( livingEntity );
+		attributeHelper.setValue( getTotalSlownessMultiplier( livingEntity ) )
+			.apply( livingEntity );
 	}
 
 	private static float getTotalSlownessMultiplier( LivingEntity livingEntity ) {
 		int sum = 0;
 
 		sum += WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.SLOWNESS.get(), livingEntity, EquipmentSlotTypes.ARMOR );
-		sum += WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.SLOWNESS.get(), livingEntity, EquipmentSlotTypes.BOTH_HANDS, ShieldItem.class );
+		sum += WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.SLOWNESS.get(), livingEntity,
+			EquipmentSlotTypes.BOTH_HANDS, ShieldItem.class
+		);
 
 		return -( ( float )( sum ) * slownessMultiplierPerLevel );
 	}

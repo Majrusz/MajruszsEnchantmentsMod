@@ -86,7 +86,10 @@ public class FanaticEnchantment extends Enchantment {
 		int fanaticLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FISHING_FANATIC.get(), player );
 
 		Multiset< String > rewards = HashMultiset.create();
-		rewards.add( event.getDrops().get( 0 ).getDisplayName().getString() );
+		rewards.add( event.getDrops()
+			.get( 0 )
+			.getDisplayName()
+			.getString() );
 
 		int extraRewardsCounter = 0;
 		for( int i = 0; i < fanaticLevel && ConfigHandler.Values.FISHING_FANATIC.get(); i++ )
@@ -94,38 +97,53 @@ public class FanaticEnchantment extends Enchantment {
 				for( ItemStack extraReward : lootTable.generate( lootContext ) ) {
 					spawnReward( extraReward, player, world, event.getHookEntity() );
 
-					rewards.add( extraReward.getDisplayName().getString() );
+					rewards.add( extraReward.getDisplayName()
+						.getString() );
 					extraRewardsCounter++;
 				}
 
 		if( tryIncreaseFishingFanaticLevel( player ) )
-			player.sendStatusMessage( new StringTextComponent( TextFormatting.BOLD + new TranslationTextComponent( "wonderful_enchantments.fanatic_level_up" ).getUnformattedComponentText() ), true );
+			player.sendStatusMessage( new StringTextComponent(
+					TextFormatting.BOLD + new TranslationTextComponent( "wonderful_enchantments.fanatic_level_up" ).getUnformattedComponentText() ),
+				true
+			);
 
 		else if( rewards.size() > 1 )
 			notifyPlayerAboutRewards( rewards, player );
 
 		event.damageRodBy( event.getRodDamage() + extraRewardsCounter );
-		world.addEntity( new ExperienceOrbEntity( world, player.getPosX(), player.getPosY() + 0.5D, player.getPosZ() + 0.5D, extraRewardsCounter + WonderfulEnchantments.RANDOM.nextInt( 2 * extraRewardsCounter + 1 ) ) );
+		world.addEntity( new ExperienceOrbEntity( world, player.getPosX(), player.getPosY() + 0.5D, player.getPosZ() + 0.5D,
+			extraRewardsCounter + WonderfulEnchantments.RANDOM.nextInt( 2 * extraRewardsCounter + 1 )
+		) );
 	}
 
 	protected static LootContext generateLootContext( PlayerEntity player ) {
 		LootContext.Builder lootContextBuilder = new LootContext.Builder( ( ServerWorld )player.getEntityWorld() );
-		lootContextBuilder.withParameter( LootParameters.TOOL, player.getHeldItemMainhand() ).withRandom( WonderfulEnchantments.RANDOM ).withLuck( player.getLuck() );
+		lootContextBuilder.withParameter( LootParameters.TOOL, player.getHeldItemMainhand() )
+			.withRandom( WonderfulEnchantments.RANDOM )
+			.withLuck( player.getLuck() );
 
 		return lootContextBuilder.build( LootParameterSets.FISHING );
 	}
 
 	protected static LootTable getFishingLootTable() {
-		return ServerLifecycleHooks.getCurrentServer().getLootTableManager().getLootTableFromLocation( LootTables.GAMEPLAY_FISHING );
+		return ServerLifecycleHooks.getCurrentServer()
+			.getLootTableManager()
+			.getLootTableFromLocation( LootTables.GAMEPLAY_FISHING );
 	}
 
 	protected static void spawnReward( ItemStack reward, PlayerEntity player, World world, FishingBobberEntity bobberEntity ) {
-		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), bobberEntity.getPosY() + 0.25D * WonderfulEnchantments.RANDOM.nextDouble(), bobberEntity.getPosZ() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), reward );
+		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(),
+			bobberEntity.getPosY() + 0.25D * WonderfulEnchantments.RANDOM.nextDouble(),
+			bobberEntity.getPosZ() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), reward
+		);
 
 		double deltaX = player.getPosX() - itemEntity.getPosX();
 		double deltaY = player.getPosY() - itemEntity.getPosY();
 		double deltaZ = player.getPosZ() - itemEntity.getPosZ();
-		itemEntity.setMotion( 0.1D * deltaX, 0.1D * deltaY + Math.pow( Math.pow( deltaX, 2 ) + Math.pow( deltaY, 2 ) + Math.pow( deltaZ, 2 ), 0.25D ) * 0.08D, 0.1D * deltaZ );
+		itemEntity.setMotion( 0.1D * deltaX,
+			0.1D * deltaY + Math.pow( Math.pow( deltaX, 2 ) + Math.pow( deltaY, 2 ) + Math.pow( deltaZ, 2 ), 0.25D ) * 0.08D, 0.1D * deltaZ
+		);
 
 		world.addEntity( itemEntity );
 	}
@@ -133,7 +151,9 @@ public class FanaticEnchantment extends Enchantment {
 
 	protected static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player ) {
 		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FISHING_FANATIC.get(), player );
-		double increaseChance = ( RegistryHandler.FISHING_FANATIC.get().getMaxLevel() - enchantmentLevel ) * levelIncreaseChanceMultiplier;
+		double increaseChance = ( RegistryHandler.FISHING_FANATIC.get()
+			.getMaxLevel() - enchantmentLevel
+		) * levelIncreaseChanceMultiplier;
 
 		if( WonderfulEnchantments.RANDOM.nextDouble() < increaseChance ) {
 			ItemStack fishingRod = player.getHeldItemMainhand();
@@ -144,8 +164,11 @@ public class FanaticEnchantment extends Enchantment {
 				ListNBT nbt = fishingRod.getEnchantmentTagList();
 
 				for( int i = 0; i < nbt.size(); ++i )
-					if( nbt.getCompound( i ).getString( "id" ).contains( "fishing_fanatic" ) ) {
-						nbt.getCompound( i ).putInt( "lvl", enchantmentLevel + 1 );
+					if( nbt.getCompound( i )
+						.getString( "id" )
+						.contains( "fishing_fanatic" ) ) {
+						nbt.getCompound( i )
+							.putInt( "lvl", enchantmentLevel + 1 );
 						break;
 					}
 
@@ -161,7 +184,9 @@ public class FanaticEnchantment extends Enchantment {
 	protected static void notifyPlayerAboutRewards( Multiset< String > rewards, PlayerEntity player ) {
 		StringTextComponent message = new StringTextComponent( TextFormatting.WHITE + "(" );
 
-		ImmutableList< String > rewardList = Multisets.copyHighestCountFirst( rewards ).elementSet().asList();
+		ImmutableList< String > rewardList = Multisets.copyHighestCountFirst( rewards )
+			.elementSet()
+			.asList();
 		for( int i = 0; i < rewardList.size(); i++ ) {
 			message.func_230529_a_( new StringTextComponent( ( ( i == 0 ) ? TextFormatting.WHITE : TextFormatting.GOLD ) + rewardList.get( i ) ) );
 

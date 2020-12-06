@@ -2,6 +2,7 @@ package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.AttributeHelper;
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -30,7 +31,9 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 
 @Mod.EventBusSubscriber
 public class DodgeEnchantment extends Enchantment {
-	protected static final AttributeHelper attributeHelper = new AttributeHelper( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444", "KnockBackImmunityTime", SharedMonsterAttributes.KNOCKBACK_RESISTANCE, AttributeModifier.Operation.ADDITION );
+	protected static final AttributeHelper attributeHelper = new AttributeHelper( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444", "KnockBackImmunityTime",
+		SharedMonsterAttributes.KNOCKBACK_RESISTANCE, AttributeModifier.Operation.ADDITION
+	);
 	protected static HashMap< Integer, Integer > immunitiesLeft = new HashMap<>(); // holding pair (entityID, ticks left)
 
 	public DodgeEnchantment() {
@@ -63,8 +66,10 @@ public class DodgeEnchantment extends Enchantment {
 				return;
 
 			spawnParticlesAndPlaySounds( livingEntity );
-			setImmunity( livingEntity, 50 * dodgeLevel );
-			pants.damageItem( Math.max( ( int )( event.getAmount() * 0.5f ), 1 ), livingEntity, ( e )->e.sendBreakAnimation( EquipmentSlotType.LEGS ) );
+			setImmunity( livingEntity, WonderfulEnchantmentHelper.secondsToTicks( 2.5D ) * dodgeLevel );
+			pants.damageItem( Math.max( ( int )( event.getAmount() * 0.5f ), 1 ), livingEntity,
+				( e )->e.sendBreakAnimation( EquipmentSlotType.LEGS )
+			);
 			event.setCanceled( true );
 		}
 	}
@@ -80,7 +85,8 @@ public class DodgeEnchantment extends Enchantment {
 			pair.setValue( Math.max( pair.getValue() - 1, 0 ) );
 		}
 
-		immunitiesLeft.values().removeIf( value->( value == 0 ) );
+		immunitiesLeft.values()
+			.removeIf( value->( value == 0 ) );
 	}
 
 	protected static void setImmunity( LivingEntity livingEntity, @Nonnegative int ticks ) {
@@ -92,7 +98,8 @@ public class DodgeEnchantment extends Enchantment {
 	protected static void updateImmunity( LivingEntity livingEntity ) {
 		double immunity = ( immunitiesLeft.get( livingEntity.getEntityId() ) > 0 ) ? 1.0D : 0.0D;
 
-		attributeHelper.setValue( immunity ).apply( livingEntity );
+		attributeHelper.setValue( immunity )
+			.apply( livingEntity );
 	}
 
 	protected static void spawnParticlesAndPlaySounds( LivingEntity livingEntity ) {
@@ -100,8 +107,12 @@ public class DodgeEnchantment extends Enchantment {
 		for( double d = 0.0D; d < 3.0D; d++ ) {
 			Vec3d emitterPosition = new Vec3d( 0.0D, livingEntity.getHeight() * 0.25D * ( d + 1.0D ), 0.0D ).add( livingEntity.getPositionVector() );
 			for( int i = 0; i < 2; i++ )
-				world.spawnParticle( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, emitterPosition.getX(), emitterPosition.getY(), emitterPosition.getZ(), 16 * i, 0.125D, 0.0D, 0.125D, 0.075D );
+				world.spawnParticle( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, emitterPosition.getX(), emitterPosition.getY(),
+					emitterPosition.getZ(), 16 * i, 0.125D, 0.0D, 0.125D, 0.075D
+				);
 		}
-		world.playSound( null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.AMBIENT, 1.0F, 1.0F );
+		world.playSound( null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE,
+			SoundCategory.AMBIENT, 1.0F, 1.0F
+		);
 	}
 }
