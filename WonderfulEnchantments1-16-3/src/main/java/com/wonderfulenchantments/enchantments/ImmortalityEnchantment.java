@@ -47,7 +47,6 @@ public class ImmortalityEnchantment extends Enchantment {
 		LivingEntity target = event.getEntityLiving();
 
 		if( ( target.getHealth() - event.getAmount() ) < 1.0F ) {
-
 			if( tryCheatDeath( target, target.getHeldItemMainhand() ) )
 				event.setCanceled( true );
 			else if( tryCheatDeath( target, target.getHeldItemOffhand() ) )
@@ -70,7 +69,11 @@ public class ImmortalityEnchantment extends Enchantment {
 
 	protected static void spawnParticlesAndPlaySounds( LivingEntity livingEntity ) {
 		ServerWorld world = ( ServerWorld )livingEntity.getEntityWorld();
-		world.spawnParticle( ParticleTypes.TOTEM_OF_UNDYING, livingEntity.getPosX(), livingEntity.getPosYHeight( 0.75D ), livingEntity.getPosZ(), 64, 0.25D, 0.5D, 0.25D, 0.5D );
-		world.playSound( null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ITEM_TOTEM_USE, SoundCategory.AMBIENT, 1.0F, 1.0F );
+		world.spawnParticle( ParticleTypes.TOTEM_OF_UNDYING, livingEntity.getPosX(), livingEntity.getPosYHeight( 0.75D ), livingEntity.getPosZ(), 64,
+			0.25D, 0.5D, 0.25D, 0.5D
+		);
+		world.playSound( null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ITEM_TOTEM_USE,
+			SoundCategory.AMBIENT, 1.0F, 1.0F
+		);
 	}
 }

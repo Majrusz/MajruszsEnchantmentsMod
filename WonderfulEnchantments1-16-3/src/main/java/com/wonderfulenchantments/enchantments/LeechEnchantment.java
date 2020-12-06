@@ -61,7 +61,8 @@ public class LeechEnchantment extends Enchantment {
 		if( WonderfulEnchantments.RANDOM.nextDouble() >= leechChance )
 			return;
 
-		LivingEntity attacker = ( LivingEntity )event.getSource().getImmediateSource();
+		LivingEntity attacker = ( LivingEntity )event.getSource()
+			.getImmediateSource();
 		LivingEntity target = event.getEntityLiving();
 
 		if( EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.LEECH.get(), attacker ) > 0 ) {
@@ -82,7 +83,8 @@ public class LeechEnchantment extends Enchantment {
 		EffectInstance[] possibleEffects = effects.toArray( new EffectInstance[]{} );
 
 		for( EffectInstance effect : possibleEffects )
-			if( effect.getPotion().isBeneficial() ) {
+			if( effect.getPotion()
+				.isBeneficial() ) {
 				stealer.addPotionEffect( effect );
 				target.removePotionEffect( effect.getPotion() );
 
@@ -101,8 +103,10 @@ public class LeechEnchantment extends Enchantment {
 		if( attacker.getEntityWorld() instanceof ServerWorld ) {
 			ServerWorld world = ( ServerWorld )attacker.getEntityWorld();
 
-			Vector3d startPosition = attacker.getPositionVec().add( new Vector3d( 0.0D, attacker.getHeight() * 0.75D, 0.0D ) );
-			Vector3d endPosition = target.getPositionVec().add( new Vector3d( 0.0D, target.getHeight() * 0.75D, 0.0D ) );
+			Vector3d startPosition = attacker.getPositionVec()
+				.add( new Vector3d( 0.0D, attacker.getHeight() * 0.75D, 0.0D ) );
+			Vector3d endPosition = target.getPositionVec()
+				.add( new Vector3d( 0.0D, target.getHeight() * 0.75D, 0.0D ) );
 
 			Vector3d difference = endPosition.subtract( startPosition );
 			int amountOfParticles = ( int )( Math.ceil( startPosition.distanceTo( endPosition ) * 5.0D ) );
@@ -110,10 +114,14 @@ public class LeechEnchantment extends Enchantment {
 			for( int i = 0; i <= amountOfParticles; i++ ) {
 				Vector3d step = difference.scale( ( float )( i ) / amountOfParticles );
 				Vector3d finalPosition = startPosition.add( step );
-				world.spawnParticle( ParticleTypes.ENCHANTED_HIT, finalPosition.getX(), finalPosition.getY(), finalPosition.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D );
+				world.spawnParticle( ParticleTypes.ENCHANTED_HIT, finalPosition.getX(), finalPosition.getY(), finalPosition.getZ(), 1, 0.0D, 0.0D,
+					0.0D, 0.0D
+				);
 			}
 
-			world.playSound( null, startPosition.getX(), startPosition.getY(), startPosition.getZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.AMBIENT, 0.25F, 1.0F );
+			world.playSound( null, startPosition.getX(), startPosition.getY(), startPosition.getZ(), SoundEvents.ENTITY_GENERIC_DRINK,
+				SoundCategory.AMBIENT, 0.25F, 1.0F
+			);
 		}
 	}
 }

@@ -30,7 +30,9 @@ import java.util.Optional;
 public class LootModifiers {
 	@SubscribeEvent
 	public static void registerModifierSerializers( final RegistryEvent.Register< GlobalLootModifierSerializer< ? > > event ) {
-		event.getRegistry().register( new SmeltingItems.Serializer().setRegistryName( new ResourceLocation( WonderfulEnchantments.MOD_ID, "smelter_enchantment" ) ) );
+		event.getRegistry()
+			.register(
+				new SmeltingItems.Serializer().setRegistryName( new ResourceLocation( WonderfulEnchantments.MOD_ID, "smelter_enchantment" ) ) );
 	}
 
 	private static class SmeltingItems extends LootModifier {
@@ -53,15 +55,22 @@ public class LootModifiers {
 				if( WonderfulEnchantments.RANDOM.nextDouble() <= getSmeltChance( smelterLevel ) ) {
 					output.add( smelt( itemStack, context ) );
 					WonderfulEnchantments.LOGGER.info( "!" );
-					Optional< FurnaceRecipe > recipe = world.getRecipeManager().getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world );
+					Optional< FurnaceRecipe > recipe = world.getRecipeManager()
+						.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world );
 
 					if( recipe.isPresent() ) {
 						BlockPos position = new BlockPos( context.get( LootParameters.field_237457_g_ ) );
-						int experience = ( recipe.get().getExperience() > WonderfulEnchantments.RANDOM.nextFloat() ? 1 : 0 );
+						int experience = ( recipe.get()
+							.getExperience() > WonderfulEnchantments.RANDOM.nextFloat() ? 1 : 0
+						);
 
 						if( experience > 0 )
-							world.addEntity( new ExperienceOrbEntity( world, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D, experience ) );
-						world.spawnParticle( ParticleTypes.FLAME, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D, 1 + WonderfulEnchantments.RANDOM.nextInt( 3 ), 0.125D, 0.125D, 0.125D, 0.03125D );
+							world.addEntity( new ExperienceOrbEntity( world, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
+								experience
+							) );
+						world.spawnParticle( ParticleTypes.FLAME, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
+							1 + WonderfulEnchantments.RANDOM.nextInt( 3 ), 0.125D, 0.125D, 0.125D, 0.03125D
+						);
 					}
 				} else
 					output.add( itemStack );
@@ -71,7 +80,13 @@ public class LootModifiers {
 		}
 
 		protected static ItemStack smelt( ItemStack itemStack, LootContext lootContext ) {
-			return lootContext.getWorld().getRecipeManager().getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), lootContext.getWorld() ).map( FurnaceRecipe::getRecipeOutput ).filter( i->!i.isEmpty() ).map( i->ItemHandlerHelper.copyStackWithSize( i, i.getCount() * i.getCount() ) ).orElse( itemStack );
+			return lootContext.getWorld()
+				.getRecipeManager()
+				.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), lootContext.getWorld() )
+				.map( FurnaceRecipe::getRecipeOutput )
+				.filter( i->!i.isEmpty() )
+				.map( i->ItemHandlerHelper.copyStackWithSize( i, i.getCount() * i.getCount() ) )
+				.orElse( itemStack );
 		}
 
 		protected static double getSmeltChance( int smelterLevel ) {

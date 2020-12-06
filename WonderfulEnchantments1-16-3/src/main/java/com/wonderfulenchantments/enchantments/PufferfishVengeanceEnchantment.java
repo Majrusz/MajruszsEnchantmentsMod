@@ -48,7 +48,8 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public static void onHit( LivingAttackEvent event ) {
-		Entity entitySource = event.getSource().getImmediateSource();
+		Entity entitySource = event.getSource()
+			.getImmediateSource();
 		if( entitySource instanceof LivingEntity ) {
 			LivingEntity attacker = ( LivingEntity )entitySource;
 			int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.PUFFERFISH_VENGEANCE.get(), attacker );
@@ -62,7 +63,10 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 				target.addPotionEffect( new EffectInstance( Effects.POISON, durationInTicks, 3 ) );
 				target.addPotionEffect( new EffectInstance( Effects.NAUSEA, durationInTicks, 0 ) );
 
-				attacker.getEntityWorld().playSound( null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT, SoundCategory.AMBIENT, 1.0F, 1.0F );
+				attacker.getEntityWorld()
+					.playSound( null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT,
+						SoundCategory.AMBIENT, 1.0F, 1.0F
+					);
 			}
 		}
 	}

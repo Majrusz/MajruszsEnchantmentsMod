@@ -1,15 +1,23 @@
 package com.wonderfulenchantments;
 
-import com.wonderfulenchantments.curses.*;
+import com.wonderfulenchantments.curses.FatigueCurse;
+import com.wonderfulenchantments.curses.SlownessCurse;
 import com.wonderfulenchantments.enchantments.*;
-import com.wonderfulenchantments.items.ShieldReplacementItem;
+import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
+import com.wonderfulenchantments.items.HorseArmorItemReplacement;
+import com.wonderfulenchantments.items.ShieldItemReplacement;
+import com.wonderfulenchantments.renderers.HorseRendererReplacement;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,39 +27,71 @@ public class RegistryHandler {
     public static final DeferredRegister< ParticleType< ? > > PARTICLES = DeferredRegister.create( ForgeRegistries.PARTICLE_TYPES, WonderfulEnchantments.MOD_ID );
     public static final DeferredRegister< Item > ITEMS_TO_REPLACE = DeferredRegister.create( ForgeRegistries.ITEMS, "minecraft" );
 
+    // Fishing Rod Enchantments
+    public static final RegistryObject< Enchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", FanaticEnchantment::new );
+
+    // Sword Enchantments
+    public static final RegistryObject< Enchantment > HUMAN_SLAYER = ENCHANTMENTS.register( "human_slayer", HumanSlayerEnchantment::new );
+    public static final RegistryObject< Enchantment > PUFFERFISH_VENGEANCE = ENCHANTMENTS.register( "pufferfish_vengeance", PufferfishVengeanceEnchantment::new );
+    public static final RegistryObject< Enchantment > LEECH = ENCHANTMENTS.register( "leech", LeechEnchantment::new );
+
+    // Armor Enchantments
+    public static final RegistryObject< Enchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment::new );
+    public static final RegistryObject< Enchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment::new );
+    public static final RegistryObject< Enchantment > PHOENIX_DIVE = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new );
+    public static final RegistryObject< Enchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", MagicProtectionEnchantment::new );
+
+    // Shield Enchantments
+    public static final RegistryObject< Enchantment > VITALITY = ENCHANTMENTS.register( "vitality", VitalityEnchantment::new );
+    public static final RegistryObject< Enchantment > IMMORTALITY = ENCHANTMENTS.register( "immortality", ImmortalityEnchantment::new );
+
+    // Tool Enchantments
+    public static final RegistryObject< Enchantment > SMELTER = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new );
+    public static final RegistryObject< Enchantment > GOTTA_MINE_FAST = ENCHANTMENTS.register( "gotta_mine_fast", GottaMineFastEnchantment::new );
+
+    // Horse Armor Enchantments
+    public static final RegistryObject< Enchantment > SWIFTNESS = ENCHANTMENTS.register( "swiftness", SwiftnessEnchantment::new );
+    public static final RegistryObject< Enchantment > HORSE_PROTECTION = ENCHANTMENTS.register( "horse_protection", HorseProtectionEnchantment::new );
+
+    // Curses
+    public static final RegistryObject< Enchantment > SLOWNESS = ENCHANTMENTS.register( "slowness_curse", SlownessCurse::new );
+    public static final RegistryObject< Enchantment > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
+
+    // Particles
+    public static final RegistryObject< BasicParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle", ()->new BasicParticleType( true ) );
+
     public static void init() {
-        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        final IEventBus modEventBus = FMLJavaModLoadingContext.get()
+            .getModEventBus();
 
-        // replacing standard minecraft shield with the new one which could be enchanted
-        ITEMS_TO_REPLACE.register( "shield", ShieldReplacementItem::new );
+        replaceRestStandardMinecraftItems();
+        registerObjects( modEventBus );
+        addEnchantmentTypesToItemGroups();
+        modEventBus.addListener( RegistryHandler::replaceStandardMinecraftHorseArmorLayer );
+    }
 
+    // replacing standard minecraft shield and horse armors with the new ones which could be enchanted
+    private static void replaceRestStandardMinecraftItems() {
+        ITEMS_TO_REPLACE.register( "shield", ShieldItemReplacement::new );
+        ITEMS_TO_REPLACE.register( "leather_horse_armor", ()->new DyeableHorseArmorItemReplacement( 3, "leather" ) );
+        ITEMS_TO_REPLACE.register( "iron_horse_armor", ()->new HorseArmorItemReplacement( 5, "iron" ) );
+        ITEMS_TO_REPLACE.register( "golden_horse_armor", ()->new HorseArmorItemReplacement( 7, "gold" ) );
+        ITEMS_TO_REPLACE.register( "diamond_horse_armor", ()->new HorseArmorItemReplacement( 11, "diamond" ) );
+    }
+
+    private static void registerObjects( final IEventBus modEventBus ) {
         ENCHANTMENTS.register( modEventBus );
         PARTICLES.register( modEventBus );
         ITEMS_TO_REPLACE.register( modEventBus );
-
-        WonderfulEnchantmentHelper.addTypeToItemGroup( WonderfulEnchantmentHelper.SHIELD, ItemGroup.COMBAT );
     }
 
-    // Enchantments
-    public static final RegistryObject< Enchantment >
-        FISHING_FANATIC         = ENCHANTMENTS.register( "fishing_fanatic", FanaticEnchantment::new ),
-        HUMAN_SLAYER            = ENCHANTMENTS.register( "human_slayer", HumanSlayerEnchantment::new ),
-        DODGE                   = ENCHANTMENTS.register( "dodge", DodgeEnchantment::new ),
-        ENLIGHTENMENT           = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment::new ),
-        VITALITY                = ENCHANTMENTS.register( "vitality", VitalityEnchantment::new ),
-        PHOENIX_DIVE            = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new ),
-        PUFFERFISH_VENGEANCE    = ENCHANTMENTS.register( "pufferfish_vengeance", PufferfishVengeanceEnchantment::new ),
-        IMMORTALITY             = ENCHANTMENTS.register( "immortality", ImmortalityEnchantment::new ),
-        SMELTER                 = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new ),
-        GOTTA_MINE_FAST         = ENCHANTMENTS.register( "gotta_mine_fast", GottaMineFastEnchantment::new ),
-        LEECH                   = ENCHANTMENTS.register( "leech", LeechEnchantment::new );
+    private static void addEnchantmentTypesToItemGroups() {
+        WonderfulEnchantmentHelper.addTypeToItemGroup( WonderfulEnchantmentHelper.SHIELD, ItemGroup.COMBAT );
+        WonderfulEnchantmentHelper.addTypeToItemGroup( WonderfulEnchantmentHelper.HORSE_ARMOR, ItemGroup.MISC );
+    }
 
-    // Curses
-    public static final RegistryObject< Enchantment >
-        SLOWNESS                = ENCHANTMENTS.register( "slowness_curse", SlownessCurse::new ),
-        FATIGUE                 = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
-
-    // Particles
-    public static final RegistryObject< BasicParticleType >
-        PHOENIX_PARTICLE        = PARTICLES.register( "phoenix_particle", () -> new BasicParticleType( true ) );
+    private static void replaceStandardMinecraftHorseArmorLayer( final FMLClientSetupEvent event ) {
+        EntityRendererManager rendererManager = Minecraft.getInstance().getRenderManager();
+        rendererManager.register( EntityType.HORSE, new HorseRendererReplacement( rendererManager ) );
+    }
 }
