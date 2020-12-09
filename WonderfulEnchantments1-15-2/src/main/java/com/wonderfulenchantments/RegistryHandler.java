@@ -6,11 +6,7 @@ import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
-import com.wonderfulenchantments.renderers.HorseRendererReplacement;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.BasicParticleType;
@@ -67,7 +63,7 @@ public class RegistryHandler {
 		replaceRestStandardMinecraftItems();
 		registerObjects( modEventBus );
 		addEnchantmentTypesToItemGroups();
-		modEventBus.addListener( RegistryHandler::replaceStandardMinecraftHorseArmorLayer );
+		modEventBus.addListener( RegistryHandler::doClientSetup );
 	}
 
 	// replacing standard minecraft shield and horse armors with the new ones which could be enchanted
@@ -90,8 +86,7 @@ public class RegistryHandler {
 		WonderfulEnchantmentHelper.addTypeToItemGroup( WonderfulEnchantmentHelper.HORSE_ARMOR, ItemGroup.MISC );
 	}
 
-	private static void replaceStandardMinecraftHorseArmorLayer( final FMLClientSetupEvent event ) {
-		EntityRendererManager rendererManager = Minecraft.getInstance().getRenderManager();
-		rendererManager.register( EntityType.HORSE, new HorseRendererReplacement( rendererManager ) );
+	private static void doClientSetup( final FMLClientSetupEvent event ) {
+		RegistryHandlerClient.replaceStandardMinecraftHorseArmorLayer();
 	}
 }
