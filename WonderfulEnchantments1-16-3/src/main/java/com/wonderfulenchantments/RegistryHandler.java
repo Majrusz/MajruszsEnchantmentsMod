@@ -63,7 +63,7 @@ public class RegistryHandler {
         replaceRestStandardMinecraftItems();
         registerObjects( modEventBus );
         addEnchantmentTypesToItemGroups();
-        modEventBus.addListener( RegistryHandler::replaceStandardMinecraftHorseArmorLayer );
+        modEventBus.addListener( RegistryHandler::doClientSetup );
     }
 
     // replacing standard minecraft shield and horse armors with the new ones which could be enchanted
@@ -86,7 +86,7 @@ public class RegistryHandler {
         WonderfulEnchantmentHelper.addTypeToItemGroup( WonderfulEnchantmentHelper.HORSE_ARMOR, ItemGroup.MISC );
     }
 
-    private static void replaceStandardMinecraftHorseArmorLayer( final FMLClientSetupEvent event ) {
+    private static void doClientSetup( final FMLClientSetupEvent event ) {
         RegistryHandlerClient.replaceStandardMinecraftHorseArmorLayer();
     }
 }
