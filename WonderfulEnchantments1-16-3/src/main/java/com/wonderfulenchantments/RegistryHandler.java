@@ -6,11 +6,7 @@ import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
-import com.wonderfulenchantments.renderers.HorseRendererReplacement;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.BasicParticleType;
@@ -91,7 +87,6 @@ public class RegistryHandler {
     }
 
     private static void replaceStandardMinecraftHorseArmorLayer( final FMLClientSetupEvent event ) {
-        EntityRendererManager rendererManager = Minecraft.getInstance().getRenderManager();
-        rendererManager.register( EntityType.HORSE, new HorseRendererReplacement( rendererManager ) );
+        RegistryHandlerClient.replaceStandardMinecraftHorseArmorLayer();
     }
 }
