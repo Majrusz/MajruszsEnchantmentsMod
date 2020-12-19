@@ -1,10 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.AttributeHelper;
+import com.wonderfulenchantments.*;
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.EquipmentSlotTypes;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -20,7 +18,6 @@ public class VitalityEnchantment extends Enchantment {
 	protected static final AttributeHelper attributeHelper = new AttributeHelper( "575cb29a-1ee4-11eb-adc1-0242ac120002", "VitalityBonus",
 		Attributes.MAX_HEALTH, AttributeModifier.Operation.ADDITION
 	);
-	protected static final double healthPerLevel = 2.0D;
 
 	public VitalityEnchantment() {
 		super( Rarity.UNCOMMON, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
@@ -54,6 +51,6 @@ public class VitalityEnchantment extends Enchantment {
 			EquipmentSlotTypes.BOTH_HANDS, ShieldItem.class
 		);
 
-		return sum * healthPerLevel;
+		return sum * Config.VITALITY_BONUS.get();
 	}
 }

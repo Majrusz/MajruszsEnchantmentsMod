@@ -1,10 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.AttributeHelper;
+import com.wonderfulenchantments.*;
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.EquipmentSlotTypes;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -20,7 +18,6 @@ public class SwiftnessEnchantment extends Enchantment {
 	protected static final AttributeHelper attributeHelper = new AttributeHelper( "76c3bea2-7ef1-4c4b-b062-a12355120ee7", "SwiftnessBonus",
 		Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_BASE
 	);
-	protected static final double movementSpeedMultiplierPerLevel = 0.125D;
 
 	public SwiftnessEnchantment() {
 		super( Rarity.RARE, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR );
@@ -53,6 +50,6 @@ public class SwiftnessEnchantment extends Enchantment {
 	protected static double getMovementSpeedMultiplier( HorseEntity horse ) {
 		int swiftnessLevel = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.SWIFTNESS.get(), horse.getArmorInventoryList() );
 
-		return swiftnessLevel * movementSpeedMultiplierPerLevel;
+		return swiftnessLevel * Config.SWIFTNESS_MULTIPLIER.get();
 	}
 }

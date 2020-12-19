@@ -1,10 +1,8 @@
 package com.wonderfulenchantments.curses;
 
-import com.wonderfulenchantments.AttributeHelper;
+import com.wonderfulenchantments.*;
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.EquipmentSlotTypes;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
@@ -21,7 +19,6 @@ public class SlownessCurse extends Enchantment {
 	protected static final AttributeHelper attributeHelper = new AttributeHelper( "760f7b82-76c7-4875-821e-ef0579b881e0", "SlownessCurse",
 		Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL
 	);
-	protected static final float slownessMultiplierPerLevel = 0.125f;
 
 	public SlownessCurse() {
 		super( Rarity.RARE, EnchantmentType.BREAKABLE, EquipmentSlotTypes.ARMOR_AND_HANDS );
@@ -68,6 +65,6 @@ public class SlownessCurse extends Enchantment {
 			EquipmentSlotTypes.BOTH_HANDS, ShieldItem.class
 		);
 
-		return -( ( float )( sum ) * slownessMultiplierPerLevel );
+		return ( float )-( sum * Config.SLOWNESS_MULTIPLIER.get() );
 	}
 }

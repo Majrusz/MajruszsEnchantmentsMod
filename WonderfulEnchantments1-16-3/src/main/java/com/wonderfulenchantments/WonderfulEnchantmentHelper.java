@@ -83,52 +83,52 @@ public class WonderfulEnchantmentHelper {
 		Function< ForgeConfigSpec.BooleanValue, Integer > checkEnchantment = ( value )->( value.get() ? 0 : disableEnchantmentValue );
 
 		if( enchantment instanceof FanaticEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.FISHING_FANATIC );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.FISHING_FANATIC );
 
 		if( enchantment instanceof HumanSlayerEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.HUMAN_SLAYER );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HUMAN_SLAYER );
 
 		if( enchantment instanceof DodgeEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.DODGE );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.DODGE );
 
 		if( enchantment instanceof EnlightenmentEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.ENLIGHTENMENT );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.ENLIGHTENMENT );
 
 		if( enchantment instanceof VitalityEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.VITALITY );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.VITALITY );
 
 		if( enchantment instanceof PhoenixDiveEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.PHOENIX_DIVE );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.PHOENIX_DIVE );
 
 		if( enchantment instanceof PufferfishVengeanceEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.PUFFERFISH_VENGEANCE );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.PUFFERFISH_VENGEANCE );
 
 		if( enchantment instanceof ImmortalityEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.IMMORTALITY );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.IMMORTALITY );
 
 		if( enchantment instanceof SmelterEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.SMELTER );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SMELTER );
 
 		if( enchantment instanceof GottaMineFastEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.GOTTA_MINE_FAST );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.GOTTA_MINE_FAST );
 
 		if( enchantment instanceof LeechEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.LEECH );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.LEECH );
 
 		if( enchantment instanceof MagicProtectionEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.MAGIC_PROTECTION );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.MAGIC_PROTECTION );
 
 		if( enchantment instanceof SwiftnessEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.SWIFTNESS );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SWIFTNESS );
 
 		if( enchantment instanceof HorseProtectionEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Values.HORSE_PROTECTION );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HORSE_PROTECTION );
 
 		if( enchantment instanceof SlownessCurse )
-			return checkEnchantment.apply( ConfigHandler.Values.SLOWNESS );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SLOWNESS );
 
 		if( enchantment instanceof FatigueCurse )
-			return checkEnchantment.apply( ConfigHandler.Values.FATIGUE );
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.FATIGUE );
 
 		return 0;
 	}

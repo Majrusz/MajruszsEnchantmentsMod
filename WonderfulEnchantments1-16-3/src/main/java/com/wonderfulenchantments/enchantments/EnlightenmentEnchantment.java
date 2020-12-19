@@ -1,9 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.EquipmentSlotTypes;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import com.wonderfulenchantments.WonderfulEnchantments;
+import com.wonderfulenchantments.*;
+import com.wonderfulenchantments.ConfigHandler.Config;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.EntityPredicate;
@@ -18,8 +16,6 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 
 @Mod.EventBusSubscriber
 public class EnlightenmentEnchantment extends Enchantment {
-	protected static final double experienceMultiplierBonusPerLevel = 0.25D;
-
 	public EnlightenmentEnchantment() {
 		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR );
 	}
@@ -46,7 +42,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 		);
 
 		if( enlightenmentSum > 0 ) {
-			double bonusRatio = experienceMultiplierBonusPerLevel * ( double )enlightenmentSum;
+			double bonusRatio = Config.EXPERIENCE_MULTIPLIER.get() * ( double )enlightenmentSum;
 			double randomBonus = bonusRatio * WonderfulEnchantments.RANDOM.nextDouble();
 			int bonusExp = ( int )( Math.round( randomBonus * ( double )event.getOrb()
 				.getXpValue() )

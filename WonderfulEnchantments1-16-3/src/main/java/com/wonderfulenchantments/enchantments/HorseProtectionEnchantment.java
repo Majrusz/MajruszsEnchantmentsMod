@@ -1,10 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.AttributeHelper;
+import com.wonderfulenchantments.*;
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.EquipmentSlotTypes;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -20,7 +18,6 @@ public class HorseProtectionEnchantment extends Enchantment {
 	protected static final AttributeHelper attributeHelper = new AttributeHelper( "f7f6f46b-23a1-4d3b-8e83-3160c6390f9a", "HorseProtectionBonus",
 		Attributes.ARMOR, AttributeModifier.Operation.ADDITION
 	);
-	protected static final double armorBonusPerLevel = 2;
 
 	public HorseProtectionEnchantment() {
 		super( Rarity.UNCOMMON, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR );
@@ -55,6 +52,6 @@ public class HorseProtectionEnchantment extends Enchantment {
 			horse.getArmorInventoryList()
 		);
 
-		return protectionLevel * armorBonusPerLevel;
+		return protectionLevel * Config.HORSE_ARMOR_BONUS.get();
 	}
 }

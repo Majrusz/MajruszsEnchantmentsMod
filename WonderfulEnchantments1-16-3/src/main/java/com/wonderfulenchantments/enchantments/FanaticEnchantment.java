@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -31,7 +32,7 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 
 @Mod.EventBusSubscriber
 public class FanaticEnchantment extends Enchantment {
-	protected static final double extraCatchChance = 0.33334D, levelIncreaseChanceMultiplier = 0.01D;
+	protected static final double levelIncreaseChanceMultiplier = 0.01D;
 
 	public FanaticEnchantment() {
 		super( Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
@@ -92,8 +93,8 @@ public class FanaticEnchantment extends Enchantment {
 			.getString() );
 
 		int extraRewardsCounter = 0;
-		for( int i = 0; i < fanaticLevel && ConfigHandler.Values.FISHING_FANATIC.get(); i++ )
-			if( WonderfulEnchantments.RANDOM.nextDouble() < extraCatchChance )
+		for( int i = 0; i < fanaticLevel && ConfigHandler.Config.Enchantability.FISHING_FANATIC.get(); i++ )
+			if( WonderfulEnchantments.RANDOM.nextDouble() < Config.FISHING_EXTRA_DROP_CHANCE.get() )
 				for( ItemStack extraReward : lootTable.generate( lootContext ) ) {
 					spawnReward( extraReward, player, world, event.getHookEntity() );
 

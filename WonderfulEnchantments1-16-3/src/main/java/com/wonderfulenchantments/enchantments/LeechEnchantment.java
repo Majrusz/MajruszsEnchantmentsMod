@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
@@ -27,8 +28,6 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 
 @Mod.EventBusSubscriber
 public class LeechEnchantment extends Enchantment {
-	protected static final double leechChance = 0.25D;
-
 	public LeechEnchantment() {
 		super( Rarity.UNCOMMON, EnchantmentType.WEAPON, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
 	}
@@ -58,7 +57,7 @@ public class LeechEnchantment extends Enchantment {
 		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
 			return;
 
-		if( WonderfulEnchantments.RANDOM.nextDouble() >= leechChance )
+		if( WonderfulEnchantments.RANDOM.nextDouble() >= Config.LEECH_CHANCE.get() )
 			return;
 
 		LivingEntity attacker = ( LivingEntity )event.getSource()

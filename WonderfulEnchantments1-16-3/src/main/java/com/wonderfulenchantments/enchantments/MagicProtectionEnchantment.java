@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.EquipmentSlotTypes;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.util.DamageSource;
@@ -14,7 +15,7 @@ public class MagicProtectionEnchantment extends ProtectionEnchantment {
 		if( source.canHarmInCreative() )
 			return 0;
 		else if( source.isMagicDamage() )
-			return level * 2;
+			return level * Config.MAGIC_PROTECTION_BONUS.get();
 
 		return 0;
 	}
