@@ -1,4 +1,4 @@
-[Mod logo](logo.png?raw=true)
+[Mod logo](https://github.com/Majrusz/WonderfulEnchantmentsMod/blob/main/logo.png?raw=true)
 
 ## What is Wonderful Enchantments?
 **Wonderful Enchantments** is a Minecraft Forge modification which adds to the
