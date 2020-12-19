@@ -38,9 +38,11 @@ public class AttributeHelper {
 	public AttributeHelper apply( LivingEntity livingEntity ) {
 		ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute( this.attribute );
 
-		attributeInstance.removeModifier( this.uuid );
-		AttributeModifier modifier = new AttributeModifier( this.uuid, this.name, this.value, this.operation );
-		attributeInstance.func_233767_b_( modifier );
+		if( attributeInstance != null ) {
+			attributeInstance.removeModifier( this.uuid );
+			AttributeModifier modifier = new AttributeModifier( this.uuid, this.name, this.value, this.operation );
+			attributeInstance.func_233767_b_( modifier );
+		}
 
 		return this;
 	}
