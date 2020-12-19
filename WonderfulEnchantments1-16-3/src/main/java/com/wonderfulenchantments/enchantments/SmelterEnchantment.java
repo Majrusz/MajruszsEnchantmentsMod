@@ -16,17 +16,17 @@ public class SmelterEnchantment extends Enchantment {
 
 	@Override
 	public int getMaxLevel() {
-		return 3;
+		return 1;
 	}
 
 	@Override
 	public int getMinEnchantability( int level ) {
-		return 8 * level + increaseLevelIfEnchantmentIsDisabled( this );
+		return 15 * level + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
 	@Override
 	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 10;
+		return this.getMinEnchantability( level ) + 30;
 	}
 
 	@Override

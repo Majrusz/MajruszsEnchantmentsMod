@@ -47,33 +47,29 @@ public class LootModifiers {
 			if( tool == null )
 				return generatedLoot;
 
-			int smelterLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.SMELTER.get(), tool );
 			ServerWorld world = context.getWorld();
 
 			ArrayList< ItemStack > output = new ArrayList<>();
 			for( ItemStack itemStack : generatedLoot ) {
-				if( WonderfulEnchantments.RANDOM.nextDouble() <= getSmeltChance( smelterLevel ) ) {
-					output.add( smelt( itemStack, context ) );
-					WonderfulEnchantments.LOGGER.info( "!" );
-					Optional< FurnaceRecipe > recipe = world.getRecipeManager()
-						.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world );
+				output.add( smelt( itemStack, context ) );
 
-					if( recipe.isPresent() ) {
-						BlockPos position = new BlockPos( context.get( LootParameters.field_237457_g_ ) );
-						int experience = ( recipe.get()
-							.getExperience() > WonderfulEnchantments.RANDOM.nextFloat() ? 1 : 0
-						);
+				Optional< FurnaceRecipe > recipe = world.getRecipeManager()
+					.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world );
 
-						if( experience > 0 )
-							world.addEntity( new ExperienceOrbEntity( world, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
-								experience
-							) );
-						world.spawnParticle( ParticleTypes.FLAME, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
-							1 + WonderfulEnchantments.RANDOM.nextInt( 3 ), 0.125D, 0.125D, 0.125D, 0.03125D
-						);
-					}
-				} else
-					output.add( itemStack );
+				if( recipe.isPresent() ) {
+					BlockPos position = new BlockPos( context.get( LootParameters.field_237457_g_ ) );
+					int experience = ( recipe.get()
+						.getExperience() > WonderfulEnchantments.RANDOM.nextFloat() ? 1 : 0
+					);
+
+					if( experience > 0 )
+						world.addEntity( new ExperienceOrbEntity( world, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
+							experience
+						) );
+					world.spawnParticle( ParticleTypes.FLAME, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
+						2 + WonderfulEnchantments.RANDOM.nextInt( 4 ), 0.125D, 0.125D, 0.125D, 0.03125D
+					);
+				}
 			}
 
 			return output;
@@ -87,19 +83,6 @@ public class LootModifiers {
 				.filter( i->!i.isEmpty() )
 				.map( i->ItemHandlerHelper.copyStackWithSize( i, i.getCount() * i.getCount() ) )
 				.orElse( itemStack );
-		}
-
-		protected static double getSmeltChance( int smelterLevel ) {
-			switch( smelterLevel ) {
-				case 1:
-					return 0.25D;
-				case 2:
-					return 0.5D;
-				case 3:
-					return 1.0D;
-				default:
-					return 0.0D;
-			}
 		}
 
 		private static class Serializer extends GlobalLootModifierSerializer< SmeltingItems > {
