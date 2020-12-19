@@ -1,3 +1,5 @@
+[Mod logo](https://i.ibb.co/2SkZ7Rk/wonderful-enchantments-full.png)
+
 ## What is Wonderful Enchantments?
 **Wonderful Enchantments** is a Minecraft Forge modification which adds to the
 game plenty of new and unique enchantments.
@@ -8,5 +10,9 @@ game plenty of new and unique enchantments.
 
 ## Current Mod Releases
 - [v0.8.2 for Minecraft 1.16.3/1.16.4](WonderfulEnchantments1-16-3)
-- [v0.8.1 for Minecraft 1.15.2 *(not supported anymore)*](WonderfulEnchantments1-15-2)
-- [v0.6.0 for Minecraft 1.12.2 *(not supported anymore)*](WonderfulEnchantments1-12-2)
+- [v0.8.1 for Minecraft 1.15.2](WonderfulEnchantments1-15-2) *(not supported anymore)*
+- [v0.6.0 for Minecraft 1.12.2](WonderfulEnchantments1-12-2) *(not supported anymore)*
+
+## Technologies
+- Java 8
+- [Minecraft Forge API](https://github.com/MinecraftForge/MinecraftForge)
