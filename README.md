@@ -8,8 +8,8 @@ game plenty of new and unique enchantments.
 - [Curse Forge](https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments)
 - [Planet Minecraft](https://www.planetminecraft.com/mod/wonderful-enchantments/)
 
-## Current Mod Releases
-- [v0.8.2 for Minecraft 1.16.3/1.16.4](WonderfulEnchantments1-16-3)
+## Current Mod Releases (Source Code)
+- [v0.8.3 for Minecraft 1.16.3/1.16.4](WonderfulEnchantments1-16-3)
 - [v0.8.1 for Minecraft 1.15.2](WonderfulEnchantments1-15-2) *(not supported anymore)*
 - [v0.6.0 for Minecraft 1.12.2](WonderfulEnchantments1-12-2) *(not supported anymore)*
 
