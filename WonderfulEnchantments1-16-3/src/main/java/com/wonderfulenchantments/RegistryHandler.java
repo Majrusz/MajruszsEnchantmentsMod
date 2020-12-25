@@ -3,6 +3,7 @@ package com.wonderfulenchantments;
 import com.wonderfulenchantments.curses.FatigueCurse;
 import com.wonderfulenchantments.curses.IncompatibilityCurse;
 import com.wonderfulenchantments.curses.SlownessCurse;
+import com.wonderfulenchantments.curses.VampirismCurse;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
@@ -56,6 +57,7 @@ public class RegistryHandler {
     public static final RegistryObject< Enchantment > SLOWNESS = ENCHANTMENTS.register( "slowness_curse", SlownessCurse::new );
     public static final RegistryObject< Enchantment > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
     public static final RegistryObject< Enchantment > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse::new );
+    public static final RegistryObject< Enchantment > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse::new );
 
     // Particles
     public static final RegistryObject< BasicParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle", ()->new BasicParticleType( true ) );

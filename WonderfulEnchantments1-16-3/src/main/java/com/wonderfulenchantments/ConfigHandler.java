@@ -56,6 +56,7 @@ public class ConfigHandler {
 
 		BUILDER.push( "Durations" );
 		Config.PUFFERFISH_DURATION = createConfigSpecForDouble( "Pufferfish debuffs duration (in seconds) per enchantment level. (Vengeance of Pufferfish)", "pufferfish_duration", 2.0, 1.0, 10 );
+		Config.VAMPIRISM_DURATION = createConfigSpecForInteger( "Vampirism debuffs duration (in seconds) per enchantment level. (Curse of Vampirism)", "vampirism_duration", 30, 10, 300 );
 		BUILDER.pop();
 
 		CONFIG_SPEC = BUILDER.build();
@@ -98,6 +99,7 @@ public class ConfigHandler {
 
 		// Durations
 		public static ForgeConfigSpec.DoubleValue PUFFERFISH_DURATION;
+		public static ForgeConfigSpec.IntValue VAMPIRISM_DURATION;
 	}
 
 	private static ForgeConfigSpec.IntValue createConfigSpecForInteger( String comment, String name, int defaultValue, int min, int max ) {
