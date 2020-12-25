@@ -2,7 +2,6 @@ package com.wonderfulenchantments.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.SilkTouchEnchantment;
 import net.minecraft.inventory.EquipmentSlotType;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;

@@ -1,7 +1,6 @@
 package com.wonderfulenchantments;
 
 import com.google.gson.JsonObject;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,8 +34,10 @@ public class LootModifiers {
 	public static void registerModifierSerializers( final RegistryEvent.Register< GlobalLootModifierSerializer< ? > > event ) {
 		IForgeRegistry< GlobalLootModifierSerializer< ? > > registry = event.getRegistry();
 
-		registry.register( new SmeltingItems.Serializer().setRegistryName( new ResourceLocation( WonderfulEnchantments.MOD_ID, "smelter_enchantment" ) ) );
-		registry.register( new AddItemsDirectlyToInventory.Serializer().setRegistryName( new ResourceLocation( WonderfulEnchantments.MOD_ID, "telekinesis_enchantment" ) ) );
+		registry.register(
+			new SmeltingItems.Serializer().setRegistryName( new ResourceLocation( WonderfulEnchantments.MOD_ID, "smelter_enchantment" ) ) );
+		registry.register( new AddItemsDirectlyToInventory.Serializer().setRegistryName(
+			new ResourceLocation( WonderfulEnchantments.MOD_ID, "telekinesis_enchantment" ) ) );
 	}
 
 	private static class SmeltingItems extends LootModifier {
@@ -67,9 +68,8 @@ public class LootModifiers {
 					);
 
 					if( experience > 0 )
-						world.addEntity( new ExperienceOrbEntity( world, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
-							experience
-						) );
+						world.addEntity(
+							new ExperienceOrbEntity( world, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D, experience ) );
 					world.spawnParticle( ParticleTypes.FLAME, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
 						2 + WonderfulEnchantments.RANDOM.nextInt( 4 ), 0.125D, 0.125D, 0.125D, 0.03125D
 					);
