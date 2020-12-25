@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
-@Mod.EventBusSubscriber
 public class SmelterEnchantment extends Enchantment {
 	public SmelterEnchantment() {
 		super( Rarity.UNCOMMON, EnchantmentType.DIGGER, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
