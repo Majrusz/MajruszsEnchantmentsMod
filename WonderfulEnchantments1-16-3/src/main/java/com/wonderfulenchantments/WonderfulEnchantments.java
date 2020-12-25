@@ -21,7 +21,7 @@ public class WonderfulEnchantments {
     public static final String
         MOD_ID      = "wonderful_enchantments",
         NAME        = "Wonderful Enchantments",
-        VERSION     = "0.8.0";
+        VERSION     = "0.9.0";
 
     public static final Logger LOGGER = LogManager.getLogger();
     public static final Random RANDOM = new Random();

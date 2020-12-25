@@ -1,13 +1,67 @@
 {
-	"enchantment.wonderful_enchantments.fishing_fanatic": "хороший рыболов",
-	"wonderful_enchantments.fanatic_level_up": "Вы стали хорошим рыболовом!",
-	"wonderful_enchantments.true_level": "Истинный",
-	"enchantment.wonderful_enchantments.human_slayer": "Месть человечеству",
-	"enchantment.wonderful_enchantments.dodge": "Уклонный манёвр",
-	"enchantment.wonderful_enchantments.enlightenment": "просветлённость",
-	"enchantment.wonderful_enchantments.vitality": "живучесть",
-	"enchantment.wonderful_enchantments.phoenix_dive": "Падение Феникса",
-	"enchantment.wonderful_enchantments.pufferfish_vengeance": "Зло Иглобрюха",
-	"enchantment.wonderful_enchantments.immortality": "Бессмертие",
-	"enchantment.wonderful_enchantments.slowness_curse": "Проклятие медлительности"
+  "enchantment.wonderful_enchantments.fishing_fanatic": "Фанат рыбалки",
+  "enchantment.wonderful_enchantments.fishing_fanatic.desc": "Дает шанс поймать дополнительные предметы с рыбалки. Каждый дополнительный предмет дает вам дополнительный опыт и быстрее ломает вашу удочку.",
+  "enchantment.wonderful_enchantments.fishing_fanatic.description": "Дает шанс поймать дополнительные предметы с рыбалки.Каждый дополнительный предмет дает вам дополнительный опыт и быстрее ломает вашу удочку.",
+  "wonderful_enchantments.fanatic_level_up": "Вы стали большим фанатом рыбалки!",
+  "wonderful_enchantments.true_level": "Истинный",
+
+  "enchantment.wonderful_enchantments.human_slayer": "Чары против людей",
+  "enchantment.wonderful_enchantments.human_slayer.desc": "Увеличивает урон против жителей деревни, грабителей, ведьм и других игроков.",
+  "enchantment.wonderful_enchantments.human_slayer.description": "Увеличивает урон против жителей деревни, грабителей, ведьм и других игроков.",
+
+  "enchantment.wonderful_enchantments.dodge": "Уклонение",
+  "enchantment.wonderful_enchantments.dodge.desc": "Дает шанс полностью избежать любого вида повреждений, но каждое успешное уклонение расходует запас прочности.",
+  "enchantment.wonderful_enchantments.dodge.description": "Дает шанс полностью избежать любого вида повреждений, но каждое успешное уклонение расходует запас прочности.",
+
+  "enchantment.wonderful_enchantments.enlightenment": "Озарение",
+  "enchantment.wonderful_enchantments.enlightenment.desc": "Увеличивает опыт, получаемый из любого источника. Бонус увеличивается с каждым предметом брони, на котором есть эти чары! Также повышает уровень зачарования на столе зачарования",
+  "enchantment.wonderful_enchantments.enlightenment.description": "Увеличивает опыт, получаемый из любого источника. Бонус увеличивается с каждым предметом брони, на котором есть эти чары! Также повышает уровень зачарования на столе зачарования",
+
+  "enchantment.wonderful_enchantments.vitality": "Живучесть",
+  "enchantment.wonderful_enchantments.vitality.desc": "Увеличивает здоровье игрока.",
+  "enchantment.wonderful_enchantments.vitality.description": "Увеличивает здоровье игрока.",
+
+  "enchantment.wonderful_enchantments.phoenix_dive": "Приземление феникса",
+  "enchantment.wonderful_enchantments.phoenix_dive.desc": "Падение с высоты вызывает выброс волны огня, которая наносит урон и поджигает ближайших врагов. Кроме того, пока вы кродетесь (def. SHIFT) вы прыгнете выше!",
+  "enchantment.wonderful_enchantments.phoenix_dive.description": "Падение с высоты вызывает выброс волны огня, которая наносит урон и поджигает ближайших врагов. Кроме того, пока вы кродетесь (def. SHIFT) вы прыгнете выше!",
+
+  "enchantment.wonderful_enchantments.pufferfish_vengeance": "Месть иглобрюха",
+  "enchantment.wonderful_enchantments.pufferfish_vengeance.desc": "Каждая атака накладывает на цель следующие дебаффы: Яд IV , Голод III , Тошнота II .",
+  "enchantment.wonderful_enchantments.pufferfish_vengeance.description": "Каждая атака накладывает на цель следующие дебаффы: Яд IV , Голод III , Тошнота II .",
+
+  "enchantment.wonderful_enchantments.immortality": "Бессмертие",
+  "enchantment.wonderful_enchantments.immortality.desc": "Удерживая щит с этим зачарованием, вы обманете смерть, но щит будет сломан",
+  "enchantment.wonderful_enchantments.immortality.description": "Удерживая щит с этим зачарованием, вы обманете смерть, но щит будет сломан",
+
+  "enchantment.wonderful_enchantments.smelter": "Плавильщик",
+  "enchantment.wonderful_enchantments.smelter.desc": "Дает шанс расплавить блок при разрушении.(100% на уровне 3)",
+  "enchantment.wonderful_enchantments.smelter.description": "Дает шанс расплавить блок при разрушении.(100% на уровне 3)",
+
+  "enchantment.wonderful_enchantments.gotta_mine_fast": "Нужно копать быстрее!",
+  "enchantment.wonderful_enchantments.gotta_mine_fast.desc": "Чем дольше вы удерживаете левую кнопку мыши, тем выше скорость копания. (до x4 через несколько минут!)",
+  "enchantment.wonderful_enchantments.gotta_mine_fast.description": "Чем дольше вы удерживаете левую кнопку мыши, тем выше скорость копания. (до x4 через несколько минут!)",
+
+  "enchantment.wonderful_enchantments.leech": "Пиявка",
+  "enchantment.wonderful_enchantments.leech.desc": "У каждой атаки есть шанс украсть случайный положительный эффект или половину сердца у врага.",
+  "enchantment.wonderful_enchantments.leech.description": "У каждой атаки есть шанс украсть случайный положительный эффект или половину сердца у врага.",
+
+  "enchantment.wonderful_enchantments.magic_protection": "Защита от магии",
+  "enchantment.wonderful_enchantments.magic_protection.desc": "Защищает от таких магических атак, как челюсти вызывателя, луч стража и зелье мгновенного урона.",
+  "enchantment.wonderful_enchantments.magic_protection.description": "Защищает от таких магических атак, как челюсти вызывателя, луч стража и зелье мгновенного урона.",
+
+  "enchantment.wonderful_enchantments.swiftness": "Стремительность",
+  "enchantment.wonderful_enchantments.swiftness.desc": "Увеличивает скорость передвижения лошади.",
+  "enchantment.wonderful_enchantments.swiftness.description": "Увеличивает скорость передвижения лошади.",
+
+  "enchantment.wonderful_enchantments.horse_protection": "Защита лошади",
+  "enchantment.wonderful_enchantments.horse_protection.desc": "Уменьшает количество повреждений, получаемых лошадью.",
+  "enchantment.wonderful_enchantments.horse_protection.description": "Уменьшает количество повреждений, получаемых лошадью.",
+
+  "enchantment.wonderful_enchantments.slowness_curse": "Проклятие медлительности",
+  "enchantment.wonderful_enchantments.slowness_curse.desc": "Уменьшает скорость передвижения игрока.",
+  "enchantment.wonderful_enchantments.slowness_curse.description": "Уменьшает скорость передвижения игрока.",
+
+  "enchantment.wonderful_enchantments.fatigue_curse": "Проклятие усталости",
+  "enchantment.wonderful_enchantments.fatigue_curse.desc": "Уменьшает скорость добычи блоков.",
+  "enchantment.wonderful_enchantments.fatigue_curse.description": "Уменьшает скорость добычи блоков."
 }

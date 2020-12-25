@@ -109,7 +109,8 @@ public class FanaticEnchantment extends Enchantment {
 					extraRewardsCounter++;
 				}
 
-		if( tryIncreaseFishingFanaticLevel( player ) )
+		boolean isRaining = ( world instanceof ServerWorld && ( ( ServerWorld )world ).isRaining() );
+		if( tryIncreaseFishingFanaticLevel( player, isRaining ) )
 			player.sendStatusMessage( new StringTextComponent(
 					TextFormatting.BOLD + new TranslationTextComponent( "wonderful_enchantments.fanatic_level_up" ).getUnformattedComponentText() ),
 				true
@@ -157,11 +158,14 @@ public class FanaticEnchantment extends Enchantment {
 	}
 
 
-	protected static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player ) {
+	protected static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player, boolean isRaining ) {
 		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FISHING_FANATIC.get(), player );
 		double increaseChance = ( RegistryHandler.FISHING_FANATIC.get()
 			.getMaxLevel() - enchantmentLevel
 		) * levelIncreaseChanceMultiplier;
+
+		if( isRaining )
+			increaseChance *= 2.0D;
 
 		if( WonderfulEnchantments.RANDOM.nextDouble() < increaseChance ) {
 			ItemStack fishingRod = player.getHeldItemMainhand();

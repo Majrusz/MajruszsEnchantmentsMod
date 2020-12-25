@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
@@ -82,7 +83,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 				for( Entity entity : entities )
 					if( entity instanceof LivingEntity ) {
 						LivingEntity target = ( LivingEntity )entity;
-						target.setFire( WonderfulEnchantmentHelper.secondsToTicks( 2.0D * enchantmentLevel ) );
+						target.setFire( 2 * enchantmentLevel );
 						target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
 						target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * distance ) );
 					}
@@ -135,7 +136,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 			if( player.isCrouching() && enchantmentLevel > 0 ) {
 				double angleInRadians = Math.toRadians( player.rotationYaw + 90.0D );
-				double factor = ( enchantmentLevel + 1 ) * 0.33334D;
+				double factor = ( enchantmentLevel + 1 ) * Config.PHOENIX_JUMP_MULTIPLIER.get();
 				player.setMotion( player.getMotion()
 					.mul( new Vector3d( 0.0D, 1.0D + factor, 0.0D ) )
 					.add( factor * Math.cos( angleInRadians ), 0.0D, factor * Math.sin( angleInRadians ) ) );

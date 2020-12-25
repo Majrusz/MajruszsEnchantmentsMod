@@ -2,6 +2,7 @@ package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
+import com.wonderfulenchantments.ConfigHandler.Config;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
@@ -23,8 +24,6 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 
 @Mod.EventBusSubscriber
 public class HumanSlayerEnchantment extends DamageEnchantment {
-	protected static final double damageBonusPerLevel = 2.5D;
-
 	public HumanSlayerEnchantment() {
 		super( Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND );
 	}
@@ -52,7 +51,7 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 		LivingEntity attacker = ( LivingEntity )event.getSource()
 			.getImmediateSource();
 		LivingEntity target = event.getEntityLiving();
-		float extraDamage = ( float )Math.floor( damageBonusPerLevel * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
+		float extraDamage = ( float )Math.floor( Config.HUMANITY_DAMAGE_BONUS.get() * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
 
 		if( extraDamage > 0.0F && isHuman( target ) ) {
 			( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ),

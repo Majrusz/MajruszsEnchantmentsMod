@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.curses;
 
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.EfficiencyEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -57,15 +58,6 @@ public class FatigueCurse extends Enchantment {
 	}
 
 	protected static float getMiningMultiplier( int fatigueLevel ) {
-		switch( fatigueLevel ) {
-			case 1:
-				return 0.7f;
-			case 2:
-				return 0.49f;
-			case 3:
-				return 0.343f;
-			default:
-				return ( float )Math.pow( 0.7f, fatigueLevel );
-		}
+		return ( float )Math.pow( Config.FATIGUE_MULTIPLIER.get(), fatigueLevel );
 	}
 }

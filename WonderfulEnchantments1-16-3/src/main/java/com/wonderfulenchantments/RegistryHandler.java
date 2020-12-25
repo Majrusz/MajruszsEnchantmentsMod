@@ -1,16 +1,14 @@
 package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.curses.FatigueCurse;
+import com.wonderfulenchantments.curses.IncompatibilityCurse;
 import com.wonderfulenchantments.curses.SlownessCurse;
+import com.wonderfulenchantments.curses.VampirismCurse;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
-import com.wonderfulenchantments.renderers.HorseRendererReplacement;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.BasicParticleType;
@@ -48,14 +46,18 @@ public class RegistryHandler {
     // Tool Enchantments
     public static final RegistryObject< Enchantment > SMELTER = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new );
     public static final RegistryObject< Enchantment > GOTTA_MINE_FAST = ENCHANTMENTS.register( "gotta_mine_fast", GottaMineFastEnchantment::new );
+    public static final RegistryObject< Enchantment > TELEKINESIS = ENCHANTMENTS.register( "telekinesis", TelekinesisEnchantment::new );
 
     // Horse Armor Enchantments
     public static final RegistryObject< Enchantment > SWIFTNESS = ENCHANTMENTS.register( "swiftness", SwiftnessEnchantment::new );
     public static final RegistryObject< Enchantment > HORSE_PROTECTION = ENCHANTMENTS.register( "horse_protection", HorseProtectionEnchantment::new );
+    public static final RegistryObject< Enchantment > HORSE_FROST_WALKER = ENCHANTMENTS.register( "horse_frost_walker", HorseFrostWalkerEnchantment::new );
 
     // Curses
     public static final RegistryObject< Enchantment > SLOWNESS = ENCHANTMENTS.register( "slowness_curse", SlownessCurse::new );
     public static final RegistryObject< Enchantment > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
+    public static final RegistryObject< Enchantment > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse::new );
+    public static final RegistryObject< Enchantment > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse::new );
 
     // Particles
     public static final RegistryObject< BasicParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle", ()->new BasicParticleType( true ) );
@@ -67,7 +69,7 @@ public class RegistryHandler {
         replaceRestStandardMinecraftItems();
         registerObjects( modEventBus );
         addEnchantmentTypesToItemGroups();
-        modEventBus.addListener( RegistryHandler::replaceStandardMinecraftHorseArmorLayer );
+        modEventBus.addListener( RegistryHandler::doClientSetup );
     }
 
     // replacing standard minecraft shield and horse armors with the new ones which could be enchanted
@@ -90,8 +92,7 @@ public class RegistryHandler {
         WonderfulEnchantmentHelper.addTypeToItemGroup( WonderfulEnchantmentHelper.HORSE_ARMOR, ItemGroup.MISC );
     }
 
-    private static void replaceStandardMinecraftHorseArmorLayer( final FMLClientSetupEvent event ) {
-        EntityRendererManager rendererManager = Minecraft.getInstance().getRenderManager();
-        rendererManager.register( EntityType.HORSE, new HorseRendererReplacement( rendererManager ) );
+    private static void doClientSetup( final FMLClientSetupEvent event ) {
+        RegistryHandlerClient.replaceStandardMinecraftHorseArmorLayer();
     }
 }

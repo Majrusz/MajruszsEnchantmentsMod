@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -57,7 +58,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 			if( enchantmentLevel > 0 ) {
 				LivingEntity target = event.getEntityLiving();
 
-				int durationInTicks = WonderfulEnchantmentHelper.secondsToTicks( 2 * enchantmentLevel + 1 );
+				int durationInTicks = WonderfulEnchantmentHelper.secondsToTicks( 2 * Config.PUFFERFISH_DURATION.get() + 1 );
 
 				target.addPotionEffect( new EffectInstance( Effects.HUNGER, durationInTicks, 2 ) );
 				target.addPotionEffect( new EffectInstance( Effects.POISON, durationInTicks, 3 ) );

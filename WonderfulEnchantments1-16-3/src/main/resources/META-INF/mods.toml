@@ -2,7 +2,7 @@ modLoader="javafml"
 
 loaderVersion="[34,)"
 
-license="All rights reserved"
+license="MIT License"
 
 issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
 
@@ -10,7 +10,7 @@ issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantm
 
 modId="wonderful_enchantments"
 
-version="1.16.3-0.8.0"
+version="1.16.3-0.9.0"
 
 displayName="Wonderful Enchantments"
 
@@ -20,7 +20,7 @@ displayURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
 
 logoFile="logo.png"
 
-credits="Thanks for all your suport!"
+credits="Thanks for all your support!"
 
 authors="Majrusz"
 

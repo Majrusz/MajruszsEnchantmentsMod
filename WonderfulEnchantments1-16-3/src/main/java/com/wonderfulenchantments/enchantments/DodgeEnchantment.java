@@ -1,10 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.AttributeHelper;
+import com.wonderfulenchantments.*;
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -35,7 +33,6 @@ public class DodgeEnchantment extends Enchantment {
 		Attributes.KNOCKBACK_RESISTANCE, AttributeModifier.Operation.ADDITION
 	);
 	protected static HashMap< Integer, Integer > immunitiesLeft = new HashMap<>(); // holding pair (entityID, ticks left)
-	protected static final double dodgeChancePerLevel = 0.125D;
 
 	public DodgeEnchantment() {
 		super( Rarity.RARE, EnchantmentType.ARMOR_LEGS, new EquipmentSlotType[]{ EquipmentSlotType.LEGS } );
@@ -63,7 +60,7 @@ public class DodgeEnchantment extends Enchantment {
 		int dodgeLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.DODGE.get(), pants );
 
 		if( dodgeLevel > 0 ) {
-			if( !( WonderfulEnchantments.RANDOM.nextDouble() < ( double )dodgeLevel * dodgeChancePerLevel ) )
+			if( !( WonderfulEnchantments.RANDOM.nextDouble() < ( double )dodgeLevel * Config.DODGE_CHANCE.get() ) )
 				return;
 
 			spawnParticlesAndPlaySounds( livingEntity );
