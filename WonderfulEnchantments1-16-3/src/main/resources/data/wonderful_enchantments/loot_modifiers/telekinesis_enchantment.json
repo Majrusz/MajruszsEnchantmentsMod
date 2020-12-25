@@ -1,0 +1,18 @@
+{
+  "type": "wonderful_enchantments:telekinesis_enchantment",
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "enchantments": [
+          {
+            "enchantment": "wonderful_enchantments:telekinesis",
+            "levels": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

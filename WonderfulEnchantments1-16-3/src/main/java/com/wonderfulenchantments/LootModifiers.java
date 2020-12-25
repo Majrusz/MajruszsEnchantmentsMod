@@ -2,7 +2,9 @@ package com.wonderfulenchantments;
 
 import com.google.gson.JsonObject;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
@@ -20,6 +22,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -30,9 +33,10 @@ import java.util.Optional;
 public class LootModifiers {
 	@SubscribeEvent
 	public static void registerModifierSerializers( final RegistryEvent.Register< GlobalLootModifierSerializer< ? > > event ) {
-		event.getRegistry()
-			.register(
-				new SmeltingItems.Serializer().setRegistryName( new ResourceLocation( WonderfulEnchantments.MOD_ID, "smelter_enchantment" ) ) );
+		IForgeRegistry< GlobalLootModifierSerializer< ? > > registry = event.getRegistry();
+
+		registry.register( new SmeltingItems.Serializer().setRegistryName( new ResourceLocation( WonderfulEnchantments.MOD_ID, "smelter_enchantment" ) ) );
+		registry.register( new AddItemsDirectlyToInventory.Serializer().setRegistryName( new ResourceLocation( WonderfulEnchantments.MOD_ID, "telekinesis_enchantment" ) ) );
 	}
 
 	private static class SmeltingItems extends LootModifier {
@@ -93,6 +97,47 @@ public class LootModifiers {
 
 			@Override
 			public JsonObject write( SmeltingItems instance ) {
+				return null;
+			}
+		}
+	}
+
+	private static class AddItemsDirectlyToInventory extends LootModifier {
+		public AddItemsDirectlyToInventory( ILootCondition[] conditions ) {
+			super( conditions );
+		}
+
+		@Nonnull
+		@Override
+		public List< ItemStack > doApply( List< ItemStack > generatedLoot, LootContext context ) {
+			ItemStack tool = context.get( LootParameters.TOOL );
+			if( tool == null )
+				return generatedLoot;
+
+			Entity entity = context.get( LootParameters.THIS_ENTITY );
+			if( !( entity instanceof PlayerEntity ) )
+				return generatedLoot;
+
+			PlayerEntity player = ( PlayerEntity )entity;
+			ArrayList< ItemStack > output = new ArrayList<>();
+			for( ItemStack itemStack : generatedLoot ) {
+				if( !player.canPickUpItem( itemStack ) )
+					output.add( itemStack );
+
+				player.inventory.addItemStackToInventory( itemStack );
+			}
+
+			return output;
+		}
+
+		private static class Serializer extends GlobalLootModifierSerializer< AddItemsDirectlyToInventory > {
+			@Override
+			public AddItemsDirectlyToInventory read( ResourceLocation name, JsonObject object, ILootCondition[] conditions ) {
+				return new AddItemsDirectlyToInventory( conditions );
+			}
+
+			@Override
+			public JsonObject write( AddItemsDirectlyToInventory instance ) {
 				return null;
 			}
 		}
