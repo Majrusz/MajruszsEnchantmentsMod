@@ -1,7 +1,9 @@
 package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.curses.FatigueCurse;
+import com.wonderfulenchantments.curses.IncompatibilityCurse;
 import com.wonderfulenchantments.curses.SlownessCurse;
+import com.wonderfulenchantments.curses.VampirismCurse;
 import com.wonderfulenchantments.enchantments.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -128,11 +130,23 @@ public class WonderfulEnchantmentHelper {
 		if( enchantment instanceof HorseProtectionEnchantment )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HORSE_PROTECTION );
 
+		if( enchantment instanceof HorseFrostWalkerEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HORSE_FROST_WALKER );
+
+		if( enchantment instanceof TelekinesisEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.TELEKINESIS );
+
 		if( enchantment instanceof SlownessCurse )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SLOWNESS );
 
 		if( enchantment instanceof FatigueCurse )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.FATIGUE );
+
+		if( enchantment instanceof IncompatibilityCurse )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.INCOMPATIBILITY );
+
+		if( enchantment instanceof VampirismCurse )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.VAMPIRISM );
 
 		return 0;
 	}

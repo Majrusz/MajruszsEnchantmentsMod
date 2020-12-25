@@ -26,11 +26,15 @@ public class ConfigHandler {
 		Config.Enchantability.MAGIC_PROTECTION = createConfigSpecForEnchantability( "magic_protection", "Magic Protection" );
 		Config.Enchantability.SWIFTNESS = createConfigSpecForEnchantability( "swiftness", "Swiftness" );
 		Config.Enchantability.HORSE_PROTECTION = createConfigSpecForEnchantability( "horse_protection", "Horse Protection" );
+		Config.Enchantability.HORSE_FROST_WALKER = createConfigSpecForEnchantability( "horse_frost_walker", "Horse Frost Walker" );
+		Config.Enchantability.TELEKINESIS = createConfigSpecForEnchantability( "telekinesis", "Telekinesis" );
 		BUILDER.pop();
 
 		BUILDER.push( "Curses" );
 		Config.Enchantability.SLOWNESS = createConfigSpecForEnchantability( "slowness", "Curse of Slowness" );
 		Config.Enchantability.FATIGUE = createConfigSpecForEnchantability( "fatigue", "Curse of Fatigue" );
+		Config.Enchantability.INCOMPATIBILITY = createConfigSpecForEnchantability( "incompatibility", "Curse of Incompatibility" );
+		Config.Enchantability.VAMPIRISM = createConfigSpecForEnchantability( "vampirism", "Curse of Vampirism" );
 		BUILDER.pop();
 
 		BUILDER.push( "Bonuses" );
@@ -71,10 +75,10 @@ public class ConfigHandler {
 	public static class Config {
 		public static class Enchantability {
 			// Enchantments
-			public static ForgeConfigSpec.BooleanValue FISHING_FANATIC, HUMAN_SLAYER, DODGE, ENLIGHTENMENT, VITALITY, PHOENIX_DIVE, PUFFERFISH_VENGEANCE, IMMORTALITY, SMELTER, GOTTA_MINE_FAST, LEECH, MAGIC_PROTECTION, SWIFTNESS, HORSE_PROTECTION;
+			public static ForgeConfigSpec.BooleanValue FISHING_FANATIC, HUMAN_SLAYER, DODGE, ENLIGHTENMENT, VITALITY, PHOENIX_DIVE, PUFFERFISH_VENGEANCE, IMMORTALITY, SMELTER, GOTTA_MINE_FAST, LEECH, MAGIC_PROTECTION, SWIFTNESS, HORSE_PROTECTION, HORSE_FROST_WALKER, TELEKINESIS;
 
 			// Curses
-			public static ForgeConfigSpec.BooleanValue SLOWNESS, FATIGUE;
+			public static ForgeConfigSpec.BooleanValue SLOWNESS, FATIGUE, INCOMPATIBILITY, VAMPIRISM;
 		}
 
 		// Bonuses
