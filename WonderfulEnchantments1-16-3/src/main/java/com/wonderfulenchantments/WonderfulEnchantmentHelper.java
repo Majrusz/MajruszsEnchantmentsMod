@@ -79,6 +79,10 @@ public class WonderfulEnchantmentHelper {
 		return source.getTrueSource() instanceof LivingEntity && source.getImmediateSource() instanceof LivingEntity;
 	}
 
+	public static boolean isHorseArmor( ItemStack itemStack ) {
+		return ( itemStack.getItem() instanceof HorseArmorItem || itemStack.getItem() instanceof DyeableHorseArmorItem );
+	}
+
 	public static int increaseLevelIfEnchantmentIsDisabled( Enchantment enchantment ) {
 		Function< ForgeConfigSpec.BooleanValue, Integer > checkEnchantment = ( value )->( value.get() ? 0 : disableEnchantmentValue );
 
