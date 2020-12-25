@@ -25,5 +25,4 @@ public class TelekinesisEnchantment extends Enchantment {
 	public int getMaxEnchantability( int level ) {
 		return this.getMinEnchantability( level ) + 30;
 	}
-
 }
