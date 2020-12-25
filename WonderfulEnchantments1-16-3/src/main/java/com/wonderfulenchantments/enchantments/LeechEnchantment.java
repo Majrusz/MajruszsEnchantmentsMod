@@ -64,8 +64,13 @@ public class LeechEnchantment extends Enchantment {
 			.getImmediateSource();
 		LivingEntity target = event.getEntityLiving();
 
+		int vampirismLevel = 0;
+		if( attacker != null )
+			vampirismLevel = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.VAMPIRISM.get(), attacker.getArmorInventoryList() );
+
 		if( EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.LEECH.get(), attacker ) > 0 ) {
-			steal( attacker, target );
+			for( int i = 0; i < 1 + vampirismLevel; i++ )
+				steal( attacker, target );
 			spawnParticlesAndPlaySounds( attacker, target );
 		}
 	}
