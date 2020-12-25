@@ -83,7 +83,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 				for( Entity entity : entities )
 					if( entity instanceof LivingEntity ) {
 						LivingEntity target = ( LivingEntity )entity;
-						target.setFire( WonderfulEnchantmentHelper.secondsToTicks( 2.0D * enchantmentLevel ) );
+						target.setFire( 2 * enchantmentLevel );
 						target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
 						target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * distance ) );
 					}
