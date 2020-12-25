@@ -57,11 +57,28 @@
 	"enchantment.wonderful_enchantments.horse_protection.desc": "Zmniejsza obrażenia otrzymywane przez konia.",
 	"enchantment.wonderful_enchantments.horse_protection.description": "Zmniejsza obrażenia otrzymywane przez konia.",
 
+	"enchantment.wonderful_enchantments.horse_frost_walker": "Koński mroźny piechur",
+	"enchantment.wonderful_enchantments.horse_frost_walker.desc": "Tworzy zamrożone bloki lodu gdy koń chodzi po wodzie.",
+	"enchantment.wonderful_enchantments.horse_frost_walker.description": "Tworzy zamrożone bloki lodu gdy koń chodzi po wodzie.",
+
+	"enchantment.wonderful_enchantments.telekinesis": "Telekineza",
+	"enchantment.wonderful_enchantments.telekinesis.desc": "Automatycznie dodaje przedmiotu do ekwipunku gdy niszczy się bloki.",
+	"enchantment.wonderful_enchantments.telekinesis.description": "Automatycznie dodaje przedmiotu do ekwipunku gdy niszczy się bloki.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Zmniejsza prędkość poruszania się gracza.",
 
 	"enchantment.wonderful_enchantments.fatigue_curse": "Klątwa zmęczenia",
 	"enchantment.wonderful_enchantments.fatigue_curse.desc": "Zmniejsza prędkość wydobywania bloków.",
-	"enchantment.wonderful_enchantments.fatigue_curse.description": "Zmniejsza prędkość wydobywania bloków."
+	"enchantment.wonderful_enchantments.fatigue_curse.description": "Zmniejsza prędkość wydobywania bloków.",
+
+	"enchantment.wonderful_enchantments.incompatibility_curse": "Klątwa niekompatybilności",
+	"enchantment.wonderful_enchantments.incompatibility_curse.desc": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
+	"enchantment.wonderful_enchantments.incompatibility_curse.description": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
+
+	"enchantment.wonderful_enchantments.vampirism_curse": "Klątwa wampiryzmu",
+	"enchantment.wonderful_enchantments.vampirism_curse.desc": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia. Wzmacnia zaklęcie Pijawka.",
+	"enchantment.wonderful_enchantments.vampirism_curse.description": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia. Wzmacnia zaklęcie Pijawka."
+
 }
