@@ -74,8 +74,8 @@
 	"enchantment.wonderful_enchantments.fatigue_curse.description": "Decreases the player's mining speed.",
 
 	"enchantment.wonderful_enchantments.incompatibility_curse": "Curse of Incompatibility",
-	"enchantment.wonderful_enchantments.incompatibility_curse.desc": "Makes it impossible for any enchantment to be placed on an object.",
-	"enchantment.wonderful_enchantments.incompatibility_curse.description": "Makes it impossible for any enchantment to be placed on an object.",
+	"enchantment.wonderful_enchantments.incompatibility_curse.desc": "Makes it impossible for any enchantment to be placed on an item.",
+	"enchantment.wonderful_enchantments.incompatibility_curse.description": "Makes it impossible for any enchantment to be placed on an item.",
 
 	"enchantment.wonderful_enchantments.vampirism_curse": "Curse of Vampirism",
 	"enchantment.wonderful_enchantments.vampirism_curse.desc": "Weakens and sets the player on fire when he is outside during the day. Makes the Leech enchantment stronger.",

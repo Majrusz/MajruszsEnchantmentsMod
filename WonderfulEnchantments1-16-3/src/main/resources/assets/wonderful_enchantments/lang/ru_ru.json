@@ -57,11 +57,27 @@
   "enchantment.wonderful_enchantments.horse_protection.desc": "Уменьшает количество повреждений, получаемых лошадью.",
   "enchantment.wonderful_enchantments.horse_protection.description": "Уменьшает количество повреждений, получаемых лошадью.",
 
+  "enchantment.wonderful_enchantments.horse_frost_walker": "Ледяные копыта",
+  "enchantment.wonderful_enchantments.horse_frost_walker.desc": "Замораживает воду под лошадью.",
+  "enchantment.wonderful_enchantments.horse_frost_walker.description": "Замораживает воду под лошадью.",
+
+  "enchantment.wonderful_enchantments.telekinesis": "Телекинез",
+  "enchantment.wonderful_enchantments.telekinesis.desc": "Добавляет выпадающие предметы непосредственно в инвентарь игрока, если это возможно.",
+  "enchantment.wonderful_enchantments.telekinesis.description": "Добавляет выпадающие предметы непосредственно в инвентарь игрока, если это возможно.",
+
   "enchantment.wonderful_enchantments.slowness_curse": "Проклятие медлительности",
   "enchantment.wonderful_enchantments.slowness_curse.desc": "Уменьшает скорость передвижения игрока.",
   "enchantment.wonderful_enchantments.slowness_curse.description": "Уменьшает скорость передвижения игрока.",
 
   "enchantment.wonderful_enchantments.fatigue_curse": "Проклятие усталости",
   "enchantment.wonderful_enchantments.fatigue_curse.desc": "Уменьшает скорость добычи блоков.",
-  "enchantment.wonderful_enchantments.fatigue_curse.description": "Уменьшает скорость добычи блоков."
+  "enchantment.wonderful_enchantments.fatigue_curse.description": "Уменьшает скорость добычи блоков.",
+
+  "enchantment.wonderful_enchantments.incompatibility_curse": "Проклятье несовместимости",
+  "enchantment.wonderful_enchantments.incompatibility_curse.desc": "Делает невозможным наложение каких-либо чар на предмет.",
+  "enchantment.wonderful_enchantments.incompatibility_curse.description": "Делает невозможным наложение каких-либо чар на предмет.",
+
+  "enchantment.wonderful_enchantments.vampirism_curse": "Проклятье вампиризма",
+  "enchantment.wonderful_enchantments.vampirism_curse.desc": "Ослабляет и поджигает игрока, когда он находится под солнечным светом, но усиливает зачарование - Пиявка.",
+  "enchantment.wonderful_enchantments.vampirism_curse.description": "Ослабляет и поджигает игрока, когда он находится под солнечным светом, но усиливает зачарование - Пиявка."
 }
