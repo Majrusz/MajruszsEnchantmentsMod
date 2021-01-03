@@ -47,6 +47,18 @@ public class WonderfulEnchantmentHelper {
 		return sum;
 	}
 
+	public static < InstanceType > int calculateEnchantmentSumIfIsInstanceOf( Enchantment enchantment, Iterable< ItemStack > itemStacks,
+		Class< InstanceType > type
+	) {
+		int sum = 0;
+
+		for( ItemStack itemStack : itemStacks )
+			if( type.isInstance( itemStack.getItem() ) )
+				sum += EnchantmentHelper.getEnchantmentLevel( enchantment, itemStack );
+
+		return sum;
+	}
+
 	public static int calculateEnchantmentSum( Enchantment enchantment, LivingEntity livingEntity, EquipmentSlotType[] slotTypes ) {
 		int sum = 0;
 
