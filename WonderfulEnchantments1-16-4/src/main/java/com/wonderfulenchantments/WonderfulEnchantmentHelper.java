@@ -11,6 +11,8 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -95,6 +97,12 @@ public class WonderfulEnchantmentHelper {
 
 	public static boolean isHorseArmor( ItemStack itemStack ) {
 		return ( itemStack.getItem() instanceof HorseArmorItem || itemStack.getItem() instanceof DyeableHorseArmorItem );
+	}
+
+	public static void applyEffect( LivingEntity entity, Effect effect, int effectDuration, int amplifier ) {
+		EffectInstance effectInstance = new EffectInstance( effect, effectDuration, amplifier );
+		if( entity.isPotionApplicable( effectInstance ) )
+			entity.addPotionEffect( effectInstance );
 	}
 
 	public static int increaseLevelIfEnchantmentIsDisabled( Enchantment enchantment ) {
