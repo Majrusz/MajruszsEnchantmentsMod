@@ -67,9 +67,9 @@ public class AbsorberEnchantment extends Enchantment {
 	}
 
 	protected static void damageShield( ItemStack shield, LivingEntity entity, EffectInstance effectInstance ) {
-		int amplifierDamage = effectInstance.getAmplifier() + 1;
-		int durationDamage = effectInstance.getDuration() / WonderfulEnchantmentHelper.secondsToTicks( 60.0 );
+		double amplifierDamage = effectInstance.getAmplifier();
+		double durationDamage = ( ( double )effectInstance.getDuration() ) / WonderfulEnchantmentHelper.secondsToTicks( 60.0 );
 
-		shield.damageItem( amplifierDamage + durationDamage, entity, ( e )->e.sendBreakAnimation( shield.getEquipmentSlot() ) );
+		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, ( e )->e.sendBreakAnimation( shield.getEquipmentSlot() ) );
 	}
 }
