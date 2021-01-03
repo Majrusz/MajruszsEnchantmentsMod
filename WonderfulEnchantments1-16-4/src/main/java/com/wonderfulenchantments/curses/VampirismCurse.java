@@ -78,7 +78,7 @@ public class VampirismCurse extends Enchantment {
 
 		int effectDurationInTicks = WonderfulEnchantmentHelper.secondsToTicks( Config.VAMPIRISM_DURATION.get() ) * enchantmentLevel;
 		for( Effect effect : effects )
-			player.addPotionEffect( new EffectInstance( effect, effectDurationInTicks, 0 ) );
+			WonderfulEnchantmentHelper.applyEffectIfPossible( player, effect, effectDurationInTicks, 0 );
 
 		player.setFire( 3 + 2 * enchantmentLevel );
 	}

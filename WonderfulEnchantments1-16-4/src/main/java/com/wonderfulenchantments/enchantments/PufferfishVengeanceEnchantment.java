@@ -60,9 +60,9 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 
 				int durationInTicks = WonderfulEnchantmentHelper.secondsToTicks( 2 * Config.PUFFERFISH_DURATION.get() + 1 );
 
-				target.addPotionEffect( new EffectInstance( Effects.HUNGER, durationInTicks, 2 ) );
-				target.addPotionEffect( new EffectInstance( Effects.POISON, durationInTicks, 3 ) );
-				target.addPotionEffect( new EffectInstance( Effects.NAUSEA, durationInTicks, 0 ) );
+				WonderfulEnchantmentHelper.applyEffectIfPossible( target, Effects.HUNGER, durationInTicks, 2 );
+				WonderfulEnchantmentHelper.applyEffectIfPossible( target, Effects.POISON, durationInTicks, 3 );
+				WonderfulEnchantmentHelper.applyEffectIfPossible( target, Effects.NAUSEA, durationInTicks, 0 );
 
 				attacker.getEntityWorld()
 					.playSound( null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT,

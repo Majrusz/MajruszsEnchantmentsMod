@@ -89,7 +89,7 @@ public class LeechEnchantment extends Enchantment {
 		for( EffectInstance effect : possibleEffects )
 			if( effect.getPotion()
 				.isBeneficial() ) {
-				stealer.addPotionEffect( effect );
+				WonderfulEnchantmentHelper.applyEffectIfPossible( stealer, effect );
 				target.removePotionEffect( effect.getPotion() );
 
 				return true;

@@ -99,10 +99,13 @@ public class WonderfulEnchantmentHelper {
 		return ( itemStack.getItem() instanceof HorseArmorItem || itemStack.getItem() instanceof DyeableHorseArmorItem );
 	}
 
-	public static void applyEffectIfPossible( LivingEntity entity, Effect effect, int effectDuration, int amplifier ) {
-		EffectInstance effectInstance = new EffectInstance( effect, effectDuration, amplifier );
+	public static void applyEffectIfPossible( LivingEntity entity, EffectInstance effectInstance ) {
 		if( entity.isPotionApplicable( effectInstance ) )
 			entity.addPotionEffect( effectInstance );
+	}
+
+	public static void applyEffectIfPossible( LivingEntity entity, Effect effect, int effectDuration, int amplifier ) {
+		applyEffectIfPossible( entity, new EffectInstance( effect, effectDuration, amplifier ) );
 	}
 
 	public static int increaseLevelIfEnchantmentIsDisabled( Enchantment enchantment ) {
