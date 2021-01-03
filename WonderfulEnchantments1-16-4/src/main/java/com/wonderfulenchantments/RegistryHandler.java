@@ -39,6 +39,7 @@ public class RegistryHandler {
     // Shield Enchantments
     public static final RegistryObject< Enchantment > VITALITY = ENCHANTMENTS.register( "vitality", VitalityEnchantment::new );
     public static final RegistryObject< Enchantment > IMMORTALITY = ENCHANTMENTS.register( "immortality", ImmortalityEnchantment::new );
+    public static final RegistryObject< Enchantment > ABSORBER = ENCHANTMENTS.register( "absorber", AbsorberEnchantment::new );
 
     // Tool Enchantments
     public static final RegistryObject< Enchantment > SMELTER = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new );
@@ -55,7 +56,6 @@ public class RegistryHandler {
     public static final RegistryObject< Enchantment > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
     public static final RegistryObject< Enchantment > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse::new );
     public static final RegistryObject< Enchantment > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse::new );
-    public static final RegistryObject< Enchantment > BREAKING = ENCHANTMENTS.register( "breaking_curse", BreakingCurse::new );
 
     // Particles
     public static final RegistryObject< BasicParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle", ()->new BasicParticleType( true ) );
