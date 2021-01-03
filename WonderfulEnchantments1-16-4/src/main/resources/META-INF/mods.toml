@@ -1,0 +1,43 @@
+modLoader="javafml"
+
+loaderVersion="[35,)"
+
+license="MIT License"
+
+issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
+
+[[mods]]
+
+modId="wonderful_enchantments"
+
+version="1.16.4-0.10.0"
+
+displayName="Wonderful Enchantments"
+
+updateJSONURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
+
+displayURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
+
+logoFile="logo.png"
+
+credits="Thanks for all your support!"
+
+authors="Majrusz"
+
+description='''
+Mod adding a lot of new unique enchantments to the game.
+'''
+
+[[dependencies.examplemod]]
+    modId="forge"
+    mandatory=true
+    versionRange="[35,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.examplemod]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.4,1.17)"
+    ordering="NONE"
+    side="BOTH"
