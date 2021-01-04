@@ -70,8 +70,8 @@
 	"enchantment.wonderful_enchantments.absorber.description": "Shield absorbs all negative effects at the expense of durability.",
 
 	"enchantment.wonderful_enchantments.hunter": "Hunter",
-	"enchantment.wonderful_enchantments.hunter.desc": "Adds the item directly to the inventory if possible when destroying blocks.",
-	"enchantment.wonderful_enchantments.hunter.description": "Adds the item directly to the inventory if possible when destroying blocks.",
+	"enchantment.wonderful_enchantments.hunter.desc": "Increases the number of items you receive and the further away your enemy is, the more damage you cause.",
+	"enchantment.wonderful_enchantments.hunter.description": "Increases the number of items you receive and the further away your enemy is, the more damage you cause.",
 
 	"enchantment.wonderful_enchantments.slowness_curse": "Curse of Slowness",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Decreases the player's movement speed.",

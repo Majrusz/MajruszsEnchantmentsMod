@@ -34,8 +34,8 @@
 	"enchantment.wonderful_enchantments.immortality.description": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
 
 	"enchantment.wonderful_enchantments.smelter": "Hutnik",
-	"enchantment.wonderful_enchantments.smelter.desc": "Daje szansę na automatycznie przepalenie bloku podczas zniszczenia go.",
-	"enchantment.wonderful_enchantments.smelter.description": "Daje szansę na automatycznie przepalenie bloku podczas zniszczenia go.",
+	"enchantment.wonderful_enchantments.smelter.desc": "Automatycznie przetapia zniszczony blok.",
+	"enchantment.wonderful_enchantments.smelter.description": "Automatycznie przetapia zniszczony blok.",
 
 	"enchantment.wonderful_enchantments.gotta_mine_fast": "Muszę kopać szybko",
 	"enchantment.wonderful_enchantments.gotta_mine_fast.desc": "Zwiększa prędkość kopania w zależności od tego jak długo trzymasz lewy przycisk myszy.",
@@ -64,6 +64,14 @@
 	"enchantment.wonderful_enchantments.telekinesis": "Telekineza",
 	"enchantment.wonderful_enchantments.telekinesis.desc": "Automatycznie dodaje przedmiotu do ekwipunku gdy niszczy się bloki.",
 	"enchantment.wonderful_enchantments.telekinesis.description": "Automatycznie dodaje przedmiotu do ekwipunku gdy niszczy się bloki.",
+
+	"enchantment.wonderful_enchantments.absorber": "Absorber",
+	"enchantment.wonderful_enchantments.absorber.desc": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
+	"enchantment.wonderful_enchantments.absorber.description": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
+
+	"enchantment.wonderful_enchantments.hunter": "Łowca",
+	"enchantment.wonderful_enchantments.hunter.desc": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
+	"enchantment.wonderful_enchantments.hunter.description": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
 
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
