@@ -54,6 +54,7 @@ public class ConfigHandler {
 		Config.EXPERIENCE_MULTIPLIER = createConfigSpecForDouble( "Maximum experience bonus per enchantment level. (Enlightenment)", "enlightenment_experience_multiplier", 0.25, 0.01, 1.0 );
 		Config.PHOENIX_JUMP_MULTIPLIER = createConfigSpecForDouble( "Jumping power multiplier per enchantment level. (Phoenix Dive)", "phoenix_jump_multiplier", 0.25, 0.01, 1.0 );
 		Config.SWIFTNESS_MULTIPLIER = createConfigSpecForDouble( "Horse movement speed multiplier per enchantment level. (Swiftness)", "swiftness_multiplier", 0.125, 0.01, 0.5 );
+		Config.HUNTER_MULTIPLIER = createConfigSpecForDouble( "Extra damage multiplier to distance per enchantment level. (Hunter)", "hunter_multiplier", 0.0001, 0.0, 0.01 );
 		Config.SLOWNESS_MULTIPLIER = createConfigSpecForDouble( "Cumulative movement speed reduction with each enchantment. (Curse of Slowness)", "slowness_multiplier", 0.125, 0.01, 0.15 );
 		Config.FATIGUE_MULTIPLIER = createConfigSpecForDouble( "Mining speed reduction from the previous enchantment level. (Curse of Fatigue)", "fatigue_multiplier", 0.7, 0.1, 0.9 );
 		BUILDER.pop();
@@ -96,6 +97,7 @@ public class ConfigHandler {
 		public static ForgeConfigSpec.DoubleValue EXPERIENCE_MULTIPLIER;
 		public static ForgeConfigSpec.DoubleValue PHOENIX_JUMP_MULTIPLIER;
 		public static ForgeConfigSpec.DoubleValue SWIFTNESS_MULTIPLIER;
+		public static ForgeConfigSpec.DoubleValue HUNTER_MULTIPLIER;
 
 		// Multipliers (Curses)
 		public static ForgeConfigSpec.DoubleValue SLOWNESS_MULTIPLIER;

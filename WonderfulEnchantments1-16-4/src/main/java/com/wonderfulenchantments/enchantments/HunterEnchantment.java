@@ -1,8 +1,10 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.enchantment.*;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.LootBonusEnchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -47,10 +49,12 @@ public class HunterEnchantment extends LootBonusEnchantment {
 
 		LivingEntity attacker = ( LivingEntity )damageSource.getTrueSource();
 		int hunterLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.HUNTER.get(), attacker.getHeldItemMainhand() );
-		float extraDamage = ( float )( attacker.getPositionVec()
-			.squareDistanceTo( target.getPositionVec() ) ) * 0.001f * hunterLevel;
+		double extraDamageMultiplier = ( attacker.getPositionVec()
+			.squareDistanceTo( target.getPositionVec() )
+		) * ConfigHandler.Config.HUNTER_MULTIPLIER.get() * hunterLevel + 1.0;
 
-		target.attackEntityFrom( DamageSource.causeMobDamage( attacker ), extraDamage );
+		event.setAmount( ( float )( event.getAmount() * extraDamageMultiplier ) );
+
 	}
 
 	protected static boolean isValid( DamageSource source ) {
