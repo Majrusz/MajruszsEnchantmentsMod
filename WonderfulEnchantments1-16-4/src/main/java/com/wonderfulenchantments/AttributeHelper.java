@@ -3,7 +3,6 @@ package com.wonderfulenchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 
 import java.util.UUID;
@@ -15,6 +14,7 @@ public class AttributeHelper {
 		public static final Attribute KNOCKBACK_RESISTANCE = net.minecraft.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE;
 		public static final Attribute ARMOR = net.minecraft.entity.ai.attributes.Attributes.ARMOR;
 	}
+
 	private final UUID uuid;
 	private final String name;
 	private final Attribute attribute;

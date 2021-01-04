@@ -21,7 +21,7 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 @Mod.EventBusSubscriber
 public class AbsorberEnchantment extends Enchantment {
 	public AbsorberEnchantment() {
-		super( Rarity.RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
+		super( Rarity.VERY_RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
 	}
 
 	@Override
