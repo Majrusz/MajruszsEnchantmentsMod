@@ -159,6 +159,12 @@ public class WonderfulEnchantmentHelper {
 		if( enchantment instanceof TelekinesisEnchantment )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.TELEKINESIS );
 
+		if( enchantment instanceof AbsorberEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.ABSORBER );
+
+		if( enchantment instanceof HunterEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HUNTER );
+
 		if( enchantment instanceof SlownessCurse )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SLOWNESS );
 

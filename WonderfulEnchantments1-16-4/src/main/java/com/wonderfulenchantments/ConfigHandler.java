@@ -28,6 +28,8 @@ public class ConfigHandler {
 		Config.Enchantability.HORSE_PROTECTION = createConfigSpecForEnchantability( "horse_protection", "Horse Protection" );
 		Config.Enchantability.HORSE_FROST_WALKER = createConfigSpecForEnchantability( "horse_frost_walker", "Horse Frost Walker" );
 		Config.Enchantability.TELEKINESIS = createConfigSpecForEnchantability( "telekinesis", "Telekinesis" );
+		Config.Enchantability.ABSORBER = createConfigSpecForEnchantability( "absorber", "Absorber" );
+		Config.Enchantability.HUNTER = createConfigSpecForEnchantability( "hunter", "Hunter" );
 		BUILDER.pop();
 
 		BUILDER.push( "Curses" );
@@ -76,7 +78,7 @@ public class ConfigHandler {
 	public static class Config {
 		public static class Enchantability {
 			// Enchantments
-			public static ForgeConfigSpec.BooleanValue FISHING_FANATIC, HUMAN_SLAYER, DODGE, ENLIGHTENMENT, VITALITY, PHOENIX_DIVE, PUFFERFISH_VENGEANCE, IMMORTALITY, SMELTER, GOTTA_MINE_FAST, LEECH, MAGIC_PROTECTION, SWIFTNESS, HORSE_PROTECTION, HORSE_FROST_WALKER, TELEKINESIS;
+			public static ForgeConfigSpec.BooleanValue FISHING_FANATIC, HUMAN_SLAYER, DODGE, ENLIGHTENMENT, VITALITY, PHOENIX_DIVE, PUFFERFISH_VENGEANCE, IMMORTALITY, SMELTER, GOTTA_MINE_FAST, LEECH, MAGIC_PROTECTION, SWIFTNESS, HORSE_PROTECTION, HORSE_FROST_WALKER, TELEKINESIS, ABSORBER, HUNTER;
 
 			// Curses
 			public static ForgeConfigSpec.BooleanValue SLOWNESS, FATIGUE, INCOMPATIBILITY, VAMPIRISM;
