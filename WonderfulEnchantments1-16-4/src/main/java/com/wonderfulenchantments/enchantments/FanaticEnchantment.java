@@ -105,8 +105,7 @@ public class FanaticEnchantment extends Enchantment {
 
 		boolean isRaining = ( world instanceof ServerWorld && ( ( ServerWorld )world ).isRaining() );
 		if( tryIncreaseFishingFanaticLevel( player, isRaining ) )
-			player.sendStatusMessage(
-				new TranslationTextComponent( "wonderful_enchantments.fanatic_level_up" ).mergeStyle( TextFormatting.BOLD ),
+			player.sendStatusMessage( new TranslationTextComponent( "wonderful_enchantments.fanatic_level_up" ).mergeStyle( TextFormatting.BOLD ),
 				true
 			);
 

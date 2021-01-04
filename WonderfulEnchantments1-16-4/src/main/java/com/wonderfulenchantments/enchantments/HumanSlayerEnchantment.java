@@ -1,8 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import com.wonderfulenchantments.ConfigHandler.Config;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
@@ -51,7 +51,8 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 		LivingEntity attacker = ( LivingEntity )event.getSource()
 			.getImmediateSource();
 		LivingEntity target = event.getEntityLiving();
-		float extraDamage = ( float )Math.floor( Config.HUMANITY_DAMAGE_BONUS.get() * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
+		float extraDamage = ( float )Math.floor(
+			Config.HUMANITY_DAMAGE_BONUS.get() * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
 
 		if( extraDamage > 0.0F && isHuman( target ) ) {
 			( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ),

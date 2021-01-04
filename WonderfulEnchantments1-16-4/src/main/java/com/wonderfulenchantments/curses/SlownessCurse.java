@@ -1,8 +1,11 @@
 package com.wonderfulenchantments.curses;
 
-import com.wonderfulenchantments.*;
-import com.wonderfulenchantments.ConfigHandler.Config;
+import com.wonderfulenchantments.AttributeHelper;
 import com.wonderfulenchantments.AttributeHelper.Attributes;
+import com.wonderfulenchantments.ConfigHandler.Config;
+import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;

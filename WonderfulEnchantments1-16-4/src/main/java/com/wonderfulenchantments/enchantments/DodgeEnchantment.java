@@ -1,8 +1,11 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.*;
-import com.wonderfulenchantments.ConfigHandler.Config;
+import com.wonderfulenchantments.AttributeHelper;
 import com.wonderfulenchantments.AttributeHelper.Attributes;
+import com.wonderfulenchantments.ConfigHandler.Config;
+import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
+import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;

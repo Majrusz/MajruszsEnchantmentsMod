@@ -1,7 +1,10 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.*;
 import com.wonderfulenchantments.ConfigHandler.Config;
+import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
+import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.EntityPredicate;

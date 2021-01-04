@@ -8,7 +8,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
@@ -20,8 +19,7 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 
 @Mod.EventBusSubscriber
 public class VampirismCurse extends Enchantment {
-	protected static Effect[] effects = new Effect[] {
-		Effects.WEAKNESS, Effects.SLOWNESS, Effects.HUNGER
+	protected static Effect[] effects = new Effect[]{ Effects.WEAKNESS, Effects.SLOWNESS, Effects.HUNGER
 	};
 	protected static int counter = 0;
 	protected static int updateDelay = WonderfulEnchantmentHelper.secondsToTicks( 5.0 );
