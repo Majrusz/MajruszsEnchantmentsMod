@@ -73,6 +73,10 @@
 	"enchantment.wonderful_enchantments.hunter.desc": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
 	"enchantment.wonderful_enchantments.hunter.description": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
 
+	"enchantment.wonderful_enchantments.elder_guardian_favor": "Przychylność prastrażnika",
+	"enchantment.wonderful_enchantments.elder_guardian_favor.desc": "Po zaatakowaniu przeciwnika atakuje go dodatkowe wiązką laserową, której nie można uniknąć.",
+	"enchantment.wonderful_enchantments.elder_guardian_favor.description": "Po zaatakowaniu przeciwnika atakuje go dodatkowe wiązką laserową, której nie można uniknąć.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Zmniejsza prędkość poruszania się gracza.",
