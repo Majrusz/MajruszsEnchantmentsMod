@@ -54,6 +54,9 @@ public class RegistryHandler {
     // Bow Enchantments
     public static final RegistryObject< Enchantment > HUNTER = ENCHANTMENTS.register( "hunter", HunterEnchantment::new );
 
+    // Trident Enchantments
+    public static final RegistryObject< Enchantment > ELDER_GUARDIAN_FAVOR = ENCHANTMENTS.register( "elder_guardian_favor", ElderGaurdianFavorEnchantment::new );
+
     // Curses
     public static final RegistryObject< Enchantment > SLOWNESS = ENCHANTMENTS.register( "slowness_curse", SlownessCurse::new );
     public static final RegistryObject< Enchantment > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
