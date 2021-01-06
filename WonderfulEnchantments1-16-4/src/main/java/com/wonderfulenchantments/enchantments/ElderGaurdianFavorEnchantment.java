@@ -13,6 +13,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -83,7 +85,8 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 		} else {
 			boolean areEntitiesInWater = target.isInWater() && attacker.isInWater();
 
-			target.attackEntityFrom( DamageSource.causeMobDamage( attacker ),
+			world.playSound( null, target.getPosX(), target.getPosYEye(), target.getPosZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.AMBIENT, 0.5f, 1.8f );
+			target.attackEntityFrom( DamageSource.MAGIC,
 				( float )( ( areEntitiesInWater ? 2.0 : 1.0 ) * ConfigHandler.Config.GUARDIAN_BEAM_DAMAGE.get() )
 			);
 		}

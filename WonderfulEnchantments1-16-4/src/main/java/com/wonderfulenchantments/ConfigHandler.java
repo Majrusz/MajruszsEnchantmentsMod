@@ -65,11 +65,11 @@ public class ConfigHandler {
 		BUILDER.push( "Durations" );
 		Config.PUFFERFISH_DURATION = createConfigSpecForDouble( "Pufferfish debuffs duration (in seconds) per enchantment level. (Vengeance of Pufferfish)", "pufferfish_duration", 2.0, 1.0, 10 );
 		Config.VAMPIRISM_DURATION = createConfigSpecForInteger( "Vampirism debuffs duration (in seconds) per enchantment level. (Curse of Vampirism)", "vampirism_duration", 30, 10, 300 );
-		Config.GUARDIAN_BEAM_DURATION = createConfigSpecForDouble( "Duration (in seconds) before enemy will take damage from the beam. (Favor of Elder Guardian)", "guardian_beam_duration", 3.5, 1.0, 10.0 );
+		Config.GUARDIAN_BEAM_DURATION = createConfigSpecForDouble( "Duration (in seconds) before enemy will take damage from the beam. (Favor of Elder Guardian)", "guardian_beam_duration", 3.0, 0.1, 100.0 );
 		BUILDER.pop();
 
 		BUILDER.push( "Damage" );
-		Config.GUARDIAN_BEAM_DAMAGE = createConfigSpecForDouble( "Damage dealt by the beam. (Favor of Elder Guardian)", "guardian_beam_damage", 4.0, 1.0, 10.0 );
+		Config.GUARDIAN_BEAM_DAMAGE = createConfigSpecForDouble( "Damage dealt by the beam. (Favor of Elder Guardian)", "guardian_beam_damage", 5.0, 1.0, 50.0 );
 		BUILDER.pop();
 
 		CONFIG_SPEC = BUILDER.build();
