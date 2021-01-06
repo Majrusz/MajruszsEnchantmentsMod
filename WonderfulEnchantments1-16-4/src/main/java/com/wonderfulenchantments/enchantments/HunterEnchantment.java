@@ -54,7 +54,6 @@ public class HunterEnchantment extends LootBonusEnchantment {
 		) * ConfigHandler.Config.HUNTER_MULTIPLIER.get() * hunterLevel + 1.0;
 
 		event.setAmount( ( float )( event.getAmount() * extraDamageMultiplier ) );
-
 	}
 
 	protected static boolean isValid( DamageSource source ) {
