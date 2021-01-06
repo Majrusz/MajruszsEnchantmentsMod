@@ -7,14 +7,22 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.ElderGuardianEntity;
+import net.minecraft.entity.projectile.ProjectileHelper;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -24,12 +32,15 @@ import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 @Mod.EventBusSubscriber
 public class ElderGaurdianFavorEnchantment extends Enchantment {
 	protected static final String linkTag = "ElderGuardianFavorLinkedEntityID";
+	protected static final String linkCounterTag = "ElderGuardianFavorCounter";
+	protected static final int damageCooldown = 70;
 
 	public ElderGaurdianFavorEnchantment() {
 		super( Rarity.RARE, EnchantmentType.TRIDENT, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
@@ -52,56 +63,72 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public static void onHit( LivingHurtEvent event ) {
-		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
+		DamageSource damageSource = event.getSource();
+
+		if( !( damageSource.getTrueSource() instanceof LivingEntity ) || !( damageSource.getImmediateSource() instanceof LivingEntity ) )
 			return;
 
-		LivingEntity attacker = ( LivingEntity )event.getSource().getTrueSource();
+		LivingEntity attacker = ( LivingEntity )damageSource.getTrueSource();
 		LivingEntity target = event.getEntityLiving();
 
-		connectEntities( attacker, target );
+		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.ELDER_GUARDIAN_FAVOR.get(), attacker.getHeldItemMainhand() );
+		connectEntities( attacker, target, enchantmentLevel );
 	}
 
 	@SubscribeEvent
 	public static void onUpdate( LivingEvent.LivingUpdateEvent event ) {
 		LivingEntity attacker = event.getEntityLiving();
 		CompoundNBT data = attacker.getPersistentData();
+		int counter = data.getInt( linkCounterTag ) - 1;
 
-		if( !data.hasUniqueId( linkTag ) )
+		if( counter < 0 || !( attacker.world instanceof ServerWorld ) )
 			return;
 
+		data.putInt( linkCounterTag, counter );
+		
 		int targetID = data.getInt( linkTag );
-		World world = attacker.world;
-
-		if( !( world.getEntityByID( targetID ) instanceof LivingEntity ) )
+		ServerWorld world = ( ServerWorld )attacker.world;
+		Entity targetEntity = world.getEntityByID( targetID );
+		if( !( targetEntity instanceof LivingEntity ) )
 			return;
 
-		LivingEntity target = ( LivingEntity )world.getEntityByID( targetID );
+		LivingEntity target = ( LivingEntity )targetEntity;
+		if( counter > 0 ) {
+			spawnParticles( attacker, target, world );
+		} else {
+			boolean areEntitiesInWater = target.isInWater() && attacker.isInWater();
 
-		if( world instanceof ClientWorld )
-			spawnParticles( attacker, target, ( ClientWorld )world );
+			target.attackEntityFrom( DamageSource.causeMobDamage( attacker ), ( areEntitiesInWater ? 2.0f : 1.0f ) * 10.0f );
+		}
 	}
 
-	protected static void connectEntities( LivingEntity attacker, LivingEntity target ) {
-		WonderfulEnchantments.LOGGER.info( attacker + "/" + target );
+	protected static void connectEntities( LivingEntity attacker, LivingEntity target, int enchantmentLevel ) {
+		CompoundNBT data = attacker.getPersistentData();
 
-		attacker.getPersistentData().putInt( linkTag, target.getEntityId() );
+		if( data.getInt( linkCounterTag ) > 0 || enchantmentLevel == 0 )
+			return;
+
+		data.putInt( linkTag, target.getEntityId() );
+		data.putInt( linkCounterTag, damageCooldown );
 	}
 
-	protected static void spawnParticles( LivingEntity attacker, LivingEntity target, ClientWorld world ) {
-		double d5 = (double)0.5;
-		double d0 = target.getPosX() - attacker.getPosX();
-		double d1 = target.getPosYHeight(0.5D) - attacker.getPosYEye();
-		double d2 = target.getPosZ() - attacker.getPosZ();
-		double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
-		d0 = d0 / d3;
-		d1 = d1 / d3;
-		d2 = d2 / d3;
-		double d4 = WonderfulEnchantments.RANDOM.nextDouble();
+	protected static void spawnParticles( LivingEntity attacker, LivingEntity target, ServerWorld world ) {
+		Vector3d difference = new Vector3d(
+			attacker.getPosX() - target.getPosX(),
+			attacker.getPosYHeight( 0.5 ) - target.getPosYHeight( 0.5 ),
+			attacker.getPosZ() - target.getPosZ()
+		);
+		Vector3d normalized = difference.normalize();
+		double factor = 0.0;
 
-		WonderfulEnchantments.LOGGER.info( "Particles: " + d4 + "/" + d3 );
-		while(d4 < d3) {
-			d4 += 1.8D - d5 + WonderfulEnchantments.RANDOM.nextDouble() * (1.7D - d5);
-			world.addParticle( ParticleTypes.CRIT, target.getPosX() + d0 * d4, target.getPosYEye() + d1 * d4, target.getPosZ() + d2 * d4, 0.0D, 0.0D, 0.0D);
+		while( factor < difference.length() ) {
+			double x = attacker.getPosX() - normalized.x * factor;
+			double y = attacker.getPosYHeight( 0.5 ) - normalized.y * factor;
+			double z = attacker.getPosZ() - normalized.z * factor;
+			world.spawnParticle( ParticleTypes.BUBBLE, x, y, z, 1, 0.0, 0.0, 0.0, 0.0 );
+			world.spawnParticle( ParticleTypes.BUBBLE_POP, x, y, z, 1, 0.0, 0.0, 0.0, 0.0 );
+
+			factor += 1.8 - 0.8 + WonderfulEnchantments.RANDOM.nextDouble() * (1.7 - 0.8);
 		}
 	}
 }
