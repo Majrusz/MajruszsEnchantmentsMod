@@ -2,11 +2,13 @@ package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.EquipmentSlotTypes;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
+import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
+import net.minecraft.item.UseAction;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundCategory;
@@ -21,7 +23,7 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 @Mod.EventBusSubscriber
 public class AbsorberEnchantment extends Enchantment {
 	public AbsorberEnchantment() {
-		super( Rarity.VERY_RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
+		super( Rarity.RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class AbsorberEnchantment extends Enchantment {
 	}
 
 	protected static boolean absorbSucceed( ItemStack itemStack ) {
-		return itemStack.getItem() instanceof ShieldItem;
+		return itemStack.getItem() instanceof ShieldItem && itemStack.getUseAction() == UseAction.BLOCK;
 	}
 
 	protected static void damageShield( ItemStack shield, LivingEntity entity, EffectInstance effectInstance ) {
