@@ -12,31 +12,26 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends Enchantment {
-	protected static List< Vector3d > positionsToGenerateParticles = new ArrayList<>();
-	protected static HashMap< Integer, Integer > particleTimers = new HashMap<>(); // holding pair (entityID, ticks since last creating particle)
+	private static final String footParticleTag = "PhoenixDiveFootParticleTick";
 
 	public PhoenixDiveEnchantment() {
 		super( Rarity.RARE, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{ EquipmentSlotType.FEET } );
@@ -64,109 +59,103 @@ public class PhoenixDiveEnchantment extends Enchantment {
 
 	@SubscribeEvent
 	public static void onFall( LivingFallEvent event ) {
-		double distance = event.getDistance();
+		if( event.getDistance() <= 3.0 )
+			return;
 
-		if( distance > 3.0D ) {
-			LivingEntity attacker = event.getEntityLiving();
-			World world = attacker.getEntityWorld();
+		LivingEntity attacker = event.getEntityLiving();
+		int enchantmentLevel = getPhoenixDiveLevel( attacker );
 
-			int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(),
-				attacker.getItemStackFromSlot( EquipmentSlotType.FEET )
-			);
+		if( enchantmentLevel <= 0 || !( attacker.world instanceof ServerWorld ) )
+			return;
 
-			if( enchantmentLevel > 0 ) {
-				double range = 5.0D;
-				List< Entity > entities = world.getEntitiesWithinAABBExcludingEntity( attacker.getEntity(), attacker.getBoundingBox()
-					.offset( -range, -attacker.getHeight() * 0.5D, -range )
-					.expand( range * 2.0D, 0, range * 2.0D ) );
-				for( Entity entity : entities )
-					if( entity instanceof LivingEntity ) {
-						LivingEntity target = ( LivingEntity )entity;
-						target.setFire( 2 * enchantmentLevel );
-						target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
-						target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * distance ) );
-					}
-
-				positionsToGenerateParticles.add( attacker.getPositionVec() );
+		ServerWorld world = ( ServerWorld )attacker.world;
+		for( Entity entity : getEntitiesInRange( attacker, world ) )
+			if( entity instanceof LivingEntity ) {
+				LivingEntity target = ( LivingEntity )entity;
+				target.setFire( 2 * enchantmentLevel );
+				// target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
+				target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * event.getDistance() ) );
 			}
-		}
+
+		spawnFallParticles( attacker.getPositionVec(), world );
 	}
 
 	@SubscribeEvent
-	public static void onUpdate( TickEvent.WorldTickEvent event ) {
-		if( positionsToGenerateParticles.size() > 0 ) {
-			for( Vector3d position : positionsToGenerateParticles )
-				for( double d = 0.0D; d < 3.0D; d++ ) {
-					ServerWorld world = ( ServerWorld )event.world;
-					world.spawnParticle( RegistryHandler.PHOENIX_PARTICLE.get(), position.getX(), position.getY(), position.getZ(),
-						( int )Math.pow( 5.0D, d + 1.0D ), 0.0625D, 0.125D, 0.0625D, ( 0.125D + 0.0625D ) * ( d + 1.0D )
-					);
-					world.playSound( null, position.getX(), position.getY(), position.getZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT,
-						0.25F, 1.0F
-					);
-				}
+	public static void onUpdate( TickEvent.PlayerTickEvent event ) {
+		PlayerEntity player = event.player;
+		CompoundNBT data = player.getPersistentData();
+		if( getPhoenixDiveLevel( player ) <= 0 || !( player.world instanceof ServerWorld ) )
+			return;
 
-			positionsToGenerateParticles.clear();
-		}
+		int ticks = data.getInt( footParticleTag );
 
-		for( Map.Entry< Integer, Integer > pair : particleTimers.entrySet() ) {
-			Entity entity = event.world.getEntityByID( pair.getKey() );
+		if( ticks % 3 == 0 )
+			spawnFootParticle( player, ( ServerWorld )player.world, ticks % 6 == 0 );
 
-			int ticks = pair.getValue() + 1;
-			if( entity != null && ticks > 3 ) {
-				ticks -= 3;
-				spawnFootParticle( entity );
-			}
-			pair.setValue( Math.max( ticks, 0 ) );
-		}
+		ticks++;
 
-		particleTimers.entrySet()
-			.removeIf( ( pair )->( event.world.getEntityByID( pair.getKey() ) == null ) );
+		if( ticks >= 6 )
+			ticks = 0;
+
+		data.putInt( footParticleTag, ticks );
 	}
 
 	@SubscribeEvent
 	public static void onJump( LivingEvent.LivingJumpEvent event ) {
-		LivingEntity entity = event.getEntityLiving();
+		if( !( event.getEntityLiving() instanceof PlayerEntity ) )
+			return;
 
-		if( entity instanceof PlayerEntity ) {
-			PlayerEntity player = ( PlayerEntity )entity;
-			ItemStack boots = entity.getItemStackFromSlot( EquipmentSlotType.FEET );
-			int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), boots );
+		PlayerEntity player = ( PlayerEntity )event.getEntityLiving();
+		ItemStack boots = player.getItemStackFromSlot( EquipmentSlotType.FEET );
+		int enchantmentLevel = getPhoenixDiveLevel( player );
 
-			if( player.isCrouching() && enchantmentLevel > 0 ) {
-				double angleInRadians = Math.toRadians( player.rotationYaw + 90.0D );
-				double factor = ( enchantmentLevel + 1 ) * Config.PHOENIX_JUMP_MULTIPLIER.get();
-				player.setMotion( player.getMotion()
-					.mul( new Vector3d( 0.0D, 1.0D + factor, 0.0D ) )
-					.add( factor * Math.cos( angleInRadians ), 0.0D, factor * Math.sin( angleInRadians ) ) );
+		if( !player.isCrouching() || enchantmentLevel <= 0 )
+			return;
 
-				boots.damageItem( 3, player, ( e )->e.sendBreakAnimation( EquipmentSlotType.FEET ) );
-			}
-		}
+		double angleInRadians = Math.toRadians( player.rotationYaw + 90.0 );
+		double factor = ( enchantmentLevel + 1 ) * Config.PHOENIX_JUMP_MULTIPLIER.get();
+		player.setMotion( player.getMotion()
+			.mul( new Vector3d( 0.0, 1.0 + factor, 0.0 ) )
+			.add( factor * Math.cos( angleInRadians ), 0.0, factor * Math.sin( angleInRadians ) ) );
+
+		boots.damageItem( 3, player, entity->entity.sendBreakAnimation( EquipmentSlotType.FEET ) );
+
+		if( !( player.world instanceof ServerWorld ) )
+			return;
+
+		ServerWorld world = ( ServerWorld )player.world;
+		world.playSound( null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.5f, 0.9f );
 	}
 
-	@SubscribeEvent
-	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
-		LivingEntity livingEntity = event.getEntityLiving();
-		Integer entityID = livingEntity.getEntityId();
-
-		if( EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), livingEntity ) > 0 )
-			particleTimers.put( livingEntity.getEntityId(), 0 );
-		else
-			particleTimers.remove( entityID );
+	protected static int getPhoenixDiveLevel( LivingEntity entity ) {
+		return EnchantmentHelper.getEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), entity.getItemStackFromSlot( EquipmentSlotType.FEET ) );
 	}
 
-	protected static void spawnFootParticle( Entity entity ) {
-		if( entity instanceof LivingEntity ) {
-			World world = entity.getEntityWorld();
-			double leftLegRotation = ( WonderfulEnchantments.RANDOM.nextBoolean() ? 180.0D : 0.0D );
-			double angleInRadians = Math.toRadians( entity.rotationYaw + 90.0D + leftLegRotation );
-			if( world instanceof ServerWorld )
-				( ( ServerWorld )world ).spawnParticle( ParticleTypes.FLAME, entity.getPosX() + 0.1875D * Math.sin( -angleInRadians ),
-					entity.getPosY(), entity.getPosZ() + 0.1875D * Math.cos( -angleInRadians ), 1, 0.0D, 0.125D * Math.cos( angleInRadians ), 0.00D,
-					0.0D
-				);
-		}
+	protected static List< Entity > getEntitiesInRange( LivingEntity entity, ServerWorld world ) {
+		double range = 5.0D;
+		return world.getEntitiesWithinAABBExcludingEntity( entity.getEntity(), entity.getBoundingBox()
+			.offset( -range, -entity.getHeight() * 0.5D, -range )
+			.expand( range * 2.0D, 0, range * 2.0D ) );
 	}
 
+	protected static void spawnFallParticles( Vector3d position, ServerWorld world ) {
+		double x = position.getX(), y = position.getY(), z = position.getZ();
+		for( double d = 0.0; d < 3.0; d++ )
+			world.spawnParticle( RegistryHandler.PHOENIX_PARTICLE.get(), x, y, z, ( int )Math.pow( 5.0, d + 1.0 ), 0.0625, 0.125, 0.0625,
+				( 0.125 + 0.0625 ) * ( d + 1.0 )
+			);
+
+		world.playSound( null, x, y, z, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.5f, 0.9f );
+	}
+
+	protected static void spawnFootParticle( LivingEntity entity, ServerWorld world, boolean isLeftLeg ) {
+		if( entity.isElytraFlying() )
+			return;
+		
+		double leftLegRotation = ( isLeftLeg ? 180.0 : 0.0 );
+		double angleInRadians = Math.toRadians( entity.rotationYaw + 90.0 + leftLegRotation );
+		world.spawnParticle( ParticleTypes.FLAME, entity.getPosX() + 0.1875 * Math.sin( -angleInRadians ), entity.getPosY() + 0.1,
+			entity.getPosZ() + 0.1875 * Math.cos( -angleInRadians ), 1, 0.0, 0.125 * Math.cos( angleInRadians ), 0.00, 0.0
+		);
+	}
 }
