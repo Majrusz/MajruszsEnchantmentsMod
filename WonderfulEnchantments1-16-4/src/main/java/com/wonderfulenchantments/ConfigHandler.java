@@ -30,6 +30,7 @@ public class ConfigHandler {
 		Config.Enchantability.TELEKINESIS = createConfigSpecForEnchantability( "telekinesis", "Telekinesis" );
 		Config.Enchantability.ABSORBER = createConfigSpecForEnchantability( "absorber", "Absorber" );
 		Config.Enchantability.HUNTER = createConfigSpecForEnchantability( "hunter", "Hunter" );
+		Config.Enchantability.ELDER_GUARDIAN_FAVOR = createConfigSpecForEnchantability( "elder_guardian_favor", "Favor of Elder Guardian" );
 		BUILDER.pop();
 
 		BUILDER.push( "Curses" );
@@ -64,6 +65,11 @@ public class ConfigHandler {
 		BUILDER.push( "Durations" );
 		Config.PUFFERFISH_DURATION = createConfigSpecForDouble( "Pufferfish debuffs duration (in seconds) per enchantment level. (Vengeance of Pufferfish)", "pufferfish_duration", 2.0, 1.0, 10 );
 		Config.VAMPIRISM_DURATION = createConfigSpecForInteger( "Vampirism debuffs duration (in seconds) per enchantment level. (Curse of Vampirism)", "vampirism_duration", 30, 10, 300 );
+		Config.GUARDIAN_BEAM_DURATION = createConfigSpecForDouble( "Duration (in seconds) before enemy will take damage from the beam. (Favor of Elder Guardian)", "guardian_beam_duration", 3.5, 1.0, 10.0 );
+		BUILDER.pop();
+
+		BUILDER.push( "Damage" );
+		Config.GUARDIAN_BEAM_DAMAGE = createConfigSpecForDouble( "Damage dealt by the beam. (Favor of Elder Guardian)", "guardian_beam_damage", 4.0, 1.0, 10.0 );
 		BUILDER.pop();
 
 		CONFIG_SPEC = BUILDER.build();
@@ -78,7 +84,7 @@ public class ConfigHandler {
 	public static class Config {
 		public static class Enchantability {
 			// Enchantments
-			public static ForgeConfigSpec.BooleanValue FISHING_FANATIC, HUMAN_SLAYER, DODGE, ENLIGHTENMENT, VITALITY, PHOENIX_DIVE, PUFFERFISH_VENGEANCE, IMMORTALITY, SMELTER, GOTTA_MINE_FAST, LEECH, MAGIC_PROTECTION, SWIFTNESS, HORSE_PROTECTION, HORSE_FROST_WALKER, TELEKINESIS, ABSORBER, HUNTER;
+			public static ForgeConfigSpec.BooleanValue FISHING_FANATIC, HUMAN_SLAYER, DODGE, ENLIGHTENMENT, VITALITY, PHOENIX_DIVE, PUFFERFISH_VENGEANCE, IMMORTALITY, SMELTER, GOTTA_MINE_FAST, LEECH, MAGIC_PROTECTION, SWIFTNESS, HORSE_PROTECTION, HORSE_FROST_WALKER, TELEKINESIS, ABSORBER, HUNTER, ELDER_GUARDIAN_FAVOR;
 
 			// Curses
 			public static ForgeConfigSpec.BooleanValue SLOWNESS, FATIGUE, INCOMPATIBILITY, VAMPIRISM;
@@ -108,6 +114,10 @@ public class ConfigHandler {
 		// Durations
 		public static ForgeConfigSpec.DoubleValue PUFFERFISH_DURATION;
 		public static ForgeConfigSpec.IntValue VAMPIRISM_DURATION;
+		public static ForgeConfigSpec.DoubleValue GUARDIAN_BEAM_DURATION;
+
+		// Damage
+		public static ForgeConfigSpec.DoubleValue GUARDIAN_BEAM_DAMAGE;
 	}
 
 	private static ForgeConfigSpec.IntValue createConfigSpecForInteger( String comment, String name, int defaultValue, int min, int max ) {
