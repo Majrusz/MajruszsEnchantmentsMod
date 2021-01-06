@@ -73,6 +73,10 @@
 	"enchantment.wonderful_enchantments.hunter.desc": "Increases the number of items you receive and the further away your enemy is, the more damage you cause.",
 	"enchantment.wonderful_enchantments.hunter.description": "Increases the number of items you receive and the further away your enemy is, the more damage you cause.",
 
+	"enchantment.wonderful_enchantments.elder_guardian_favor": "Favor of Elder Guardian",
+	"enchantment.wonderful_enchantments.elder_guardian_favor.desc": "After successful hit, it attacks enemy with laser beam that cannot be dodged or blocked.",
+	"enchantment.wonderful_enchantments.elder_guardian_favor.description": "After successful hit, it attacks enemy with laser beam that cannot be dodged or blocked.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Curse of Slowness",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Decreases the player's movement speed.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Decreases the player's movement speed.",

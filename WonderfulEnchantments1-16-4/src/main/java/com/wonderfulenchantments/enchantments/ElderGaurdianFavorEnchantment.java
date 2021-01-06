@@ -1,38 +1,22 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.ElderGuardianEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.core.jmx.Server;
-
-import java.util.UUID;
-import java.util.function.Predicate;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
@@ -85,7 +69,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 			return;
 
 		data.putInt( linkCounterTag, counter );
-		
+
 		int targetID = data.getInt( linkTag );
 		ServerWorld world = ( ServerWorld )attacker.world;
 		Entity targetEntity = world.getEntityByID( targetID );
@@ -113,9 +97,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 	}
 
 	protected static void spawnParticles( LivingEntity attacker, LivingEntity target, ServerWorld world ) {
-		Vector3d difference = new Vector3d(
-			attacker.getPosX() - target.getPosX(),
-			attacker.getPosYHeight( 0.5 ) - target.getPosYHeight( 0.5 ),
+		Vector3d difference = new Vector3d( attacker.getPosX() - target.getPosX(), attacker.getPosYHeight( 0.5 ) - target.getPosYHeight( 0.5 ),
 			attacker.getPosZ() - target.getPosZ()
 		);
 		Vector3d normalized = difference.normalize();
@@ -128,7 +110,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 			world.spawnParticle( ParticleTypes.BUBBLE, x, y, z, 1, 0.0, 0.0, 0.0, 0.0 );
 			world.spawnParticle( ParticleTypes.BUBBLE_POP, x, y, z, 1, 0.0, 0.0, 0.0, 0.0 );
 
-			factor += 1.8 - 0.8 + WonderfulEnchantments.RANDOM.nextDouble() * (1.7 - 0.8);
+			factor += 1.8 - 0.8 + WonderfulEnchantments.RANDOM.nextDouble() * ( 1.7 - 0.8 );
 		}
 	}
 }
