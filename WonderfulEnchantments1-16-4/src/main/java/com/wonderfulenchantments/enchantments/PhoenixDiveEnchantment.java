@@ -2,7 +2,6 @@ package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.ConfigHandler.Config;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -72,8 +71,8 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		for( Entity entity : getEntitiesInRange( attacker, world ) )
 			if( entity instanceof LivingEntity ) {
 				LivingEntity target = ( LivingEntity )entity;
-				target.setFire( 2 * enchantmentLevel );
-				// target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
+				target.setFire( 3 * enchantmentLevel );
+				target.attackEntityFrom( DamageSource.causeExplosionDamage( attacker ), 0 );
 				target.attackEntityFrom( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * event.getDistance() ) );
 			}
 
@@ -124,7 +123,9 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			return;
 
 		ServerWorld world = ( ServerWorld )player.world;
-		world.playSound( null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.5f, 0.9f );
+		world.playSound( null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.5f,
+			0.9f
+		);
 	}
 
 	protected static int getPhoenixDiveLevel( LivingEntity entity ) {
@@ -151,7 +152,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 	protected static void spawnFootParticle( LivingEntity entity, ServerWorld world, boolean isLeftLeg ) {
 		if( entity.isElytraFlying() )
 			return;
-		
+
 		double leftLegRotation = ( isLeftLeg ? 180.0 : 0.0 );
 		double angleInRadians = Math.toRadians( entity.rotationYaw + 90.0 + leftLegRotation );
 		world.spawnParticle( ParticleTypes.FLAME, entity.getPosX() + 0.1875 * Math.sin( -angleInRadians ), entity.getPosY() + 0.1,
