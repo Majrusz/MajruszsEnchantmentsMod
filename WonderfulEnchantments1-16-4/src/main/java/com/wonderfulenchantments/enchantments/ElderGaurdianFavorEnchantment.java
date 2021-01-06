@@ -1,6 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.wonderfulenchantments.ConfigHandler;
 import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,7 +26,6 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 public class ElderGaurdianFavorEnchantment extends Enchantment {
 	protected static final String linkTag = "ElderGuardianFavorLinkedEntityID";
 	protected static final String linkCounterTag = "ElderGuardianFavorCounter";
-	protected static final int damageCooldown = 70;
 
 	public ElderGaurdianFavorEnchantment() {
 		super( Rarity.RARE, EnchantmentType.TRIDENT, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
@@ -82,7 +83,9 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 		} else {
 			boolean areEntitiesInWater = target.isInWater() && attacker.isInWater();
 
-			target.attackEntityFrom( DamageSource.causeMobDamage( attacker ), ( areEntitiesInWater ? 2.0f : 1.0f ) * 10.0f );
+			target.attackEntityFrom( DamageSource.causeMobDamage( attacker ),
+				( float )( ( areEntitiesInWater ? 2.0 : 1.0 ) * ConfigHandler.Config.GUARDIAN_BEAM_DAMAGE.get() )
+			);
 		}
 	}
 
@@ -93,7 +96,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 			return;
 
 		data.putInt( linkTag, target.getEntityId() );
-		data.putInt( linkCounterTag, damageCooldown );
+		data.putInt( linkCounterTag, WonderfulEnchantmentHelper.secondsToTicks( ConfigHandler.Config.GUARDIAN_BEAM_DURATION.get() ) );
 	}
 
 	protected static void spawnParticles( LivingEntity attacker, LivingEntity target, ServerWorld world ) {

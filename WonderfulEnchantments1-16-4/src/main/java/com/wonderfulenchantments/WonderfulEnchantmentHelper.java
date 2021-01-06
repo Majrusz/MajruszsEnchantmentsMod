@@ -165,6 +165,9 @@ public class WonderfulEnchantmentHelper {
 		if( enchantment instanceof HunterEnchantment )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HUNTER );
 
+		if( enchantment instanceof ElderGaurdianFavorEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.ELDER_GUARDIAN_FAVOR );
+
 		if( enchantment instanceof SlownessCurse )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SLOWNESS );
 
