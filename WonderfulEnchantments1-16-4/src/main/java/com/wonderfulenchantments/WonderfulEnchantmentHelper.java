@@ -11,6 +11,8 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -97,6 +99,15 @@ public class WonderfulEnchantmentHelper {
 		return ( itemStack.getItem() instanceof HorseArmorItem || itemStack.getItem() instanceof DyeableHorseArmorItem );
 	}
 
+	public static void applyEffectIfPossible( LivingEntity entity, EffectInstance effectInstance ) {
+		if( entity.isPotionApplicable( effectInstance ) )
+			entity.addPotionEffect( effectInstance );
+	}
+
+	public static void applyEffectIfPossible( LivingEntity entity, Effect effect, int effectDuration, int amplifier ) {
+		applyEffectIfPossible( entity, new EffectInstance( effect, effectDuration, amplifier ) );
+	}
+
 	public static int increaseLevelIfEnchantmentIsDisabled( Enchantment enchantment ) {
 		Function< ForgeConfigSpec.BooleanValue, Integer > checkEnchantment = ( value )->( value.get() ? 0 : disableEnchantmentValue );
 
@@ -147,6 +158,15 @@ public class WonderfulEnchantmentHelper {
 
 		if( enchantment instanceof TelekinesisEnchantment )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.TELEKINESIS );
+
+		if( enchantment instanceof AbsorberEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.ABSORBER );
+
+		if( enchantment instanceof HunterEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HUNTER );
+
+		if( enchantment instanceof ElderGaurdianFavorEnchantment )
+			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.ELDER_GUARDIAN_FAVOR );
 
 		if( enchantment instanceof SlownessCurse )
 			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SLOWNESS );

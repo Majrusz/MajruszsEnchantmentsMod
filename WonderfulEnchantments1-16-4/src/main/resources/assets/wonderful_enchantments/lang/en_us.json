@@ -34,16 +34,16 @@
 	"enchantment.wonderful_enchantments.immortality.description": "You will cheat death on fatal hit.",
 
 	"enchantment.wonderful_enchantments.smelter": "Smelter",
-	"enchantment.wonderful_enchantments.smelter.desc": "Gives a chance to smelt a block when destroyed.",
-	"enchantment.wonderful_enchantments.smelter.description": "Gives a chance to smelt a block when destroyed.",
+	"enchantment.wonderful_enchantments.smelter.desc": "When the block is destroyed it is automatically smelted.",
+	"enchantment.wonderful_enchantments.smelter.description": "When the block is destroyed it is automatically smelted.",
 
 	"enchantment.wonderful_enchantments.gotta_mine_fast": "Gotta Mine Fast",
 	"enchantment.wonderful_enchantments.gotta_mine_fast.desc": "Increases the digging speed the longer you hold the left mouse button.",
 	"enchantment.wonderful_enchantments.gotta_mine_fast.description": "Increases the digging speed the longer you hold the left mouse button.",
 
 	"enchantment.wonderful_enchantments.leech": "Leech",
-	"enchantment.wonderful_enchantments.leech.desc": "Gives a chance to steal positive effects or health from opponents.",
-	"enchantment.wonderful_enchantments.leech.description": "Gives a chance to steal positive effects or health from opponents.",
+	"enchantment.wonderful_enchantments.leech.desc": "Gives a chance to steal positive effects or health from enemies.",
+	"enchantment.wonderful_enchantments.leech.description": "Gives a chance to steal positive effects or health from enemies.",
 
 	"enchantment.wonderful_enchantments.magic_protection": "Magic Protection",
 	"enchantment.wonderful_enchantments.magic_protection.desc": "Protects against magical damage like Evoker Fangs, Guardian laser and Instant Damage potion.",
@@ -64,6 +64,18 @@
 	"enchantment.wonderful_enchantments.telekinesis": "Telekinesis",
 	"enchantment.wonderful_enchantments.telekinesis.desc": "Adds the item directly to the inventory if possible when destroying blocks.",
 	"enchantment.wonderful_enchantments.telekinesis.description": "Adds the item directly to the inventory if possible when destroying blocks.",
+
+	"enchantment.wonderful_enchantments.absorber": "Absorber",
+	"enchantment.wonderful_enchantments.absorber.desc": "Shield absorbs all negative effects at the expense of durability.",
+	"enchantment.wonderful_enchantments.absorber.description": "Shield absorbs all negative effects at the expense of durability.",
+
+	"enchantment.wonderful_enchantments.hunter": "Hunter",
+	"enchantment.wonderful_enchantments.hunter.desc": "Increases the number of items you receive and the further away your enemy is, the more damage you cause.",
+	"enchantment.wonderful_enchantments.hunter.description": "Increases the number of items you receive and the further away your enemy is, the more damage you cause.",
+
+	"enchantment.wonderful_enchantments.elder_guardian_favor": "Favor of Elder Guardian",
+	"enchantment.wonderful_enchantments.elder_guardian_favor.desc": "After successful hit, it attacks enemy with laser beam that cannot be dodged or blocked.",
+	"enchantment.wonderful_enchantments.elder_guardian_favor.description": "After successful hit, it attacks enemy with laser beam that cannot be dodged or blocked.",
 
 	"enchantment.wonderful_enchantments.slowness_curse": "Curse of Slowness",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Decreases the player's movement speed.",

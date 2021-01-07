@@ -1,6 +1,6 @@
 modLoader="javafml"
 
-loaderVersion="[34,)"
+loaderVersion="[35,)"
 
 license="MIT License"
 
@@ -10,7 +10,7 @@ issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantm
 
 modId="wonderful_enchantments"
 
-version="1.16.3-0.9.1"
+version="1.16.4-0.10.0"
 
 displayName="Wonderful Enchantments"
 
@@ -31,13 +31,13 @@ Mod adding a lot of new unique enchantments to the game.
 [[dependencies.examplemod]]
     modId="forge"
     mandatory=true
-    versionRange="[34,)"
+    versionRange="[35,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.examplemod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3]"
+    versionRange="[1.16.4,1.17)"
     ordering="NONE"
     side="BOTH"
