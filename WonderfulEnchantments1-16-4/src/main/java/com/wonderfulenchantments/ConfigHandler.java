@@ -78,7 +78,7 @@ public class ConfigHandler {
 	public static void register( final ModLoadingContext context ) {
 		ConfigHandler.load();
 
-		context.registerConfig( ModConfig.Type.COMMON, ConfigHandler.CONFIG_SPEC, "wonderful-enchantments.toml" );
+		context.registerConfig( ModConfig.Type.COMMON, ConfigHandler.CONFIG_SPEC, "wonderful-enchantments-common.toml" );
 	}
 
 	public static class Config {
