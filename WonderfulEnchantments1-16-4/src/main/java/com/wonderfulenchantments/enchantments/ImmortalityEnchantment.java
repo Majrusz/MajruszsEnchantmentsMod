@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that causes shield to work like Totem of Undying. */
 @Mod.EventBusSubscriber
 public class ImmortalityEnchantment extends Enchantment {
 	protected static final int damageOnUse = 9001;
@@ -42,6 +43,7 @@ public class ImmortalityEnchantment extends Enchantment {
 		return this.getMinEnchantability( level ) + 30;
 	}
 
+	/** Event on which enchantment effect is applied if it is possible. */
 	@SubscribeEvent
 	public static void onEntityHurt( LivingHurtEvent event ) {
 		LivingEntity target = event.getEntityLiving();
@@ -54,6 +56,14 @@ public class ImmortalityEnchantment extends Enchantment {
 		}
 	}
 
+	/**
+	 Cheating death when players is holding shield and it has this enchantment.
+
+	 @param target    Entity which will receive full health on death.
+	 @param itemStack Item stack to check.
+
+	 @return Returns whether player successfully cheated death.
+	 */
 	protected static boolean tryCheatDeath( LivingEntity target, ItemStack itemStack ) {
 		if( itemStack.getItem() instanceof ShieldItem && EnchantmentHelper.getEnchantmentLevel( RegistryHandler.IMMORTALITY.get(), itemStack ) > 0 ) {
 			target.setHealth( target.getMaxHealth() );
@@ -67,6 +77,11 @@ public class ImmortalityEnchantment extends Enchantment {
 		return false;
 	}
 
+	/**
+	 Spawning particles and playing sound on cheating death.
+
+	 @param livingEntity Entity where the effects will be generated.
+	 */
 	protected static void spawnParticlesAndPlaySounds( LivingEntity livingEntity ) {
 		ServerWorld world = ( ServerWorld )livingEntity.getEntityWorld();
 		world.spawnParticle( ParticleTypes.TOTEM_OF_UNDYING, livingEntity.getPosX(), livingEntity.getPosYHeight( 0.75D ), livingEntity.getPosZ(), 64,
