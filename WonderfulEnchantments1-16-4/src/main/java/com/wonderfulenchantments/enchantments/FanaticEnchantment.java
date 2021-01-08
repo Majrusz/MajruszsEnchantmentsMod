@@ -30,6 +30,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that increases loot from fishing. */
 @Mod.EventBusSubscriber
 public class FanaticEnchantment extends Enchantment {
 	protected static final double levelIncreaseChanceMultiplier = 0.01D;
@@ -58,6 +59,7 @@ public class FanaticEnchantment extends Enchantment {
 		return ( float )level * 1.0F;
 	}
 
+	/** Method that displays enchantment name. It is overridden because at maximum level the enchantment will change its name. */
 	@Override
 	public ITextComponent getDisplayName( int level ) {
 		if( level == this.getMaxLevel() ) {
@@ -77,6 +79,7 @@ public class FanaticEnchantment extends Enchantment {
 		return true;
 	}
 
+	/** Event that increase loot if all conditions were met. */
 	@SubscribeEvent
 	public static void onFishedItem( ItemFishedEvent event ) {
 		PlayerEntity player = event.getPlayer();
@@ -118,6 +121,11 @@ public class FanaticEnchantment extends Enchantment {
 		) );
 	}
 
+	/**
+	 Generating loot context at which player was fishing. (tool, position etc.)
+
+	 @param player Player for which context will be generated.
+	 */
 	protected static LootContext generateLootContext( PlayerEntity player ) {
 		LootContext.Builder lootContextBuilder = new LootContext.Builder( ( ServerWorld )player.getEntityWorld() );
 		lootContextBuilder.withParameter( LootParameters.TOOL, player.getHeldItemMainhand() )
@@ -128,12 +136,21 @@ public class FanaticEnchantment extends Enchantment {
 		return lootContextBuilder.build( LootParameterSets.FISHING );
 	}
 
+	/** Method that returns fishing loot table. (possible items to get) */
 	protected static LootTable getFishingLootTable() {
 		return ServerLifecycleHooks.getCurrentServer()
 			.getLootTableManager()
 			.getLootTableFromLocation( LootTables.GAMEPLAY_FISHING );
 	}
 
+	/**
+	 Spawning extra reward in world.
+
+	 @param reward       Item stack that player will receive.
+	 @param player       Player that receive extra reward.
+	 @param world        World where the player is fishing.
+	 @param bobberEntity Fishing bobber where item will be spawned.
+	 */
 	protected static void spawnReward( ItemStack reward, PlayerEntity player, World world, FishingBobberEntity bobberEntity ) {
 		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(),
 			bobberEntity.getPosY() + 0.25D * WonderfulEnchantments.RANDOM.nextDouble(),
@@ -150,7 +167,14 @@ public class FanaticEnchantment extends Enchantment {
 		world.addEntity( itemEntity );
 	}
 
+	/**
+	 Trying to increase level when player is fishing. Chance is increased when it is raining.
 
+	 @param player    Player that is currently fishing.
+	 @param isRaining Flag that tells if it is currently raining.
+
+	 @return Returns whether the level was increased or not.
+	 */
 	protected static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player, boolean isRaining ) {
 		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FISHING_FANATIC.get(), player );
 		double increaseChance = ( RegistryHandler.FISHING_FANATIC.get()
@@ -186,6 +210,12 @@ public class FanaticEnchantment extends Enchantment {
 		return false;
 	}
 
+	/**
+	 Displaying information on screen for player when he fished more than one item.
+
+	 @param rewards Rewards that player get.
+	 @param player  Player that will see the notification.
+	 */
 	protected static void notifyPlayerAboutRewards( Multiset< String > rewards, PlayerEntity player ) {
 		StringTextComponent message = new StringTextComponent( TextFormatting.WHITE + "(" );
 
