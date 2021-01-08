@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that increases experience from all sources. */
 @Mod.EventBusSubscriber
 public class EnlightenmentEnchantment extends Enchantment {
 	public EnlightenmentEnchantment() {
@@ -38,6 +39,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 		return this.getMinEnchantability( enchantmentLevel ) + 20;
 	}
 
+	/** Event that increases experience when picking up experience orbs. */
 	@SubscribeEvent
 	public static void onXPPickUp( PlayerXpEvent.PickupXp event ) {
 		int enlightenmentSum = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.ENLIGHTENMENT.get(), event.getPlayer(),
@@ -56,6 +58,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 		}
 	}
 
+	/** Event that increases levels at the enchantment table with each enchantment level. (gives 0%-100% level bonus, capped at 30lvl) */
 	@SubscribeEvent
 	public static void onCalculatingEnchantmentLevels( EnchantmentLevelSetEvent event ) {
 		BlockPos position = event.getPos();
@@ -68,7 +71,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 		if( enlightenmentSum > 0 ) {
 			int bonus = Math.max( 0,
 				Math.min( event.getLevel() * enlightenmentSum / ( enchantment.getMaxLevel() * 4 ), 30 - event.getLevel() )
-			); // gives 0%-100% level bonus (capped at 30lvl)
+			);
 
 			event.setLevel( event.getLevel() + bonus );
 		}
