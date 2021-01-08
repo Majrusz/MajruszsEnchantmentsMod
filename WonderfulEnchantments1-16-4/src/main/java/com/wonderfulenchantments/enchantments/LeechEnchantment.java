@@ -148,8 +148,8 @@ public class LeechEnchantment extends Enchantment {
 		for( int i = 0; i <= amountOfParticles; i++ ) {
 			Vector3d step = difference.scale( ( float )( i ) / amountOfParticles );
 			Vector3d finalPosition = startPosition.add( step );
-			world.spawnParticle( ParticleTypes.ENCHANTED_HIT, finalPosition.getX(), finalPosition.getY(), finalPosition.getZ(), 1, 0.0D, 0.0D,
-				0.0D, 0.0D
+			world.spawnParticle( ParticleTypes.ENCHANTED_HIT, finalPosition.getX(), finalPosition.getY(), finalPosition.getZ(), 1, 0.0D, 0.0D, 0.0D,
+				0.0D
 			);
 		}
 
