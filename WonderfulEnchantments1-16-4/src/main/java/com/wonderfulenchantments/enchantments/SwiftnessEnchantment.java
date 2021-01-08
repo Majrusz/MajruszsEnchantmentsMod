@@ -53,8 +53,10 @@ public class SwiftnessEnchantment extends Enchantment {
 				.apply( livingEntity );
 	}
 
-	/** Calculating the movement speed bonuses of equipped horse armor.
-	 * @param animal Animal on which the movement bonus is calculated.
+	/**
+	 Calculating the movement speed bonuses of equipped horse armor.
+
+	 @param animal Animal on which the movement bonus is calculated.
 	 */
 	protected static double getMovementSpeedMultiplier( AnimalEntity animal ) {
 		int swiftnessLevel = WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.SWIFTNESS.get(),

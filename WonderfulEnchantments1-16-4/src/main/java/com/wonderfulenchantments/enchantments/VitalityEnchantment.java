@@ -51,8 +51,10 @@ public class VitalityEnchantment extends Enchantment {
 			.apply( livingEntity );
 	}
 
-	/** Calculating the sum of health bonuses on both shields.
-	 * @param livingEntity Entity on which the health bonus is calculated.
+	/**
+	 Calculating the sum of health bonuses on both shields.
+
+	 @param livingEntity Entity on which the health bonus is calculated.
 	 */
 	protected static double getHealthBonus( LivingEntity livingEntity ) {
 		int sum = WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.VITALITY.get(), livingEntity,
