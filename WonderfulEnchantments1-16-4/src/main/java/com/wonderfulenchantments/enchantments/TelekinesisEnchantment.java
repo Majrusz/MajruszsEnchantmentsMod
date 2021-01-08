@@ -6,6 +6,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that puts an item directly to inventory when destroying blocks. (if possible) */
 public class TelekinesisEnchantment extends Enchantment {
 	public TelekinesisEnchantment() {
 		super( Rarity.UNCOMMON, EnchantmentType.DIGGER, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );

@@ -1,9 +1,10 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that causes the shield to absorb all negative effects at the expense of durability. */
 @Mod.EventBusSubscriber
 public class AbsorberEnchantment extends Enchantment {
 	public AbsorberEnchantment() {
@@ -41,6 +43,7 @@ public class AbsorberEnchantment extends Enchantment {
 		return this.getMinEnchantability( level ) + 15;
 	}
 
+	/** Event that manages whether or not an effect should be applied. */
 	@SubscribeEvent
 	public static void onApplyingEffect( PotionEvent.PotionApplicableEvent event ) {
 		LivingEntity entity = event.getEntityLiving();
@@ -64,14 +67,29 @@ public class AbsorberEnchantment extends Enchantment {
 		}
 	}
 
+	/**
+	 Checking that the item is the shield and has the appropriate enchantment.
+
+	 @param itemStack Item stack to check.
+	 */
 	protected static boolean absorbSucceed( ItemStack itemStack ) {
-		return itemStack.getItem() instanceof ShieldItem && itemStack.getUseAction() == UseAction.BLOCK;
+		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.ABSORBER.get(), itemStack );
+
+		return itemStack.getItem() instanceof ShieldItem && itemStack.getUseAction() == UseAction.BLOCK && enchantmentLevel > 0;
 	}
 
+	/**
+	 Damaging the shield when the effect is absorbed.
+
+	 @param shield         Shield to be damaged.
+	 @param entity         Entity which is holding the shield.
+	 @param effectInstance Effect that was absorbed, required to calculate the damage.
+	 */
 	protected static void damageShield( ItemStack shield, LivingEntity entity, EffectInstance effectInstance ) {
 		double amplifierDamage = effectInstance.getAmplifier();
 		double durationDamage = ( ( double )effectInstance.getDuration() ) / WonderfulEnchantmentHelper.secondsToTicks( 60.0 );
 
-		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, ( e )->e.sendBreakAnimation( shield.getEquipmentSlot() ) );
+		EquipmentSlotType slotType = entity.getHeldItemMainhand() == shield ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
+		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, ( e )->e.sendBreakAnimation( slotType ) );
 	}
 }

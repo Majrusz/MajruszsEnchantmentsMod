@@ -7,6 +7,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that automatically smelts destroyed blocks. (if possible) */
 public class SmelterEnchantment extends Enchantment {
 	public SmelterEnchantment() {
 		super( Rarity.UNCOMMON, EnchantmentType.DIGGER, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );

@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment which after successful hit attacks enemy with laser beam that cannot be dodged or blocked. */
 @Mod.EventBusSubscriber
 public class ElderGaurdianFavorEnchantment extends Enchantment {
 	protected static final String linkTag = "ElderGuardianFavorLinkedEntityID";
@@ -48,6 +49,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 		return this.getMinEnchantability( level ) + 20;
 	}
 
+	/** Event that links entities together on hit. */
 	@SubscribeEvent
 	public static void onHit( LivingHurtEvent event ) {
 		DamageSource damageSource = event.getSource();
@@ -62,6 +64,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 		connectEntities( attacker, target, enchantmentLevel );
 	}
 
+	/** Event that updates link between entities and damage target after some time. */
 	@SubscribeEvent
 	public static void onUpdate( LivingEvent.LivingUpdateEvent event ) {
 		LivingEntity attacker = event.getEntityLiving();
@@ -85,13 +88,22 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 		} else {
 			boolean areEntitiesInWater = target.isInWater() && attacker.isInWater();
 
-			world.playSound( null, target.getPosX(), target.getPosYEye(), target.getPosZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.AMBIENT, 0.5f, 1.8f );
+			world.playSound( null, target.getPosX(), target.getPosYEye(), target.getPosZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.AMBIENT,
+				0.5f, 1.8f
+			);
 			target.attackEntityFrom( DamageSource.MAGIC,
 				( float )( ( areEntitiesInWater ? 2.0 : 1.0 ) * ConfigHandler.Config.GUARDIAN_BEAM_DAMAGE.get() )
 			);
 		}
 	}
 
+	/**
+	 Linking entities together.
+
+	 @param attacker         Entity that attacks target.
+	 @param target           Entity that was damaged and will be damaged second time later.
+	 @param enchantmentLevel Attacker's level of 'Favor of Elder Guardian'.
+	 */
 	protected static void connectEntities( LivingEntity attacker, LivingEntity target, int enchantmentLevel ) {
 		CompoundNBT data = attacker.getPersistentData();
 
@@ -102,6 +114,13 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 		data.putInt( linkCounterTag, WonderfulEnchantmentHelper.secondsToTicks( ConfigHandler.Config.GUARDIAN_BEAM_DURATION.get() ) );
 	}
 
+	/**
+	 Spawning particles between entities when they are linked.
+
+	 @param attacker Attacker.
+	 @param target   Target.
+	 @param world    World at which particles will be spawned.
+	 */
 	protected static void spawnParticles( LivingEntity attacker, LivingEntity target, ServerWorld world ) {
 		Vector3d difference = new Vector3d( attacker.getPosX() - target.getPosX(), attacker.getPosYHeight( 0.5 ) - target.getPosYHeight( 0.5 ),
 			attacker.getPosZ() - target.getPosZ()

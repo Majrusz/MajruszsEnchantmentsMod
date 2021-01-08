@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that increases damage dealt against humans. (pillagers, villagers, players and witches) */
 @Mod.EventBusSubscriber
 public class HumanSlayerEnchantment extends DamageEnchantment {
 	public HumanSlayerEnchantment() {
@@ -43,6 +44,7 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 		return 0.0f;
 	}
 
+	/** Event that increases damage when all conditions are met. */
 	@SubscribeEvent
 	public static void onEntityHurt( LivingHurtEvent event ) {
 		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
@@ -54,14 +56,19 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 		float extraDamage = ( float )Math.floor(
 			Config.HUMANITY_DAMAGE_BONUS.get() * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
 
-		if( extraDamage > 0.0F && isHuman( target ) ) {
+		if( extraDamage > 0.0f && isHuman( target ) ) {
 			( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ),
-				target.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D
+				target.getPosZ(), 24, 0.125, 0.25, 0.125, 0.5
 			);
 			event.setAmount( event.getAmount() + extraDamage );
 		}
 	}
 
+	/**
+	 Checking if entity is human.
+
+	 @param entity Entity to check.
+	 */
 	protected static boolean isHuman( Entity entity ) {
 		return ( entity instanceof VillagerEntity || entity instanceof WanderingTraderEntity || entity instanceof PlayerEntity || entity instanceof WitchEntity || entity instanceof AbstractIllagerEntity );
 	}

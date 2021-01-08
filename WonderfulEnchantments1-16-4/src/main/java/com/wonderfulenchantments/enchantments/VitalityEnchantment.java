@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that increases the health of the entity. */
 @Mod.EventBusSubscriber
 public class VitalityEnchantment extends Enchantment {
 	protected static final AttributeHelper attributeHelper = new AttributeHelper( "575cb29a-1ee4-11eb-adc1-0242ac120002", "VitalityBonus",
@@ -41,6 +42,7 @@ public class VitalityEnchantment extends Enchantment {
 		return this.getMinEnchantability( level ) + 10;
 	}
 
+	/** Event that updates the health bonus on each living entity equipment change. */
 	@SubscribeEvent
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
 		LivingEntity livingEntity = event.getEntityLiving();
@@ -49,6 +51,11 @@ public class VitalityEnchantment extends Enchantment {
 			.apply( livingEntity );
 	}
 
+	/**
+	 Calculating the sum of health bonuses on both shields.
+
+	 @param livingEntity Entity on which the health bonus is calculated.
+	 */
 	protected static double getHealthBonus( LivingEntity livingEntity ) {
 		int sum = WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.VITALITY.get(), livingEntity,
 			EquipmentSlotTypes.BOTH_HANDS, ShieldItem.class

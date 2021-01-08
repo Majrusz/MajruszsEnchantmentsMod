@@ -26,6 +26,7 @@ import java.util.Collection;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that steals from enemy positive effect or some health. */
 @Mod.EventBusSubscriber
 public class LeechEnchantment extends Enchantment {
 	public LeechEnchantment() {
@@ -52,6 +53,7 @@ public class LeechEnchantment extends Enchantment {
 		return stack.getItem() instanceof AxeItem || super.canApply( stack );
 	}
 
+	/** Event that applies enchantment effect when attacker has an appropriate enchantment level and if 'leeching' succeeded. */
 	@SubscribeEvent
 	public static void onHit( LivingAttackEvent event ) {
 		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
@@ -75,14 +77,28 @@ public class LeechEnchantment extends Enchantment {
 		}
 	}
 
+	/**
+	 Stealing from the entity first positive effect. If entity does not have any, then stealing health.
+
+	 @param stealer Entity which will receive some bonuses.
+	 @param target  Entity which will lose something.
+	 */
 	protected static void steal( LivingEntity stealer, LivingEntity target ) {
 		Collection< EffectInstance > targetEffects = target.getActivePotionEffects();
 
-		// if there is no effects at all or there is no positive effect then steal health
 		if( !( targetEffects.size() > 0 && stealEffect( stealer, target, targetEffects ) ) )
 			stealHealth( stealer, target );
 	}
 
+	/**
+	 Stealing from the entity first positive effect.
+
+	 @param stealer Entity which will receive new effect.
+	 @param target  Entity which will lose the effect.
+	 @param effects Collection of all target effects.
+
+	 @return Returns whether stealing effect succeeded. May be false when target has only negative effects.
+	 */
 	protected static boolean stealEffect( LivingEntity stealer, LivingEntity target, Collection< EffectInstance > effects ) {
 		EffectInstance[] possibleEffects = effects.toArray( new EffectInstance[]{} );
 
@@ -98,34 +114,47 @@ public class LeechEnchantment extends Enchantment {
 		return false;
 	}
 
+	/**
+	 Stealing from the entity fixed amount of the health.
+
+	 @param stealer Entity which will receive some extra health.
+	 @param target  Entity which will be damage from magic source.
+	 */
 	protected static void stealHealth( LivingEntity stealer, LivingEntity target ) {
 		target.attackEntityFrom( DamageSource.MAGIC, 1.0f );
 		stealer.heal( 1.0f );
 	}
 
+	/**
+	 Spawning particles between entities and playing sound. The order does not matter.
+
+	 @param attacker One of two entities.
+	 @param target   One of two entities.
+	 */
 	protected static void spawnParticlesAndPlaySounds( LivingEntity attacker, LivingEntity target ) {
-		if( attacker.getEntityWorld() instanceof ServerWorld ) {
-			ServerWorld world = ( ServerWorld )attacker.getEntityWorld();
+		if( !( attacker.getEntityWorld() instanceof ServerWorld ) )
+			return;
 
-			Vector3d startPosition = attacker.getPositionVec()
-				.add( new Vector3d( 0.0D, attacker.getHeight() * 0.75D, 0.0D ) );
-			Vector3d endPosition = target.getPositionVec()
-				.add( new Vector3d( 0.0D, target.getHeight() * 0.75D, 0.0D ) );
+		ServerWorld world = ( ServerWorld )attacker.getEntityWorld();
 
-			Vector3d difference = endPosition.subtract( startPosition );
-			int amountOfParticles = ( int )( Math.ceil( startPosition.distanceTo( endPosition ) * 5.0D ) );
+		Vector3d startPosition = attacker.getPositionVec()
+			.add( new Vector3d( 0.0D, attacker.getHeight() * 0.75D, 0.0D ) );
+		Vector3d endPosition = target.getPositionVec()
+			.add( new Vector3d( 0.0D, target.getHeight() * 0.75D, 0.0D ) );
 
-			for( int i = 0; i <= amountOfParticles; i++ ) {
-				Vector3d step = difference.scale( ( float )( i ) / amountOfParticles );
-				Vector3d finalPosition = startPosition.add( step );
-				world.spawnParticle( ParticleTypes.ENCHANTED_HIT, finalPosition.getX(), finalPosition.getY(), finalPosition.getZ(), 1, 0.0D, 0.0D,
-					0.0D, 0.0D
-				);
-			}
+		Vector3d difference = endPosition.subtract( startPosition );
+		int amountOfParticles = ( int )( Math.ceil( startPosition.distanceTo( endPosition ) * 5.0D ) );
 
-			world.playSound( null, startPosition.getX(), startPosition.getY(), startPosition.getZ(), SoundEvents.ENTITY_GENERIC_DRINK,
-				SoundCategory.AMBIENT, 0.25F, 1.0F
+		for( int i = 0; i <= amountOfParticles; i++ ) {
+			Vector3d step = difference.scale( ( float )( i ) / amountOfParticles );
+			Vector3d finalPosition = startPosition.add( step );
+			world.spawnParticle( ParticleTypes.ENCHANTED_HIT, finalPosition.getX(), finalPosition.getY(), finalPosition.getZ(), 1, 0.0D, 0.0D, 0.0D,
+				0.0D
 			);
 		}
+
+		world.playSound( null, startPosition.getX(), startPosition.getY(), startPosition.getZ(), SoundEvents.ENTITY_GENERIC_DRINK,
+			SoundCategory.AMBIENT, 0.25F, 1.0F
+		);
 	}
 }

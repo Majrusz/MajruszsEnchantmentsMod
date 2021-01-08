@@ -20,6 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that gives Frost Walker enchantment effect but on horse armor. */
 @Mod.EventBusSubscriber
 public class HorseFrostWalkerEnchantment extends Enchantment {
 	public HorseFrostWalkerEnchantment() {
@@ -46,6 +47,7 @@ public class HorseFrostWalkerEnchantment extends Enchantment {
 		return true;
 	}
 
+	/** Event that freezes nearby water each tick when all conditions are met. */
 	@SubscribeEvent
 	public static void freezeNearby( LivingEvent.LivingUpdateEvent event ) {
 		if( !isValid( event ) )
@@ -102,6 +104,11 @@ public class HorseFrostWalkerEnchantment extends Enchantment {
 		}
 	}
 
+	/**
+	 Checking whether all conditions are met.
+
+	 @param event Living entity update event.
+	 */
 	protected static boolean isValid( LivingEvent.LivingUpdateEvent event ) {
 		if( !( event.getEntityLiving() instanceof AnimalEntity ) )
 			return false;

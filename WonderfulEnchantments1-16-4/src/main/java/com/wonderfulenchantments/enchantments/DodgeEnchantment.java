@@ -30,6 +30,7 @@ import java.util.Map;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** DOCUMENTATION FOR THIS ENCHANTMENT WILL BE DONE AFTER REFACTORING IT. */
 @Mod.EventBusSubscriber
 public class DodgeEnchantment extends Enchantment {
 	protected static final AttributeHelper attributeHelper = new AttributeHelper( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444", "KnockBackImmunityTime",

@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that increases loot from enemies and increases damage the further the enemy is. */
 @Mod.EventBusSubscriber
 public class HunterEnchantment extends LootBonusEnchantment {
 	public HunterEnchantment() {
@@ -27,6 +28,7 @@ public class HunterEnchantment extends LootBonusEnchantment {
 		return super.getMinEnchantability( level ) + increaseLevelIfEnchantmentIsDisabled( this );
 	}
 
+	/** Event at which loot will be increased when killer killed entity with bow and have this enchantment. */
 	@SubscribeEvent
 	public static void spawnExtraLoot( LootingLevelEvent event ) {
 		DamageSource damageSource = event.getDamageSource();
@@ -39,6 +41,7 @@ public class HunterEnchantment extends LootBonusEnchantment {
 		event.setLootingLevel( event.getLootingLevel() + hunterLevel );
 	}
 
+	/** Event that increases damage dealt by entity. */
 	@SubscribeEvent
 	public static void onHit( LivingHurtEvent event ) {
 		DamageSource damageSource = event.getSource();
@@ -56,6 +59,11 @@ public class HunterEnchantment extends LootBonusEnchantment {
 		event.setAmount( ( float )( event.getAmount() * extraDamageMultiplier ) );
 	}
 
+	/**
+	 Checking if damage source comes from arrow and is caused (fired) by the entity. (not dispenser for example)
+
+	 @param source Damage source to check.
+	 */
 	protected static boolean isValid( DamageSource source ) {
 		return source.getImmediateSource() instanceof ArrowEntity && source.getTrueSource() instanceof LivingEntity;
 	}
