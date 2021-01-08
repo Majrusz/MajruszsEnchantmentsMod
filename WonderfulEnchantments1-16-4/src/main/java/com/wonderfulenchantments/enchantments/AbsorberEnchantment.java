@@ -1,9 +1,10 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.wonderfulenchantments.EquipmentSlotTypes;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
+import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -17,8 +18,6 @@ import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 @Mod.EventBusSubscriber
 public class AbsorberEnchantment extends Enchantment {
@@ -65,13 +64,15 @@ public class AbsorberEnchantment extends Enchantment {
 	}
 
 	protected static boolean absorbSucceed( ItemStack itemStack ) {
-		return itemStack.getItem() instanceof ShieldItem && itemStack.getUseAction() == UseAction.BLOCK;
+		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.ABSORBER.get(), itemStack );
+		return itemStack.getItem() instanceof ShieldItem && itemStack.getUseAction() == UseAction.BLOCK && enchantmentLevel > 0;
 	}
 
 	protected static void damageShield( ItemStack shield, LivingEntity entity, EffectInstance effectInstance ) {
 		double amplifierDamage = effectInstance.getAmplifier();
 		double durationDamage = ( ( double )effectInstance.getDuration() ) / WonderfulEnchantmentHelper.secondsToTicks( 60.0 );
 
-		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, ( e )->e.sendBreakAnimation( shield.getEquipmentSlot() ) );
+		EquipmentSlotType slotType = entity.getHeldItemMainhand() == shield ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
+		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, ( e )->e.sendBreakAnimation( slotType ) );
 	}
 }
