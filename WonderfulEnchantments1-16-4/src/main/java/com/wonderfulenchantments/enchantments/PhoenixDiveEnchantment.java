@@ -132,17 +132,21 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		);
 	}
 
-	/** Returning Phoenix Dive enchantment level.
+	/**
+	 Returning Phoenix Dive enchantment level.
+
 	 @param entity Entity to check level.
 	 */
 	protected static int getPhoenixDiveLevel( LivingEntity entity ) {
 		return EnchantmentHelper.getEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), entity.getItemStackFromSlot( EquipmentSlotType.FEET ) );
 	}
 
-	/** Getting entities in certain range.
+	/**
+	 Getting entities in certain range.
 
 	 @param entity Entity as a start position.
-	 @param world Current entity world.
+	 @param world  Current entity world.
+
 	 @return Returns list with entities that were in range.
 	 */
 	protected static List< Entity > getEntitiesInRange( LivingEntity entity, ServerWorld world ) {
@@ -152,10 +156,11 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			.expand( range * 2.0D, 0, range * 2.0D ) );
 	}
 
-	/** Spawning particles on fall.
+	/**
+	 Spawning particles on fall.
 
 	 @param position Position where the entity landed.
-	 @param world World where particles should be spawned.
+	 @param world    World where particles should be spawned.
 	 */
 	protected static void spawnFallParticles( Vector3d position, ServerWorld world ) {
 		double x = position.getX(), y = position.getY(), z = position.getZ();
@@ -167,10 +172,11 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		world.playSound( null, x, y, z, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.5f, 0.9f );
 	}
 
-	/** Spawning particles at foot height.
+	/**
+	 Spawning particles at foot height.
 
-	 @param entity Entity where the particles will be spawned.
-	 @param world World where particles should be spawned.
+	 @param entity    Entity where the particles will be spawned.
+	 @param world     World where particles should be spawned.
 	 @param isLeftLeg Flag that informs to spawn particle at left leg position.
 	 */
 	protected static void spawnFootParticle( LivingEntity entity, ServerWorld world, boolean isLeftLeg ) {
