@@ -65,6 +65,18 @@
   "enchantment.wonderful_enchantments.telekinesis.desc": "Добавляет выпадающие предметы непосредственно в инвентарь игрока, если это возможно.",
   "enchantment.wonderful_enchantments.telekinesis.description": "Добавляет выпадающие предметы непосредственно в инвентарь игрока, если это возможно.",
 
+  "enchantment.wonderful_enchantments.absorber": "Абсорбент",
+  "enchantment.wonderful_enchantments.absorber.desc": "Щит поглощает все негативные эффекты за счет прочности.",
+  "enchantment.wonderful_enchantments.absorber.description": "Щит поглощает все негативные эффекты за счет прочности.",
+
+  "enchantment.wonderful_enchantments.hunter": "Охотник",
+  "enchantment.wonderful_enchantments.hunter.desc": "Увеличивает наносимый урон вместе с увеличением дистанции до цели. Также увеличивает количество добычи.",
+  "enchantment.wonderful_enchantments.hunter.description": "Увеличивает наносимый урон вместе с увеличением дистанции до цели. Также увеличивает количество добычи.",
+
+  "enchantment.wonderful_enchantments.elder_guardian_favor": "Благословение древнего стража",
+  "enchantment.wonderful_enchantments.elder_guardian_favor.desc": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать.",
+  "enchantment.wonderful_enchantments.elder_guardian_favor.description": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать.",
+
   "enchantment.wonderful_enchantments.slowness_curse": "Проклятие медлительности",
   "enchantment.wonderful_enchantments.slowness_curse.desc": "Уменьшает скорость передвижения игрока.",
   "enchantment.wonderful_enchantments.slowness_curse.description": "Уменьшает скорость передвижения игрока.",
