@@ -28,6 +28,7 @@ import java.util.List;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that releases fire wave when entity falls. */
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends Enchantment {
 	private static final String footParticleTag = "PhoenixDiveFootParticleTick";
@@ -56,6 +57,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		return !( enchantment instanceof FrostWalkerEnchantment ) && super.canApplyTogether( enchantment );
 	}
 
+	/** Event that will leave fire wave when the entity falls from certain height. */
 	@SubscribeEvent
 	public static void onFall( LivingFallEvent event ) {
 		if( event.getDistance() <= 3.0 )
@@ -79,6 +81,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		spawnFallParticles( attacker.getPositionVec(), world );
 	}
 
+	/** Event that will create particles on players that have enchantment on their boots. */
 	@SubscribeEvent
 	public static void onUpdate( TickEvent.PlayerTickEvent event ) {
 		PlayerEntity player = event.player;
@@ -99,6 +102,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		data.putInt( footParticleTag, ticks );
 	}
 
+	/** Event that increases jump height when player is holding sneak key. */
 	@SubscribeEvent
 	public static void onJump( LivingEvent.LivingJumpEvent event ) {
 		if( !( event.getEntityLiving() instanceof PlayerEntity ) )
@@ -128,10 +132,19 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		);
 	}
 
+	/** Returning Phoenix Dive enchantment level.
+	 @param entity Entity to check level.
+	 */
 	protected static int getPhoenixDiveLevel( LivingEntity entity ) {
 		return EnchantmentHelper.getEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), entity.getItemStackFromSlot( EquipmentSlotType.FEET ) );
 	}
 
+	/** Getting entities in certain range.
+
+	 @param entity Entity as a start position.
+	 @param world Current entity world.
+	 @return Returns list with entities that were in range.
+	 */
 	protected static List< Entity > getEntitiesInRange( LivingEntity entity, ServerWorld world ) {
 		double range = 5.0D;
 		return world.getEntitiesWithinAABBExcludingEntity( entity.getEntity(), entity.getBoundingBox()
@@ -139,6 +152,11 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			.expand( range * 2.0D, 0, range * 2.0D ) );
 	}
 
+	/** Spawning particles on fall.
+
+	 @param position Position where the entity landed.
+	 @param world World where particles should be spawned.
+	 */
 	protected static void spawnFallParticles( Vector3d position, ServerWorld world ) {
 		double x = position.getX(), y = position.getY(), z = position.getZ();
 		for( double d = 0.0; d < 3.0; d++ )
@@ -149,6 +167,12 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		world.playSound( null, x, y, z, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.5f, 0.9f );
 	}
 
+	/** Spawning particles at foot height.
+
+	 @param entity Entity where the particles will be spawned.
+	 @param world World where particles should be spawned.
+	 @param isLeftLeg Flag that informs to spawn particle at left leg position.
+	 */
 	protected static void spawnFootParticle( LivingEntity entity, ServerWorld world, boolean isLeftLeg ) {
 		if( entity.isElytraFlying() )
 			return;
