@@ -1,0 +1,95 @@
+{
+	"enchantment.wonderful_enchantments.fishing_fanatic": "낚시광",
+	"enchantment.wonderful_enchantments.fishing_fanatic.desc": "아이템을 추가로 낚을 수 있는 확률이 부여됩니다.",
+	"enchantment.wonderful_enchantments.fishing_fanatic.description": "아이템을 추가로 낚을 수 있는 확률이 부여됩니다.",
+	"wonderful_enchantments.fanatic_level_up": "당신은 진정한 낚시왕!",
+	"wonderful_enchantments.true_level": "진정한",
+
+	"enchantment.wonderful_enchantments.human_slayer": "대인공격",
+	"enchantment.wonderful_enchantments.human_slayer.desc": "주민, 우민 계열 몹, 플레이어에 대해 추가 피해를 줍니다.",
+	"enchantment.wonderful_enchantments.human_slayer.description": "주민, 우민 계열 몹, 플레이어에 대해 추가 피해를 줍니다.",
+
+	"enchantment.wonderful_enchantments.dodge": "회피",
+	"enchantment.wonderful_enchantments.dodge.desc": "모든 종류의 피해에 대한 무효화 확률이 부여됩니다.",
+	"enchantment.wonderful_enchantments.dodge.description": "모든 종류의 피해에 대한 무효화 확률이 부여됩니다.",
+
+	"enchantment.wonderful_enchantments.enlightenment": "통달",
+	"enchantment.wonderful_enchantments.enlightenment.desc": "모든 경험치 획득량이 증가합니다.",
+	"enchantment.wonderful_enchantments.enlightenment.description": "모든 경험치 획득량이 증가합니다.",
+
+	"enchantment.wonderful_enchantments.vitality": "활력",
+	"enchantment.wonderful_enchantments.vitality.desc": "플레이어의 최대 체력이 증가합니다.",
+	"enchantment.wonderful_enchantments.vitality.description": "플레이어의 최대 체력이 증가합니다.",
+
+	"enchantment.wonderful_enchantments.phoenix_dive": "불사조 강림",
+	"enchantment.wonderful_enchantments.phoenix_dive.desc": "높은 곳에서 떨어지면 근처의 몹에게 피해를 입히고 불을 붙이는 불의 파도가 생깁니다. 또한 웅크리기 버튼(왼쪽 Shift)을 누르고 점프를 하면 더 높게 뛰어오릅니다!",
+	"enchantment.wonderful_enchantments.phoenix_dive.description": "높은 곳에서 떨어지면 근처의 몹에게 피해를 입히고 불을 붙이는 불의 파도가 생깁니다. 또한 웅크리기 버튼(왼쪽 Shift)을 누르고 점프를 하면 더 높게 뛰어오릅니다!",
+
+	"enchantment.wonderful_enchantments.pufferfish_vengeance": "복어 독",
+	"enchantment.wonderful_enchantments.pufferfish_vengeance.desc": "모든 공격이 대상에게 여러 약화 효과를 부여합니다 .",
+	"enchantment.wonderful_enchantments.pufferfish_vengeance.description": "모든 공격이 대상에게 여러 약화 효과를 부여합니다.",
+
+	"enchantment.wonderful_enchantments.immortality": "불멸",
+	"enchantment.wonderful_enchantments.immortality.desc": "죽음에 이르는 피해를 무시합니다.",
+	"enchantment.wonderful_enchantments.immortality.description": "죽음에 이르는 피해를 무시합니다.",
+
+	"enchantment.wonderful_enchantments.smelter": "제련",
+	"enchantment.wonderful_enchantments.smelter.desc": "블록을 파괴하였을 때 해당 아이템을 자동으로 제련합니다.",
+	"enchantment.wonderful_enchantments.smelter.description": "블록을 파괴하였을 때 해당 아이템을 자동으로 제련합니다.",
+
+	"enchantment.wonderful_enchantments.gotta_mine_fast": "채굴 가속",
+	"enchantment.wonderful_enchantments.gotta_mine_fast.desc": "마우스 왼쪽 버튼을 지속해서 누르면 채굴속도가 증가합니다.",
+	"enchantment.wonderful_enchantments.gotta_mine_fast.description": "마우스 왼쪽 버튼을 지속해서 누르면 채굴속도가 증가합니다.",
+
+	"enchantment.wonderful_enchantments.leech": "흡혈",
+	"enchantment.wonderful_enchantments.leech.desc": "몹의 체력이나 가지고 있는 이로운 효과를 뺐어 올 수 있습니다.",
+	"enchantment.wonderful_enchantments.leech.description": "몹의 체력이나 가지고 있는 이로운 효과를 뺐어 올 수 있습니다.",
+
+	"enchantment.wonderful_enchantments.magic_protection": "마법으로부터 보호",
+	"enchantment.wonderful_enchantments.magic_protection.desc": "고통의 물약이나 가디언의 광선 공격, 소환사의 송곳니 같은 마법 피해량이 감소합니다.",
+	"enchantment.wonderful_enchantments.magic_protection.description": "고통의 물약이나 가디언의 광선 공격, 소환사의 송곳니 같은 마법 피해량이 감소합니다.",
+
+	"enchantment.wonderful_enchantments.swiftness": "신속",
+	"enchantment.wonderful_enchantments.swiftness.desc": "말의 이동속도가 증가합니다.",
+	"enchantment.wonderful_enchantments.swiftness.description": "말의 이동속도가 증가합니다.",
+
+	"enchantment.wonderful_enchantments.horse_protection": "수호",
+	"enchantment.wonderful_enchantments.horse_protection.desc": "말이 받는 모든 피해를 감소시킵니다.",
+	"enchantment.wonderful_enchantments.horse_protection.description": "말이 받는 모든 피해량을 감소시킵니다.",
+
+	"enchantment.wonderful_enchantments.horse_frost_walker": "차가운 말걸음",
+	"enchantment.wonderful_enchantments.horse_frost_walker.desc": "말이 밟고 있는 지형 주변 물 블록을 일시적으로 얼음으로 만듭니다.",
+	"enchantment.wonderful_enchantments.horse_frost_walker.description": "말이 밟고 있는 지형 주변 물 블록을 일시적으로 얼음으로 만듭니다.",
+
+	"enchantment.wonderful_enchantments.telekinesis": "염력",
+	"enchantment.wonderful_enchantments.telekinesis.desc": "블록을 파괴했을 때 해당 아이템이 즉시 보관함으로 들어오게 됩니다.",
+	"enchantment.wonderful_enchantments.telekinesis.description": "블록을 파괴했을 때 해당 아이템이 즉시 보관함으로 들어오게 됩니다",
+
+	"enchantment.wonderful_enchantments.absorber": "흡수성",
+	"enchantment.wonderful_enchantments.absorber.desc": "외부에서 들어오는 약화효과를 방패의 내구도를 소모하여 흡수합니다.",
+	"enchantment.wonderful_enchantments.absorber.description": "외부에서 들어오는 약화효과를 방패의 내구도를 소모하여 흡수합니다.",
+
+	"enchantment.wonderful_enchantments.hunter": "사수",
+	"enchantment.wonderful_enchantments.hunter.desc": "처치한 몹의 전리품이 더 많이 나오고 대상과의 거리가 멀 수록 입히는 피해량이 증가합니다.",
+	"enchantment.wonderful_enchantments.hunter.description": "처치한 몹의 전리품이 더 많이 나오고 대상과의 거리가 멀 수록 입히는 피해량이 증가합니다.",
+
+	"enchantment.wonderful_enchantments.elder_guardian_favor": "엘더 가디언의 가호",
+	"enchantment.wonderful_enchantments.elder_guardian_favor.desc": "대상에게 타격을 입히면 잠시 뒤 방어와 회피가 불가능한 광선 공격으로 추가적인 피해를 줍니다.",
+	"enchantment.wonderful_enchantments.elder_guardian_favor.description": "대상에게 타격을 입히면 잠시 뒤 방어와 회피가 불가능한 광선 공격으로 추가적인 피해를 줍니다.",
+
+	"enchantment.wonderful_enchantments.slowness_curse": "둔화 저주",
+	"enchantment.wonderful_enchantments.slowness_curse.desc": "플레이어의 이동속도를 감소시킵니다.",
+	"enchantment.wonderful_enchantments.slowness_curse.description": "플레이어의 이동속도를 감소시킵니다.",
+
+	"enchantment.wonderful_enchantments.fatigue_curse": "피로 저주",
+	"enchantment.wonderful_enchantments.fatigue_curse.desc": "플레이어의 채굴 속도를 감소시킵니다.",
+	"enchantment.wonderful_enchantments.fatigue_curse.description": "플레이어의 채굴 속도를 감소시킵니다.",
+
+	"enchantment.wonderful_enchantments.incompatibility_curse": "불화 저주",
+	"enchantment.wonderful_enchantments.incompatibility_curse.desc": "아이템에 마법 부여를 할 수 없게 됩니다.",
+	"enchantment.wonderful_enchantments.incompatibility_curse.description": "아이템에 마법 부여를 할 수 없게 됩니다.",
+
+	"enchantment.wonderful_enchantments.vampirism_curse": "혈귀 저주",
+	"enchantment.wonderful_enchantments.vampirism_curse.desc": "플레이어에게 여러 약화효과를 부여하고 플레이어가 낮 동안 밖에 있을 경우 화염 피해를 입게 됩니다. 마법 부여 흡혈의 효과가 증가합니다.",
+	"enchantment.wonderful_enchantments.vampirism_curse.description": "플레이어에게 여러 약화효과를 부여하고 플레이어가 낮 동안 밖에 있을 경우 화염 피해를 입게 됩니다. 마법 부여 흡혈의 효과가 증가합니다."
+}
