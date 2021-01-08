@@ -5,6 +5,7 @@ import com.wonderfulenchantments.EquipmentSlotTypes;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.util.DamageSource;
 
+/** Enchantment that reduces damage from magic sources. (like Evoker fangs, Elder Guardian laser beam etc.) */
 public class MagicProtectionEnchantment extends ProtectionEnchantment {
 	public MagicProtectionEnchantment() {
 		super( Rarity.UNCOMMON, Type.ALL, EquipmentSlotTypes.ARMOR );
