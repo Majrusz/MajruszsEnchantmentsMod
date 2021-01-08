@@ -67,8 +67,10 @@ public class AbsorberEnchantment extends Enchantment {
 		}
 	}
 
-	/** Checking that the item is the shield and has the appropriate enchantment.
-	 * @param itemStack Item stack to check.
+	/**
+	 Checking that the item is the shield and has the appropriate enchantment.
+
+	 @param itemStack Item stack to check.
 	 */
 	protected static boolean absorbSucceed( ItemStack itemStack ) {
 		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.ABSORBER.get(), itemStack );
@@ -76,10 +78,12 @@ public class AbsorberEnchantment extends Enchantment {
 		return itemStack.getItem() instanceof ShieldItem && itemStack.getUseAction() == UseAction.BLOCK && enchantmentLevel > 0;
 	}
 
-	/** Damaging the shield when the effect is absorbed.
-	 * @param shield Shield to be damaged.
-	 * @param entity Entity which is holding the shield.
-	 * @param effectInstance Effect that was absorbed, required to calculate the damage.
+	/**
+	 Damaging the shield when the effect is absorbed.
+
+	 @param shield         Shield to be damaged.
+	 @param entity         Entity which is holding the shield.
+	 @param effectInstance Effect that was absorbed, required to calculate the damage.
 	 */
 	protected static void damageShield( ItemStack shield, LivingEntity entity, EffectInstance effectInstance ) {
 		double amplifierDamage = effectInstance.getAmplifier();

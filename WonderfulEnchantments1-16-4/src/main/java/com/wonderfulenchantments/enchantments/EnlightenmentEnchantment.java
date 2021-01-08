@@ -69,9 +69,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 		int enlightenmentSum = WonderfulEnchantmentHelper.calculateEnchantmentSum( enchantment, player, EquipmentSlotTypes.ARMOR );
 
 		if( enlightenmentSum > 0 ) {
-			int bonus = Math.max( 0,
-				Math.min( event.getLevel() * enlightenmentSum / ( enchantment.getMaxLevel() * 4 ), 30 - event.getLevel() )
-			);
+			int bonus = Math.max( 0, Math.min( event.getLevel() * enlightenmentSum / ( enchantment.getMaxLevel() * 4 ), 30 - event.getLevel() ) );
 
 			event.setLevel( event.getLevel() + bonus );
 		}

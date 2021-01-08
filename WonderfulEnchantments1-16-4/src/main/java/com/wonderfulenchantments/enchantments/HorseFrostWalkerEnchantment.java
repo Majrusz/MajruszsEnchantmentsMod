@@ -104,7 +104,9 @@ public class HorseFrostWalkerEnchantment extends Enchantment {
 		}
 	}
 
-	/** Checking whether all conditions are met.
+	/**
+	 Checking whether all conditions are met.
+
 	 @param event Living entity update event.
 	 */
 	protected static boolean isValid( LivingEvent.LivingUpdateEvent event ) {
