@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
+/** Enchantment that increases damage dealt against humans. (pillagers, villagers, players and witches) */
 @Mod.EventBusSubscriber
 public class HumanSlayerEnchantment extends DamageEnchantment {
 	public HumanSlayerEnchantment() {
@@ -43,6 +44,7 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 		return 0.0f;
 	}
 
+	/** Event that increases damage when all conditions are met. */
 	@SubscribeEvent
 	public static void onEntityHurt( LivingHurtEvent event ) {
 		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
@@ -62,6 +64,11 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 		}
 	}
 
+	/**
+	 Checking if entity is human.
+
+	 @param entity Entity to check.
+	 */
 	protected static boolean isHuman( Entity entity ) {
 		return ( entity instanceof VillagerEntity || entity instanceof WanderingTraderEntity || entity instanceof PlayerEntity || entity instanceof WitchEntity || entity instanceof AbstractIllagerEntity );
 	}
