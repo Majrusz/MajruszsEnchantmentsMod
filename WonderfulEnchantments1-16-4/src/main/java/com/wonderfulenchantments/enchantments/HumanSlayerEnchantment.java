@@ -15,6 +15,7 @@ import net.minecraft.entity.monster.WitchEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -56,9 +57,9 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 		float extraDamage = ( float )Math.floor(
 			Config.HUMANITY_DAMAGE_BONUS.get() * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
 
-		if( extraDamage > 0.0F && isHuman( target ) ) {
+		if( extraDamage > 0.0f && isHuman( target ) ) {
 			( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ),
-				target.getPosZ(), 24, 0.125D, 0.25D, 0.125D, 0.5D
+				target.getPosZ(), 24, 0.125, 0.25, 0.125, 0.5
 			);
 			event.setAmount( event.getAmount() + extraDamage );
 		}
