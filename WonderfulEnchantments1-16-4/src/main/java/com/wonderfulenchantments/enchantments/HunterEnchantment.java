@@ -65,6 +65,6 @@ public class HunterEnchantment extends LootBonusEnchantment {
 	 @param source Damage source to check.
 	 */
 	protected static boolean isValid( DamageSource source ) {
-		return source.getImmediateSource() instanceof ArrowEntity && source.getTrueSource() instanceof LivingEntity;
+		return source != null && source.getImmediateSource() instanceof ArrowEntity && source.getTrueSource() instanceof LivingEntity;
 	}
 }
