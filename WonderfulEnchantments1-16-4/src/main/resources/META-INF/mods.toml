@@ -4,17 +4,17 @@ loaderVersion="[35,)"
 
 license="MIT License"
 
-issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
+issueTrackerURL="https://github.com/Majrusz/WonderfulEnchantmentsMod/issues"
 
 [[mods]]
 
 modId="wonderful_enchantments"
 
-version="1.16.4-0.10.2"
+version="0.10.3"
 
 displayName="Wonderful Enchantments"
 
-updateJSONURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
+updateJSONURL="https://raw.githubusercontent.com/Majrusz/WonderfulEnchantmentsMod/main/update.json"
 
 displayURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
 
