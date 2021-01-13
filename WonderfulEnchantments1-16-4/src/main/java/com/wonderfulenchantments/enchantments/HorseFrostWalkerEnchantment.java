@@ -66,6 +66,9 @@ public class HorseFrostWalkerEnchantment extends Enchantment {
 			position.add( factor, -1.0D, factor )
 		);
 
+		if( enchantmentLevel <= 0 )
+			return;
+
 		for( BlockPos blockPosition : blockPositions ) {
 			if( !blockPosition.withinDistance( animal.getPositionVec(), factor ) )
 				continue;
