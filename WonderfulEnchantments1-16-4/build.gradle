@@ -101,7 +101,8 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.1.4'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile fg.deobf('com.mlib:majrusz-library-1.16.4:1.0.0')
 }
 
 jar {
