@@ -2,9 +2,9 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlotTypes;
 import com.mlib.TimeConverter;
-import com.wonderfulenchantments.RegistryHandler;
+import com.mlib.config.DurationConfig;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -20,28 +20,19 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
 /** Enchantment that causes the shield to absorb all negative effects at the expense of durability. */
 @Mod.EventBusSubscriber
-public class AbsorberEnchantment extends Enchantment {
+public class AbsorberEnchantment extends WonderfulEnchantment {
+	protected final DurationConfig minimumEffectDuration;
+
 	public AbsorberEnchantment() {
-		super( Rarity.RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS );
-	}
+		super( Rarity.RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Absorber" );
+		String comment = "Minimum required duration to absorb an effect. (in seconds)";
+		this.minimumEffectDuration = this.enchantmentGroup.addConfig( new DurationConfig( "minimum_duration", comment, false, 2.0, 0.0, 60.0 ) );
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 5 + 8 * level + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 15;
+		setMaximumEnchantmentLevel( 1 );
+		setDifferenceBetweenMinimumAndMaximum( 15 );
+		setMinimumEnchantabilityCalculator( level->( 5 + 8 * level ) );
 	}
 
 	/** Event that manages whether or not an effect should be applied. */
@@ -51,7 +42,7 @@ public class AbsorberEnchantment extends Enchantment {
 		EffectInstance effectInstance = event.getPotionEffect();
 		Effect effect = effectInstance.getPotion();
 
-		if( effect.isBeneficial() )
+		if( effect.isBeneficial() || effectInstance.getDuration() < Instances.ABSORBER.minimumEffectDuration.getDuration() )
 			return;
 
 		for( EquipmentSlotType equipmentSlotType : EquipmentSlotTypes.BOTH_HANDS ) {
@@ -74,7 +65,7 @@ public class AbsorberEnchantment extends Enchantment {
 	 @param itemStack Item stack to check.
 	 */
 	protected static boolean absorbSucceed( ItemStack itemStack ) {
-		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.ABSORBER.get(), itemStack );
+		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( Instances.ABSORBER, itemStack );
 
 		return itemStack.getItem() instanceof ShieldItem && itemStack.getUseAction() == UseAction.BLOCK && enchantmentLevel > 0;
 	}
@@ -91,6 +82,6 @@ public class AbsorberEnchantment extends Enchantment {
 		double durationDamage = ( ( double )effectInstance.getDuration() ) / TimeConverter.secondsToTicks( 60.0 );
 
 		EquipmentSlotType slotType = entity.getHeldItemMainhand() == shield ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
-		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, ( e )->e.sendBreakAnimation( slotType ) );
+		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, e->e.sendBreakAnimation( slotType ) );
 	}
 }
