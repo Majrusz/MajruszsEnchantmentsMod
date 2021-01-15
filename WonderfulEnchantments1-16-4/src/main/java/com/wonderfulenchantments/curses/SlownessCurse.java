@@ -1,73 +1,49 @@
 package com.wonderfulenchantments.curses;
 
-import com.wonderfulenchantments.AttributeHelper;
-import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.ConfigHandler.Config;
-import com.wonderfulenchantments.EquipmentSlotTypes;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import net.minecraft.enchantment.Enchantment;
+import com.mlib.EquipmentSlotTypes;
+import com.mlib.attributes.AttributeHandler;
+import com.mlib.config.DoubleConfig;
+import com.mlib.enchantments.EnchantmentHelperPlus;
+import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.item.ShieldItem;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
+/** Causes entity to move slower with each level. */
 @Mod.EventBusSubscriber
-public class SlownessCurse extends Enchantment {
-	protected static final AttributeHelper attributeHelper = new AttributeHelper( "760f7b82-76c7-4875-821e-ef0579b881e0", "SlownessCurse",
+public class SlownessCurse extends WonderfulCurse {
+	protected static final AttributeHandler attributeHandler = new AttributeHandler( "760f7b82-76c7-4875-821e-ef0579b881e0", "SlownessCurse",
 		Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL
 	);
+	protected final DoubleConfig slownessMultiplierConfig;
 
 	public SlownessCurse() {
-		super( Rarity.RARE, EnchantmentType.BREAKABLE, EquipmentSlotTypes.ARMOR_AND_HANDS );
+		super( Rarity.RARE, EnchantmentType.BREAKABLE, EquipmentSlotTypes.ARMOR_AND_HANDS, "Slowness" );
+		String comment = "Cumulative movement speed reduction with each item with this curse.";
+		this.slownessMultiplierConfig = this.curseGroup.addConfig( new DoubleConfig( "multiplier", comment, false, 0.875, 0.1, 0.95 ) );
+
+		setMaximumEnchantmentLevel( 1 );
+		setDifferenceBetweenMinimumAndMaximum( 40 );
+		setMinimumEnchantabilityCalculator( level->10 );
 	}
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 10 + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 40;
-	}
-
-	@Override
-	public boolean isTreasureEnchantment() {
-		return true;
-	}
-
-	@Override
-	public boolean isCurse() {
-		return true;
-	}
-
+	/** Called when entity is changing equipment. */
 	@SubscribeEvent
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
-		LivingEntity livingEntity = event.getEntityLiving();
+		LivingEntity entity = event.getEntityLiving();
 
-		attributeHelper.setValue( getTotalSlownessMultiplier( livingEntity ) )
-			.apply( livingEntity );
+		attributeHandler.setValue( Instances.SLOWNESS.getTotalSlownessMultiplier( entity )-1.0 )
+			.apply( entity );
 	}
 
-	private static float getTotalSlownessMultiplier( LivingEntity livingEntity ) {
-		int sum = 0;
+	/** Calculates total slowness multiplier. (sum of slowness enchantment level on every armor piece) */
+	private double getTotalSlownessMultiplier( LivingEntity entity ) {
+		int sum = EnchantmentHelperPlus.calculateEnchantmentSum( Instances.SLOWNESS, entity, EquipmentSlotTypes.ARMOR );
 
-		sum += WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.SLOWNESS.get(), livingEntity, EquipmentSlotTypes.ARMOR );
-		sum += WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.SLOWNESS.get(), livingEntity,
-			EquipmentSlotTypes.BOTH_HANDS, ShieldItem.class
-		);
-
-		return ( float )-( sum * Config.SLOWNESS_MULTIPLIER.get() );
+		return Math.pow( this.slownessMultiplierConfig.get(), sum );
 	}
 }

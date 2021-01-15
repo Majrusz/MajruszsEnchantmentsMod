@@ -1,6 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler;
+import com.wonderfulenchantments.ConfigHandlerOld;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -54,7 +54,7 @@ public class HunterEnchantment extends LootBonusEnchantment {
 		int hunterLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.HUNTER.get(), attacker.getHeldItemMainhand() );
 		double extraDamageMultiplier = ( attacker.getPositionVec()
 			.squareDistanceTo( target.getPositionVec() )
-		) * ConfigHandler.Config.HUNTER_MULTIPLIER.get() * hunterLevel + 1.0;
+		) * ConfigHandlerOld.Config.HUNTER_MULTIPLIER.get() * hunterLevel + 1.0;
 
 		event.setAmount( ( float )( event.getAmount() * extraDamageMultiplier ) );
 	}

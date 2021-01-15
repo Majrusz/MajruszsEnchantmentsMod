@@ -1,6 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.mlib.EquipmentSlotTypes;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;

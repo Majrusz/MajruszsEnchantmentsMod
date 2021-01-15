@@ -1,14 +1,15 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.AttributeHelper;
-import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.ConfigHandler.Config;
-import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.mlib.EquipmentSlotTypes;
+import com.mlib.attributes.AttributeHandler;
+import com.mlib.enchantments.EnchantmentHelperPlus;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -20,7 +21,7 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 /** Enchantment that increases horse's armor. */
 @Mod.EventBusSubscriber
 public class HorseProtectionEnchantment extends Enchantment {
-	protected static final AttributeHelper attributeHelper = new AttributeHelper( "f7f6f46b-23a1-4d3b-8e83-3160c6390f9a", "HorseProtectionBonus",
+	protected static final AttributeHandler attributeHandler = new AttributeHandler( "f7f6f46b-23a1-4d3b-8e83-3160c6390f9a", "HorseProtectionBonus",
 		Attributes.ARMOR, AttributeModifier.Operation.ADDITION
 	);
 
@@ -49,7 +50,7 @@ public class HorseProtectionEnchantment extends Enchantment {
 		LivingEntity livingEntity = event.getEntityLiving();
 
 		if( livingEntity instanceof AnimalEntity )
-			attributeHelper.setValue( getArmorBonus( ( AnimalEntity )livingEntity ) )
+			attributeHandler.setValue( getArmorBonus( ( AnimalEntity )livingEntity ) )
 				.apply( livingEntity );
 	}
 
@@ -59,7 +60,7 @@ public class HorseProtectionEnchantment extends Enchantment {
 	 @param animal Animal on which the armor bonus is calculated.
 	 */
 	protected static double getArmorBonus( AnimalEntity animal ) {
-		int protectionLevel = WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.HORSE_PROTECTION.get(),
+		int protectionLevel = EnchantmentHelperPlus.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.HORSE_PROTECTION.get(),
 			animal.getArmorInventoryList(), HorseArmorItem.class
 		);
 

@@ -1,10 +1,9 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.AttributeHelper;
-import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.ConfigHandler.Config;
+import com.mlib.TimeConverter;
+import com.mlib.attributes.AttributeHandler;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -12,6 +11,7 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
@@ -33,7 +33,7 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 /** DOCUMENTATION FOR THIS ENCHANTMENT WILL BE DONE AFTER REFACTORING IT. */
 @Mod.EventBusSubscriber
 public class DodgeEnchantment extends Enchantment {
-	protected static final AttributeHelper attributeHelper = new AttributeHelper( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444", "KnockBackImmunityTime",
+	protected static final AttributeHandler attributeHandler = new AttributeHandler( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444", "KnockBackImmunityTime",
 		Attributes.KNOCKBACK_RESISTANCE, AttributeModifier.Operation.ADDITION
 	);
 	protected static HashMap< Integer, Integer > immunitiesLeft = new HashMap<>(); // holding pair (entityID, ticks left)
@@ -68,7 +68,7 @@ public class DodgeEnchantment extends Enchantment {
 				return;
 
 			spawnParticlesAndPlaySounds( livingEntity );
-			setImmunity( livingEntity, WonderfulEnchantmentHelper.secondsToTicks( 2.5D ) * dodgeLevel );
+			setImmunity( livingEntity, TimeConverter.secondsToTicks( 2.5D ) * dodgeLevel );
 			pants.damageItem( Math.max( ( int )( event.getAmount() * 0.5f ), 1 ), livingEntity,
 				( e )->e.sendBreakAnimation( EquipmentSlotType.LEGS )
 			);
@@ -100,7 +100,7 @@ public class DodgeEnchantment extends Enchantment {
 	protected static void updateImmunity( LivingEntity livingEntity ) {
 		double immunity = ( immunitiesLeft.get( livingEntity.getEntityId() ) > 0 ) ? 1.0D : 0.0D;
 
-		attributeHelper.setValue( immunity )
+		attributeHandler.setValue( immunity )
 			.apply( livingEntity );
 	}
 

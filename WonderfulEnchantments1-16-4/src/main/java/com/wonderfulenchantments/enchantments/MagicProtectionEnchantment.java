@@ -1,7 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler.Config;
-import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.mlib.EquipmentSlotTypes;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.util.DamageSource;
 

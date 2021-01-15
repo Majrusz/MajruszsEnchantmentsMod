@@ -1,7 +1,7 @@
 package com.wonderfulenchantments.curses;
 
-import com.wonderfulenchantments.ConfigHandler.Config;
-import com.wonderfulenchantments.RegistryHandler;
+import com.mlib.config.DoubleConfig;
+import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EfficiencyEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -11,27 +11,19 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
+/** Reduces player mining speed. */
 @Mod.EventBusSubscriber
-public class FatigueCurse extends Enchantment {
+public class FatigueCurse extends WonderfulCurse {
+	protected final DoubleConfig miningMultiplierConfig;
+
 	public FatigueCurse() {
-		super( Rarity.RARE, EnchantmentType.DIGGER, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
-	}
+		super( Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "Fatigue" );
+		String comment = "Mining speed reduction with each level.";
+		this.miningMultiplierConfig = this.curseGroup.addConfig( new DoubleConfig( "multiplier", comment, false, 0.8, 0.1, 0.95 ) );
 
-	@Override
-	public int getMaxLevel() {
-		return 3;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 10 + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 40;
+		setMaximumEnchantmentLevel( 3 );
+		setDifferenceBetweenMinimumAndMaximum( 40 );
+		setMinimumEnchantabilityCalculator( level->10 );
 	}
 
 	@Override
@@ -39,25 +31,17 @@ public class FatigueCurse extends Enchantment {
 		return !( enchantment instanceof EfficiencyEnchantment ) && super.canApplyTogether( enchantment );
 	}
 
-	@Override
-	public boolean isTreasureEnchantment() {
-		return true;
-	}
-
-	@Override
-	public boolean isCurse() {
-		return true;
-	}
-
 	@SubscribeEvent
 	public static void onBreakingBlock( PlayerEvent.BreakSpeed event ) {
-		int fatigueLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FATIGUE.get(), event.getPlayer() );
+		FatigueCurse fatigueCurse = Instances.FATIGUE;
+		int fatigueLevel = EnchantmentHelper.getMaxEnchantmentLevel( fatigueCurse, event.getPlayer() );
 
 		if( fatigueLevel > 0 )
-			event.setNewSpeed( event.getNewSpeed() * getMiningMultiplier( fatigueLevel ) );
+			event.setNewSpeed( event.getNewSpeed() * fatigueCurse.getMiningMultiplier( fatigueLevel ) );
 	}
 
-	protected static float getMiningMultiplier( int fatigueLevel ) {
-		return ( float )Math.pow( Config.FATIGUE_MULTIPLIER.get(), fatigueLevel );
+	/** Returns final mining multiplier. */
+	protected float getMiningMultiplier( int fatigueLevel ) {
+		return ( float )Math.pow( this.miningMultiplierConfig.get(), fatigueLevel );
 	}
 }

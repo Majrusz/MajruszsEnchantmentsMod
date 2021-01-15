@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.mlib.EquipmentSlotTypes;
+import com.mlib.TimeConverter;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -87,7 +88,7 @@ public class AbsorberEnchantment extends Enchantment {
 	 */
 	protected static void damageShield( ItemStack shield, LivingEntity entity, EffectInstance effectInstance ) {
 		double amplifierDamage = effectInstance.getAmplifier();
-		double durationDamage = ( ( double )effectInstance.getDuration() ) / WonderfulEnchantmentHelper.secondsToTicks( 60.0 );
+		double durationDamage = ( ( double )effectInstance.getDuration() ) / TimeConverter.secondsToTicks( 60.0 );
 
 		EquipmentSlotType slotType = entity.getHeldItemMainhand() == shield ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
 		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, ( e )->e.sendBreakAnimation( slotType ) );

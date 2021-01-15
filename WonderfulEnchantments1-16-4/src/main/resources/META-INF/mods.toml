@@ -5,14 +5,14 @@ issueTrackerURL="https://github.com/Majrusz/WonderfulEnchantmentsMod/issues"
 
 [[mods]]
     modId="wonderful_enchantments"
-    version="${mod_version}"
-    displayName="${mod_name}"
-    updateJSONURL="${mod_update_json_url}"
-    displayURL="${mod_display_url}"
+    version="1.0.0"
+    displayName="Wonderful Enchantments"
+    updateJSONURL="https://raw.githubusercontent.com/Majrusz/WonderfulEnchantmentsMod/main/update.json"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
     logoFile="logo.png"
-    credits="${mod_credits}"
-    authors="${mod_author}"
-    description='''${mod_description}'''
+    credits="Thanks for all your support!"
+    authors="Majrusz"
+    description='''Mod adding a lot of new unique enchantments to the game.'''
 
 [[dependencies.wonderful_enchantments]]
     modId="forge"

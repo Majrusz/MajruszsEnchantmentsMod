@@ -1,8 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler;
+import com.mlib.TimeConverter;
+import com.wonderfulenchantments.ConfigHandlerOld;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -92,7 +92,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 				0.5f, 1.8f
 			);
 			target.attackEntityFrom( DamageSource.MAGIC,
-				( float )( ( areEntitiesInWater ? 2.0 : 1.0 ) * ConfigHandler.Config.GUARDIAN_BEAM_DAMAGE.get() )
+				( float )( ( areEntitiesInWater ? 2.0 : 1.0 ) * ConfigHandlerOld.Config.GUARDIAN_BEAM_DAMAGE.get() )
 			);
 		}
 	}
@@ -111,7 +111,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 			return;
 
 		data.putInt( linkTag, target.getEntityId() );
-		data.putInt( linkCounterTag, WonderfulEnchantmentHelper.secondsToTicks( ConfigHandler.Config.GUARDIAN_BEAM_DURATION.get() ) );
+		data.putInt( linkCounterTag, TimeConverter.secondsToTicks( ConfigHandlerOld.Config.GUARDIAN_BEAM_DURATION.get() ) );
 	}
 
 	/**

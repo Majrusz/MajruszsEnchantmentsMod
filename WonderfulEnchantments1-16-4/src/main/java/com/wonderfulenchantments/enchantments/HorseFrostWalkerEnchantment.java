@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.mlib.EquipmentSlotTypes;
+import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.block.BlockState;
@@ -9,6 +10,7 @@ import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -56,7 +58,7 @@ public class HorseFrostWalkerEnchantment extends Enchantment {
 		AnimalEntity animal = ( AnimalEntity )event.getEntityLiving();
 		ServerWorld world = ( ServerWorld )animal.world;
 		BlockPos position = new BlockPos( animal.getPositionVec() );
-		int enchantmentLevel = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.HORSE_FROST_WALKER.get(),
+		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( RegistryHandler.HORSE_FROST_WALKER.get(),
 			animal.getArmorInventoryList()
 		);
 		BlockState blockState = Blocks.FROSTED_ICE.getDefaultState();
@@ -125,7 +127,7 @@ public class HorseFrostWalkerEnchantment extends Enchantment {
 			return false;
 
 		for( ItemStack itemStack : animal.getArmorInventoryList() )
-			if( WonderfulEnchantmentHelper.isHorseArmor( itemStack ) )
+			if( itemStack.getItem() instanceof HorseArmorItem )
 				return true;
 
 		return false;

@@ -1,5 +1,7 @@
 package com.wonderfulenchantments;
 
+import com.mlib.MajruszLibrary;
+import com.mlib.items.ItemHelper;
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
@@ -11,9 +13,12 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleType;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLConfig;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -58,10 +63,10 @@ public class RegistryHandler {
     public static final RegistryObject< Enchantment > ELDER_GUARDIAN_FAVOR = ENCHANTMENTS.register( "elder_guardian_favor", ElderGaurdianFavorEnchantment::new );
 
     // Curses
-    public static final RegistryObject< Enchantment > SLOWNESS = ENCHANTMENTS.register( "slowness_curse", SlownessCurse::new );
-    public static final RegistryObject< Enchantment > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
-    public static final RegistryObject< Enchantment > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse::new );
-    public static final RegistryObject< Enchantment > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse::new );
+    public static final RegistryObject< Enchantment > SLOWNESS = ENCHANTMENTS.register( "slowness_curse", ()->Instances.SLOWNESS );
+    public static final RegistryObject< Enchantment > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", ()->Instances.FATIGUE );
+    public static final RegistryObject< Enchantment > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", ()->Instances.INCOMPATIBILITY );
+    public static final RegistryObject< Enchantment > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", ()->Instances.VAMPIRISM );
 
     // Particles
     public static final RegistryObject< BasicParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle", ()->new BasicParticleType( true ) );
@@ -92,8 +97,8 @@ public class RegistryHandler {
     }
 
     private static void addEnchantmentTypesToItemGroups() {
-        WonderfulEnchantmentHelper.addTypeToItemGroup( WonderfulEnchantmentHelper.SHIELD, ItemGroup.COMBAT );
-        WonderfulEnchantmentHelper.addTypeToItemGroup( WonderfulEnchantmentHelper.HORSE_ARMOR, ItemGroup.MISC );
+        ItemHelper.addEnchantmentTypeToItemGroup( WonderfulEnchantmentHelper.SHIELD, ItemGroup.COMBAT );
+        ItemHelper.addEnchantmentTypeToItemGroup( WonderfulEnchantmentHelper.HORSE_ARMOR, ItemGroup.MISC );
     }
 
     private static void doClientSetup( final FMLClientSetupEvent event ) {

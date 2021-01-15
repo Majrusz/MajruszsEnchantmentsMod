@@ -1,9 +1,9 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler.Config;
-import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.mlib.EquipmentSlotTypes;
+import com.mlib.enchantments.EnchantmentHelperPlus;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
@@ -42,7 +42,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 	/** Event that increases experience when picking up experience orbs. */
 	@SubscribeEvent
 	public static void onXPPickUp( PlayerXpEvent.PickupXp event ) {
-		int enlightenmentSum = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.ENLIGHTENMENT.get(), event.getPlayer(),
+		int enlightenmentSum = EnchantmentHelperPlus.calculateEnchantmentSum( RegistryHandler.ENLIGHTENMENT.get(), event.getPlayer(),
 			EquipmentSlotTypes.ARMOR
 		);
 
@@ -66,7 +66,7 @@ public class EnlightenmentEnchantment extends Enchantment {
 			.getClosestPlayer( EntityPredicate.DEFAULT, position.getX(), position.getY(), position.getZ() );
 
 		Enchantment enchantment = RegistryHandler.ENLIGHTENMENT.get();
-		int enlightenmentSum = WonderfulEnchantmentHelper.calculateEnchantmentSum( enchantment, player, EquipmentSlotTypes.ARMOR );
+		int enlightenmentSum = EnchantmentHelperPlus.calculateEnchantmentSum( enchantment, player, EquipmentSlotTypes.ARMOR );
 
 		if( enlightenmentSum > 0 ) {
 			int bonus = Math.max( 0, Math.min( event.getLevel() * enlightenmentSum / ( enchantment.getMaxLevel() * 4 ), 30 - event.getLevel() ) );

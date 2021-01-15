@@ -1,6 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler.Config;
+import com.mlib.effects.EffectHelper;
+import com.mlib.enchantments.EnchantmentHelperPlus;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import com.wonderfulenchantments.WonderfulEnchantments;
@@ -68,7 +70,7 @@ public class LeechEnchantment extends Enchantment {
 
 		int vampirismLevel = 0;
 		if( attacker != null )
-			vampirismLevel = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.VAMPIRISM.get(), attacker.getArmorInventoryList() );
+			vampirismLevel = EnchantmentHelperPlus.calculateEnchantmentSum( RegistryHandler.VAMPIRISM.get(), attacker.getArmorInventoryList() );
 
 		if( EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.LEECH.get(), attacker ) > 0 ) {
 			for( int i = 0; i < 1 + vampirismLevel; i++ )
@@ -105,7 +107,7 @@ public class LeechEnchantment extends Enchantment {
 		for( EffectInstance effect : possibleEffects )
 			if( effect.getPotion()
 				.isBeneficial() ) {
-				WonderfulEnchantmentHelper.applyEffectIfPossible( stealer, effect );
+				EffectHelper.applyEffectIfPossible( stealer, effect );
 				target.removePotionEffect( effect.getPotion() );
 
 				return true;

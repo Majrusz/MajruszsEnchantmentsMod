@@ -6,13 +6,9 @@ import com.wonderfulenchantments.curses.SlownessCurse;
 import com.wonderfulenchantments.curses.VampirismCurse;
 import com.wonderfulenchantments.enchantments.*;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -23,162 +19,81 @@ public class WonderfulEnchantmentHelper {
 	public static final EnchantmentType HORSE_ARMOR = EnchantmentType.create( "horse_armor", ( Item item )->item instanceof HorseArmorItem );
 	private static final int disableEnchantmentValue = 9001;
 
-	public static void addTypeToItemGroup( EnchantmentType type, ItemGroup itemGroup ) {
-		EnchantmentType[] group = itemGroup.getRelevantEnchantmentTypes();
-		if( group.length == 0 ) {
-			itemGroup.setRelevantEnchantmentTypes( type );
-			return;
-		}
-		EnchantmentType[] temporary = new EnchantmentType[ group.length + 1 ];
-		System.arraycopy( group, 0, temporary, 0, group.length );
-		temporary[ group.length - 1 ] = type;
-		itemGroup.setRelevantEnchantmentTypes( temporary );
-	}
-
-	public static < InstanceType > int calculateEnchantmentSumIfIsInstanceOf( Enchantment enchantment, LivingEntity livingEntity,
-		EquipmentSlotType[] slotTypes, Class< InstanceType > type
-	) {
-		int sum = 0;
-
-		for( EquipmentSlotType slotType : slotTypes ) {
-			ItemStack itemStack = livingEntity.getItemStackFromSlot( slotType );
-			if( type.isInstance( itemStack.getItem() ) )
-				sum += EnchantmentHelper.getEnchantmentLevel( enchantment, itemStack );
-		}
-
-		return sum;
-	}
-
-	public static < InstanceType > int calculateEnchantmentSumIfIsInstanceOf( Enchantment enchantment, Iterable< ItemStack > itemStacks,
-		Class< InstanceType > type
-	) {
-		int sum = 0;
-
-		for( ItemStack itemStack : itemStacks )
-			if( type.isInstance( itemStack.getItem() ) )
-				sum += EnchantmentHelper.getEnchantmentLevel( enchantment, itemStack );
-
-		return sum;
-	}
-
-	public static int calculateEnchantmentSum( Enchantment enchantment, LivingEntity livingEntity, EquipmentSlotType[] slotTypes ) {
-		int sum = 0;
-
-		for( EquipmentSlotType slotType : slotTypes )
-			sum += EnchantmentHelper.getEnchantmentLevel( enchantment, livingEntity.getItemStackFromSlot( slotType ) );
-
-		return sum;
-	}
-
-	public static int calculateEnchantmentSum( Enchantment enchantment, Iterable< ItemStack > itemStacks ) {
-		int sum = 0;
-
-		for( ItemStack itemStack : itemStacks )
-			sum += EnchantmentHelper.getEnchantmentLevel( enchantment, itemStack );
-
-		return sum;
-	}
-
-	public static final int ticksInSecond = 20;
-
-	public static int secondsToTicks( double seconds ) {
-		return ( int )( seconds * ticksInSecond );
-	}
-
-	public static final int ticksInMinute = ticksInSecond * 60;
-
-	public static int minutesToTicks( double minutes ) {
-		return ( int )( minutes * ticksInMinute );
-	}
-
 	public static boolean isDirectDamageFromLivingEntity( DamageSource source ) {
 		return source.getTrueSource() instanceof LivingEntity && source.getImmediateSource() instanceof LivingEntity;
-	}
-
-	public static boolean isHorseArmor( ItemStack itemStack ) {
-		return ( itemStack.getItem() instanceof HorseArmorItem || itemStack.getItem() instanceof DyeableHorseArmorItem );
-	}
-
-	public static void applyEffectIfPossible( LivingEntity entity, EffectInstance effectInstance ) {
-		if( entity.isPotionApplicable( effectInstance ) )
-			entity.addPotionEffect( effectInstance );
-	}
-
-	public static void applyEffectIfPossible( LivingEntity entity, Effect effect, int effectDuration, int amplifier ) {
-		applyEffectIfPossible( entity, new EffectInstance( effect, effectDuration, amplifier ) );
 	}
 
 	public static int increaseLevelIfEnchantmentIsDisabled( Enchantment enchantment ) {
 		Function< ForgeConfigSpec.BooleanValue, Integer > checkEnchantment = ( value )->( value.get() ? 0 : disableEnchantmentValue );
 
 		if( enchantment instanceof FanaticEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.FISHING_FANATIC );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.FISHING_FANATIC );
 
 		if( enchantment instanceof HumanSlayerEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HUMAN_SLAYER );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.HUMAN_SLAYER );
 
 		if( enchantment instanceof DodgeEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.DODGE );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.DODGE );
 
 		if( enchantment instanceof EnlightenmentEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.ENLIGHTENMENT );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.ENLIGHTENMENT );
 
 		if( enchantment instanceof VitalityEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.VITALITY );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.VITALITY );
 
 		if( enchantment instanceof PhoenixDiveEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.PHOENIX_DIVE );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.PHOENIX_DIVE );
 
 		if( enchantment instanceof PufferfishVengeanceEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.PUFFERFISH_VENGEANCE );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.PUFFERFISH_VENGEANCE );
 
 		if( enchantment instanceof ImmortalityEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.IMMORTALITY );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.IMMORTALITY );
 
 		if( enchantment instanceof SmelterEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SMELTER );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.SMELTER );
 
 		if( enchantment instanceof GottaMineFastEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.GOTTA_MINE_FAST );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.GOTTA_MINE_FAST );
 
 		if( enchantment instanceof LeechEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.LEECH );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.LEECH );
 
 		if( enchantment instanceof MagicProtectionEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.MAGIC_PROTECTION );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.MAGIC_PROTECTION );
 
 		if( enchantment instanceof SwiftnessEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SWIFTNESS );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.SWIFTNESS );
 
 		if( enchantment instanceof HorseProtectionEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HORSE_PROTECTION );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.HORSE_PROTECTION );
 
 		if( enchantment instanceof HorseFrostWalkerEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HORSE_FROST_WALKER );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.HORSE_FROST_WALKER );
 
 		if( enchantment instanceof TelekinesisEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.TELEKINESIS );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.TELEKINESIS );
 
 		if( enchantment instanceof AbsorberEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.ABSORBER );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.ABSORBER );
 
 		if( enchantment instanceof HunterEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.HUNTER );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.HUNTER );
 
 		if( enchantment instanceof ElderGaurdianFavorEnchantment )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.ELDER_GUARDIAN_FAVOR );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.ELDER_GUARDIAN_FAVOR );
 
 		if( enchantment instanceof SlownessCurse )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.SLOWNESS );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.SLOWNESS );
 
 		if( enchantment instanceof FatigueCurse )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.FATIGUE );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.FATIGUE );
 
 		if( enchantment instanceof IncompatibilityCurse )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.INCOMPATIBILITY );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.INCOMPATIBILITY );
 
 		if( enchantment instanceof VampirismCurse )
-			return checkEnchantment.apply( ConfigHandler.Config.Enchantability.VAMPIRISM );
+			return checkEnchantment.apply( ConfigHandlerOld.Config.Enchantability.VAMPIRISM );
 
 		return 0;
 	}

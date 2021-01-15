@@ -1,6 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler.Config;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;

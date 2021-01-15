@@ -4,7 +4,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 
-public class ConfigHandler {
+public class ConfigHandlerOld {
 	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 	public static ForgeConfigSpec CONFIG_SPEC;
 
@@ -76,9 +76,9 @@ public class ConfigHandler {
 	}
 
 	public static void register( final ModLoadingContext context ) {
-		ConfigHandler.load();
+		ConfigHandlerOld.load();
 
-		context.registerConfig( ModConfig.Type.COMMON, ConfigHandler.CONFIG_SPEC, "wonderful-enchantments-common.toml" );
+		context.registerConfig( ModConfig.Type.COMMON, ConfigHandlerOld.CONFIG_SPEC, "wonderful-enchantments-common.toml" );
 	}
 
 	public static class Config {

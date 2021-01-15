@@ -1,10 +1,11 @@
 package com.wonderfulenchantments.curses;
 
-import com.wonderfulenchantments.ConfigHandler.Config;
-import com.wonderfulenchantments.EquipmentSlotTypes;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import net.minecraft.enchantment.Enchantment;
+import com.mlib.EquipmentSlotTypes;
+import com.mlib.TimeConverter;
+import com.mlib.config.DurationConfig;
+import com.mlib.effects.EffectHelper;
+import com.mlib.enchantments.EnchantmentHelperPlus;
+import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
@@ -15,47 +16,22 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
+/** Weakens entity when it is outside during the day. */
 @Mod.EventBusSubscriber
-public class VampirismCurse extends Enchantment {
-	protected static Effect[] effects = new Effect[]{ Effects.WEAKNESS, Effects.SLOWNESS, Effects.HUNGER
-	};
+public class VampirismCurse extends WonderfulCurse {
+	protected static Effect[] effects = new Effect[]{ Effects.WEAKNESS, Effects.SLOWNESS, Effects.HUNGER };
 	protected static int counter = 0;
-	protected static int updateDelay = WonderfulEnchantmentHelper.secondsToTicks( 5.0 );
+	protected static int updateDelay = TimeConverter.secondsToTicks( 5.0 );
+	protected final DurationConfig effectDuration;
 
 	public VampirismCurse() {
-		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR );
-	}
+		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Vampirism" );
+		String comment = "Duration of negative effects. (in seconds)";
+		this.effectDuration = this.curseGroup.addConfig( new DurationConfig( "effect_duration", comment, false, 30.0, 10.0, 300.0 ) );
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 10 + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 40;
-	}
-
-	@Override
-	public boolean canApplyTogether( Enchantment enchantment ) {
-		return super.canApplyTogether( enchantment );
-	}
-
-	@Override
-	public boolean isTreasureEnchantment() {
-		return true;
-	}
-
-	@Override
-	public boolean isCurse() {
-		return true;
+		setMaximumEnchantmentLevel( 1 );
+		setDifferenceBetweenMinimumAndMaximum( 40 );
+		setMinimumEnchantabilityCalculator( level->10 );
 	}
 
 	@SubscribeEvent
@@ -69,19 +45,20 @@ public class VampirismCurse extends Enchantment {
 
 		PlayerEntity player = event.player;
 		ServerWorld world = ( ServerWorld )event.player.world;
-		int enchantmentLevel = WonderfulEnchantmentHelper.calculateEnchantmentSum( RegistryHandler.VAMPIRISM.get(), player.getArmorInventoryList() );
+		VampirismCurse vampirism = Instances.VAMPIRISM;
+		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( vampirism, player.getArmorInventoryList() );
 
-		if( enchantmentLevel == 0 || !isPlayerOutsideInDay( player, world ) )
+		if( enchantmentLevel == 0 || !isPlayerOutsideDuringTheDay( player, world ) )
 			return;
 
-		int effectDurationInTicks = WonderfulEnchantmentHelper.secondsToTicks( Config.VAMPIRISM_DURATION.get() ) * enchantmentLevel;
 		for( Effect effect : effects )
-			WonderfulEnchantmentHelper.applyEffectIfPossible( player, effect, effectDurationInTicks, 0 );
+			EffectHelper.applyEffectIfPossible( player, effect, vampirism.effectDuration.getDuration() * enchantmentLevel, 0 );
 
 		player.setFire( 3 + 2 * enchantmentLevel );
 	}
 
-	protected static boolean isPlayerOutsideInDay( PlayerEntity player, ServerWorld world ) {
+	/** Checks whether player is outside during the day. */
+	protected static boolean isPlayerOutsideDuringTheDay( PlayerEntity player, ServerWorld world ) {
 		return world.canSeeSky( new BlockPos( player.getPositionVec() ) ) && world.isDaytime();
 	}
 }

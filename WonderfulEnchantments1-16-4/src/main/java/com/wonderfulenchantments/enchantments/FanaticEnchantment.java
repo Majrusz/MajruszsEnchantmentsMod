@@ -4,8 +4,8 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
-import com.wonderfulenchantments.ConfigHandler;
-import com.wonderfulenchantments.ConfigHandler.Config;
+import com.wonderfulenchantments.ConfigHandlerOld;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -96,7 +96,7 @@ public class FanaticEnchantment extends Enchantment {
 			.getString() );
 
 		int extraRewardsCounter = 0;
-		for( int i = 0; i < fanaticLevel && ConfigHandler.Config.Enchantability.FISHING_FANATIC.get(); i++ )
+		for( int i = 0; i < fanaticLevel && ConfigHandlerOld.Config.Enchantability.FISHING_FANATIC.get(); i++ )
 			if( WonderfulEnchantments.RANDOM.nextDouble() < Config.FISHING_EXTRA_DROP_CHANCE.get() )
 				for( ItemStack extraReward : lootTable.generate( lootContext ) ) {
 					spawnReward( extraReward, player, world, event.getHookEntity() );

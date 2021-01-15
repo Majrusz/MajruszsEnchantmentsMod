@@ -1,14 +1,15 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.AttributeHelper;
-import com.wonderfulenchantments.AttributeHelper.Attributes;
-import com.wonderfulenchantments.ConfigHandler.Config;
-import com.wonderfulenchantments.EquipmentSlotTypes;
+import com.mlib.EquipmentSlotTypes;
+import com.mlib.attributes.AttributeHandler;
+import com.mlib.enchantments.EnchantmentHelperPlus;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -20,7 +21,7 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 /** Enchantment that increases the movement speed of the horse. */
 @Mod.EventBusSubscriber
 public class SwiftnessEnchantment extends Enchantment {
-	protected static final AttributeHelper attributeHelper = new AttributeHelper( "76c3bea2-7ef1-4c4b-b062-a12355120ee7", "SwiftnessBonus",
+	protected static final AttributeHandler attributeHandler = new AttributeHandler( "76c3bea2-7ef1-4c4b-b062-a12355120ee7", "SwiftnessBonus",
 		Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_BASE
 	);
 
@@ -49,7 +50,7 @@ public class SwiftnessEnchantment extends Enchantment {
 		LivingEntity livingEntity = event.getEntityLiving();
 
 		if( livingEntity instanceof AnimalEntity )
-			attributeHelper.setValue( getMovementSpeedMultiplier( ( AnimalEntity )livingEntity ) )
+			attributeHandler.setValue( getMovementSpeedMultiplier( ( AnimalEntity )livingEntity ) )
 				.apply( livingEntity );
 	}
 
@@ -59,7 +60,7 @@ public class SwiftnessEnchantment extends Enchantment {
 	 @param animal Animal on which the movement bonus is calculated.
 	 */
 	protected static double getMovementSpeedMultiplier( AnimalEntity animal ) {
-		int swiftnessLevel = WonderfulEnchantmentHelper.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.SWIFTNESS.get(),
+		int swiftnessLevel = EnchantmentHelperPlus.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.SWIFTNESS.get(),
 			animal.getArmorInventoryList(), HorseArmorItem.class
 		);
 

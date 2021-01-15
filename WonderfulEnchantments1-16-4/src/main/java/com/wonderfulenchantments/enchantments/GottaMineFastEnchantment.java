@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.mlib.TimeConverter;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -12,7 +13,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.ticksInMinute;
 
 /** Enchantment that increases mining speed the longer the player hold left mouse button. */
 @Mod.EventBusSubscriber
@@ -67,6 +67,6 @@ public class GottaMineFastEnchantment extends Enchantment {
 	 @return Returns multiplier which represents how fast the player will mine the block. (2.0f will mean twice as fast)
 	 */
 	protected static float getMiningMultiplier() {
-		return 1.0f + ( float )Math.pow( Math.min( tickCounter, 2 * ticksInMinute ) / ( float )ticksInMinute, 1.5849625007f );
+		return 1.0f + ( float )Math.pow( Math.min( tickCounter, TimeConverter.minutesToTicks( 2.0 ) ) / ( float )TimeConverter.minutesToTicks( 1.0 ), 1.5849625007f );
 	}
 }

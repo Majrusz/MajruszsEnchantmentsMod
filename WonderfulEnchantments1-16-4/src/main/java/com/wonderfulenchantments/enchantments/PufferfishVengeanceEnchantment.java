@@ -1,8 +1,9 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandler.Config;
+import com.mlib.TimeConverter;
+import com.mlib.effects.EffectHelper;
+import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -63,7 +64,7 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 			return;
 
 		LivingEntity target = event.getEntityLiving();
-		int durationInTicks = WonderfulEnchantmentHelper.secondsToTicks( 2 * Config.PUFFERFISH_DURATION.get() + 1 );
+		int durationInTicks = TimeConverter.secondsToTicks( 2 * Config.PUFFERFISH_DURATION.get() + 1 );
 		World world = attacker.getEntityWorld();
 
 		applyEffects( target, durationInTicks );
@@ -79,8 +80,8 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 	 @param durationInTicks Duration how long effect will last. (in ticks)
 	 */
 	protected static void applyEffects( LivingEntity target, int durationInTicks ) {
-		WonderfulEnchantmentHelper.applyEffectIfPossible( target, Effects.HUNGER, durationInTicks, 2 );
-		WonderfulEnchantmentHelper.applyEffectIfPossible( target, Effects.POISON, durationInTicks, 3 );
-		WonderfulEnchantmentHelper.applyEffectIfPossible( target, Effects.NAUSEA, durationInTicks, 0 );
+		EffectHelper.applyEffectIfPossible( target, Effects.HUNGER, durationInTicks, 2 );
+		EffectHelper.applyEffectIfPossible( target, Effects.POISON, durationInTicks, 3 );
+		EffectHelper.applyEffectIfPossible( target, Effects.NAUSEA, durationInTicks, 0 );
 	}
 }
