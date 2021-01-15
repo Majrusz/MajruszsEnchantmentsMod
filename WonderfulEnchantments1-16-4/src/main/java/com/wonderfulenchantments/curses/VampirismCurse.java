@@ -42,7 +42,7 @@ public class VampirismCurse extends WonderfulCurse {
 		counter = ( counter + 1 ) % updateDelay;
 		if( counter != 0 )
 			return;
-
+		
 		PlayerEntity player = event.player;
 		ServerWorld world = ( ServerWorld )event.player.world;
 		VampirismCurse vampirism = Instances.VAMPIRISM;
