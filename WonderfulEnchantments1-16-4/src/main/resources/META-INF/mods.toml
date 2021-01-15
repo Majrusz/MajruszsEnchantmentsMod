@@ -41,3 +41,10 @@ Mod adding a lot of new unique enchantments to the game.
     versionRange="[1.16.4,1.17)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.examplemod]]
+    modId="majrusz_library"
+    mandatory=true
+    versionRange="[1.0.0,2.0.0)"
+    ordering="NONE"
+    side="BOTH"
