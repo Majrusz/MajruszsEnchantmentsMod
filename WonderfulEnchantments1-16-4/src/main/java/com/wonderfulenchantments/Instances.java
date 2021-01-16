@@ -45,6 +45,9 @@ public class Instances {
 
 	*/
 
+	// Fishing Rod Enchantments
+	public static final FanaticEnchantment FISHING_FANATIC;
+
 	// Armor Enchantments
 	public static final DodgeEnchantment DODGE;
 	public static final EnlightenmentEnchantment ENLIGHTENMENT;
@@ -68,6 +71,8 @@ public class Instances {
 	public static final CorrosionCurse CORROSION;
 
 	static {
+		FISHING_FANATIC = new FanaticEnchantment();
+
 		DODGE = new DodgeEnchantment();
 		ENLIGHTENMENT = new EnlightenmentEnchantment();
 

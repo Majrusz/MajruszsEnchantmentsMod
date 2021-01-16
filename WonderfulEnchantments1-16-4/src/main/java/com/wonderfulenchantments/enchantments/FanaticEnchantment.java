@@ -4,8 +4,13 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
+import com.mlib.MajruszLibrary;
+import com.mlib.Random;
+import com.mlib.config.DoubleConfig;
+import com.mlib.config.IntegerConfig;
 import com.wonderfulenchantments.ConfigHandlerOld;
 import com.wonderfulenchantments.ConfigHandlerOld.Config;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -27,36 +32,38 @@ import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import org.lwjgl.system.CallbackI;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 /** Enchantment that increases loot from fishing. */
 @Mod.EventBusSubscriber
-public class FanaticEnchantment extends Enchantment {
-	protected static final double levelIncreaseChanceMultiplier = 0.01D;
+public class FanaticEnchantment extends WonderfulEnchantment {
+	protected final DoubleConfig levelIncreaseChanceMultiplier;
+	protected final DoubleConfig extraLootChance;
+	protected final DoubleConfig rainingMultiplier;
+	protected final DoubleConfig damageBonus;
 
 	public FanaticEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
-	}
+		super( Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, EquipmentSlotType.MAINHAND, "FishingFanatic" );
+		String increase_comment = "Chance for increasing enchantment level per difference to maximum level. (for example if this value is equal 0.01 then to get 1st level you will have 6 * 0.01 = 6% chance, to get 2nd level ( 6-1 ) * 0.01 = 5% chance )";
+		String loot_comment = "Independent chance for extra loot with every enchantment level.";
+		String raining_comment = "Chance multiplier when player is fishing while it is raining.";
+		String damage_comment = "Damage increase with every level.";
+		this.levelIncreaseChanceMultiplier = new DoubleConfig( "level_increase_chance", increase_comment, false, 0.01, 0.01, 0.15 );
+		this.extraLootChance = new DoubleConfig( "extra_loot_chance", loot_comment, false, 0.33333, 0.01, 1.0 );
+		this.rainingMultiplier = new DoubleConfig( "raining_multiplier", raining_comment, false, 2.0, 1.0, 10.0 );
+		this.damageBonus = new DoubleConfig( "damage_bonus", damage_comment, false, 1.0, 0.0, 5.0 );
+		this.enchantmentGroup.addConfigs( this.levelIncreaseChanceMultiplier, this.extraLootChance, this.rainingMultiplier, this.damageBonus );
 
-	@Override
-	public int getMaxLevel() {
-		return 6;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 10 * level + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 20;
+		setMaximumEnchantmentLevel( 6 );
+		setDifferenceBetweenMinimumAndMaximum( 20 );
+		setMinimumEnchantabilityCalculator( level->( 10 * level ) );
 	}
 
 	@Override
 	public float calcDamageByCreature( int level, CreatureAttribute creature ) {
-		return ( float )level * 1.0F;
+		return ( float )( level * Instances.FISHING_FANATIC.damageBonus.get() );
 	}
 
 	/** Method that displays enchantment name. It is overridden because at maximum level the enchantment will change its name. */
@@ -84,10 +91,10 @@ public class FanaticEnchantment extends Enchantment {
 	public static void onFishedItem( ItemFishedEvent event ) {
 		PlayerEntity player = event.getPlayer();
 		World world = player.getEntityWorld();
-
+		FanaticEnchantment enchantment = Instances.FISHING_FANATIC;
 		LootContext lootContext = generateLootContext( player );
 		LootTable lootTable = getFishingLootTable();
-		int fanaticLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FISHING_FANATIC.get(), player );
+		int fanaticLevel = EnchantmentHelper.getMaxEnchantmentLevel( enchantment, player );
 
 		Multiset< String > rewards = HashMultiset.create();
 		rewards.add( event.getDrops()
@@ -96,8 +103,8 @@ public class FanaticEnchantment extends Enchantment {
 			.getString() );
 
 		int extraRewardsCounter = 0;
-		for( int i = 0; i < fanaticLevel && ConfigHandlerOld.Config.Enchantability.FISHING_FANATIC.get(); i++ )
-			if( WonderfulEnchantments.RANDOM.nextDouble() < Config.FISHING_EXTRA_DROP_CHANCE.get() )
+		for( int i = 0; i < fanaticLevel && enchantment.availabilityConfig.isEnabled(); i++ )
+			if( Random.tryChance( enchantment.extraLootChance.get() ) )
 				for( ItemStack extraReward : lootTable.generate( lootContext ) ) {
 					spawnReward( extraReward, player, world, event.getHookEntity() );
 
@@ -117,7 +124,7 @@ public class FanaticEnchantment extends Enchantment {
 
 		event.damageRodBy( event.getRodDamage() + extraRewardsCounter );
 		world.addEntity( new ExperienceOrbEntity( world, player.getPosX(), player.getPosY() + 0.5D, player.getPosZ() + 0.5D,
-			extraRewardsCounter + WonderfulEnchantments.RANDOM.nextInt( 2 * extraRewardsCounter + 1 )
+			extraRewardsCounter + MajruszLibrary.RANDOM.nextInt( 2 * extraRewardsCounter + 1 )
 		) );
 	}
 
@@ -152,16 +159,16 @@ public class FanaticEnchantment extends Enchantment {
 	 @param bobberEntity Fishing bobber where item will be spawned.
 	 */
 	protected static void spawnReward( ItemStack reward, PlayerEntity player, World world, FishingBobberEntity bobberEntity ) {
-		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(),
-			bobberEntity.getPosY() + 0.25D * WonderfulEnchantments.RANDOM.nextDouble(),
-			bobberEntity.getPosZ() + 0.50D * WonderfulEnchantments.RANDOM.nextDouble(), reward
+		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50 * WonderfulEnchantments.RANDOM.nextDouble(),
+			bobberEntity.getPosY() + 0.25 * WonderfulEnchantments.RANDOM.nextDouble(),
+			bobberEntity.getPosZ() + 0.50 * WonderfulEnchantments.RANDOM.nextDouble(), reward
 		);
 
 		double deltaX = player.getPosX() - itemEntity.getPosX();
 		double deltaY = player.getPosY() - itemEntity.getPosY();
 		double deltaZ = player.getPosZ() - itemEntity.getPosZ();
-		itemEntity.setMotion( 0.1D * deltaX,
-			0.1D * deltaY + Math.pow( Math.pow( deltaX, 2 ) + Math.pow( deltaY, 2 ) + Math.pow( deltaZ, 2 ), 0.25D ) * 0.08D, 0.1D * deltaZ
+		itemEntity.setMotion( 0.1 * deltaX,
+			0.1 * deltaY + Math.pow( Math.pow( deltaX, 2 ) + Math.pow( deltaY, 2 ) + Math.pow( deltaZ, 2 ), 0.25 ) * 0.08, 0.1 * deltaZ
 		);
 
 		world.addEntity( itemEntity );
@@ -176,19 +183,18 @@ public class FanaticEnchantment extends Enchantment {
 	 @return Returns whether the level was increased or not.
 	 */
 	protected static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player, boolean isRaining ) {
-		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.FISHING_FANATIC.get(), player );
-		double increaseChance = ( RegistryHandler.FISHING_FANATIC.get()
-			.getMaxLevel() - enchantmentLevel
-		) * levelIncreaseChanceMultiplier;
+		FanaticEnchantment enchantment = Instances.FISHING_FANATIC;
+		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( enchantment, player );
+		double increaseChance = ( enchantment.getMaxLevel() - enchantmentLevel ) * enchantment.levelIncreaseChanceMultiplier.get();
 
 		if( isRaining )
-			increaseChance *= 2.0D;
+			increaseChance *= enchantment.rainingMultiplier.get();
 
-		if( WonderfulEnchantments.RANDOM.nextDouble() < increaseChance ) {
+		if( Random.tryChance( increaseChance ) ) {
 			ItemStack fishingRod = player.getHeldItemMainhand();
 
 			if( enchantmentLevel == 0 )
-				fishingRod.addEnchantment( RegistryHandler.FISHING_FANATIC.get(), 1 );
+				fishingRod.addEnchantment( enchantment, 1 );
 			else {
 				ListNBT nbt = fishingRod.getEnchantmentTagList();
 

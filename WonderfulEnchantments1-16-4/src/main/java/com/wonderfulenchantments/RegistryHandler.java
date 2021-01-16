@@ -28,7 +28,7 @@ public class RegistryHandler {
     public static final DeferredRegister< Item > ITEMS_TO_REPLACE = DeferredRegister.create( ForgeRegistries.ITEMS, "minecraft" );
 
     // Fishing Rod Enchantments
-    public static final RegistryObject< Enchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", FanaticEnchantment::new );
+    public static final RegistryObject< Enchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", ()->Instances.FISHING_FANATIC );
 
     // Sword Enchantments
     public static final RegistryObject< Enchantment > HUMAN_SLAYER = ENCHANTMENTS.register( "human_slayer", HumanSlayerEnchantment::new );
