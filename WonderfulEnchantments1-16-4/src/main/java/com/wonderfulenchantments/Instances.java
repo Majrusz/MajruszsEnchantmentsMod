@@ -1,9 +1,6 @@
 package com.wonderfulenchantments;
 
-import com.wonderfulenchantments.curses.FatigueCurse;
-import com.wonderfulenchantments.curses.IncompatibilityCurse;
-import com.wonderfulenchantments.curses.SlownessCurse;
-import com.wonderfulenchantments.curses.VampirismCurse;
+import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -58,6 +55,7 @@ public class Instances {
 	public static final FatigueCurse FATIGUE;
 	public static final IncompatibilityCurse INCOMPATIBILITY;
 	public static final VampirismCurse VAMPIRISM;
+	public static final CorrosionCurse CORROSION;
 
 	static {
 		ABSORBER = new AbsorberEnchantment();
@@ -66,6 +64,7 @@ public class Instances {
 		FATIGUE = new FatigueCurse();
 		INCOMPATIBILITY = new IncompatibilityCurse();
 		VAMPIRISM = new VampirismCurse();
+		CORROSION = new CorrosionCurse();
 
 		WonderfulEnchantments.CONFIG_HANDLER.register( ModLoadingContext.get() );
 	}

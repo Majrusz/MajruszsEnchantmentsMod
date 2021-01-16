@@ -67,6 +67,7 @@ public class RegistryHandler {
     public static final RegistryObject< Enchantment > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", ()->Instances.FATIGUE );
     public static final RegistryObject< Enchantment > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", ()->Instances.INCOMPATIBILITY );
     public static final RegistryObject< Enchantment > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", ()->Instances.VAMPIRISM );
+    public static final RegistryObject< Enchantment > CORROSION = ENCHANTMENTS.register( "corrosion_curse", ()->Instances.CORROSION );
 
     // Particles
     public static final RegistryObject< BasicParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle", ()->new BasicParticleType( true ) );
