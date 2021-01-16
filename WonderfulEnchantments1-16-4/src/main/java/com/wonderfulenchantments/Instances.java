@@ -47,7 +47,7 @@ public class Instances {
 
 	// Armor Enchantments
 	public static final DodgeEnchantment DODGE;
-	// --
+	public static final EnlightenmentEnchantment ENLIGHTENMENT;
 	// --
 	// --
 
@@ -69,6 +69,7 @@ public class Instances {
 
 	static {
 		DODGE = new DodgeEnchantment();
+		ENLIGHTENMENT = new EnlightenmentEnchantment();
 
 		ABSORBER = new AbsorberEnchantment();
 

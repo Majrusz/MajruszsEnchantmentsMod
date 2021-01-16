@@ -36,7 +36,7 @@ public class ElderGaurdianFavorEnchantment extends WonderfulEnchantment {
 		String damage_comment = "Damage dealt by this enchantment.";
 		String water_comment = "Damage multiplier when both entities are in water.";
 		this.beamCooldown = new DurationConfig( "beam_cooldown", cooldown_comment, false, 3.0, 1.0, 60.0 );
-		this.beamDamage = new DoubleConfig( "beam_damage", damage_comment, false, 5.0, 1.0, 100.0 );
+		this.beamDamage = new DoubleConfig( "beam_damage", damage_comment, false, 6.0, 1.0, 100.0 );
 		this.waterMultiplier = new DoubleConfig( "water_multiplier", water_comment, false, 2.0, 1.0, 10.0 );
 		this.enchantmentGroup.addConfigs( this.beamCooldown, this.beamDamage, this.waterMultiplier );
 

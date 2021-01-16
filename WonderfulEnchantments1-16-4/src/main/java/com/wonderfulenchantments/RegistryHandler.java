@@ -37,7 +37,7 @@ public class RegistryHandler {
 
     // Armor Enchantments
     public static final RegistryObject< Enchantment > DODGE = ENCHANTMENTS.register( "dodge", ()->Instances.DODGE );
-    public static final RegistryObject< Enchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment::new );
+    public static final RegistryObject< Enchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", ()->Instances.ENLIGHTENMENT );
     public static final RegistryObject< Enchantment > PHOENIX_DIVE = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new );
     public static final RegistryObject< Enchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", MagicProtectionEnchantment::new );
 
@@ -60,7 +60,7 @@ public class RegistryHandler {
     public static final RegistryObject< Enchantment > HUNTER = ENCHANTMENTS.register( "hunter", HunterEnchantment::new );
 
     // Trident Enchantments
-    public static final RegistryObject< Enchantment > ELDER_GUARDIAN_FAVOR = ENCHANTMENTS.register( "elder_guardian_favor", ElderGaurdianFavorEnchantment::new );
+    public static final RegistryObject< Enchantment > ELDER_GUARDIAN_FAVOR = ENCHANTMENTS.register( "elder_guardian_favor", ()->Instances.ELDER_GAURDIAN_FAVOR );
 
     // Curses
     public static final RegistryObject< Enchantment > SLOWNESS = ENCHANTMENTS.register( "slowness_curse", ()->Instances.SLOWNESS );
