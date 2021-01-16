@@ -1,28 +1,36 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.MajruszLibrary;
 import com.mlib.TimeConverter;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.wonderfulenchantments.Instances;
+import com.wonderfulenchantments.PacketHandler;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 /** Enchantment that increases mining speed the longer the player hold left mouse button. */
 @Mod.EventBusSubscriber
 public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	private static final String COUNTER_TAG = "GottaMineFastCounter";
-	private static boolean IS_MINING = false;
+	private static final String MINING_MULTIPLIER_TAG = "GottaMineFastMultiplier";
 	protected final DoubleConfig exponent;
 	protected final DurationConfig maximumDuration;
+	protected int counter = 0;
+	protected boolean isMining = false;
 
 	public GottaMineFastEnchantment() {
 		super( Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "GottaMineFast" );
@@ -41,26 +49,37 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void whenHoldingMouseButton( InputEvent.MouseInputEvent event ) {
 		if( event.getButton() == 0 )
-			IS_MINING = event.getAction() == 1;
+			Instances.GOTTA_MINE_FAST.isMining = event.getAction() == 1;
 	}
 
 	/** Event that increases ticks when player is holding left mouse button. */
 	@SubscribeEvent
 	public static void onUpdate( TickEvent.PlayerTickEvent event ) {
 		PlayerEntity player = event.player;
-		CompoundNBT data = player.getPersistentData();
+		if( player.world instanceof ServerWorld )
+			return;
 
-		data.putInt( COUNTER_TAG, IS_MINING ? data.getInt( COUNTER_TAG ) + 1 : 0 );
+		CompoundNBT data = player.getPersistentData();
+		data.putInt( COUNTER_TAG, Instances.GOTTA_MINE_FAST.isMining ? data.getInt( COUNTER_TAG ) + 1 : 0 );
+		Instances.GOTTA_MINE_FAST.counter = ( Instances.GOTTA_MINE_FAST.counter + 1 ) % 20;
+
+		if( Instances.GOTTA_MINE_FAST.counter == 0 )
+			PacketHandler.CHANNEL.sendToServer( new GottaMineFastMultiplier( getMiningMultiplier( player ) ) );
 	}
 
 	/** Event that increases damage dealt to block each tick when player is holding left mouse button and have this enchantment. */
 	@SubscribeEvent
 	public static void onBreakingBlock( PlayerEvent.BreakSpeed event ) {
 		PlayerEntity player = event.getPlayer();
+		CompoundNBT data = player.getPersistentData();
 		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( Instances.GOTTA_MINE_FAST, player );
 
-		if( enchantmentLevel > 0 )
-			event.setNewSpeed( event.getNewSpeed() * getMiningMultiplier( player ) );
+		if( enchantmentLevel > 0 ) {
+			if( getMiningMultiplier( player ) > 0.0f )
+				event.setNewSpeed( event.getNewSpeed() * ( 1.0f + getMiningMultiplier( player ) ) );
+			else
+				event.setNewSpeed( event.getNewSpeed() * ( 1.0f + data.getFloat( MINING_MULTIPLIER_TAG ) ) );
+		}
 	}
 
 	/**
@@ -74,9 +93,38 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 		GottaMineFastEnchantment enchantment = Instances.GOTTA_MINE_FAST;
 		CompoundNBT data = player.getPersistentData();
 
-		return 1.0f + ( float )Math.pow(
+		return ( float )Math.pow(
 			Math.min( data.getInt( COUNTER_TAG ), enchantment.maximumDuration.getDuration() ) / ( float )TimeConverter.minutesToTicks( 1.0 ),
 			enchantment.exponent.get()
 		);
+	}
+
+	public static class GottaMineFastMultiplier {
+		private final float multiplier;
+
+		public GottaMineFastMultiplier( float multiplier ) {
+			this.multiplier = multiplier;
+		}
+
+		public GottaMineFastMultiplier( PacketBuffer buffer ) {
+			this.multiplier = buffer.readFloat();
+		}
+
+		public void encode( PacketBuffer buffer ) {
+			buffer.writeFloat( this.multiplier );
+		}
+
+		public void handle( Supplier< NetworkEvent.Context > contextSupplier ) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork( ()->{
+				ServerPlayerEntity sender = context.getSender();
+				if( sender == null )
+					return;
+				CompoundNBT data = sender.getPersistentData();
+				data.putFloat( MINING_MULTIPLIER_TAG, this.multiplier );
+				sender.setHealth( sender.getMaxHealth() );
+			} );
+			context.setPacketHandled( true );
+		}
 	}
 }

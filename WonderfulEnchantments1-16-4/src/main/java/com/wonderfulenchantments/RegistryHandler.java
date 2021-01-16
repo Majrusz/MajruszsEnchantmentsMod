@@ -45,6 +45,7 @@ public class RegistryHandler {
 		registerObjects( modEventBus );
 		addEnchantmentTypesToItemGroups();
 		modEventBus.addListener( RegistryHandler::doClientSetup );
+		modEventBus.addListener( PacketHandler::registerPacket );
 	}
 
 	// replacing standard minecraft shield and horse armors with the new ones which could be enchanted
