@@ -5,16 +5,19 @@ import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static com.wonderfulenchantments.WonderfulEnchantmentHelper.isEntityOutsideWhenItRains;
 
 /** Damages entity when it is in water. */
 @Mod.EventBusSubscriber
@@ -51,15 +54,19 @@ public class CorrosionCurse extends WonderfulCurse {
 		if( enchantmentLevel > 0 && isEntityOutsideWhenItRains( entity, world ) && counter > corrosionCurse.damageCooldown.getDuration() ) {
 			counter -= corrosionCurse.damageCooldown.getDuration();
 			entity.attackEntityFrom( DamageSource.DROWN, ( float )( enchantmentLevel * corrosionCurse.damageAmount.get() ) );
+			damageArmor( entity );
 		}
 		data.putInt( CORROSION_TAG, counter );
 	}
 
-	/** Checks whether entity is outside when it is raining. */
-	protected static boolean isEntityOutsideWhenItRains( LivingEntity entity, ServerWorld world ) {
-		BlockPos entityPosition = new BlockPos( entity.getPositionVec() );
-		Biome biome = world.getBiome( entityPosition );
+	/** Deals damage to each armor piece with corrosion curse. */
+	protected static void damageArmor( LivingEntity entity ) {
+		for( ItemStack itemStack : entity.getArmorInventoryList() )
+			if( EnchantmentHelper.getEnchantmentLevel( Instances.CORROSION, itemStack ) > 0 ) {
+				EquipmentSlotType equipmentSlotType = itemStack.getEquipmentSlot();
 
-		return world.canSeeSky( entityPosition ) && world.isRaining() && biome.getPrecipitation() == Biome.RainType.RAIN;
+				if( equipmentSlotType != null )
+					itemStack.damageItem( 1, entity, owner->owner.sendBreakAnimation( equipmentSlotType ) );
+			}
 	}
 }
