@@ -7,13 +7,8 @@ import com.google.common.collect.Multisets;
 import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
-import com.mlib.config.IntegerConfig;
-import com.wonderfulenchantments.ConfigHandlerOld;
-import com.wonderfulenchantments.ConfigHandlerOld.Config;
 import com.wonderfulenchantments.Instances;
-import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.CreatureAttribute;
@@ -32,9 +27,6 @@ import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
-import org.lwjgl.system.CallbackI;
-
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 /** Enchantment that increases loot from fishing. */
 @Mod.EventBusSubscriber

@@ -77,7 +77,7 @@ public class DodgeEnchantment extends WonderfulEnchantment {
 		LivingEntity entity = event.getEntityLiving();
 		CompoundNBT data = entity.getPersistentData();
 
-		updateImmunity( entity, data.getInt( DODGE_TAG )-1 );
+		updateImmunity( entity, data.getInt( DODGE_TAG ) - 1 );
 	}
 
 	/** Updates current knockback immunity depending on dodge tag. */

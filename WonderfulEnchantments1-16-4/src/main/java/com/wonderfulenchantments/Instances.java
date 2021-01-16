@@ -2,68 +2,40 @@ package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.RegistryObject;
 
 public class Instances {
-	/*
-	// Fishing Rod Enchantments
-	public static final RegistryObject< Enchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", FanaticEnchantment::new );
-
-	// Sword Enchantments
-	public static final RegistryObject< Enchantment > HUMAN_SLAYER = ENCHANTMENTS.register( "human_slayer", HumanSlayerEnchantment::new );
-	public static final RegistryObject< Enchantment > PUFFERFISH_VENGEANCE = ENCHANTMENTS.register( "pufferfish_vengeance", PufferfishVengeanceEnchantment::new );
-	public static final RegistryObject< Enchantment > LEECH = ENCHANTMENTS.register( "leech", LeechEnchantment::new );
-
-	// Armor Enchantments
-	public static final RegistryObject< Enchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment::new );
-	public static final RegistryObject< Enchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment::new );
-	public static final RegistryObject< Enchantment > PHOENIX_DIVE = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new );
-	public static final RegistryObject< Enchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", MagicProtectionEnchantment::new );
-
-	// Shield Enchantments
-	public static final RegistryObject< Enchantment > VITALITY = ENCHANTMENTS.register( "vitality", VitalityEnchantment::new );
-	public static final RegistryObject< Enchantment > IMMORTALITY = ENCHANTMENTS.register( "immortality", ImmortalityEnchantment::new );
-	public static final RegistryObject< Enchantment > ABSORBER = ENCHANTMENTS.register( "absorber", AbsorberEnchantment::new );
-
-	// Tool Enchantments
-	public static final RegistryObject< Enchantment > SMELTER = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new );
-	public static final RegistryObject< Enchantment > GOTTA_MINE_FAST = ENCHANTMENTS.register( "gotta_mine_fast", GottaMineFastEnchantment::new );
-	public static final RegistryObject< Enchantment > TELEKINESIS = ENCHANTMENTS.register( "telekinesis", TelekinesisEnchantment::new );
-
-	// Horse Armor Enchantments
-	public static final RegistryObject< Enchantment > SWIFTNESS = ENCHANTMENTS.register( "swiftness", SwiftnessEnchantment::new );
-	public static final RegistryObject< Enchantment > HORSE_PROTECTION = ENCHANTMENTS.register( "horse_protection", HorseProtectionEnchantment::new );
-	public static final RegistryObject< Enchantment > HORSE_FROST_WALKER = ENCHANTMENTS.register( "horse_frost_walker", HorseFrostWalkerEnchantment::new );
-
-	// Bow Enchantments
-	public static final RegistryObject< Enchantment > HUNTER = ENCHANTMENTS.register( "hunter", HunterEnchantment::new );
-
-	// Trident Enchantments
-	public static final RegistryObject< Enchantment > ELDER_GUARDIAN_FAVOR = ENCHANTMENTS.register( "elder_guardian_favor", ElderGaurdianFavorEnchantment::new );
-
-	*/
-
 	// Fishing Rod Enchantments
 	public static final FanaticEnchantment FISHING_FANATIC;
+
+	// Sword Enchantments
+	public static final HumanSlayerEnchantment HUMAN_SLAYER;
+	public static final PufferfishVengeanceEnchantment PUFFERFISH_VENGEANCE;
+	public static final LeechEnchantment LEECH;
 
 	// Armor Enchantments
 	public static final DodgeEnchantment DODGE;
 	public static final EnlightenmentEnchantment ENLIGHTENMENT;
-	// --
-	// --
-
+	public static final PhoenixDiveEnchantment PHOENIX_DIVE;
+	public static final MagicProtectionEnchantment MAGIC_PROTECTION;
 
 	// Shield Enchantments
-	// --
-	// --
+	public static final VitalityEnchantment VITALITY;
+	public static final ImmortalityEnchantment IMMORTALITY;
 	public static final AbsorberEnchantment ABSORBER;
 
 	// Tool Enchantments
-	// --
+	public static final SmelterEnchantment SMELTER;
 	public static final GottaMineFastEnchantment GOTTA_MINE_FAST;
-	// --
+	public static final TelekinesisEnchantment TELEKINESIS;
+
+	// Horse Armor Enchantments
+	public static final SwiftnessEnchantment SWIFTNESS;
+	public static final HorseProtectionEnchantment HORSE_PROTECTION;
+	public static final HorseFrostWalkerEnchantment HORSE_FROST_WALKER;
+
+	// Bow Enchantments
+	public static final HunterEnchantment HUNTER;
 
 	// Trident Enchantments
 	public static final ElderGaurdianFavorEnchantment ELDER_GAURDIAN_FAVOR;
@@ -78,12 +50,28 @@ public class Instances {
 	static {
 		FISHING_FANATIC = new FanaticEnchantment();
 
+		HUMAN_SLAYER = new HumanSlayerEnchantment();
+		PUFFERFISH_VENGEANCE = new PufferfishVengeanceEnchantment();
+		LEECH = new LeechEnchantment();
+
 		DODGE = new DodgeEnchantment();
 		ENLIGHTENMENT = new EnlightenmentEnchantment();
+		PHOENIX_DIVE = new PhoenixDiveEnchantment();
+		MAGIC_PROTECTION = new MagicProtectionEnchantment();
 
+		VITALITY = new VitalityEnchantment();
+		IMMORTALITY = new ImmortalityEnchantment();
 		ABSORBER = new AbsorberEnchantment();
 
+		SMELTER = new SmelterEnchantment();
 		GOTTA_MINE_FAST = new GottaMineFastEnchantment();
+		TELEKINESIS = new TelekinesisEnchantment();
+
+		SWIFTNESS = new SwiftnessEnchantment();
+		HORSE_PROTECTION = new HorseProtectionEnchantment();
+		HORSE_FROST_WALKER = new HorseFrostWalkerEnchantment();
+
+		HUNTER = new HunterEnchantment();
 
 		ELDER_GAURDIAN_FAVOR = new ElderGaurdianFavorEnchantment();
 

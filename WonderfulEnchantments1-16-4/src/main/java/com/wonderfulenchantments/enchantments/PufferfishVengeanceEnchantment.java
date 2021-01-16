@@ -1,10 +1,9 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.TimeConverter;
+import com.mlib.config.DurationConfig;
 import com.mlib.effects.EffectHelper;
-import com.wonderfulenchantments.ConfigHandlerOld.Config;
-import com.wonderfulenchantments.RegistryHandler;
-import net.minecraft.enchantment.Enchantment;
+import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
@@ -20,28 +19,20 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
 /** Enchantment that inflicts on the enemy several negative effects. */
 @Mod.EventBusSubscriber
-public class PufferfishVengeanceEnchantment extends Enchantment {
+public class PufferfishVengeanceEnchantment extends WonderfulEnchantment {
+	protected final DurationConfig durationConfig;
+
 	public PufferfishVengeanceEnchantment() {
-		super( Rarity.RARE, EnchantmentType.WEAPON, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
-	}
+		super( Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "PufferfishVengeance" );
+		String comment = "Pufferfish negative effects duration per enchantment level. (in seconds)";
+		this.durationConfig = new DurationConfig( "duration", comment, false, 4.0, 1.0, 30.0 );
+		this.enchantmentGroup.addConfig( this.durationConfig );
 
-	@Override
-	public int getMaxLevel() {
-		return 2;
-	}
-
-	@Override
-	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + enchantmentLevel * 12 + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int enchantmentLevel ) {
-		return this.getMinEnchantability( enchantmentLevel ) + 20;
+		setMaximumEnchantmentLevel( 2 );
+		setDifferenceBetweenMinimumAndMaximum( 20 );
+		setMinimumEnchantabilityCalculator( level->( 5 + level * 12 ) );
 	}
 
 	@Override
@@ -58,18 +49,18 @@ public class PufferfishVengeanceEnchantment extends Enchantment {
 			return;
 
 		LivingEntity attacker = ( LivingEntity )damageSource.getImmediateSource();
-		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.PUFFERFISH_VENGEANCE.get(), attacker );
+		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( Instances.PUFFERFISH_VENGEANCE, attacker );
 
 		if( enchantmentLevel <= 0 )
 			return;
 
 		LivingEntity target = event.getEntityLiving();
-		int durationInTicks = TimeConverter.secondsToTicks( 2 * Config.PUFFERFISH_DURATION.get() + 1 );
+		int durationInTicks = TimeConverter.secondsToTicks( Instances.PUFFERFISH_VENGEANCE.durationConfig.getDuration() ) + 20;
 		World world = attacker.getEntityWorld();
 
 		applyEffects( target, durationInTicks );
 		world.playSound( null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT, SoundCategory.AMBIENT,
-			1.0F, 1.0F
+			1.0f, 1.0f
 		);
 	}
 

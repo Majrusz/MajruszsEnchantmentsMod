@@ -30,7 +30,7 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 		String comment = "Minimum required duration to absorb an effect. (in seconds)";
 		this.minimumEffectDuration = new DurationConfig( "minimum_duration", comment, false, 2.5, 0.0, 60.0 );
 		this.enchantmentGroup.addConfig( this.minimumEffectDuration );
-		
+
 		setMaximumEnchantmentLevel( 1 );
 		setDifferenceBetweenMinimumAndMaximum( 15 );
 		setMinimumEnchantabilityCalculator( level->( 5 + 8 * level ) );

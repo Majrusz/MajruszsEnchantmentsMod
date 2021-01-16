@@ -1,14 +1,24 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlotTypes;
-import com.wonderfulenchantments.ConfigHandlerOld.Config;
-import net.minecraft.enchantment.ProtectionEnchantment;
+import com.mlib.config.DoubleConfig;
+import com.wonderfulenchantments.Instances;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.util.DamageSource;
 
 /** Enchantment that reduces damage from magic sources. (like Evoker fangs, Elder Guardian laser beam etc.) */
-public class MagicProtectionEnchantment extends ProtectionEnchantment {
+public class MagicProtectionEnchantment extends WonderfulEnchantment {
+	protected final DoubleConfig protectionBonus;
+
 	public MagicProtectionEnchantment() {
-		super( Rarity.UNCOMMON, Type.ALL, EquipmentSlotTypes.ARMOR );
+		super( Rarity.UNCOMMON, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "MagicProtection" );
+		String comment = "Damage reduction bonus per enchantment level.";
+		this.protectionBonus = new DoubleConfig( "armor_bonus", comment, false, 2.0, 1.0, 10.0 );
+		this.enchantmentGroup.addConfig( this.protectionBonus );
+
+		setMaximumEnchantmentLevel( 4 );
+		setDifferenceBetweenMinimumAndMaximum( 11 );
+		setMinimumEnchantabilityCalculator( level->( 1 + ( level - 1 ) * 11 ) );
 	}
 
 	@Override
@@ -16,7 +26,7 @@ public class MagicProtectionEnchantment extends ProtectionEnchantment {
 		if( source.canHarmInCreative() )
 			return 0;
 		else if( source.isMagicDamage() )
-			return level * Config.MAGIC_PROTECTION_BONUS.get();
+			return ( int )( level * Instances.MAGIC_PROTECTION.protectionBonus.get() );
 
 		return 0;
 	}

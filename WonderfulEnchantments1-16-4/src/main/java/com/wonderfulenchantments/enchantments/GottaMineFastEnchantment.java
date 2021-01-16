@@ -76,6 +76,9 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 		GottaMineFastEnchantment enchantment = Instances.GOTTA_MINE_FAST;
 		CompoundNBT data = player.getPersistentData();
 
-		return 1.0f + ( float )Math.pow( Math.min( data.getInt( COUNTER_TAG ), enchantment.maximumDuration.getDuration() ) / ( float )TimeConverter.minutesToTicks( 1.0 ), enchantment.exponent.get() );
+		return 1.0f + ( float )Math.pow(
+			Math.min( data.getInt( COUNTER_TAG ), enchantment.maximumDuration.getDuration() ) / ( float )TimeConverter.minutesToTicks( 1.0 ),
+			enchantment.exponent.get()
+		);
 	}
 }

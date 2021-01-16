@@ -2,13 +2,12 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlotTypes;
 import com.mlib.enchantments.EnchantmentHelperPlus;
-import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.ItemStack;
@@ -20,28 +19,15 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
 /** Enchantment that gives Frost Walker enchantment effect but on horse armor. */
 @Mod.EventBusSubscriber
-public class HorseFrostWalkerEnchantment extends Enchantment {
+public class HorseFrostWalkerEnchantment extends WonderfulEnchantment {
 	public HorseFrostWalkerEnchantment() {
-		super( Rarity.RARE, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR );
-	}
+		super( Rarity.RARE, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "HorseFrostWalker" );
 
-	@Override
-	public int getMaxLevel() {
-		return 2;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return level * 10 + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 15;
+		setMaximumEnchantmentLevel( 2 );
+		setDifferenceBetweenMinimumAndMaximum( 15 );
+		setMinimumEnchantabilityCalculator( level->( 10 * level ) );
 	}
 
 	@Override
@@ -58,9 +44,7 @@ public class HorseFrostWalkerEnchantment extends Enchantment {
 		AnimalEntity animal = ( AnimalEntity )event.getEntityLiving();
 		ServerWorld world = ( ServerWorld )animal.world;
 		BlockPos position = new BlockPos( animal.getPositionVec() );
-		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( RegistryHandler.HORSE_FROST_WALKER.get(),
-			animal.getArmorInventoryList()
-		);
+		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( Instances.HORSE_FROST_WALKER, animal.getArmorInventoryList() );
 		BlockState blockState = Blocks.FROSTED_ICE.getDefaultState();
 		double factor = Math.min( 16, 2 + enchantmentLevel );
 		BlockPos.Mutable mutablePosition = new BlockPos.Mutable();

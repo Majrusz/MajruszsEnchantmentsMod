@@ -2,11 +2,10 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlotTypes;
 import com.mlib.attributes.AttributeHandler;
+import com.mlib.config.IntegerConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
-import com.wonderfulenchantments.ConfigHandlerOld.Config;
-import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -16,32 +15,23 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
 /** Enchantment that increases horse's armor. */
 @Mod.EventBusSubscriber
-public class HorseProtectionEnchantment extends Enchantment {
-	protected static final AttributeHandler attributeHandler = new AttributeHandler( "f7f6f46b-23a1-4d3b-8e83-3160c6390f9a", "HorseProtectionBonus",
+public class HorseProtectionEnchantment extends WonderfulEnchantment {
+	private static final AttributeHandler ATTRIBUTE_HANDLER = new AttributeHandler( "f7f6f46b-23a1-4d3b-8e83-3160c6390f9a", "HorseProtectionBonus",
 		Attributes.ARMOR, AttributeModifier.Operation.ADDITION
 	);
+	protected final IntegerConfig armorBonus;
 
 	public HorseProtectionEnchantment() {
-		super( Rarity.UNCOMMON, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR );
-	}
+		super( Rarity.UNCOMMON, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "HorseProtection" );
+		String comment = "Horse armor bonus per enchantment level.";
+		this.armorBonus = new IntegerConfig( "armor_bonus", comment, false, 2, 1, 10 );
+		this.enchantmentGroup.addConfig( this.armorBonus );
 
-	@Override
-	public int getMaxLevel() {
-		return 4;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 1 + 6 * ( level - 1 ) + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + level * 10;
+		setMaximumEnchantmentLevel( 4 );
+		setDifferenceBetweenMinimumAndMaximum( 10 );
+		setMinimumEnchantabilityCalculator( level->( 1 + 6 * ( level - 1 ) ) );
 	}
 
 	/** Event that updates the armor bonus on each animal entity equipment change. */
@@ -50,7 +40,7 @@ public class HorseProtectionEnchantment extends Enchantment {
 		LivingEntity livingEntity = event.getEntityLiving();
 
 		if( livingEntity instanceof AnimalEntity )
-			attributeHandler.setValue( getArmorBonus( ( AnimalEntity )livingEntity ) )
+			ATTRIBUTE_HANDLER.setValue( getArmorBonus( ( AnimalEntity )livingEntity ) )
 				.apply( livingEntity );
 	}
 
@@ -60,10 +50,10 @@ public class HorseProtectionEnchantment extends Enchantment {
 	 @param animal Animal on which the armor bonus is calculated.
 	 */
 	protected static double getArmorBonus( AnimalEntity animal ) {
-		int protectionLevel = EnchantmentHelperPlus.calculateEnchantmentSumIfIsInstanceOf( RegistryHandler.HORSE_PROTECTION.get(),
-			animal.getArmorInventoryList(), HorseArmorItem.class
+		int protectionLevel = EnchantmentHelperPlus.calculateEnchantmentSumIfIsInstanceOf( Instances.HORSE_PROTECTION, animal.getArmorInventoryList(),
+			HorseArmorItem.class
 		);
 
-		return protectionLevel * Config.HORSE_ARMOR_BONUS.get();
+		return protectionLevel * Instances.HORSE_PROTECTION.armorBonus.get();
 	}
 }

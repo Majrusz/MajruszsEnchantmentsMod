@@ -1,12 +1,11 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.mlib.Random;
+import com.mlib.config.DoubleConfig;
 import com.mlib.effects.EffectHelper;
 import com.mlib.enchantments.EnchantmentHelperPlus;
-import com.wonderfulenchantments.ConfigHandlerOld.Config;
-import com.wonderfulenchantments.RegistryHandler;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
@@ -26,28 +25,20 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.Collection;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
 /** Enchantment that steals from enemy positive effect or some health. */
 @Mod.EventBusSubscriber
-public class LeechEnchantment extends Enchantment {
+public class LeechEnchantment extends WonderfulEnchantment {
+	protected final DoubleConfig leechChance;
+
 	public LeechEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.WEAPON, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
-	}
+		super( Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "Leech" );
+		String comment = "Chance for stealing positive effect/health from enemy.";
+		this.leechChance = new DoubleConfig( "leech_chance", comment, false, 0.25, 0.0, 1.0 );
+		this.enchantmentGroup.addConfig( this.leechChance );
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-
-	@Override
-	public int getMinEnchantability( int enchantmentLevel ) {
-		return enchantmentLevel * 20 + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int enchantmentLevel ) {
-		return this.getMinEnchantability( enchantmentLevel ) + 20;
+		setMaximumEnchantmentLevel( 1 );
+		setDifferenceBetweenMinimumAndMaximum( 20 );
+		setMinimumEnchantabilityCalculator( level->( level * 20 ) );
 	}
 
 	@Override
@@ -61,7 +52,9 @@ public class LeechEnchantment extends Enchantment {
 		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
 			return;
 
-		if( WonderfulEnchantments.RANDOM.nextDouble() >= Config.LEECH_CHANCE.get() )
+		LeechEnchantment enchantment = Instances.LEECH;
+
+		if( !Random.tryChance( enchantment.leechChance.get() ) )
 			return;
 
 		LivingEntity attacker = ( LivingEntity )event.getSource()
@@ -70,9 +63,9 @@ public class LeechEnchantment extends Enchantment {
 
 		int vampirismLevel = 0;
 		if( attacker != null )
-			vampirismLevel = EnchantmentHelperPlus.calculateEnchantmentSum( RegistryHandler.VAMPIRISM.get(), attacker.getArmorInventoryList() );
+			vampirismLevel = EnchantmentHelperPlus.calculateEnchantmentSum( enchantment, attacker.getArmorInventoryList() );
 
-		if( EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.LEECH.get(), attacker ) > 0 ) {
+		if( EnchantmentHelper.getMaxEnchantmentLevel( enchantment, attacker ) > 0 ) {
 			for( int i = 0; i < 1 + vampirismLevel; i++ )
 				steal( attacker, target );
 			spawnParticlesAndPlaySounds( attacker, target );

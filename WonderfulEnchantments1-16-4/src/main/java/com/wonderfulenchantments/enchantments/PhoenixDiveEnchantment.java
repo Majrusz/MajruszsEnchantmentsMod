@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandlerOld.Config;
+import com.mlib.config.DoubleConfig;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -26,30 +27,21 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
 /** Enchantment that releases fire wave when entity falls. */
 @Mod.EventBusSubscriber
-public class PhoenixDiveEnchantment extends Enchantment {
-	private static final String footParticleTag = "PhoenixDiveFootParticleTick";
+public class PhoenixDiveEnchantment extends WonderfulEnchantment {
+	private static final String FOOT_PARTICLE_TAG = "PhoenixDiveFootParticleTick";
+	protected final DoubleConfig jumpMultiplier;
 
 	public PhoenixDiveEnchantment() {
-		super( Rarity.RARE, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{ EquipmentSlotType.FEET } );
-	}
+		super( Rarity.RARE, EnchantmentType.ARMOR_FEET, EquipmentSlotType.FEET, "PheonixDive" );
+		String comment = "Jumping power multiplier per enchantment level.";
+		this.jumpMultiplier = new DoubleConfig( "jump_multiplier", comment, false, 0.25, 0.01, 1.0 );
+		this.enchantmentGroup.addConfig( this.jumpMultiplier );
 
-	@Override
-	public int getMaxLevel() {
-		return 3;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 10 * ( level + 1 ) + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 30;
+		setMaximumEnchantmentLevel( 3 );
+		setDifferenceBetweenMinimumAndMaximum( 30 );
+		setMinimumEnchantabilityCalculator( level->( 10 * ( level + 1 ) ) );
 	}
 
 	@Override
@@ -89,7 +81,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		if( getPhoenixDiveLevel( player ) <= 0 || !( player.world instanceof ServerWorld ) )
 			return;
 
-		int ticks = data.getInt( footParticleTag );
+		int ticks = data.getInt( FOOT_PARTICLE_TAG );
 
 		if( ticks % 3 == 0 )
 			spawnFootParticle( player, ( ServerWorld )player.world, ticks % 6 == 0 );
@@ -99,7 +91,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 		if( ticks >= 6 )
 			ticks = 0;
 
-		data.putInt( footParticleTag, ticks );
+		data.putInt( FOOT_PARTICLE_TAG, ticks );
 	}
 
 	/** Event that increases jump height when player is holding sneak key. */
@@ -116,7 +108,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 			return;
 
 		double angleInRadians = Math.toRadians( player.rotationYaw + 90.0 );
-		double factor = ( enchantmentLevel + 1 ) * Config.PHOENIX_JUMP_MULTIPLIER.get();
+		double factor = ( enchantmentLevel + 1 ) * Instances.PHOENIX_DIVE.jumpMultiplier.get();
 		player.setMotion( player.getMotion()
 			.mul( new Vector3d( 0.0, 1.0 + factor, 0.0 ) )
 			.add( factor * Math.cos( angleInRadians ), 0.0, factor * Math.sin( angleInRadians ) ) );
@@ -138,7 +130,7 @@ public class PhoenixDiveEnchantment extends Enchantment {
 	 @param entity Entity to check level.
 	 */
 	protected static int getPhoenixDiveLevel( LivingEntity entity ) {
-		return EnchantmentHelper.getEnchantmentLevel( RegistryHandler.PHOENIX_DIVE.get(), entity.getItemStackFromSlot( EquipmentSlotType.FEET ) );
+		return EnchantmentHelper.getEnchantmentLevel( Instances.PHOENIX_DIVE, entity.getItemStackFromSlot( EquipmentSlotType.FEET ) );
 	}
 
 	/**

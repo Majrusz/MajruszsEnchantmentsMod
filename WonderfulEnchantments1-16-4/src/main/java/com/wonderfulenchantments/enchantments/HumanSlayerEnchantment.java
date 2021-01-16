@@ -1,11 +1,10 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.wonderfulenchantments.ConfigHandlerOld.Config;
-import com.wonderfulenchantments.RegistryHandler;
+import com.mlib.config.DoubleConfig;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
-import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
@@ -20,28 +19,20 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
 /** Enchantment that increases damage dealt against humans. (pillagers, villagers, players and witches) */
 @Mod.EventBusSubscriber
-public class HumanSlayerEnchantment extends DamageEnchantment {
+public class HumanSlayerEnchantment extends WonderfulEnchantment {
+	protected final DoubleConfig damageBonus;
+
 	public HumanSlayerEnchantment() {
-		super( Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND );
-	}
+		super( Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "AgainstHumanity" );
+		String comment = "Damage bonus per enchantment level.";
+		this.damageBonus = new DoubleConfig( "damage_bonus", comment, false, 2.5, 1.0, 10.0 );
+		this.enchantmentGroup.addConfig( this.damageBonus );
 
-	@Override
-	public int getMinEnchantability( int enchantmentLevel ) {
-		return 5 + ( enchantmentLevel - 1 ) * 8 + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int enchantmentLevel ) {
-		return this.getMinEnchantability( enchantmentLevel ) + 20;
-	}
-
-	@Override
-	public float calcDamageByCreature( int level, CreatureAttribute creatureType ) {
-		return 0.0f;
+		setMaximumEnchantmentLevel( 5 );
+		setDifferenceBetweenMinimumAndMaximum( 20 );
+		setMinimumEnchantabilityCalculator( level->( 5 + ( level - 1 ) * 8 ) );
 	}
 
 	/** Event that increases damage when all conditions are met. */
@@ -53,11 +44,11 @@ public class HumanSlayerEnchantment extends DamageEnchantment {
 		LivingEntity attacker = ( LivingEntity )event.getSource()
 			.getImmediateSource();
 		LivingEntity target = event.getEntityLiving();
-		float extraDamage = ( float )Math.floor(
-			Config.HUMANITY_DAMAGE_BONUS.get() * EnchantmentHelper.getMaxEnchantmentLevel( RegistryHandler.HUMAN_SLAYER.get(), attacker ) );
+		HumanSlayerEnchantment enchantment = Instances.HUMAN_SLAYER;
+		float extraDamage = ( float )Math.floor( enchantment.damageBonus.get() * EnchantmentHelper.getMaxEnchantmentLevel( enchantment, attacker ) );
 
 		if( extraDamage > 0.0f && isHuman( target ) ) {
-			( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625D ),
+			( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625 ),
 				target.getPosZ(), 24, 0.125, 0.25, 0.125, 0.5
 			);
 			event.setAmount( event.getAmount() + extraDamage );

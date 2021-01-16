@@ -31,33 +31,33 @@ public class RegistryHandler {
     public static final RegistryObject< Enchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", ()->Instances.FISHING_FANATIC );
 
     // Sword Enchantments
-    public static final RegistryObject< Enchantment > HUMAN_SLAYER = ENCHANTMENTS.register( "human_slayer", HumanSlayerEnchantment::new );
-    public static final RegistryObject< Enchantment > PUFFERFISH_VENGEANCE = ENCHANTMENTS.register( "pufferfish_vengeance", PufferfishVengeanceEnchantment::new );
-    public static final RegistryObject< Enchantment > LEECH = ENCHANTMENTS.register( "leech", LeechEnchantment::new );
+    public static final RegistryObject< Enchantment > HUMAN_SLAYER = ENCHANTMENTS.register( "human_slayer", ()->Instances.HUMAN_SLAYER );
+    public static final RegistryObject< Enchantment > PUFFERFISH_VENGEANCE = ENCHANTMENTS.register( "pufferfish_vengeance", ()->Instances.PUFFERFISH_VENGEANCE );
+    public static final RegistryObject< Enchantment > LEECH = ENCHANTMENTS.register( "leech", ()->Instances.LEECH );
 
     // Armor Enchantments
     public static final RegistryObject< Enchantment > DODGE = ENCHANTMENTS.register( "dodge", ()->Instances.DODGE );
     public static final RegistryObject< Enchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", ()->Instances.ENLIGHTENMENT );
-    public static final RegistryObject< Enchantment > PHOENIX_DIVE = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new );
-    public static final RegistryObject< Enchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", MagicProtectionEnchantment::new );
+    public static final RegistryObject< Enchantment > PHOENIX_DIVE = ENCHANTMENTS.register( "phoenix_dive", ()->Instances.PHOENIX_DIVE );
+    public static final RegistryObject< Enchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", ()->Instances.MAGIC_PROTECTION );
 
     // Shield Enchantments
-    public static final RegistryObject< Enchantment > VITALITY = ENCHANTMENTS.register( "vitality", VitalityEnchantment::new );
-    public static final RegistryObject< Enchantment > IMMORTALITY = ENCHANTMENTS.register( "immortality", ImmortalityEnchantment::new );
-    public static final RegistryObject< Enchantment > ABSORBER = ENCHANTMENTS.register( "absorber", AbsorberEnchantment::new );
+    public static final RegistryObject< Enchantment > VITALITY = ENCHANTMENTS.register( "vitality", ()->Instances.VITALITY );
+    public static final RegistryObject< Enchantment > IMMORTALITY = ENCHANTMENTS.register( "immortality", ()->Instances.IMMORTALITY );
+    public static final RegistryObject< Enchantment > ABSORBER = ENCHANTMENTS.register( "absorber", ()->Instances.ABSORBER );
 
     // Tool Enchantments
-    public static final RegistryObject< Enchantment > SMELTER = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new );
+    public static final RegistryObject< Enchantment > SMELTER = ENCHANTMENTS.register( "smelter", ()->Instances.SMELTER );
     public static final RegistryObject< Enchantment > GOTTA_MINE_FAST = ENCHANTMENTS.register( "gotta_mine_fast", ()->Instances.GOTTA_MINE_FAST );
-    public static final RegistryObject< Enchantment > TELEKINESIS = ENCHANTMENTS.register( "telekinesis", TelekinesisEnchantment::new );
+    public static final RegistryObject< Enchantment > TELEKINESIS = ENCHANTMENTS.register( "telekinesis", ()->Instances.TELEKINESIS );
 
     // Horse Armor Enchantments
-    public static final RegistryObject< Enchantment > SWIFTNESS = ENCHANTMENTS.register( "swiftness", SwiftnessEnchantment::new );
-    public static final RegistryObject< Enchantment > HORSE_PROTECTION = ENCHANTMENTS.register( "horse_protection", HorseProtectionEnchantment::new );
-    public static final RegistryObject< Enchantment > HORSE_FROST_WALKER = ENCHANTMENTS.register( "horse_frost_walker", HorseFrostWalkerEnchantment::new );
+    public static final RegistryObject< Enchantment > SWIFTNESS = ENCHANTMENTS.register( "swiftness", ()->Instances.SWIFTNESS );
+    public static final RegistryObject< Enchantment > HORSE_PROTECTION = ENCHANTMENTS.register( "horse_protection", ()->Instances.HORSE_PROTECTION );
+    public static final RegistryObject< Enchantment > HORSE_FROST_WALKER = ENCHANTMENTS.register( "horse_frost_walker", ()->Instances.HORSE_FROST_WALKER );
 
     // Bow Enchantments
-    public static final RegistryObject< Enchantment > HUNTER = ENCHANTMENTS.register( "hunter", HunterEnchantment::new );
+    public static final RegistryObject< Enchantment > HUNTER = ENCHANTMENTS.register( "hunter", ()->Instances.HUNTER );
 
     // Trident Enchantments
     public static final RegistryObject< Enchantment > ELDER_GUARDIAN_FAVOR = ENCHANTMENTS.register( "elder_guardian_favor", ()->Instances.ELDER_GAURDIAN_FAVOR );

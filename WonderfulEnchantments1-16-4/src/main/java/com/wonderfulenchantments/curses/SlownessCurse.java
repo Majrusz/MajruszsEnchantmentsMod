@@ -37,7 +37,7 @@ public class SlownessCurse extends WonderfulCurse {
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
 		LivingEntity entity = event.getEntityLiving();
 
-		ATTRIBUTE_HANDLER.setValue( Instances.SLOWNESS.getTotalSlownessMultiplier( entity )-1.0 )
+		ATTRIBUTE_HANDLER.setValue( Instances.SLOWNESS.getTotalSlownessMultiplier( entity ) - 1.0 )
 			.apply( entity );
 	}
 
