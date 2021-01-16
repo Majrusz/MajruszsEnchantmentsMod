@@ -57,6 +57,9 @@ public class Instances {
 	// --
 	public static final AbsorberEnchantment ABSORBER;
 
+	// Trident Enchantments
+	public static final ElderGaurdianFavorEnchantment ELDER_GAURDIAN_FAVOR;
+
 	// Curses
 	public static final SlownessCurse SLOWNESS;
 	public static final FatigueCurse FATIGUE;
@@ -68,6 +71,8 @@ public class Instances {
 		DODGE = new DodgeEnchantment();
 
 		ABSORBER = new AbsorberEnchantment();
+
+		ELDER_GAURDIAN_FAVOR = new ElderGaurdianFavorEnchantment();
 
 		SLOWNESS = new SlownessCurse();
 		FATIGUE = new FatigueCurse();

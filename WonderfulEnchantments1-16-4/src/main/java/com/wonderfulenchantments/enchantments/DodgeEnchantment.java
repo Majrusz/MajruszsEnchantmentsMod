@@ -36,15 +36,13 @@ public class DodgeEnchantment extends WonderfulEnchantment {
 
 	public DodgeEnchantment() {
 		super( Rarity.RARE, EnchantmentType.ARMOR_LEGS, EquipmentSlotType.LEGS, "Dodge" );
-		String chance_comment = "Chance to completely ignore any damage source per enchantment level.";
-		String damage_comment = "Amount of damage converted to pants damage. (for example if this factor is equal 0.5 and player took 10 damage so its pants takes 5 damage)";
-		String immunity_comment = "Duration of knockback immunity after successful dodge. (in seconds)";
-		this.dodgeChancePerLevel = new DoubleConfig( "dodge_chance", chance_comment, false, 0.125, 0.01, 0.4 );
-		this.damageAmountFactor = new DoubleConfig( "damage_factor", damage_comment, false, 0.5, 0.0, 10.0 );
-		this.immunityTime = new DurationConfig( "immunity_duration", immunity_comment, false, 3.0, 0.0, 30.0 );
-		this.enchantmentGroup.addConfig( this.dodgeChancePerLevel );
-		this.enchantmentGroup.addConfig( this.damageAmountFactor );
-		this.enchantmentGroup.addConfig( this.immunityTime );
+		String chanceComment = "Chance to completely ignore any damage source per enchantment level.";
+		String damageComment = "Amount of damage converted to pants damage. (for example if this factor is equal 0.5 and player took 10 damage so its pants takes 5 damage)";
+		String immunityComment = "Duration of knockback immunity after successful dodge. (in seconds)";
+		this.dodgeChancePerLevel = new DoubleConfig( "dodge_chance", chanceComment, false, 0.125, 0.01, 0.4 );
+		this.damageAmountFactor = new DoubleConfig( "damage_factor", damageComment, false, 0.5, 0.0, 10.0 );
+		this.immunityTime = new DurationConfig( "immunity_duration", immunityComment, false, 3.0, 0.0, 30.0 );
+		this.enchantmentGroup.addConfigs( this.dodgeChancePerLevel, this.damageAmountFactor, this.immunityTime );
 
 		setMaximumEnchantmentLevel( 2 );
 		setDifferenceBetweenMinimumAndMaximum( 20 );

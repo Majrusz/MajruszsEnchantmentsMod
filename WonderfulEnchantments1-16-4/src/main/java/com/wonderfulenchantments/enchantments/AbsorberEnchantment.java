@@ -28,8 +28,9 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 	public AbsorberEnchantment() {
 		super( Rarity.RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Absorber" );
 		String comment = "Minimum required duration to absorb an effect. (in seconds)";
-		this.minimumEffectDuration = this.enchantmentGroup.addConfig( new DurationConfig( "minimum_duration", comment, false, 2.5, 0.0, 60.0 ) );
-
+		this.minimumEffectDuration = new DurationConfig( "minimum_duration", comment, false, 2.5, 0.0, 60.0 );
+		this.enchantmentGroup.addConfig( this.minimumEffectDuration );
+		
 		setMaximumEnchantmentLevel( 1 );
 		setDifferenceBetweenMinimumAndMaximum( 15 );
 		setMinimumEnchantabilityCalculator( level->( 5 + 8 * level ) );
