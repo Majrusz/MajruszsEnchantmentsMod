@@ -10,7 +10,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn( Dist.CLIENT )
 public class RegistryHandlerClient {
 	public static void replaceStandardMinecraftHorseArmorLayer() {
-		EntityRendererManager rendererManager = Minecraft.getInstance().getRenderManager();
+		EntityRendererManager rendererManager = Minecraft.getInstance()
+			.getRenderManager();
 		rendererManager.register( EntityType.HORSE, new HorseRendererReplacement( rendererManager ) );
 	}
 }

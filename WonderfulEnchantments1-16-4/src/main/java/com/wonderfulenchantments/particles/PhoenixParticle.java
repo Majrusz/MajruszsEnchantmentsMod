@@ -59,7 +59,9 @@ public class PhoenixParticle extends SpriteTexturedParticle {
 		}
 
 		@Override
-		public Particle makeParticle( BasicParticleType type, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed ) {
+		public Particle makeParticle( BasicParticleType type, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed,
+			double zSpeed
+		) {
 			PhoenixParticle particle = new PhoenixParticle( world, x, y, z, xSpeed, ySpeed, zSpeed );
 			particle.selectSpriteRandomly( this.spriteSet );
 
