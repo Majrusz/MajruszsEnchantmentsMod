@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.loot_modifiers;
 
 import com.google.gson.JsonObject;
+import com.mlib.MajruszLibrary;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.inventory.Inventory;
@@ -48,14 +49,14 @@ public class SmeltingItems extends LootModifier {
 			if( recipe.isPresent() ) {
 				BlockPos position = new BlockPos( context.get( LootParameters.field_237457_g_ ) );
 				int experience = ( recipe.get()
-					.getExperience() > WonderfulEnchantments.RANDOM.nextFloat() ? 1 : 0
+					.getExperience() > MajruszLibrary.RANDOM.nextFloat() ? 1 : 0
 				);
 
 				if( experience > 0 )
 					world.addEntity(
 						new ExperienceOrbEntity( world, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D, experience ) );
 				world.spawnParticle( ParticleTypes.FLAME, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
-					2 + WonderfulEnchantments.RANDOM.nextInt( 4 ), 0.125D, 0.125D, 0.125D, 0.03125D
+					2 + MajruszLibrary.RANDOM.nextInt( 4 ), 0.125D, 0.125D, 0.125D, 0.03125D
 				);
 			}
 		}

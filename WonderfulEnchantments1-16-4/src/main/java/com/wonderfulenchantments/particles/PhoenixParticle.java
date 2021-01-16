@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.particles;
 
+import com.mlib.MajruszLibrary;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
@@ -15,7 +16,7 @@ public class PhoenixParticle extends SpriteTexturedParticle {
 		this.motionY = this.motionY * 0.01D + ySpeed * 0.0D;
 		this.motionZ = this.motionZ * 0.01D + zSpeed;
 
-		this.maxAge = ( 20 + WonderfulEnchantments.RANDOM.nextInt( 10 ) );
+		this.maxAge = ( 20 + MajruszLibrary.RANDOM.nextInt( 10 ) );
 	}
 
 	@Override

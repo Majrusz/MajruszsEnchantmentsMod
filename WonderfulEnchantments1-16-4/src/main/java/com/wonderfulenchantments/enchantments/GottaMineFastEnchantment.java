@@ -61,8 +61,6 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 
 		if( enchantmentLevel > 0 )
 			event.setNewSpeed( event.getNewSpeed() * getMiningMultiplier( player ) );
-
-		MajruszLibrary.LOGGER.debug( getMiningMultiplier( player ) );
 	}
 
 	/**

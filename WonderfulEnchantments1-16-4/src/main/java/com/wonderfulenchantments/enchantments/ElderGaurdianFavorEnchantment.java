@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.mlib.MajruszLibrary;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.wonderfulenchantments.Instances;
@@ -132,7 +133,7 @@ public class ElderGaurdianFavorEnchantment extends WonderfulEnchantment {
 			world.spawnParticle( ParticleTypes.BUBBLE, x, y, z, 1, 0.0, 0.0, 0.0, 0.0 );
 			world.spawnParticle( ParticleTypes.BUBBLE_POP, x, y, z, 1, 0.0, 0.0, 0.0, 0.0 );
 
-			factor += 1.8 - 0.8 + WonderfulEnchantments.RANDOM.nextDouble() * ( 1.7 - 0.8 );
+			factor += 1.8 - 0.8 + MajruszLibrary.RANDOM.nextDouble() * ( 1.7 - 0.8 );
 		}
 	}
 }

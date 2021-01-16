@@ -128,7 +128,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	protected static LootContext generateLootContext( PlayerEntity player ) {
 		LootContext.Builder lootContextBuilder = new LootContext.Builder( ( ServerWorld )player.getEntityWorld() );
 		lootContextBuilder.withParameter( LootParameters.TOOL, player.getHeldItemMainhand() )
-			.withRandom( WonderfulEnchantments.RANDOM )
+			.withRandom( MajruszLibrary.RANDOM )
 			.withLuck( player.getLuck() )
 			.withParameter( LootParameters.field_237457_g_, player.getPositionVec() );
 
@@ -151,9 +151,9 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	 @param bobberEntity Fishing bobber where item will be spawned.
 	 */
 	protected static void spawnReward( ItemStack reward, PlayerEntity player, World world, FishingBobberEntity bobberEntity ) {
-		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50 * WonderfulEnchantments.RANDOM.nextDouble(),
-			bobberEntity.getPosY() + 0.25 * WonderfulEnchantments.RANDOM.nextDouble(),
-			bobberEntity.getPosZ() + 0.50 * WonderfulEnchantments.RANDOM.nextDouble(), reward
+		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50 * MajruszLibrary.RANDOM.nextDouble(),
+			bobberEntity.getPosY() + 0.25 * MajruszLibrary.RANDOM.nextDouble(),
+			bobberEntity.getPosZ() + 0.50 * MajruszLibrary.RANDOM.nextDouble(), reward
 		);
 
 		double deltaX = player.getPosX() - itemEntity.getPosX();
