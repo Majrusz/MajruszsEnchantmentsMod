@@ -60,6 +60,11 @@ public class Instances {
 	// --
 	public static final AbsorberEnchantment ABSORBER;
 
+	// Tool Enchantments
+	// --
+	public static final GottaMineFastEnchantment GOTTA_MINE_FAST;
+	// --
+
 	// Trident Enchantments
 	public static final ElderGaurdianFavorEnchantment ELDER_GAURDIAN_FAVOR;
 
@@ -77,6 +82,8 @@ public class Instances {
 		ENLIGHTENMENT = new EnlightenmentEnchantment();
 
 		ABSORBER = new AbsorberEnchantment();
+
+		GOTTA_MINE_FAST = new GottaMineFastEnchantment();
 
 		ELDER_GAURDIAN_FAVOR = new ElderGaurdianFavorEnchantment();
 
