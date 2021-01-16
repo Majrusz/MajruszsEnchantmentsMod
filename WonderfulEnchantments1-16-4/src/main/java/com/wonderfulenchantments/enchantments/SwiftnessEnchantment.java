@@ -5,6 +5,7 @@ import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
+import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -24,7 +25,7 @@ public class SwiftnessEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig movementMultiplier;
 
 	public SwiftnessEnchantment() {
-		super( Rarity.RARE, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "Swiftness" );
+		super( Rarity.RARE, RegistryHandler.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "Swiftness" );
 		String comment = "Horse movement speed multiplier per enchantment level.";
 		this.movementMultiplier = new DoubleConfig( "movement_multiplier", comment, false, 0.125, 0.01, 0.5 );
 		this.enchantmentGroup.addConfig( this.movementMultiplier );

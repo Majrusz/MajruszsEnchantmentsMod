@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlotTypes;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,7 +23,7 @@ public class ImmortalityEnchantment extends WonderfulEnchantment {
 	protected static final int damageOnUse = 9001;
 
 	public ImmortalityEnchantment() {
-		super( Rarity.RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Immortality" );
+		super( Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Immortality" );
 
 		setMaximumEnchantmentLevel( 1 );
 		setDifferenceBetweenMinimumAndMaximum( 30 );
@@ -51,7 +52,7 @@ public class ImmortalityEnchantment extends WonderfulEnchantment {
 	 @return Returns whether player successfully cheated death.
 	 */
 	protected static boolean tryCheatDeath( LivingEntity target, ItemStack itemStack ) {
-		if( itemStack.getItem() instanceof ShieldItem && EnchantmentHelper.getEnchantmentLevel( RegistryHandler.IMMORTALITY.get(), itemStack ) > 0 ) {
+		if( itemStack.getItem() instanceof ShieldItem && EnchantmentHelper.getEnchantmentLevel( Instances.IMMORTALITY, itemStack ) > 0 ) {
 			target.setHealth( target.getMaxHealth() );
 
 			spawnParticlesAndPlaySounds( target );

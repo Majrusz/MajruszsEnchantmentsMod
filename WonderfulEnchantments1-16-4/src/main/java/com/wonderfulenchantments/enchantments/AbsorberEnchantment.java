@@ -4,6 +4,7 @@ import com.mlib.EquipmentSlotTypes;
 import com.mlib.TimeConverter;
 import com.mlib.config.DurationConfig;
 import com.wonderfulenchantments.Instances;
+import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +27,7 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 	protected final DurationConfig minimumEffectDuration;
 
 	public AbsorberEnchantment() {
-		super( Rarity.RARE, WonderfulEnchantmentHelper.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Absorber" );
+		super( Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Absorber" );
 		String comment = "Minimum required duration to absorb an effect. (in seconds)";
 		this.minimumEffectDuration = new DurationConfig( "minimum_duration", comment, false, 2.5, 0.0, 60.0 );
 		this.enchantmentGroup.addConfig( this.minimumEffectDuration );

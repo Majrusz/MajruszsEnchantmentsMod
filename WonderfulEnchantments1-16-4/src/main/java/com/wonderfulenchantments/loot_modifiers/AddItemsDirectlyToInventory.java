@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Functionality of Telekinesis enchantment. */
 public class AddItemsDirectlyToInventory extends LootModifier {
 	public AddItemsDirectlyToInventory( ILootCondition[] conditions ) {
 		super( conditions );

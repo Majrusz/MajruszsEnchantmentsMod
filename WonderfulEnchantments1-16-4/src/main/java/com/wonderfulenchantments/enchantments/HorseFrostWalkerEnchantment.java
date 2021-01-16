@@ -3,6 +3,7 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.EquipmentSlotTypes;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
+import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -23,7 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class HorseFrostWalkerEnchantment extends WonderfulEnchantment {
 	public HorseFrostWalkerEnchantment() {
-		super( Rarity.RARE, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "HorseFrostWalker" );
+		super( Rarity.RARE, RegistryHandler.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "HorseFrostWalker" );
 
 		setMaximumEnchantmentLevel( 2 );
 		setDifferenceBetweenMinimumAndMaximum( 15 );

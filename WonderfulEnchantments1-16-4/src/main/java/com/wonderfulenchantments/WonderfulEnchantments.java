@@ -3,6 +3,7 @@ package com.wonderfulenchantments;
 import com.mlib.config.ConfigGroup;
 import com.mlib.config.ConfigHandler;
 import com.mlib.config.DoubleConfig;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -26,8 +27,10 @@ public class WonderfulEnchantments {
     public WonderfulEnchantments() {
         RegistryHandler.init();
 
-        ConfigHandlerOld.register( ModLoadingContext.get() );
-
         MinecraftForge.EVENT_BUS.register( this );
+    }
+
+    public static ResourceLocation getLocation( String register ) {
+        return new ResourceLocation( MOD_ID, register );
     }
 }

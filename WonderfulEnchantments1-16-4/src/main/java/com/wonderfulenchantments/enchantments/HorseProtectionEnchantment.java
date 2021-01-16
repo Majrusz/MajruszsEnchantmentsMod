@@ -5,6 +5,7 @@ import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.IntegerConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
+import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -24,7 +25,7 @@ public class HorseProtectionEnchantment extends WonderfulEnchantment {
 	protected final IntegerConfig armorBonus;
 
 	public HorseProtectionEnchantment() {
-		super( Rarity.UNCOMMON, WonderfulEnchantmentHelper.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "HorseProtection" );
+		super( Rarity.UNCOMMON, RegistryHandler.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "HorseProtection" );
 		String comment = "Horse armor bonus per enchantment level.";
 		this.armorBonus = new IntegerConfig( "armor_bonus", comment, false, 2, 1, 10 );
 		this.enchantmentGroup.addConfig( this.armorBonus );

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/** Functionality of Smelter enchantment. */
 public class SmeltingItems extends LootModifier {
 	public SmeltingItems( ILootCondition[] conditionsIn ) {
 		super( conditionsIn );
