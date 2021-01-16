@@ -1,13 +1,9 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.TimeConverter;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
-import com.wonderfulenchantments.ConfigHandlerOld;
 import com.wonderfulenchantments.Instances;
-import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
@@ -24,8 +20,6 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
 
 /** Enchantment which after successful hit attacks enemy with laser beam that cannot be dodged or blocked. */
 @Mod.EventBusSubscriber
