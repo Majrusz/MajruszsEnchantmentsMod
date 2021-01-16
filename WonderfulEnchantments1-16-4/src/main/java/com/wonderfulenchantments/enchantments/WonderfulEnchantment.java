@@ -6,7 +6,7 @@ import com.mlib.enchantments.ExtendedEnchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
-import static com.wonderfulenchantments.WonderfulEnchantments.CURSE_GROUP;
+import static com.wonderfulenchantments.WonderfulEnchantments.ENCHANTMENT_GROUP;
 
 /** Enchantment that automatically adds config to it. */
 public class WonderfulEnchantment extends ExtendedEnchantment {
@@ -17,7 +17,7 @@ public class WonderfulEnchantment extends ExtendedEnchantment {
 		super( rarity, enchantmentType, equipmentSlotTypes );
 		String comment = "Makes this enchantment obtainable in survival mode.";
 
-		this.enchantmentGroup = CURSE_GROUP.addGroup( new ConfigGroup( configName, "" ) );
+		this.enchantmentGroup = ENCHANTMENT_GROUP.addGroup( new ConfigGroup( configName, "" ) );
 		this.availabilityConfig = this.enchantmentGroup.addConfig( new AvailabilityConfig( "is_enabled", comment, false, true ) );
 	}
 
