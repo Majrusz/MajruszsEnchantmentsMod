@@ -13,6 +13,8 @@ import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.entity.monster.WitchEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -33,6 +35,11 @@ public class HumanSlayerEnchantment extends WonderfulEnchantment {
 		setMaximumEnchantmentLevel( 5 );
 		setDifferenceBetweenMinimumAndMaximum( 20 );
 		setMinimumEnchantabilityCalculator( level->( 5 + ( level - 1 ) * 8 ) );
+	}
+
+	@Override
+	public boolean canApply( ItemStack stack ) {
+		return stack.getItem() instanceof AxeItem || super.canApply( stack );
 	}
 
 	/** Event that increases damage when all conditions are met. */
