@@ -1,7 +1,10 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.TimeConverter;
+import com.mlib.config.DoubleConfig;
+import com.mlib.config.DurationConfig;
 import com.wonderfulenchantments.ConfigHandlerOld;
+import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.Enchantment;
@@ -26,27 +29,26 @@ import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevel
 
 /** Enchantment which after successful hit attacks enemy with laser beam that cannot be dodged or blocked. */
 @Mod.EventBusSubscriber
-public class ElderGaurdianFavorEnchantment extends Enchantment {
-	protected static final String linkTag = "ElderGuardianFavorLinkedEntityID";
-	protected static final String linkCounterTag = "ElderGuardianFavorCounter";
+public class ElderGaurdianFavorEnchantment extends WonderfulEnchantment {
+	private static final String LINK_TAG = "ElderGuardianFavorLinkedEntityID";
+	private static final String LINK_COUNTER_TAG = "ElderGuardianFavorCounter";
+	protected final DurationConfig beamCooldown;
+	protected final DoubleConfig beamDamage;
+	protected final DoubleConfig waterMultiplier;
 
 	public ElderGaurdianFavorEnchantment() {
-		super( Rarity.RARE, EnchantmentType.TRIDENT, new EquipmentSlotType[]{ EquipmentSlotType.MAINHAND } );
-	}
+		super( Rarity.RARE, EnchantmentType.TRIDENT, EquipmentSlotType.MAINHAND, "ElderGuardianFavor" );
+		String cooldown_comment = "Duration how long entities are linked before dealing damage.";
+		String damage_comment = "Damage dealt by this enchantment.";
+		String water_comment = "Damage multiplier when both entities are in water.";
+		this.beamCooldown = new DurationConfig( "beam_cooldown", cooldown_comment, false, 3.0, 1.0, 60.0 );
+		this.beamDamage = new DoubleConfig( "beam_damage", damage_comment, false, 5.0, 1.0, 100.0 );
+		this.waterMultiplier = new DoubleConfig( "water_multiplier", water_comment, false, 2.0, 1.0, 10.0 );
+		this.enchantmentGroup.addConfigs( this.beamCooldown, this.beamDamage, this.waterMultiplier );
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 14 * level + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 20;
+		setMaximumEnchantmentLevel( 1 );
+		setDifferenceBetweenMinimumAndMaximum( 20 );
+		setMinimumEnchantabilityCalculator( level->( 14 * level ) );
 	}
 
 	/** Event that links entities together on hit. */
@@ -59,8 +61,8 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 
 		LivingEntity attacker = ( LivingEntity )damageSource.getTrueSource();
 		LivingEntity target = event.getEntityLiving();
+		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( Instances.ELDER_GAURDIAN_FAVOR, attacker.getHeldItemMainhand() );
 
-		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.ELDER_GUARDIAN_FAVOR.get(), attacker.getHeldItemMainhand() );
 		connectEntities( attacker, target, enchantmentLevel );
 	}
 
@@ -69,14 +71,15 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 	public static void onUpdate( LivingEvent.LivingUpdateEvent event ) {
 		LivingEntity attacker = event.getEntityLiving();
 		CompoundNBT data = attacker.getPersistentData();
-		int counter = data.getInt( linkCounterTag ) - 1;
+		int counter = data.getInt( LINK_COUNTER_TAG ) - 1;
 
 		if( counter < 0 || !( attacker.world instanceof ServerWorld ) )
 			return;
 
-		data.putInt( linkCounterTag, counter );
+		data.putInt( LINK_COUNTER_TAG, counter );
 
-		int targetID = data.getInt( linkTag );
+		ElderGaurdianFavorEnchantment enchantment = Instances.ELDER_GAURDIAN_FAVOR;
+		int targetID = data.getInt( LINK_TAG );
 		ServerWorld world = ( ServerWorld )attacker.world;
 		Entity targetEntity = world.getEntityByID( targetID );
 		if( !( targetEntity instanceof LivingEntity ) )
@@ -92,7 +95,7 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 				0.5f, 1.8f
 			);
 			target.attackEntityFrom( DamageSource.MAGIC,
-				( float )( ( areEntitiesInWater ? 2.0 : 1.0 ) * ConfigHandlerOld.Config.GUARDIAN_BEAM_DAMAGE.get() )
+				( float )( ( areEntitiesInWater ? enchantment.waterMultiplier.get() : 1.0 ) * enchantment.beamDamage.get() )
 			);
 		}
 	}
@@ -107,11 +110,11 @@ public class ElderGaurdianFavorEnchantment extends Enchantment {
 	protected static void connectEntities( LivingEntity attacker, LivingEntity target, int enchantmentLevel ) {
 		CompoundNBT data = attacker.getPersistentData();
 
-		if( data.getInt( linkCounterTag ) > 0 || enchantmentLevel == 0 )
+		if( data.getInt( LINK_COUNTER_TAG ) > 0 || enchantmentLevel == 0 )
 			return;
 
-		data.putInt( linkTag, target.getEntityId() );
-		data.putInt( linkCounterTag, TimeConverter.secondsToTicks( ConfigHandlerOld.Config.GUARDIAN_BEAM_DURATION.get() ) );
+		data.putInt( LINK_TAG, target.getEntityId() );
+		data.putInt( LINK_COUNTER_TAG, Instances.ELDER_GAURDIAN_FAVOR.beamCooldown.getDuration() );
 	}
 
 	/**
