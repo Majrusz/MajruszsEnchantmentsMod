@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.mlib.MajruszLibrary;
 import com.mlib.config.DoubleConfig;
 import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -17,12 +18,18 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class HunterEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig damageMultiplier;
+	protected final DoubleConfig minimumDistance;
+	protected final DoubleConfig damagePenaltyMultiplier;
 
 	public HunterEnchantment() {
 		super( Rarity.RARE, EnchantmentType.BOW, EquipmentSlotType.MAINHAND, "Hunter" );
-		String comment = "Extra damage multiplier to distance per enchantment level.";
-		this.damageMultiplier = new DoubleConfig( "damage_multiplier", comment, false, 0.0001, 0.0, 0.01 );
-		this.enchantmentGroup.addConfig( this.damageMultiplier );
+		String damage_comment = "Extra damage multiplier to distance per enchantment level.";
+		String distance_comment = "Minimum required distance to not get any damage penalty.";
+		String penalty_comment = "Maximum damage penalty if entity is very close.";
+		this.damageMultiplier = new DoubleConfig( "damage_multiplier", damage_comment, false, 0.0001, 0.0, 0.01 );
+		this.minimumDistance = new DoubleConfig( "minimum_distance", distance_comment, false, 80.0, 1.0, 10000.0 );
+		this.damagePenaltyMultiplier = new DoubleConfig( "penalty_multiplier", penalty_comment, false, 0.5, 0.0, 1.0 );
+		this.enchantmentGroup.addConfigs( this.damageMultiplier, this.minimumDistance, this.damagePenaltyMultiplier );
 
 		setMaximumEnchantmentLevel( 3 );
 		setDifferenceBetweenMinimumAndMaximum( 50 );
@@ -54,9 +61,11 @@ public class HunterEnchantment extends WonderfulEnchantment {
 		LivingEntity attacker = ( LivingEntity )damageSource.getTrueSource();
 		HunterEnchantment enchantment = Instances.HUNTER;
 		int hunterLevel = EnchantmentHelper.getEnchantmentLevel( enchantment, attacker.getHeldItemMainhand() );
-		double extraDamageMultiplier = ( attacker.getPositionVec()
-			.squareDistanceTo( target.getPositionVec() )
-		) * enchantment.damageMultiplier.get() * hunterLevel + 1.0;
+		double distance = attacker.getPositionVec()
+			.squareDistanceTo( target.getPositionVec() );
+		double penaltyMultiplier = Math.max( 1.0 - distance / enchantment.minimumDistance.get(), 0.0 );
+		double extraDamageMultiplier = distance * enchantment.damageMultiplier.get() * hunterLevel + 1.0 - penaltyMultiplier;
+		MajruszLibrary.LOGGER.info( penaltyMultiplier + " : " + extraDamageMultiplier );
 
 		event.setAmount( ( float )( event.getAmount() * extraDamageMultiplier ) );
 	}
