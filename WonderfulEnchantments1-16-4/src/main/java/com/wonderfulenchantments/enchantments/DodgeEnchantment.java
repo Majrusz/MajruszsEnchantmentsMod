@@ -1,121 +1,107 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.TimeConverter;
+import com.mlib.Random;
 import com.mlib.attributes.AttributeHandler;
-import com.wonderfulenchantments.ConfigHandlerOld.Config;
-import com.wonderfulenchantments.RegistryHandler;
-import com.wonderfulenchantments.WonderfulEnchantments;
-import net.minecraft.enchantment.Enchantment;
+import com.mlib.config.DoubleConfig;
+import com.mlib.config.DurationConfig;
+import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import javax.annotation.Nonnegative;
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.increaseLevelIfEnchantmentIsDisabled;
-
-/** DOCUMENTATION FOR THIS ENCHANTMENT WILL BE DONE AFTER REFACTORING IT. */
+/** Gives a chance to completely ignore any damage source.. */
 @Mod.EventBusSubscriber
-public class DodgeEnchantment extends Enchantment {
-	protected static final AttributeHandler attributeHandler = new AttributeHandler( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444", "KnockBackImmunityTime",
+public class DodgeEnchantment extends WonderfulEnchantment {
+	private static final AttributeHandler ATTRIBUTE_HANDLER = new AttributeHandler( "ad3e064e-e9f6-4747-a86b-46dc4e2a1444", "KnockBackImmunityTime",
 		Attributes.KNOCKBACK_RESISTANCE, AttributeModifier.Operation.ADDITION
 	);
-	protected static HashMap< Integer, Integer > immunitiesLeft = new HashMap<>(); // holding pair (entityID, ticks left)
+	private static final String DODGE_TAG = "KnockbackImmunityCounter";
+	protected final DoubleConfig dodgeChancePerLevel;
+	protected final DoubleConfig damageAmountFactor;
+	protected final DurationConfig immunityTime;
 
 	public DodgeEnchantment() {
-		super( Rarity.RARE, EnchantmentType.ARMOR_LEGS, new EquipmentSlotType[]{ EquipmentSlotType.LEGS } );
-	}
+		super( Rarity.RARE, EnchantmentType.ARMOR_LEGS, EquipmentSlotType.LEGS, "Dodge" );
+		String chance_comment = "Chance to completely ignore any damage source per enchantment level.";
+		String damage_comment = "Amount of damage converted to pants damage. (for example if this factor is equal 0.5 and player took 10 damage so its pants takes 5 damage)";
+		String immunity_comment = "Duration of knockback immunity after successful dodge. (in seconds)";
+		this.dodgeChancePerLevel = new DoubleConfig( "dodge_chance", chance_comment, false, 0.125, 0.01, 0.4 );
+		this.damageAmountFactor = new DoubleConfig( "damage_factor", damage_comment, false, 0.5, 0.0, 10.0 );
+		this.immunityTime = new DurationConfig( "immunity_duration", immunity_comment, false, 3.0, 0.0, 30.0 );
+		this.enchantmentGroup.addConfig( this.dodgeChancePerLevel );
+		this.enchantmentGroup.addConfig( this.damageAmountFactor );
+		this.enchantmentGroup.addConfig( this.immunityTime );
 
-	@Override
-	public int getMaxLevel() {
-		return 2;
-	}
-
-	@Override
-	public int getMinEnchantability( int level ) {
-		return 14 * level + increaseLevelIfEnchantmentIsDisabled( this );
-	}
-
-	@Override
-	public int getMaxEnchantability( int level ) {
-		return this.getMinEnchantability( level ) + 20;
+		setMaximumEnchantmentLevel( 2 );
+		setDifferenceBetweenMinimumAndMaximum( 20 );
+		setMinimumEnchantabilityCalculator( level->( 14 * level ) );
 	}
 
 	@SubscribeEvent
 	public static void onEntityHurt( LivingDamageEvent event ) {
-		LivingEntity livingEntity = event.getEntityLiving();
-		ItemStack pants = livingEntity.getItemStackFromSlot( EquipmentSlotType.LEGS );
-		int dodgeLevel = EnchantmentHelper.getEnchantmentLevel( RegistryHandler.DODGE.get(), pants );
+		LivingEntity entity = event.getEntityLiving();
+		ItemStack pants = entity.getItemStackFromSlot( EquipmentSlotType.LEGS );
+		CompoundNBT data = entity.getPersistentData();
+		DodgeEnchantment dodge = Instances.DODGE;
+		int dodgeLevel = EnchantmentHelper.getEnchantmentLevel( dodge, pants );
 
-		if( dodgeLevel > 0 ) {
-			if( !( WonderfulEnchantments.RANDOM.nextDouble() < ( double )dodgeLevel * Config.DODGE_CHANCE.get() ) )
-				return;
+		if( dodgeLevel <= 0 || !( entity.world instanceof ServerWorld ) )
+			return;
 
-			spawnParticlesAndPlaySounds( livingEntity );
-			setImmunity( livingEntity, TimeConverter.secondsToTicks( 2.5D ) * dodgeLevel );
-			pants.damageItem( Math.max( ( int )( event.getAmount() * 0.5f ), 1 ), livingEntity,
-				( e )->e.sendBreakAnimation( EquipmentSlotType.LEGS )
+		if( !Random.tryChance( dodgeLevel * dodge.dodgeChancePerLevel.get() ) )
+			return;
+
+		updateImmunity( entity, dodge.immunityTime.getDuration() );
+		spawnParticlesAndPlaySounds( entity );
+		if( dodge.damageAmountFactor.get() > 0.0 )
+			pants.damageItem( Math.max( ( int )( event.getAmount() * dodge.damageAmountFactor.get() ), 1 ), entity,
+				owner->owner.sendBreakAnimation( EquipmentSlotType.LEGS )
 			);
-			event.setCanceled( true );
-		}
+		event.setCanceled( true );
 	}
 
 	@SubscribeEvent
-	public static void updateEntitiesKnockBackImmunity( TickEvent.WorldTickEvent event ) {
-		for( Map.Entry< Integer, Integer > pair : immunitiesLeft.entrySet() ) {
-			Entity entity = event.world.getEntityByID( pair.getKey() );
+	public static void onUpdate( LivingEvent.LivingUpdateEvent event ) {
+		LivingEntity entity = event.getEntityLiving();
+		CompoundNBT data = entity.getPersistentData();
 
-			if( entity instanceof LivingEntity )
-				updateImmunity( ( LivingEntity )entity );
-
-			pair.setValue( Math.max( pair.getValue() - 1, 0 ) );
-		}
-
-		immunitiesLeft.values()
-			.removeIf( value->( value == 0 ) );
+		updateImmunity( entity, data.getInt( DODGE_TAG )-1 );
 	}
 
-	protected static void setImmunity( LivingEntity livingEntity, @Nonnegative int ticks ) {
-		immunitiesLeft.put( livingEntity.getEntityId(), ticks );
+	/** Updates current knockback immunity depending on dodge tag. */
+	protected static void updateImmunity( LivingEntity entity, int duration ) {
+		CompoundNBT data = entity.getPersistentData();
+		data.putInt( DODGE_TAG, Math.max( 0, duration ) );
 
-		updateImmunity( livingEntity );
+		ATTRIBUTE_HANDLER.setValue( data.getInt( DODGE_TAG ) > 0 ? 1.0 : 0.0 )
+			.apply( entity );
 	}
 
-	protected static void updateImmunity( LivingEntity livingEntity ) {
-		double immunity = ( immunitiesLeft.get( livingEntity.getEntityId() ) > 0 ) ? 1.0D : 0.0D;
-
-		attributeHandler.setValue( immunity )
-			.apply( livingEntity );
-	}
-
-	protected static void spawnParticlesAndPlaySounds( LivingEntity livingEntity ) {
-		ServerWorld world = ( ServerWorld )livingEntity.getEntityWorld();
-		for( double d = 0.0D; d < 3.0D; d++ ) {
-			Vector3d emitterPosition = new Vector3d( 0.0D, livingEntity.getHeight() * 0.25D * ( d + 1.0D ), 0.0D ).add(
-				livingEntity.getPositionVec() );
+	protected static void spawnParticlesAndPlaySounds( LivingEntity entity ) {
+		ServerWorld world = ( ServerWorld )entity.getEntityWorld();
+		for( double d = 0.0; d < 3.0; d++ ) {
+			Vector3d emitterPosition = new Vector3d( 0.0, entity.getHeight() * 0.25 * ( d + 1.0 ), 0.0 ).add( entity.getPositionVec() );
 			for( int i = 0; i < 2; i++ )
 				world.spawnParticle( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, emitterPosition.getX(), emitterPosition.getY(),
-					emitterPosition.getZ(), 16 * i, 0.125D, 0.0D, 0.125D, 0.075D
+					emitterPosition.getZ(), 16 * i, 0.125, 0.0, 0.125, 0.075
 				);
 		}
-		world.playSound( null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE,
-			SoundCategory.AMBIENT, 1.0F, 1.0F
+		world.playSound( null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE,
+			SoundCategory.AMBIENT, 1.0f, 1.0f
 		);
 	}
 }

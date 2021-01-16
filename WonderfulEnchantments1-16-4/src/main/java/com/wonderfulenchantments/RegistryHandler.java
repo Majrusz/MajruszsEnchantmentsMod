@@ -36,7 +36,7 @@ public class RegistryHandler {
     public static final RegistryObject< Enchantment > LEECH = ENCHANTMENTS.register( "leech", LeechEnchantment::new );
 
     // Armor Enchantments
-    public static final RegistryObject< Enchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment::new );
+    public static final RegistryObject< Enchantment > DODGE = ENCHANTMENTS.register( "dodge", ()->Instances.DODGE );
     public static final RegistryObject< Enchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment::new );
     public static final RegistryObject< Enchantment > PHOENIX_DIVE = ENCHANTMENTS.register( "phoenix_dive", PhoenixDiveEnchantment::new );
     public static final RegistryObject< Enchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", MagicProtectionEnchantment::new );

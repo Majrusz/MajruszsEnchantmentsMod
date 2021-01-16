@@ -45,6 +45,13 @@ public class Instances {
 
 	*/
 
+	// Armor Enchantments
+	public static final DodgeEnchantment DODGE;
+	// --
+	// --
+	// --
+
+
 	// Shield Enchantments
 	// --
 	// --
@@ -58,6 +65,8 @@ public class Instances {
 	public static final CorrosionCurse CORROSION;
 
 	static {
+		DODGE = new DodgeEnchantment();
+
 		ABSORBER = new AbsorberEnchantment();
 
 		SLOWNESS = new SlownessCurse();
