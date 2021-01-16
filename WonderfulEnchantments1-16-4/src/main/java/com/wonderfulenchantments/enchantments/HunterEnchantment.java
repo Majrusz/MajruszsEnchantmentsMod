@@ -61,12 +61,13 @@ public class HunterEnchantment extends WonderfulEnchantment {
 		LivingEntity attacker = ( LivingEntity )damageSource.getTrueSource();
 		HunterEnchantment enchantment = Instances.HUNTER;
 		int hunterLevel = EnchantmentHelper.getEnchantmentLevel( enchantment, attacker.getHeldItemMainhand() );
+		if( hunterLevel <= 0 )
+			return;
+
 		double distance = attacker.getPositionVec()
 			.squareDistanceTo( target.getPositionVec() );
-		double penaltyMultiplier = Math.max( 1.0 - distance / enchantment.minimumDistance.get(), 0.0 );
+		double penaltyMultiplier = Math.max( 1.0 - distance / enchantment.minimumDistance.get(), 0.0 ) * enchantment.damagePenaltyMultiplier.get();
 		double extraDamageMultiplier = distance * enchantment.damageMultiplier.get() * hunterLevel + 1.0 - penaltyMultiplier;
-		MajruszLibrary.LOGGER.info( penaltyMultiplier + " : " + extraDamageMultiplier );
-
 		event.setAmount( ( float )( event.getAmount() * extraDamageMultiplier ) );
 	}
 

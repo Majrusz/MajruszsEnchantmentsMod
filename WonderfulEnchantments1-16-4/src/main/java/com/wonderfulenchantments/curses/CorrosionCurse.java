@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.wonderfulenchantments.WonderfulEnchantmentHelper.isEntityOutsideWhenItRains;
 
-/** Damages entity when it is in water. */
+/** Damages entity when it is in water or outside while it is raining. */
 @Mod.EventBusSubscriber
 public class CorrosionCurse extends WonderfulCurse {
 	private static final String CORROSION_TAG = "CurseOfCorrosionCounter";
@@ -31,7 +31,7 @@ public class CorrosionCurse extends WonderfulCurse {
 		String cooldownComment = "Damage cooldown in seconds.";
 		String damageComment = "Amount of damage dealt to the player every X seconds.";
 		this.damageCooldown = new DurationConfig( "damage_cooldown_duration", cooldownComment, false, 3.0, 1.0, 60.0 );
-		this.damageAmount = new DoubleConfig( "damage_amount", damageComment, false, 1.0, 1.0, 20.0 );
+		this.damageAmount = new DoubleConfig( "damage_amount", damageComment, false, 0.5, 0.5, 20.0 );
 		this.curseGroup.addConfigs( this.damageCooldown, this.damageAmount );
 
 		setMaximumEnchantmentLevel( 1 );
@@ -51,7 +51,8 @@ public class CorrosionCurse extends WonderfulCurse {
 		CompoundNBT data = entity.getPersistentData();
 
 		int counter = data.getInt( CORROSION_TAG ) + 1;
-		if( enchantmentLevel > 0 && isEntityOutsideWhenItRains( entity, world ) && counter > corrosionCurse.damageCooldown.getDuration() ) {
+		boolean hasContactWithWater = isEntityOutsideWhenItRains( entity, world ) || entity.isInWater();
+		if( enchantmentLevel > 0 && hasContactWithWater && counter > corrosionCurse.damageCooldown.getDuration() ) {
 			counter -= corrosionCurse.damageCooldown.getDuration();
 			entity.attackEntityFrom( DamageSource.DROWN, ( float )( enchantmentLevel * corrosionCurse.damageAmount.get() ) );
 			damageArmor( entity );
@@ -61,12 +62,11 @@ public class CorrosionCurse extends WonderfulCurse {
 
 	/** Deals damage to each armor piece with corrosion curse. */
 	protected static void damageArmor( LivingEntity entity ) {
-		for( ItemStack itemStack : entity.getArmorInventoryList() )
-			if( EnchantmentHelper.getEnchantmentLevel( Instances.CORROSION, itemStack ) > 0 ) {
-				EquipmentSlotType equipmentSlotType = itemStack.getEquipmentSlot();
+		for( EquipmentSlotType equipmentSlotType : EquipmentSlotTypes.ARMOR ) {
+			ItemStack itemStack = entity.getItemStackFromSlot( equipmentSlotType );
 
-				if( equipmentSlotType != null )
-					itemStack.damageItem( 1, entity, owner->owner.sendBreakAnimation( equipmentSlotType ) );
-			}
+			if( EnchantmentHelper.getEnchantmentLevel( Instances.CORROSION, itemStack ) > 0 )
+				itemStack.damageItem( 1, entity, owner->owner.sendBreakAnimation( equipmentSlotType ) );
+		}
 	}
 }
