@@ -122,7 +122,6 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 					return;
 				CompoundNBT data = sender.getPersistentData();
 				data.putFloat( MINING_MULTIPLIER_TAG, this.multiplier );
-				sender.setHealth( sender.getMaxHealth() );
 			} );
 			context.setPacketHandled( true );
 		}
