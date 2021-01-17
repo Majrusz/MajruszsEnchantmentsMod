@@ -32,7 +32,7 @@ public class HarvesterEnchantment extends WonderfulEnchantment {
 		String grow_comment = "Chance for increasing age of nearby crops. (calculated for each crop separately)";
 		this.range = new IntegerConfig( "range", range_comment, false, 1, 1, 3 );
 		this.durabilityPenalty = new IntegerConfig( "durability_penalty", durability_comment, false, 1, 1, 10 );
-		this.growChance = new DoubleConfig( "grow_chance", grow_comment, false, 0.035, 0.0, 1.0 );
+		this.growChance = new DoubleConfig( "grow_chance", grow_comment, false, 0.04, 0.0, 1.0 );
 		this.enchantmentGroup.addConfigs( this.range, this.durabilityPenalty, this.growChance );
 
 		setMaximumEnchantmentLevel( 3 );
