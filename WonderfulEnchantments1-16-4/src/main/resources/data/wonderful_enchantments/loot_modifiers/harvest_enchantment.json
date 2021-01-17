@@ -1,0 +1,18 @@
+{
+  "type": "wonderful_enchantments:harvest_enchantment",
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "enchantments": [
+          {
+            "enchantment": "wonderful_enchantments:harvest",
+            "levels": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

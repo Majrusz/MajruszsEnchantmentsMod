@@ -77,6 +77,7 @@ public class RegistryHandler {
 		ENCHANTMENTS.register( "horse_frost_walker", ()->Instances.HORSE_FROST_WALKER );
 		ENCHANTMENTS.register( "hunter", ()->Instances.HUNTER );
 		ENCHANTMENTS.register( "elder_guardian_favor", ()->Instances.ELDER_GAURDIAN_FAVOR );
+		ENCHANTMENTS.register( "harvest", ()->Instances.HARVEST );
 	}
 
 	private static void addCurses() {

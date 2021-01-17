@@ -1,6 +1,7 @@
 package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.loot_modifiers.AddItemsDirectlyToInventory;
+import com.wonderfulenchantments.loot_modifiers.Replant;
 import com.wonderfulenchantments.loot_modifiers.SmeltingItems;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
@@ -17,5 +18,6 @@ public class LootModifiers {
 		registry.register( new SmeltingItems.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "smelter_enchantment" ) ) );
 		registry.register(
 			new AddItemsDirectlyToInventory.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "telekinesis_enchantment" ) ) );
+		registry.register( new Replant.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "harvest_enchantment" ) ) );
 	}
 }
