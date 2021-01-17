@@ -1,7 +1,6 @@
 package com.wonderfulenchantments.particles;
 
 import com.mlib.MajruszLibrary;
-import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;

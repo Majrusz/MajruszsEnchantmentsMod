@@ -1,6 +1,5 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.MajruszLibrary;
 import com.mlib.config.DoubleConfig;
 import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;

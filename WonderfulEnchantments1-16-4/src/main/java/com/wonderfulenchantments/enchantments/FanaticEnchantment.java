@@ -8,7 +8,6 @@ import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.wonderfulenchantments.Instances;
-import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.CreatureAttribute;
@@ -152,8 +151,8 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	 */
 	protected static void spawnReward( ItemStack reward, PlayerEntity player, World world, FishingBobberEntity bobberEntity ) {
 		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50 * MajruszLibrary.RANDOM.nextDouble(),
-			bobberEntity.getPosY() + 0.25 * MajruszLibrary.RANDOM.nextDouble(),
-			bobberEntity.getPosZ() + 0.50 * MajruszLibrary.RANDOM.nextDouble(), reward
+			bobberEntity.getPosY() + 0.25 * MajruszLibrary.RANDOM.nextDouble(), bobberEntity.getPosZ() + 0.50 * MajruszLibrary.RANDOM.nextDouble(),
+			reward
 		);
 
 		double deltaX = player.getPosX() - itemEntity.getPosX();

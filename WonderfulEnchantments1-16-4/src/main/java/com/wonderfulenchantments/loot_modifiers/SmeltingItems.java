@@ -2,7 +2,6 @@ package com.wonderfulenchantments.loot_modifiers;
 
 import com.google.gson.JsonObject;
 import com.mlib.MajruszLibrary;
-import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
