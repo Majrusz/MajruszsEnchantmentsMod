@@ -4,7 +4,6 @@ import com.wonderfulenchantments.loot_modifiers.AddItemsDirectlyToInventory;
 import com.wonderfulenchantments.loot_modifiers.Replant;
 import com.wonderfulenchantments.loot_modifiers.SmeltingItems;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
-import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +22,9 @@ public class LootModifiers {
 	}
 
 	/** Adding to registry single loot modifier. */
-	protected static void registerSingleModifier( IForgeRegistry< GlobalLootModifierSerializer< ? > > registry, GlobalLootModifierSerializer< ? > serializer, String registerName ) {
+	protected static void registerSingleModifier( IForgeRegistry< GlobalLootModifierSerializer< ? > > registry,
+		GlobalLootModifierSerializer< ? > serializer, String registerName
+	) {
 		registry.register( serializer.setRegistryName( WonderfulEnchantments.getLocation( registerName ) ) );
 	}
 }
