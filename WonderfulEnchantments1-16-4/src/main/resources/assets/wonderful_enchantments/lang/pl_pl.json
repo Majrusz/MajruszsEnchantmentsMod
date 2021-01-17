@@ -77,6 +77,10 @@
 	"enchantment.wonderful_enchantments.elder_guardian_favor.desc": "Po zaatakowaniu przeciwnika atakuje go dodatkowe wiązką laserową, której nie można uniknąć.",
 	"enchantment.wonderful_enchantments.elder_guardian_favor.description": "Po zaatakowaniu przeciwnika atakuje go dodatkowe wiązką laserową, której nie można uniknąć.",
 
+	"enchantment.wonderful_enchantments.harvester": "Żniwiarz",
+	"enchantment.wonderful_enchantments.harvester.desc": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
+	"enchantment.wonderful_enchantments.harvester.description": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Zmniejsza prędkość poruszania się gracza.",
@@ -91,6 +95,9 @@
 
 	"enchantment.wonderful_enchantments.vampirism_curse": "Klątwa wampiryzmu",
 	"enchantment.wonderful_enchantments.vampirism_curse.desc": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia. Wzmacnia zaklęcie Pijawka.",
-	"enchantment.wonderful_enchantments.vampirism_curse.description": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia. Wzmacnia zaklęcie Pijawka."
+	"enchantment.wonderful_enchantments.vampirism_curse.description": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia. Wzmacnia zaklęcie Pijawka.",
 
+	"enchantment.wonderful_enchantments.corrosion_curse": "Klątwa korozji",
+	"enchantment.wonderful_enchantments.corrosion_curse.desc": "Stopniowo niszczy pancerz i rani użytkownika gdy ten ma kontakt z wodą.",
+	"enchantment.wonderful_enchantments.corrosion_curse.description": "Stopniowo niszczy pancerz i rani użytkownika gdy ten ma kontakt z wodą."
 }
