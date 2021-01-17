@@ -20,10 +20,6 @@ public class LootModifiers {
 		registerSingleModifier( registry, new SmeltingItems.Serializer(), "smelter_enchantment" );
 		registerSingleModifier( registry, new AddItemsDirectlyToInventory.Serializer(), "telekinesis_enchantment" );
 		registerSingleModifier( registry, new Replant.Serializer(), "harvester_enchantment" );
-		/*registry.register( new SmeltingItems.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "smelter_enchantment" ) ) );
-		registry.register(
-			new AddItemsDirectlyToInventory.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "telekinesis_enchantment" ) ) );
-		registry.register( new Replant.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "harvester_enchantment" ) ) );*/
 	}
 
 	/** Adding to registry single loot modifier. */
