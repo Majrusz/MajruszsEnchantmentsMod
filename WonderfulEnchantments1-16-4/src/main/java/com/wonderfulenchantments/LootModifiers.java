@@ -18,6 +18,6 @@ public class LootModifiers {
 		registry.register( new SmeltingItems.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "smelter_enchantment" ) ) );
 		registry.register(
 			new AddItemsDirectlyToInventory.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "telekinesis_enchantment" ) ) );
-		registry.register( new Replant.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "harvest_enchantment" ) ) );
+		registry.register( new Replant.Serializer().setRegistryName( WonderfulEnchantments.getLocation( "harvester_enchantment" ) ) );
 	}
 }

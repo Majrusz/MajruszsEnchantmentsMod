@@ -28,7 +28,7 @@ public class Instances {
 	public static final SmelterEnchantment SMELTER;
 	public static final GottaMineFastEnchantment GOTTA_MINE_FAST;
 	public static final TelekinesisEnchantment TELEKINESIS;
-	public static final HarvestEnchantment HARVEST;
+	public static final HarvesterEnchantment HARVESTER;
 
 	// Horse Armor Enchantments
 	public static final SwiftnessEnchantment SWIFTNESS;
@@ -67,7 +67,7 @@ public class Instances {
 		SMELTER = new SmelterEnchantment();
 		GOTTA_MINE_FAST = new GottaMineFastEnchantment();
 		TELEKINESIS = new TelekinesisEnchantment();
-		HARVEST = new HarvestEnchantment();
+		HARVESTER = new HarvesterEnchantment();
 
 		SWIFTNESS = new SwiftnessEnchantment();
 		HORSE_PROTECTION = new HorseProtectionEnchantment();

@@ -1,19 +1,15 @@
 package com.wonderfulenchantments.loot_modifiers;
 
 import com.google.gson.JsonObject;
-import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.wonderfulenchantments.Instances;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
@@ -25,12 +21,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /** Functionality of Harvest enchantment. */
 public class Replant extends LootModifier {
@@ -52,13 +45,14 @@ public class Replant extends LootModifier {
 		Entity entity = context.get( LootParameters.THIS_ENTITY );
 		ItemStack hoe = context.get( LootParameters.TOOL );
 		Vector3d origin = context.get( LootParameters.field_237457_g_ );
+		int rangeFactor = Instances.HARVESTER.range.get() * EnchantmentHelper.getEnchantmentLevel( Instances.HARVESTER, hoe );
 		if( entity == null || origin == null || !crops.isMaxAge( blockState ) )
 			return generatedLoot;
 
 		BlockPos position = new BlockPos( origin );
 		removeSeedsFromLoot( generatedLoot, entity.world, crops, blockState, position );
 		if( entity.world instanceof ServerWorld && entity instanceof LivingEntity )
-			tickInRange( Instances.HARVEST.range.get(), ( ServerWorld )entity.world, position, ( LivingEntity )entity, hoe );
+			tickInRange( rangeFactor, ( ServerWorld )entity.world, position, ( LivingEntity )entity, hoe );
 
 		return generatedLoot;
 	}
@@ -68,7 +62,7 @@ public class Replant extends LootModifier {
 		ItemStack seedStack = crops.getItem( world, position, state );
 		for( ItemStack itemStack : generatedLoot ) {
 			if( itemStack.getItem() == seedStack.getItem() ) {
-				itemStack.setCount( itemStack.getCount()-1 );
+				itemStack.setCount( itemStack.getCount() - 1 );
 				world.setBlockState( position, crops.getDefaultState() );
 				return;
 			}
@@ -88,15 +82,25 @@ public class Replant extends LootModifier {
 					continue;
 
 				CropsBlock cropsBlock = ( CropsBlock )blockState.getBlock();
-				double growChance = Instances.HARVEST.growChance.get();
+				double growChance = Instances.HARVESTER.growChance.get();
 				if( growChance > 0.0 ) {
 					if( Random.tryChance( growChance ) ) {
+						int penalty = Instances.HARVESTER.durabilityPenalty.get();
 						cropsBlock.grow( world, neighbourPosition, blockState );
-						hoe.damageItem( 1, entity, owner->owner.sendBreakAnimation( EquipmentSlotType.MAINHAND ) );
+						spawnParticles( world, neighbourPosition, 3 );
+						if( penalty > 0 )
+							hoe.damageItem( penalty, entity, owner->owner.sendBreakAnimation( EquipmentSlotType.MAINHAND ) );
 					}
-					world.spawnParticle( ParticleTypes.HAPPY_VILLAGER, neighbourPosition.getX() + 0.5, neighbourPosition.getY() + 0.5, neighbourPosition.getZ() + 0.5, 4, 0.25, 0.25, 0.25, 0.1 );
+					spawnParticles( world, neighbourPosition, 1 );
 				}
 			}
+	}
+
+	/** Spawning particles on nearby crops. */
+	protected static void spawnParticles( ServerWorld world, BlockPos position, int amount ) {
+		world.spawnParticle( ParticleTypes.HAPPY_VILLAGER, position.getX() + 0.5, position.getY() + 0.5, position.getZ() + 0.5, amount, 0.25, 0.25,
+			0.25, 0.1
+		);
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer< Replant > {

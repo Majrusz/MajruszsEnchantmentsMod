@@ -20,17 +20,20 @@ import net.minecraftforge.fml.common.Mod;
 
 /** Enchantment that automatically replants seeds and gives a chance to improve nearby crops. */
 @Mod.EventBusSubscriber
-public class HarvestEnchantment extends WonderfulEnchantment {
+public class HarvesterEnchantment extends WonderfulEnchantment {
 	public final IntegerConfig range;
+	public final IntegerConfig durabilityPenalty;
 	public final DoubleConfig growChance;
 
-	public HarvestEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "Harvest" );
+	public HarvesterEnchantment() {
+		super( Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "Harvester" );
 		String range_comment = "Range increase per enchantment level. (per block in x-axis and z-axis)";
+		String durability_comment = "Penalty for increasing age of nearby crops. (per successful increase)";
 		String grow_comment = "Chance for increasing age of nearby crops. (calculated for each crop separately)";
 		this.range = new IntegerConfig( "range", range_comment, false, 1, 1, 3 );
-		this.growChance = new DoubleConfig( "grow_chance", grow_comment, false, 0.05, 0.0, 1.0 );
-		this.enchantmentGroup.addConfigs( this.range, this.growChance );
+		this.durabilityPenalty = new IntegerConfig( "durability_penalty", durability_comment, false, 1, 1, 10 );
+		this.growChance = new DoubleConfig( "grow_chance", grow_comment, false, 0.035, 0.0, 1.0 );
+		this.enchantmentGroup.addConfigs( this.range, this.durabilityPenalty, this.growChance );
 
 		setMaximumEnchantmentLevel( 3 );
 		setDifferenceBetweenMinimumAndMaximum( 30 );
@@ -46,7 +49,7 @@ public class HarvestEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void onRightClick( PlayerInteractEvent.RightClickBlock event ) {
 		ItemStack itemStack = event.getItemStack();
-		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( Instances.HARVEST, itemStack );
+		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( Instances.HARVESTER, itemStack );
 		PlayerEntity player = event.getPlayer();
 		BlockPos position = event.getPos();
 		if( enchantmentLevel <= 0 )
