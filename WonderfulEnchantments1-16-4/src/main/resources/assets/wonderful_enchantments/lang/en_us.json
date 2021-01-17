@@ -77,6 +77,10 @@
 	"enchantment.wonderful_enchantments.elder_guardian_favor.desc": "After successful hit, it attacks enemy with laser beam that cannot be dodged or blocked.",
 	"enchantment.wonderful_enchantments.elder_guardian_favor.description": "After successful hit, it attacks enemy with laser beam that cannot be dodged or blocked.",
 
+	"enchantment.wonderful_enchantments.harvester": "Harvester",
+	"enchantment.wonderful_enchantments.harvester.desc": "Gives the option of right-click harvesting and the chance to grow nearby crops.",
+	"enchantment.wonderful_enchantments.harvester.description": "Gives the option of right-click harvesting and the chance to grow nearby crops.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Curse of Slowness",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Decreases the player's movement speed.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Decreases the player's movement speed.",
@@ -91,5 +95,9 @@
 
 	"enchantment.wonderful_enchantments.vampirism_curse": "Curse of Vampirism",
 	"enchantment.wonderful_enchantments.vampirism_curse.desc": "Weakens and sets the player on fire when he is outside during the day. Makes the Leech enchantment stronger.",
-	"enchantment.wonderful_enchantments.vampirism_curse.description": "Weakens and sets the player on fire when he is outside during the day. Makes the Leech enchantment stronger."
+	"enchantment.wonderful_enchantments.vampirism_curse.description": "Weakens and sets the player on fire when he is outside during the day. Makes the Leech enchantment stronger.",
+
+	"enchantment.wonderful_enchantments.corrosion_curse": "Curse of Corrosion",
+	"enchantment.wonderful_enchantments.corrosion_curse.desc": "Gradually destroys the armor and hurts the owner when it comes into contact with water.",
+	"enchantment.wonderful_enchantments.corrosion_curse.description": "Gradually destroys the armor and hurts the owner when it comes into contact with water."
 }
