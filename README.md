@@ -1,6 +1,6 @@
 ![Mod logo](https://github.com/Majrusz/WonderfulEnchantmentsMod/blob/main/logo.png?raw=true)
 
-## What is Wonderful Enchantments?
+## What is Wonderful Enchantments? [![](http://cf.way2muchnoise.eu/full_wonderful-enchantments_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments)
 **Wonderful Enchantments** is a Minecraft Forge modification which adds to the
 game plenty of new and unique enchantments.
 
@@ -9,9 +9,13 @@ game plenty of new and unique enchantments.
 - [Planet Minecraft](https://www.planetminecraft.com/mod/wonderful-enchantments/)
 
 ## Current Mod Releases (Source Code)
-- [v0.9.0 for Minecraft 1.16.3/1.16.4](WonderfulEnchantments1-16-3)
-- [v0.8.1 for Minecraft 1.15.2](WonderfulEnchantments1-15-2) *(not supported anymore)*
-- [v0.6.0 for Minecraft 1.12.2](WonderfulEnchantments1-12-2) *(not supported anymore)*
+- [v1.0.0 for Minecraft 1.16.4](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/1.16.4)
+- [v0.9.1 for Minecraft 1.16.3](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/old-main/WonderfulEnchantments1-16-3) *(not supported anymore)*
+- [v0.8.1 for Minecraft 1.15.2](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/old-main/WonderfulEnchantments1-15-2) *(not supported anymore)*
+- [v0.6.0 for Minecraft 1.12.2](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/old-main/WonderfulEnchantments1-12-2) *(not supported anymore)*
+
+## Dependencies
+- [Majrusz Library](https://github.com/Majrusz/MajruszLibrary/tree/1.16.4) *(Wonderful Enchantments version 1.0.0 above)*
 
 ## Technologies
 - Java 8
