@@ -4,6 +4,7 @@ import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
+/** Makes horse armor enchantable. */
 public class HorseArmorItemReplacement extends HorseArmorItem {
 	public HorseArmorItemReplacement( int armorBonus, String resource ) {
 		super( armorBonus, resource, ( new Properties() ).maxStackSize( 1 )
