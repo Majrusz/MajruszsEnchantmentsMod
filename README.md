@@ -15,7 +15,7 @@ game plenty of new and unique enchantments.
 - [v0.6.0 for Minecraft 1.12.2](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/old-main/WonderfulEnchantments1-12-2) *(not supported anymore)*
 
 ## Dependencies
-- [Majrusz Library](https://github.com/Majrusz/MajruszLibrary/tree/1.16.4) *(Wonderful Enchantments version 1.0.0 above)*
+- [Majrusz Library](https://github.com/Majrusz/MajruszLibrary/tree/1.16.4) *(Wonderful Enchantments version 1.0.0 and above)*
 
 ## Technologies
 - Java 8
