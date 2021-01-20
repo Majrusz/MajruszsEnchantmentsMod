@@ -33,7 +33,7 @@
 	"enchantment.wonderful_enchantments.immortality.desc": "죽음에 이르는 피해를 무시합니다.",
 	"enchantment.wonderful_enchantments.immortality.description": "죽음에 이르는 피해를 무시합니다.",
 
-	"enchantment.wonderful_enchantments.smelter": "제련",
+	"enchantment.wonderful_enchantments.smelter": "제련화",
 	"enchantment.wonderful_enchantments.smelter.desc": "블록을 파괴하였을 때 해당 아이템을 자동으로 제련합니다.",
 	"enchantment.wonderful_enchantments.smelter.description": "블록을 파괴하였을 때 해당 아이템을 자동으로 제련합니다.",
 
@@ -76,6 +76,10 @@
 	"enchantment.wonderful_enchantments.elder_guardian_favor": "엘더 가디언의 가호",
 	"enchantment.wonderful_enchantments.elder_guardian_favor.desc": "대상에게 타격을 입히면 잠시 뒤 방어와 회피가 불가능한 광선 공격으로 추가적인 피해를 줍니다.",
 	"enchantment.wonderful_enchantments.elder_guardian_favor.description": "대상에게 타격을 입히면 잠시 뒤 방어와 회피가 불가능한 광선 공격으로 추가적인 피해를 줍니다.",
+	
+	"enchantment.wonderful_enchantments.harvester": "수확",
+	"enchantment.wonderful_enchantments.harvester.desc": "이제 마우스 우클릭으로도 수확을 할 수 있으며, 수확 후 추가로 주변의 작물이 성장할 확률을 부여합니다.",
+	"enchantment.wonderful_enchantments.harvester.description": "이제 마우스 우클릭으로 수확을 할 수 있으며, 수확 후 추가로 주변의 작물이 성장할 확률을 부여합니다.",
 
 	"enchantment.wonderful_enchantments.slowness_curse": "둔화 저주",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "플레이어의 이동속도를 감소시킵니다.",
@@ -92,4 +96,8 @@
 	"enchantment.wonderful_enchantments.vampirism_curse": "혈귀 저주",
 	"enchantment.wonderful_enchantments.vampirism_curse.desc": "플레이어에게 여러 약화효과를 부여하고 플레이어가 낮 동안 밖에 있을 경우 화염 피해를 입게 됩니다. 마법 부여 흡혈의 효과가 증가합니다.",
 	"enchantment.wonderful_enchantments.vampirism_curse.description": "플레이어에게 여러 약화효과를 부여하고 플레이어가 낮 동안 밖에 있을 경우 화염 피해를 입게 됩니다. 마법 부여 흡혈의 효과가 증가합니다."
+	
+	"enchantment.wonderful_enchantments.corrosion_curse": "부식 저주",
+	"enchantment.wonderful_enchantments.corrosion_curse.desc": "플레이어가 물에 닿을 경우 플레이어와 장비의 내구도에 피해를 줍니다.",
+	"enchantment.wonderful_enchantments.corrosion_curse.description": "플레이어가 물에 닿을 경우 플레이어와 장비의 내구도에 피해를 줍니다."
 }
