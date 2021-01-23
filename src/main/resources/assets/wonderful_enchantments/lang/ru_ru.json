@@ -77,6 +77,10 @@
   "enchantment.wonderful_enchantments.elder_guardian_favor.desc": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать.",
   "enchantment.wonderful_enchantments.elder_guardian_favor.description": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать.",
 
+  "enchantment.wonderful_enchantments.harvester": "Жнец",
+  "enchantment.wonderful_enchantments.harvester.desc": "Дает возможность правой кнопкой мыши собирать урожай и выращивать близлежащие культуры.",
+  "enchantment.wonderful_enchantments.harvester.description": "Дает возможность правой кнопкой мыши собирать урожай и выращивать близлежащие культуры.",
+
   "enchantment.wonderful_enchantments.slowness_curse": "Проклятие медлительности",
   "enchantment.wonderful_enchantments.slowness_curse.desc": "Уменьшает скорость передвижения игрока.",
   "enchantment.wonderful_enchantments.slowness_curse.description": "Уменьшает скорость передвижения игрока.",
@@ -91,5 +95,9 @@
 
   "enchantment.wonderful_enchantments.vampirism_curse": "Проклятье вампиризма",
   "enchantment.wonderful_enchantments.vampirism_curse.desc": "Ослабляет и поджигает игрока, когда он находится под солнечным светом, но усиливает зачарование - Пиявка.",
-  "enchantment.wonderful_enchantments.vampirism_curse.description": "Ослабляет и поджигает игрока, когда он находится под солнечным светом, но усиливает зачарование - Пиявка."
+  "enchantment.wonderful_enchantments.vampirism_curse.description": "Ослабляет и поджигает игрока, когда он находится под солнечным светом, но усиливает зачарование - Пиявка.",
+
+  "enchantment.wonderful_enchantments.corrosion_curse": "Проклятье коррозии",
+  "enchantment.wonderful_enchantments.corrosion_curse.desc": "Постепенно разрушает броню и вредит владельцу при соприкосновении с водой.",
+  "enchantment.wonderful_enchantments.corrosion_curse.description": "Постепенно разрушает броню и вредит владельцу при соприкосновении с водой."
 }
