@@ -77,6 +77,10 @@
 	"enchantment.wonderful_enchantments.elder_guardian_favor.desc": "Dopo aver colpito con successo, il nemico viene attaccato da un raggio che non può essere schivato o bloccato.",
 	"enchantment.wonderful_enchantments.elder_guardian_favor.description": "Dopo aver colpito con successo, il nemico viene attaccato da un raggio che non può essere schivato o bloccato.",
 
+	"enchantment.wonderful_enchantments.harvester": "Mietitore",
+	"enchantment.wonderful_enchantments.harvester.desc": "Puoi prendere il raccolto col tasto destro ripiantandolo e hai la possibilità di coltivare raccolti vicini.",
+	"enchantment.wonderful_enchantments.harvester.description": "Puoi prendere il raccolto col tasto destro ripiantandolo e hai la possibilità di coltivare raccolti vicini.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Maledizione della lentezza",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Ti rende più lento.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Ti rende più lento.",
@@ -91,5 +95,9 @@
 
 	"enchantment.wonderful_enchantments.vampirism_curse": "Maledizione vampirica",
 	"enchantment.wonderful_enchantments.vampirism_curse.desc": "Indebolisce e dà fuoco al giocatore quando è fuori durante il giorno. Rende più forte l'incantesimo Sanguisuga.",
-	"enchantment.wonderful_enchantments.vampirism_curse.description": "Indebolisce e dà fuoco al giocatore quando è fuori durante il giorno. Rende più forte l'incantesimo Sanguisuga."
+	"enchantment.wonderful_enchantments.vampirism_curse.description": "Indebolisce e dà fuoco al giocatore quando è fuori durante il giorno. Rende più forte l'incantesimo Sanguisuga.",
+
+	"enchantment.wonderful_enchantments.corrosion_curse": "Maledizione della corrosione",
+	"enchantment.wonderful_enchantments.corrosion_curse.desc": "Distrugge gradualmente l'armatura e ti ferisce quando vieni a contatto con l'acqua.",
+	"enchantment.wonderful_enchantments.corrosion_curse.description": "Distrugge gradualmente l'armatura e ti ferisce quando vieni a contatto con l'acqua."
 }
