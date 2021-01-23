@@ -7,6 +7,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
+/**
+ Main class for the whole Wonderful Enchantments modification.
+
+ @author Majrusz
+ @since 2020-11-03 */
 @Mod( WonderfulEnchantments.MOD_ID )
 public class WonderfulEnchantments {
 	public static final String MOD_ID = "wonderful_enchantments";
@@ -18,10 +23,10 @@ public class WonderfulEnchantments {
 
 	public WonderfulEnchantments() {
 		RegistryHandler.init();
-
 		MinecraftForge.EVENT_BUS.register( this );
 	}
 
+	/** Returns resource location for register in current modification files. */
 	public static ResourceLocation getLocation( String register ) {
 		return new ResourceLocation( MOD_ID, register );
 	}
