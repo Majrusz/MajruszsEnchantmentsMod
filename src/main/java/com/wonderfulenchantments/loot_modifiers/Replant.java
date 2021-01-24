@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.mlib.Random;
 import com.wonderfulenchantments.Instances;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -67,6 +68,8 @@ public class Replant extends LootModifier {
 				return;
 			}
 		}
+
+		world.setBlockState( position, Blocks.AIR.getDefaultState() );
 	}
 
 	/** Increases nearby crops age and damages hoe. */
