@@ -6,10 +6,7 @@ import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.item.HorseArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ShieldItem;
+import net.minecraft.item.*;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,6 +27,7 @@ public class RegistryHandler {
 
 	public static final EnchantmentType SHIELD = EnchantmentType.create( "shield", ( Item item )->item instanceof ShieldItem );
 	public static final EnchantmentType HORSE_ARMOR = EnchantmentType.create( "horse_armor", ( Item item )->item instanceof HorseArmorItem );
+	public static final EnchantmentType BOW_AND_CROSSBOW = EnchantmentType.create( "bow_and_crossbow", ( Item item )->( item instanceof BowItem || item instanceof CrossbowItem ) );
 
 	public static final RegistryObject< BasicParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle",
 		()->new BasicParticleType( true )
@@ -97,6 +95,7 @@ public class RegistryHandler {
 	private static void addEnchantmentTypesToItemGroups() {
 		ItemHelper.addEnchantmentTypeToItemGroup( SHIELD, ItemGroup.COMBAT );
 		ItemHelper.addEnchantmentTypeToItemGroup( HORSE_ARMOR, ItemGroup.MISC );
+		ItemHelper.addEnchantmentTypeToItemGroup( BOW_AND_CROSSBOW, ItemGroup.COMBAT );
 	}
 
 	private static void doClientSetup( final FMLClientSetupEvent event ) {
