@@ -17,8 +17,8 @@ public class LootModifiers {
 		IForgeRegistry< GlobalLootModifierSerializer< ? > > registry = event.getRegistry();
 
 		registerSingleModifier( registry, new SmeltingItems.Serializer(), "smelter_enchantment" );
-		registerSingleModifier( registry, new AddItemsDirectlyToInventory.Serializer(), "telekinesis_enchantment" );
 		registerSingleModifier( registry, new Replant.Serializer(), "harvester_enchantment" );
+		registerSingleModifier( registry, new AddItemsDirectlyToInventory.Serializer(), "telekinesis_enchantment" );
 	}
 
 	/** Adding to registry single loot modifier. */
