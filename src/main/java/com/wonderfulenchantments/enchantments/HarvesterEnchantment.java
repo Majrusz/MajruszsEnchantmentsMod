@@ -41,8 +41,8 @@ public class HarvesterEnchantment extends WonderfulEnchantment {
 	}
 
 	@Override
-	public boolean canApply( ItemStack stack ) {
-		return stack.getItem() instanceof HoeItem && super.canApply( stack );
+	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+		return stack.getItem() instanceof HoeItem && stack.canApplyAtEnchantingTable( this );
 	}
 
 	/** Adding possibility to harvest crops with right click. */
