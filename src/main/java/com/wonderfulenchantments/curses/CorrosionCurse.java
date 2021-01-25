@@ -45,7 +45,6 @@ public class CorrosionCurse extends WonderfulCurse {
 			return;
 
 		CorrosionCurse corrosionCurse = Instances.CORROSION;
-		ServerWorld world = ( ServerWorld )entity.world;
 		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( corrosionCurse, entity.getArmorInventoryList() );
 		CompoundNBT data = entity.getPersistentData();
 
