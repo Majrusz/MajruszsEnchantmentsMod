@@ -41,7 +41,7 @@ public class HarvesterEnchantment extends WonderfulEnchantment {
 	}
 
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+	public boolean canApplyAtEnchantingTable( ItemStack stack ) {
 		return stack.getItem() instanceof HoeItem && stack.canApplyAtEnchantingTable( this );
 	}
 
