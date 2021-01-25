@@ -37,8 +37,7 @@ public class SlownessCurse extends WonderfulCurse {
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
 		LivingEntity entity = event.getEntityLiving();
 
-		ATTRIBUTE_HANDLER.setValue( Instances.SLOWNESS.getTotalSlownessMultiplier( entity ) - 1.0 )
-			.apply( entity );
+		ATTRIBUTE_HANDLER.setValueAndApply( entity, Instances.SLOWNESS.getTotalSlownessMultiplier( entity ) - 1.0 );
 	}
 
 	/** Calculates total slowness multiplier. (sum of slowness enchantment level on every armor piece) */
