@@ -1,8 +1,8 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.config.DoubleConfig;
+import com.mlib.damage.DamageHelper;
 import com.wonderfulenchantments.Instances;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
@@ -45,7 +45,7 @@ public class HumanSlayerEnchantment extends WonderfulEnchantment {
 	/** Event that increases damage when all conditions are met. */
 	@SubscribeEvent
 	public static void onEntityHurt( LivingHurtEvent event ) {
-		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
+		if( !DamageHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
 			return;
 
 		LivingEntity attacker = ( LivingEntity )event.getSource()
