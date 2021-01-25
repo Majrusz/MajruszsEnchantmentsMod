@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.MajruszLibrary;
+import com.mlib.WorldHelper;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.wonderfulenchantments.Instances;
@@ -85,8 +86,8 @@ public class ElderGaurdianFavorEnchantment extends WonderfulEnchantment {
 		if( counter > 0 ) {
 			spawnParticles( attacker, target, world );
 		} else {
-			boolean areEntitiesInWater = ( target.isInWater() || isEntityOutsideWhenItRains( target, world )
-			) && ( attacker.isInWater() || isEntityOutsideWhenItRains( attacker, world ) );
+			boolean areEntitiesInWater = ( target.isInWater() || WorldHelper.isEntityOutsideWhenItIsRaining( target )
+			) && ( attacker.isInWater() || WorldHelper.isEntityOutsideWhenItIsRaining( attacker ) );
 
 			world.playSound( null, target.getPosX(), target.getPosYEye(), target.getPosZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.AMBIENT,
 				0.5f, 1.8f
