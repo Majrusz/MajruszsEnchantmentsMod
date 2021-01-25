@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.curses;
 
 import com.mlib.EquipmentSlotTypes;
+import com.mlib.WorldHelper;
 import com.mlib.config.DurationConfig;
 import com.mlib.effects.EffectHelper;
 import com.mlib.enchantments.EnchantmentHelperPlus;
@@ -52,7 +53,7 @@ public class VampirismCurse extends WonderfulCurse {
 
 		int counter = data.getInt( VAMPIRISM_TAG ) + 1;
 		int particleCounter = data.getInt( VAMPIRISM_PARTICLE_TAG ) + 1;
-		if( enchantmentLevel > 0 && isPlayerOutsideDuringTheDay( entity, world ) ) {
+		if( enchantmentLevel > 0 && WorldHelper.isEntityOutsideDuringTheDay( entity ) ) {
 			int particleCooldown = 9 - Math.min( enchantmentLevel, 4 ) * 2;
 			if( particleCounter > particleCooldown ) {
 				particleCounter -= particleCooldown;
@@ -68,10 +69,5 @@ public class VampirismCurse extends WonderfulCurse {
 		}
 		data.putInt( VAMPIRISM_TAG, counter );
 		data.putInt( VAMPIRISM_PARTICLE_TAG, particleCounter );
-	}
-
-	/** Checks whether player is outside during the day. */
-	protected static boolean isPlayerOutsideDuringTheDay( LivingEntity entity, ServerWorld world ) {
-		return world.canSeeSky( new BlockPos( entity.getPositionVec() ) ) && world.isDaytime();
 	}
 }
