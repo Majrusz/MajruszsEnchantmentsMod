@@ -8,7 +8,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 
 import static com.wonderfulenchantments.WonderfulEnchantments.ENCHANTMENT_GROUP;
 
-/** Enchantment that automatically adds config to it. */
+/** Enchantment that automatically adds base config to it. */
 public class WonderfulEnchantment extends ExtendedEnchantment {
 	protected final ConfigGroup enchantmentGroup;
 	protected final AvailabilityConfig availabilityConfig;
