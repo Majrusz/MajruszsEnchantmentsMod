@@ -37,11 +37,10 @@ public class HorseProtectionEnchantment extends WonderfulEnchantment {
 	/** Event that updates the armor bonus on each animal entity equipment change. */
 	@SubscribeEvent
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
-		LivingEntity livingEntity = event.getEntityLiving();
+		LivingEntity entity = event.getEntityLiving();
 
-		if( livingEntity instanceof AnimalEntity )
-			ATTRIBUTE_HANDLER.setValue( getArmorBonus( ( AnimalEntity )livingEntity ) )
-				.apply( livingEntity );
+		if( entity instanceof AnimalEntity )
+			ATTRIBUTE_HANDLER.setValueAndApply( entity, getArmorBonus( ( AnimalEntity )entity ) );
 	}
 
 	/**
