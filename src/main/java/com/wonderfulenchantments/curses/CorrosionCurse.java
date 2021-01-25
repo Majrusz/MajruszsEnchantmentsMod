@@ -52,7 +52,7 @@ public class CorrosionCurse extends WonderfulCurse {
 		int counter = data.getInt( CORROSION_TAG ) + 1;
 		boolean hasContactWithWater = WorldHelper.isEntityOutsideWhenItIsRaining( entity ) || entity.isInWater();
 		if( enchantmentLevel > 0 && hasContactWithWater && counter > corrosionCurse.damageCooldown.getDuration() ) {
-			counter -= corrosionCurse.damageCooldown.getDuration();
+			counter = 0;
 			if( corrosionCurse.damageAmount.get() > 0 )
 				entity.attackEntityFrom( DamageSource.DROWN, ( float )( enchantmentLevel * corrosionCurse.damageAmount.get() ) );
 			damageArmor( entity );
