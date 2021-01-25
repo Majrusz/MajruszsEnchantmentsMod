@@ -36,10 +36,9 @@ public class VitalityEnchantment extends WonderfulEnchantment {
 	/** Event that updates the health bonus on each living entity equipment change. */
 	@SubscribeEvent
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
-		LivingEntity livingEntity = event.getEntityLiving();
+		LivingEntity entity = event.getEntityLiving();
 
-		ATTRIBUTE_HANDLER.setValue( getHealthBonus( livingEntity ) )
-			.apply( livingEntity );
+		ATTRIBUTE_HANDLER.setValueAndApply( entity, getHealthBonus( entity ) );
 	}
 
 	/**
