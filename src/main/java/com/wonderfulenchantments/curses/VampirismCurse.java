@@ -12,7 +12,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,7 +56,9 @@ public class VampirismCurse extends WonderfulCurse {
 			int particleCooldown = 9 - Math.min( enchantmentLevel, 4 ) * 2;
 			if( particleCounter > particleCooldown ) {
 				particleCounter -= particleCooldown;
-				world.spawnParticle( ParticleTypes.SMOKE, entity.getPosX(), entity.getPosYHeight( 0.75 ), entity.getPosZ(), 1 + enchantmentLevel/2, 0.1, 0.25, 0.1, 0.01 );
+				world.spawnParticle( ParticleTypes.SMOKE, entity.getPosX(), entity.getPosYHeight( 0.75 ), entity.getPosZ(), 1 + enchantmentLevel / 2,
+					0.1, 0.25, 0.1, 0.01
+				);
 			}
 			if( counter > vampirism.effectCooldown.getDuration() ) {
 				counter -= vampirism.effectCooldown.getDuration();
