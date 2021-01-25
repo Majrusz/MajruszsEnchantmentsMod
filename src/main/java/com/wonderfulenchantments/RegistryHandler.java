@@ -16,6 +16,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/** Class responsible for registering all objects. (items, enchantments etc.)*/
 public class RegistryHandler {
 	public static final DeferredRegister< Enchantment > ENCHANTMENTS = DeferredRegister.create( ForgeRegistries.ENCHANTMENTS,
 		WonderfulEnchantments.MOD_ID
@@ -33,29 +34,31 @@ public class RegistryHandler {
 		()->new BasicParticleType( true )
 	);
 
+	/** General initialization of all objects. */
 	public static void init() {
 		FMLJavaModLoadingContext modLoadingContext = FMLJavaModLoadingContext.get();
 		final IEventBus modEventBus = modLoadingContext.getModEventBus();
 
-		addEnchantments();
-		addCurses();
-		replaceRestStandardMinecraftItems();
-		registerObjects( modEventBus );
+		addEnchantments( modEventBus );
+		replaceRestStandardMinecraftItems( modEventBus );
+		PARTICLES.register( modEventBus );
 		addEnchantmentTypesToItemGroups();
 		modEventBus.addListener( RegistryHandler::doClientSetup );
 		modEventBus.addListener( PacketHandler::registerPacket );
 	}
 
-	// replacing standard minecraft shield and horse armors with the new ones which could be enchanted
-	private static void replaceRestStandardMinecraftItems() {
+	/** Replacing standard minecraft items with the new ones which could be enchanted. */
+	private static void replaceRestStandardMinecraftItems( final IEventBus modEventBus ) {
 		ITEMS_TO_REPLACE.register( "shield", ShieldItemReplacement::new );
 		ITEMS_TO_REPLACE.register( "leather_horse_armor", ()->new DyeableHorseArmorItemReplacement( 3, "leather" ) );
 		ITEMS_TO_REPLACE.register( "iron_horse_armor", ()->new HorseArmorItemReplacement( 5, "iron" ) );
 		ITEMS_TO_REPLACE.register( "golden_horse_armor", ()->new HorseArmorItemReplacement( 7, "gold" ) );
 		ITEMS_TO_REPLACE.register( "diamond_horse_armor", ()->new HorseArmorItemReplacement( 11, "diamond" ) );
+		ITEMS_TO_REPLACE.register( modEventBus );
 	}
 
-	private static void addEnchantments() {
+	/** Registering all enchantments. */
+	private static void addEnchantments( final IEventBus modEventBus ) {
 		ENCHANTMENTS.register( "fishing_fanatic", ()->Instances.FISHING_FANATIC );
 		ENCHANTMENTS.register( "human_slayer", ()->Instances.HUMAN_SLAYER );
 		ENCHANTMENTS.register( "pufferfish_vengeance", ()->Instances.PUFFERFISH_VENGEANCE );
@@ -76,8 +79,11 @@ public class RegistryHandler {
 		ENCHANTMENTS.register( "hunter", ()->Instances.HUNTER );
 		ENCHANTMENTS.register( "elder_guardian_favor", ()->Instances.ELDER_GAURDIAN_FAVOR );
 		ENCHANTMENTS.register( "harvester", ()->Instances.HARVESTER );
+		addCurses();
+		ENCHANTMENTS.register( modEventBus );
 	}
 
+	/** Registering all curses. */
 	private static void addCurses() {
 		ENCHANTMENTS.register( "slowness_curse", ()->Instances.SLOWNESS );
 		ENCHANTMENTS.register( "fatigue_curse", ()->Instances.FATIGUE );
@@ -86,16 +92,12 @@ public class RegistryHandler {
 		ENCHANTMENTS.register( "corrosion_curse", ()->Instances.CORROSION );
 	}
 
-	private static void registerObjects( final IEventBus modEventBus ) {
-		ENCHANTMENTS.register( modEventBus );
-		PARTICLES.register( modEventBus );
-		ITEMS_TO_REPLACE.register( modEventBus );
-	}
-
+	/** Adds new enchantment types to item groups. (each new enchantment will be
+	 automatically added to this group)
+	 */
 	private static void addEnchantmentTypesToItemGroups() {
-		ItemHelper.addEnchantmentTypeToItemGroup( SHIELD, ItemGroup.COMBAT );
+		ItemHelper.addEnchantmentTypesToItemGroup( ItemGroup.COMBAT, SHIELD, BOW_AND_CROSSBOW );
 		ItemHelper.addEnchantmentTypeToItemGroup( HORSE_ARMOR, ItemGroup.MISC );
-		ItemHelper.addEnchantmentTypeToItemGroup( BOW_AND_CROSSBOW, ItemGroup.COMBAT );
 	}
 
 	private static void doClientSetup( final FMLClientSetupEvent event ) {
