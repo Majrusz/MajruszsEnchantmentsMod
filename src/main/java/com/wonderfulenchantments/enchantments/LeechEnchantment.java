@@ -2,10 +2,10 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
+import com.mlib.damage.DamageHelper;
 import com.mlib.effects.EffectHelper;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
-import com.wonderfulenchantments.WonderfulEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
@@ -49,7 +49,7 @@ public class LeechEnchantment extends WonderfulEnchantment {
 	/** Event that applies enchantment effect when attacker has an appropriate enchantment level and if 'leeching' succeeded. */
 	@SubscribeEvent
 	public static void onHit( LivingAttackEvent event ) {
-		if( !WonderfulEnchantmentHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
+		if( !DamageHelper.isDirectDamageFromLivingEntity( event.getSource() ) )
 			return;
 
 		LeechEnchantment enchantment = Instances.LEECH;
