@@ -85,8 +85,7 @@ public class DodgeEnchantment extends WonderfulEnchantment {
 		CompoundNBT data = entity.getPersistentData();
 		data.putInt( DODGE_TAG, Math.max( 0, duration ) );
 
-		ATTRIBUTE_HANDLER.setValue( data.getInt( DODGE_TAG ) > 0 ? 1.0 : 0.0 )
-			.apply( entity );
+		ATTRIBUTE_HANDLER.setValueAndApply( entity, data.getInt( DODGE_TAG ) > 0 ? 1.0 : 0.0 );
 	}
 
 	protected static void spawnParticlesAndPlaySounds( LivingEntity entity ) {
