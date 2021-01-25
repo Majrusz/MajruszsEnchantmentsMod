@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.curses;
 
 import com.mlib.EquipmentSlotTypes;
+import com.mlib.WorldHelper;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
@@ -51,7 +52,7 @@ public class CorrosionCurse extends WonderfulCurse {
 		CompoundNBT data = entity.getPersistentData();
 
 		int counter = data.getInt( CORROSION_TAG ) + 1;
-		boolean hasContactWithWater = isEntityOutsideWhenItRains( entity, world ) || entity.isInWater();
+		boolean hasContactWithWater = WorldHelper.isEntityOutsideWhenItIsRaining( entity ) || entity.isInWater();
 		if( enchantmentLevel > 0 && hasContactWithWater && counter > corrosionCurse.damageCooldown.getDuration() ) {
 			counter -= corrosionCurse.damageCooldown.getDuration();
 			if( corrosionCurse.damageAmount.get() > 0 )
