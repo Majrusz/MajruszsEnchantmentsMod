@@ -22,7 +22,7 @@ public class SlownessCurse extends WonderfulCurse {
 	protected final DoubleConfig slownessMultiplierConfig;
 
 	public SlownessCurse() {
-		super( Rarity.RARE, EnchantmentType.BREAKABLE, EquipmentSlotTypes.ARMOR_AND_HANDS, "Slowness" );
+		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Slowness" );
 		String comment = "Cumulative movement speed reduction with each item with this curse.";
 		this.slownessMultiplierConfig = new DoubleConfig( "multiplier", comment, false, 0.875, 0.1, 0.95 );
 		this.curseGroup.addConfig( this.slownessMultiplierConfig );
