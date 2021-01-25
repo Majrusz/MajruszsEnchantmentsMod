@@ -18,8 +18,6 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.isEntityOutsideWhenItRains;
-
 /** Damages entity when it is in water or outside while it is raining. */
 @Mod.EventBusSubscriber
 public class CorrosionCurse extends WonderfulCurse {

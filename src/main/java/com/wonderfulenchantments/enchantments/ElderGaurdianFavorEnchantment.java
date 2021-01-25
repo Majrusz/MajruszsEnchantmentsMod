@@ -22,8 +22,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.wonderfulenchantments.WonderfulEnchantmentHelper.isEntityOutsideWhenItRains;
-
 /** Enchantment which after successful hit attacks enemy with laser beam that cannot be dodged or blocked. */
 @Mod.EventBusSubscriber
 public class ElderGaurdianFavorEnchantment extends WonderfulEnchantment {
