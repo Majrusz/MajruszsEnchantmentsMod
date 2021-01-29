@@ -10,6 +10,8 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,13 +59,18 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 	/** Event that increases levels at the enchantment table with each enchantment level. (gives 0%-100% level bonus, capped at 30lvl) */
 	@SubscribeEvent
 	public static void onCalculatingEnchantmentLevels( EnchantmentLevelSetEvent event ) {
+		if( !( event.getWorld() instanceof ServerWorld ) )
+			return;
+
+		ServerWorld world = ( ServerWorld )event.getWorld();
 		EnlightenmentEnchantment enlightenment = Instances.ENLIGHTENMENT;
 		BlockPos position = event.getPos();
-		PlayerEntity player = event.getWorld()
-			.getClosestPlayer( EntityPredicate.DEFAULT, position.getX(), position.getY(), position.getZ() );
+		PlayerEntity player = world.getClosestPlayer( EntityPredicate.DEFAULT, position.getX(), position.getY(), position.getZ() );
+
+		if( player == null )
+			return;
 
 		int enlightenmentSum = EnchantmentHelperPlus.calculateEnchantmentSum( enlightenment, player, EquipmentSlotTypes.ARMOR );
-
 		if( enlightenmentSum > 0 ) {
 			int bonus = ( int )Math.max( 0, Math.min( event.getLevel() * enlightenmentSum * enlightenment.enchantmentLevelsMultiplier.get(),
 				enlightenment.levelCap.get() - event.getLevel()
