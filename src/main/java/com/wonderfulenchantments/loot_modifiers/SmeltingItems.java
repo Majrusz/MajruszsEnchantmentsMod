@@ -40,7 +40,11 @@ public class SmeltingItems extends LootModifier {
 
 		ArrayList< ItemStack > output = new ArrayList<>();
 		for( ItemStack itemStack : generatedLoot ) {
-			output.add( smelt( itemStack, context ) );
+			ItemStack smeltedItemStack = smelt( itemStack, context );
+			if( smeltedItemStack.getCount() != itemStack.getCount() )
+				smeltedItemStack.setCount( itemStack.getCount() );
+
+			output.add( smeltedItemStack );
 
 			Optional< FurnaceRecipe > recipe = world.getRecipeManager()
 				.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world );
