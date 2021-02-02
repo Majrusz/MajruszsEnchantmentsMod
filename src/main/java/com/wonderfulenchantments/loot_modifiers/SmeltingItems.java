@@ -1,9 +1,16 @@
 package com.wonderfulenchantments.loot_modifiers;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mlib.MajruszLibrary;
+import com.mlib.Random;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
@@ -11,12 +18,14 @@ import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -25,8 +34,12 @@ import java.util.Optional;
 
 /** Functionality of Smelter enchantment. */
 public class SmeltingItems extends LootModifier {
-	public SmeltingItems( ILootCondition[] conditionsIn ) {
+	private final List< String > extraItemsToWorkWithFortune;
+
+	public SmeltingItems( ILootCondition[] conditionsIn, List< String > extraItemsToWorkWithFortune ) {
 		super( conditionsIn );
+
+		this.extraItemsToWorkWithFortune = extraItemsToWorkWithFortune;
 	}
 
 	@Nonnull
@@ -37,13 +50,13 @@ public class SmeltingItems extends LootModifier {
 			return generatedLoot;
 
 		ServerWorld world = context.getWorld();
+		int fortuneLevel = EnchantmentHelper.getEnchantmentLevel( Enchantments.FORTUNE, tool );
 
 		ArrayList< ItemStack > output = new ArrayList<>();
 		for( ItemStack itemStack : generatedLoot ) {
-			ItemStack smeltedItemStack = smelt( itemStack, context );
-			if( smeltedItemStack.getCount() != itemStack.getCount() )
-				smeltedItemStack.setCount( itemStack.getCount() );
+			ItemStack smeltedItemStack = getSmeltedItemStack( itemStack, context );
 
+			affectByFortuneIfPossible( fortuneLevel, itemStack );
 			output.add( smeltedItemStack );
 
 			Optional< FurnaceRecipe > recipe = world.getRecipeManager()
@@ -67,6 +80,36 @@ public class SmeltingItems extends LootModifier {
 		return output;
 	}
 
+	protected ItemStack getSmeltedItemStack( ItemStack itemStackToSmelt, LootContext context ) {
+		ItemStack smeltedItemStack = smelt( itemStackToSmelt, context );
+		if( smeltedItemStack.getCount() != itemStackToSmelt.getCount() )
+			smeltedItemStack.setCount( itemStackToSmelt.getCount() );
+
+		return smeltedItemStack;
+	}
+
+	protected void affectByFortuneIfPossible( int fortuneLevel, ItemStack itemStack ) {
+		if( fortuneLevel <= 0 )
+			return;
+
+		int lootMultiplier = 1;
+		for( int i = 0; i < fortuneLevel; i++ )
+			lootMultiplier += Random.tryChance( 0.5 ) ? 1 : 0;
+
+		itemStack.setCount( itemStack.getCount() * lootMultiplier );
+	}
+
+	/** Checks whether item should be affected by Fortune enchantment. */
+	protected boolean isItemAffectedByFortune( Item item ) {
+		for( String registerName : this.extraItemsToWorkWithFortune ) {
+			ResourceLocation itemResourceLocation = item.getRegistryName();
+			MajruszLibrary.LOGGER.debug( registerName + " " + ( itemResourceLocation != null ? itemResourceLocation.toString() : "null" ) );
+			if( itemResourceLocation != null && itemResourceLocation.toString().equals( registerName.substring( 1, registerName.length()-1 ) ) )
+				return true;
+		}
+
+		return false;
+	}
 	protected static ItemStack smelt( ItemStack itemStack, LootContext lootContext ) {
 		return lootContext.getWorld()
 			.getRecipeManager()
@@ -80,7 +123,14 @@ public class SmeltingItems extends LootModifier {
 	public static class Serializer extends GlobalLootModifierSerializer< SmeltingItems > {
 		@Override
 		public SmeltingItems read( ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn ) {
-			return new SmeltingItems( conditionsIn );
+			List< String > extraItemsToWorkWithFortune = new ArrayList<>();
+			JsonArray jsonArray = JSONUtils.getJsonArray( object, "fortuneBonus" );
+			for( JsonElement element : jsonArray ) {
+				extraItemsToWorkWithFortune.add( element.toString() );
+				MajruszLibrary.LOGGER.debug( "WONDERFUL::: " + element.toString() );
+			}
+
+			return new SmeltingItems( conditionsIn, extraItemsToWorkWithFortune );
 		}
 
 		@Override
