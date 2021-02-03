@@ -80,6 +80,7 @@ public class SmeltingItems extends LootModifier {
 		return output;
 	}
 
+	/** Returns smelted item stack. */
 	protected ItemStack getSmeltedItemStack( ItemStack itemStackToSmelt, LootContext context ) {
 		ItemStack smeltedItemStack = smelt( itemStackToSmelt, context );
 		if( smeltedItemStack.getCount() != itemStackToSmelt.getCount() )
@@ -88,6 +89,7 @@ public class SmeltingItems extends LootModifier {
 		return smeltedItemStack;
 	}
 
+	/** Gives a chance to increase item stack count if fortune level is high. */
 	protected void affectByFortuneIfPossible( int fortuneLevel, ItemStack itemStack ) {
 		if( fortuneLevel <= 0 )
 			return;
