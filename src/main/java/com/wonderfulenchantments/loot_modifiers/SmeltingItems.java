@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mlib.MajruszLibrary;
+import com.mlib.Random;
 import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -62,9 +63,7 @@ public class SmeltingItems extends LootModifier {
 
 			if( recipe.isPresent() ) {
 				BlockPos position = new BlockPos( context.get( LootParameters.field_237457_g_ ) );
-				int experience = ( recipe.get()
-					.getExperience() > MajruszLibrary.RANDOM.nextFloat() ? 1 : 0
-				);
+				int experience = calculateRandomExperienceForRecipe( recipe.get(), itemStack.getCount() );
 
 				if( experience > 0 )
 					world.addEntity(
@@ -86,6 +85,21 @@ public class SmeltingItems extends LootModifier {
 			.filter( i->!i.isEmpty() )
 			.map( i->ItemHandlerHelper.copyStackWithSize( i, i.getCount() * i.getCount() ) )
 			.orElse( itemStack );
+	}
+
+	/**
+	 Calculates random experience for smelted items.
+	 For example if smelting recipe gives 0.4 XP and it has smelted 4 items.
+	 0.4 XP * 4 = 1.6 XP
+	 This will give player 1 XP point and has 60% (0.6) chance for another 1 XP point.
+	 */
+	protected int calculateRandomExperienceForRecipe( FurnaceRecipe recipe, int smeltedItems ) {
+		double recipeExperience = recipe.getExperience() * smeltedItems;
+		int experience = ( int )( recipeExperience );
+		if( Random.tryChance( recipeExperience - experience ) )
+			experience++;
+
+		return experience;
 	}
 
 	/** Returns smelted item stack. */
