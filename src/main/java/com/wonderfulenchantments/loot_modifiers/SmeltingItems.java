@@ -14,13 +14,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
@@ -48,47 +49,10 @@ public class SmeltingItems extends LootModifier {
 		if( tool == null )
 			return generatedLoot;
 
-		ServerWorld world = context.getWorld();
 		int fortuneLevel = EnchantmentHelper.getEnchantmentLevel( Enchantments.FORTUNE, tool );
-
-		ArrayList< ItemStack > output = new ArrayList<>();
-		for( ItemStack itemStack : generatedLoot ) {
-			ItemStack smeltedItemStack = getSmeltedItemStack( itemStack, world );
-			if( isItemAffectedByFortune( itemStack.getItem() ) )
-				affectByFortuneIfPossible( fortuneLevel, smeltedItemStack );
-			output.add( smeltedItemStack );
-
-			Optional< FurnaceRecipe > recipe = world.getRecipeManager()
-				.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world );
-
-			if( recipe.isPresent() ) {
-				BlockPos position = new BlockPos( context.get( LootParameters.field_237457_g_ ) );
-				int experience = calculateRandomExperienceForRecipe( recipe.get(), itemStack.getCount() );
-
-				if( experience > 0 )
-					world.addEntity(
-						new ExperienceOrbEntity( world, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D, experience ) );
-				world.spawnParticle( ParticleTypes.FLAME, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D,
-					2 + MajruszLibrary.RANDOM.nextInt( 4 ), 0.125D, 0.125D, 0.125D, 0.03125D
-				);
-			}
-		}
-
-		return output;
+		return getSmeltedLoot( generatedLoot, context.getWorld(), context.get( LootParameters.field_237457_g_ ), fortuneLevel );
 	}
 
-	/** Checks whether item should be affected by Fortune enchantment. */
-	protected boolean isItemAffectedByFortune( Item item ) {
-		for( String registerName : this.extraItemsToWorkWithFortune ) {
-			ResourceLocation itemResourceLocation = item.getRegistryName();
-			if( itemResourceLocation != null && itemResourceLocation.toString()
-				.equals( registerName.substring( 1, registerName.length() - 1 ) ) )
-				return true;
-		}
-
-		return false;
-	}
-	
 	/** Smelts given item stack if possible. */
 	protected static ItemStack smeltIfPossible( ItemStack itemStack, ServerWorld world ) {
 		return world.getRecipeManager()
@@ -124,11 +88,51 @@ public class SmeltingItems extends LootModifier {
 	}
 
 	/** Gives a chance to increase item stack count if fortune level is high. */
-	protected static void affectByFortuneIfPossible( int fortuneLevel, ItemStack itemStack ) {
-		if( fortuneLevel <= 0 || Instances.SMELTER.isExtraLootDisabled() )
-			return;
-
+	protected static void affectByFortune( int fortuneLevel, ItemStack itemStack ) {
 		itemStack.setCount( itemStack.getCount() * ( 1 + MajruszLibrary.RANDOM.nextInt( fortuneLevel + 1 ) ) );
+	}
+
+	protected List< ItemStack > getSmeltedLoot( List< ItemStack > generatedLoot, ServerWorld world, Vector3d position, int fortuneLevel ) {
+		RecipeManager recipeManager = world.getRecipeManager();
+		Vector3d blockCenter = position.add( 0.5, 0.5, 0.5 );
+
+		ArrayList< ItemStack > output = new ArrayList<>();
+		for( ItemStack itemStack : generatedLoot ) {
+			ItemStack smeltedItemStack = getSmeltedItemStack( itemStack, world );
+			if( isItemAffectedByFortune( itemStack.getItem() ) && fortuneLevel > 0 )
+				affectByFortune( fortuneLevel, smeltedItemStack );
+
+			output.add( smeltedItemStack );
+			Optional< FurnaceRecipe > recipe = recipeManager.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world );
+
+			if( !recipe.isPresent() )
+				continue;
+
+			int experience = calculateRandomExperienceForRecipe( recipe.get(), itemStack.getCount() );
+			if( experience > 0 )
+				world.addEntity( new ExperienceOrbEntity( world, blockCenter.getX(), blockCenter.getY(), blockCenter.getZ(), experience ) );
+
+			world.spawnParticle( ParticleTypes.FLAME, blockCenter.getX(), blockCenter.getY(), blockCenter.getZ(),
+				2 + MajruszLibrary.RANDOM.nextInt( 4 ), 0.125, 0.125, 0.125, 0.03125
+			);
+		}
+
+		return output;
+	}
+
+	/** Checks whether item should be affected by Fortune enchantment. */
+	protected boolean isItemAffectedByFortune( Item item ) {
+		if( Instances.SMELTER.isExtraLootDisabled() )
+			return false;
+
+		for( String registerName : this.extraItemsToWorkWithFortune ) {
+			ResourceLocation itemResourceLocation = item.getRegistryName();
+			if( itemResourceLocation != null && itemResourceLocation.toString()
+				.equals( registerName.substring( 1, registerName.length() - 1 ) ) )
+				return true;
+		}
+
+		return false;
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer< SmeltingItems > {
