@@ -53,7 +53,7 @@ public class SmeltingItems extends LootModifier {
 
 		ArrayList< ItemStack > output = new ArrayList<>();
 		for( ItemStack itemStack : generatedLoot ) {
-			ItemStack smeltedItemStack = getSmeltedItemStack( itemStack, context );
+			ItemStack smeltedItemStack = getSmeltedItemStack( itemStack, world );
 			if( isItemAffectedByFortune( itemStack.getItem() ) )
 				affectByFortuneIfPossible( fortuneLevel, smeltedItemStack );
 			output.add( smeltedItemStack );
@@ -77,48 +77,6 @@ public class SmeltingItems extends LootModifier {
 		return output;
 	}
 
-	protected static ItemStack smelt( ItemStack itemStack, LootContext lootContext ) {
-		return lootContext.getWorld()
-			.getRecipeManager()
-			.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), lootContext.getWorld() )
-			.map( FurnaceRecipe::getRecipeOutput )
-			.filter( i->!i.isEmpty() )
-			.map( i->ItemHandlerHelper.copyStackWithSize( i, i.getCount() * i.getCount() ) )
-			.orElse( itemStack );
-	}
-
-	/**
-	 Calculates random experience for smelted items.
-	 For example if smelting recipe gives 0.4 XP and it has smelted 4 items.
-	 0.4 XP * 4 = 1.6 XP
-	 This will give player 1 XP point and has 60% (0.6) chance for another 1 XP point.
-	 */
-	protected int calculateRandomExperienceForRecipe( FurnaceRecipe recipe, int smeltedItems ) {
-		double recipeExperience = recipe.getExperience() * smeltedItems;
-		int experience = ( int )( recipeExperience );
-		if( Random.tryChance( recipeExperience - experience ) )
-			experience++;
-
-		return experience;
-	}
-
-	/** Returns smelted item stack. */
-	protected ItemStack getSmeltedItemStack( ItemStack itemStackToSmelt, LootContext context ) {
-		ItemStack smeltedItemStack = smelt( itemStackToSmelt, context );
-		if( smeltedItemStack.getCount() != itemStackToSmelt.getCount() )
-			smeltedItemStack.setCount( itemStackToSmelt.getCount() );
-
-		return smeltedItemStack;
-	}
-
-	/** Gives a chance to increase item stack count if fortune level is high. */
-	protected void affectByFortuneIfPossible( int fortuneLevel, ItemStack itemStack ) {
-		if( fortuneLevel <= 0 || Instances.SMELTER.isExtraLootDisabled() )
-			return;
-
-		itemStack.setCount( itemStack.getCount() * ( 1 + MajruszLibrary.RANDOM.nextInt( fortuneLevel + 1 ) ) );
-	}
-
 	/** Checks whether item should be affected by Fortune enchantment. */
 	protected boolean isItemAffectedByFortune( Item item ) {
 		for( String registerName : this.extraItemsToWorkWithFortune ) {
@@ -129,6 +87,48 @@ public class SmeltingItems extends LootModifier {
 		}
 
 		return false;
+	}
+	
+	/** Smelts given item stack if possible. */
+	protected static ItemStack smeltIfPossible( ItemStack itemStack, ServerWorld world ) {
+		return world.getRecipeManager()
+			.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world )
+			.map( FurnaceRecipe::getRecipeOutput )
+			.filter( i->!i.isEmpty() )
+			.map( i->ItemHandlerHelper.copyStackWithSize( i, i.getCount() * i.getCount() ) )
+			.orElse( itemStack );
+	}
+
+	/**
+	 Calculates random experience for smelted items.
+	 For example if smelting recipe gives 0.4 XP and it has smelted 6 items.
+	 0.4 XP * 6 = 2.4 XP
+	 This will give player 2 XP point and has 40% (0.4) chance for another 1 XP point.
+	 */
+	protected static int calculateRandomExperienceForRecipe( FurnaceRecipe recipe, int smeltedItems ) {
+		double recipeExperience = recipe.getExperience() * smeltedItems;
+		int experience = ( int )( recipeExperience );
+		if( Random.tryChance( recipeExperience - experience ) )
+			experience++;
+
+		return experience;
+	}
+
+	/** Returns smelted item stack. */
+	protected static ItemStack getSmeltedItemStack( ItemStack itemStackToSmelt, ServerWorld world ) {
+		ItemStack smeltedItemStack = smeltIfPossible( itemStackToSmelt, world );
+		if( smeltedItemStack.getCount() != itemStackToSmelt.getCount() )
+			smeltedItemStack.setCount( itemStackToSmelt.getCount() );
+
+		return smeltedItemStack;
+	}
+
+	/** Gives a chance to increase item stack count if fortune level is high. */
+	protected static void affectByFortuneIfPossible( int fortuneLevel, ItemStack itemStack ) {
+		if( fortuneLevel <= 0 || Instances.SMELTER.isExtraLootDisabled() )
+			return;
+
+		itemStack.setCount( itemStack.getCount() * ( 1 + MajruszLibrary.RANDOM.nextInt( fortuneLevel + 1 ) ) );
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer< SmeltingItems > {
