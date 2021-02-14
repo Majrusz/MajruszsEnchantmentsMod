@@ -101,6 +101,6 @@ public class RegistryHandler {
 	}
 
 	private static void doClientSetup( final FMLClientSetupEvent event ) {
-		RegistryHandlerClient.replaceStandardMinecraftHorseArmorLayer();
+		RegistryHandlerClient.setup();
 	}
 }
