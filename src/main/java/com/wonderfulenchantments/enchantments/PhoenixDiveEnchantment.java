@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.config.DoubleConfig;
+import com.mlib.config.IntegerConfig;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.Enchantment;
@@ -31,13 +32,18 @@ import java.util.List;
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 	private static final String FOOT_PARTICLE_TAG = "PhoenixDiveFootParticleTick";
-	protected final DoubleConfig jumpMultiplier;
+	protected final DoubleConfig jumpMultiplier, damageDistance;
+	protected final IntegerConfig jumpPenalty;
 
 	public PhoenixDiveEnchantment() {
 		super( Rarity.RARE, EnchantmentType.ARMOR_FEET, EquipmentSlotType.FEET, "PheonixDive" );
-		String comment = "Jumping power multiplier per enchantment level.";
-		this.jumpMultiplier = new DoubleConfig( "jump_multiplier", comment, false, 0.25, 0.01, 1.0 );
-		this.enchantmentGroup.addConfig( this.jumpMultiplier );
+		String jumpComment = "Jumping power multiplier per enchantment level.";
+		String distanceComment = "Area of entities that will take damage. (area of square where A = (x - value, z - value) and B = (x + value, z + value))";
+		String penaltyComment = "Penalty for using special jump. (damage to durability)";
+		this.jumpMultiplier = new DoubleConfig( "jump_multiplier", jumpComment, false, 0.25, 0.01, 1.0 );
+		this.damageDistance = new DoubleConfig( "damage_range", distanceComment, false, 5.0, 1.0, 100.0 );
+		this.jumpPenalty = new IntegerConfig( "jump_penalty", penaltyComment, false, 3, 0, 100 );
+		this.enchantmentGroup.addConfigs( this.jumpMultiplier, this.jumpPenalty, this.damageDistance );
 
 		setMaximumEnchantmentLevel( 3 );
 		setDifferenceBetweenMinimumAndMaximum( 30 );
@@ -113,7 +119,9 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 			.mul( new Vector3d( 0.0, 1.0 + factor, 0.0 ) )
 			.add( factor * Math.cos( angleInRadians ), 0.0, factor * Math.sin( angleInRadians ) ) );
 
-		boots.damageItem( 3, player, entity->entity.sendBreakAnimation( EquipmentSlotType.FEET ) );
+		int damagePenalty = Instances.PHOENIX_DIVE.jumpPenalty.get();
+		if( damagePenalty > 0 )
+			boots.damageItem( damagePenalty, player, entity->entity.sendBreakAnimation( EquipmentSlotType.FEET ) );
 
 		if( !( player.world instanceof ServerWorld ) )
 			return;
@@ -142,7 +150,7 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 	 @return Returns list with entities that were in range.
 	 */
 	protected static List< Entity > getEntitiesInRange( LivingEntity entity, ServerWorld world ) {
-		double range = 5.0D;
+		double range = Instances.PHOENIX_DIVE.damageDistance.get();
 		return world.getEntitiesWithinAABBExcludingEntity( entity.getEntity(), entity.getBoundingBox()
 			.offset( -range, -entity.getHeight() * 0.5D, -range )
 			.expand( range * 2.0D, 0, range * 2.0D ) );
