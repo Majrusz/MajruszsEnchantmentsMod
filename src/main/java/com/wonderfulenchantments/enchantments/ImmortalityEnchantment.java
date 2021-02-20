@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 /** Enchantment that causes shield to work like Totem of Undying. */
 @Mod.EventBusSubscriber
 public class ImmortalityEnchantment extends WonderfulEnchantment {
-	protected static final int damageOnUse = 9001;
+	protected static final int DAMAGE_ON_USE = 9001;
 
 	public ImmortalityEnchantment() {
 		super( Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Immortality" );
@@ -55,7 +55,7 @@ public class ImmortalityEnchantment extends WonderfulEnchantment {
 			target.setHealth( target.getMaxHealth() );
 
 			spawnParticlesAndPlaySounds( target );
-			itemStack.damageItem( damageOnUse, target, ( entity )->entity.sendBreakAnimation( EquipmentSlotType.OFFHAND ) );
+			itemStack.damageItem( DAMAGE_ON_USE, target, ( entity )->entity.sendBreakAnimation( EquipmentSlotType.OFFHAND ) );
 
 			return true;
 		}
