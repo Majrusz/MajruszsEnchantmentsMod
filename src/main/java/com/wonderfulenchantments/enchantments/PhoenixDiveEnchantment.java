@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-/** Enchantment that releases fire wave when entity falls. */
+/** Enchantment that releases fire wave when entity falls. (inspired by Divinity: Original Sin 2) */
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 	private static final String FOOT_PARTICLE_TAG = "PhoenixDiveFootParticleTick";
