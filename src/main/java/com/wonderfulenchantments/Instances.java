@@ -18,6 +18,7 @@ public class Instances {
 	public static final EnlightenmentEnchantment ENLIGHTENMENT;
 	public static final PhoenixDiveEnchantment PHOENIX_DIVE;
 	public static final MagicProtectionEnchantment MAGIC_PROTECTION;
+	public static final SixthSenseEnchantment SIXTH_SENSE;
 
 	// Shield Enchantments
 	public static final VitalityEnchantment VITALITY;
@@ -59,6 +60,7 @@ public class Instances {
 		ENLIGHTENMENT = new EnlightenmentEnchantment();
 		PHOENIX_DIVE = new PhoenixDiveEnchantment();
 		MAGIC_PROTECTION = new MagicProtectionEnchantment();
+		SIXTH_SENSE = new SixthSenseEnchantment();
 
 		VITALITY = new VitalityEnchantment();
 		IMMORTALITY = new ImmortalityEnchantment();
