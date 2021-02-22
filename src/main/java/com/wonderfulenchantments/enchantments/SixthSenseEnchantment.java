@@ -1,12 +1,12 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.MajruszLibrary;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.mlib.effects.EffectHelper;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.PacketHandler;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -67,19 +67,17 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 			resetCounter( player );
 		}
 
-		if( shouldHighlightEntities( player ) )
+		if( hasEnchantment( player ) && shouldHighlightEntities( player ) )
 			PacketHandler.CHANNEL.sendToServer( new SixthSensePacket() );
 	}
 
 	/** Highlights nearby entities in certain range. */
 	private void highlightNearbyEntities( PlayerEntity player ) {
-		MajruszLibrary.LOGGER.debug( "SCAN!" );
-
 		double x = player.getPosX(), y = player.getPosY(), z = player.getPosZ(), offset = this.offsetConfig.get();
 		AxisAlignedBB axisAligned = new AxisAlignedBB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
-		for( MonsterEntity monster : player.world.getEntitiesWithinAABB( MonsterEntity.class, axisAligned ) ) {
+
+		for( MonsterEntity monster : player.world.getEntitiesWithinAABB( MonsterEntity.class, axisAligned ) )
 			EffectHelper.applyEffectIfPossible( monster, Effects.GLOWING, this.highlightDurationConfig.getDuration(), 0 );
-		}
 	}
 
 	/** Resets player's sixth sense tick counter. */
@@ -112,6 +110,11 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	/** Checks whether player moved since last tick. */
 	private boolean isPlayerMoving( PlayerEntity player ) {
 		return player.lastTickPosX != player.getPosX() || player.lastTickPosY != player.getPosY() || player.lastTickPosZ != player.getPosZ();
+	}
+
+	/** Checks whether player has Sixth Sense enchantment on its helmet. */
+	private boolean hasEnchantment( PlayerEntity player ) {
+		return EnchantmentHelper.getEnchantmentLevel( this, player.getItemStackFromSlot( EquipmentSlotType.HEAD ) ) > 0;
 	}
 
 	/** Packet required to send information from client to server to highlight nearby entities. */
