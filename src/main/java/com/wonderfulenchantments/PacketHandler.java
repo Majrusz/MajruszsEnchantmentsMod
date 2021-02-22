@@ -1,6 +1,7 @@
 package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.enchantments.GottaMineFastEnchantment.GottaMineFastMultiplier;
+import com.wonderfulenchantments.enchantments.SixthSenseEnchantment.SixthSensePacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -17,5 +18,6 @@ public class PacketHandler {
 		CHANNEL.registerMessage( 0, GottaMineFastMultiplier.class, GottaMineFastMultiplier::encode, GottaMineFastMultiplier::new,
 			GottaMineFastMultiplier::handle
 		);
+		CHANNEL.registerMessage( 1, SixthSensePacket.class, SixthSensePacket::encode, SixthSensePacket::new, SixthSensePacket::handle );
 	}
 }
