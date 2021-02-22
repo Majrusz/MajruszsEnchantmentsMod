@@ -79,6 +79,7 @@ public class RegistryHandler {
 		ENCHANTMENTS.register( "hunter", ()->Instances.HUNTER );
 		ENCHANTMENTS.register( "elder_guardian_favor", ()->Instances.ELDER_GAURDIAN_FAVOR );
 		ENCHANTMENTS.register( "harvester", ()->Instances.HARVESTER );
+		ENCHANTMENTS.register( "sixth_sense", ()->Instances.SIXTH_SENSE );
 		addCurses();
 		ENCHANTMENTS.register( modEventBus );
 	}
