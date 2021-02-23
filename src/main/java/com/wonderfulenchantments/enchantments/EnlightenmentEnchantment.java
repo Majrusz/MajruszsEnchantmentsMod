@@ -2,6 +2,7 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlotTypes;
 import com.mlib.MajruszLibrary;
+import com.mlib.config.AvailabilityConfig;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.IntegerConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
@@ -10,7 +11,6 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
@@ -21,17 +21,20 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class EnlightenmentEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig experienceMultiplier;
+	protected final AvailabilityConfig extraLevels;
 	protected final DoubleConfig enchantmentLevelsMultiplier;
 	protected final IntegerConfig levelCap;
 
 	public EnlightenmentEnchantment() {
 		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Enlightenment" );
-		String experience_comment = "Increases experience from all sources by that multiplier per enchantment level.";
-		String enchantment_comment = "Enchantment levels increase by that multiplier per enchantment level.";
-		String cap_comment = "Enchantment levels limit at enchanting table.";
-		this.experienceMultiplier = new DoubleConfig( "experience_multiplier", experience_comment, false, 0.25, 0.01, 10.0 );
-		this.enchantmentLevelsMultiplier = new DoubleConfig( "enchantment_levels_multiplier", enchantment_comment, false, 0.125, 0.01, 0.5 );
-		this.levelCap = new IntegerConfig( "level_cap", cap_comment, false, 30, 30, 60 );
+		String experienceComment = "Increases experience from all sources by that multiplier per enchantment level.";
+		String levelsComment = "Increases experience from all sources by that multiplier per enchantment level.";
+		String enchantmentComment = "Enchantment levels increase by that multiplier per enchantment level.";
+		String capComment = "Enchantment levels limit at enchanting table.";
+		this.experienceMultiplier = new DoubleConfig( "experience_multiplier", experienceComment, false, 0.25, 0.01, 10.0 );
+		this.extraLevels = new AvailabilityConfig( "extra_levels", levelsComment, false, true );
+		this.enchantmentLevelsMultiplier = new DoubleConfig( "enchantment_levels_multiplier", enchantmentComment, false, 0.125, 0.01, 0.5 );
+		this.levelCap = new IntegerConfig( "level_cap", capComment, false, 30, 30, 60 );
 		this.enchantmentGroup.addConfigs( this.experienceMultiplier, this.enchantmentLevelsMultiplier, this.levelCap );
 
 		setMaximumEnchantmentLevel( 2 );
@@ -59,11 +62,11 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 	/** Event that increases levels at the enchantment table with each enchantment level. (gives 0%-100% level bonus, capped at 30lvl) */
 	@SubscribeEvent
 	public static void onCalculatingEnchantmentLevels( EnchantmentLevelSetEvent event ) {
-		if( !( event.getWorld() instanceof ServerWorld ) )
+		EnlightenmentEnchantment enlightenment = Instances.ENLIGHTENMENT;
+		if( !( event.getWorld() instanceof ServerWorld ) || enlightenment.areExtraLevelsDisabled() )
 			return;
 
 		ServerWorld world = ( ServerWorld )event.getWorld();
-		EnlightenmentEnchantment enlightenment = Instances.ENLIGHTENMENT;
 		BlockPos position = event.getPos();
 		PlayerEntity player = world.getClosestPlayer( EntityPredicate.DEFAULT, position.getX(), position.getY(), position.getZ() );
 
@@ -78,5 +81,10 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 
 			event.setLevel( event.getLevel() + bonus );
 		}
+	}
+
+	/** Returns whether calculating extra levels on enchanting table should work. */
+	private boolean areExtraLevelsDisabled() {
+		return this.extraLevels.isDisabled();
 	}
 }
