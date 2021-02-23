@@ -43,7 +43,7 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 		EffectInstance effectInstance = event.getPotionEffect();
 		Effect effect = effectInstance.getPotion();
 
-		if( effect.isBeneficial() || effectInstance.getDuration() < Instances.ABSORBER.minimumEffectDuration.getDuration() )
+		if( isForbidden( effect ) || effect.isBeneficial() || effectInstance.getDuration() < Instances.ABSORBER.minimumEffectDuration.getDuration() )
 			return;
 
 		for( EquipmentSlotType equipmentSlotType : EquipmentSlotTypes.BOTH_HANDS ) {
@@ -84,5 +84,12 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 
 		EquipmentSlotType slotType = entity.getHeldItemMainhand() == shield ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
 		shield.damageItem( ( int )( amplifierDamage + durationDamage + 1.0 ), entity, e->e.sendBreakAnimation( slotType ) );
+	}
+
+	/** Checks whether given effect is not forbidden. (is not disabled by player) */
+	protected static boolean isForbidden( Effect effect ) {
+		String effectName = effect.getName();
+
+		return effectName.contains( "bleeding" ); // TODO: list of forbidden effects
 	}
 }
