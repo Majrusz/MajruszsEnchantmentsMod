@@ -2,9 +2,7 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
-import com.mlib.effects.EffectHelper;
 import com.wonderfulenchantments.Instances;
-import com.wonderfulenchantments.PacketHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -14,7 +12,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,6 +24,8 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber
 public class SixthSenseEnchantment extends WonderfulEnchantment {
 	private static final String SENSE_TAG = "SixthSenseCounter";
+	private static final String TICK_TAG = "SixthSenseTickCounter";
+	private static final String MONSTER_TAG = "SixthSenseHighlightTicksLeft";
 	protected final DoubleConfig offsetConfig;
 	protected final DurationConfig preparingTimeConfig;
 	protected final DurationConfig cooldownConfig;
@@ -39,7 +38,7 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 		String preparingComment = "Duration of standing still before the entities will be highlighted.";
 		String cooldownComment = "Duration of standing still before the entities will be highlighted.";
 		String highlightComment = "Duration of entities being highlighted.";
-		this.offsetConfig = new DoubleConfig( "offset", offsetComment, false, 5.0, 1.0, 100.0 );
+		this.offsetConfig = new DoubleConfig( "offset", offsetComment, false, 10.0, 1.0, 100.0 );
 		this.preparingTimeConfig = new DurationConfig( "preparing_time", preparingComment, false, 3.5, 1.0, 60.0 );
 		this.cooldownConfig = new DurationConfig( "cooldown", cooldownComment, false, 1.0, 0.1, 10.0 );
 		this.highlightDurationConfig = new DurationConfig( "highlight_duration", highlightComment, false, 5.0, 0.5, 60.0 );
@@ -61,14 +60,33 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 		if( !( player.world instanceof ClientWorld ) )
 			return;
 
-		if( !isPlayerMoving( player ) ) {
-			increaseCounter( player );
-		} else {
-			resetCounter( player );
-		}
+		increaseTickCounter( player );
+		if( !isPlayerMoving( player ) )
+			increaseStandingStillCounter( player );
+		else
+			resetStandingStillCounter( player );
+
+		if( shouldRemoveHighlightsFromEntities( player ) )
+			removeHighlightFromEntities( player );
 
 		if( hasEnchantment( player ) && shouldHighlightEntities( player ) )
-			PacketHandler.CHANNEL.sendToServer( new SixthSensePacket() );
+			highlightNearbyEntities( player );
+	}
+
+	/** Removes old highlights from entities in certain range. */
+	private void removeHighlightFromEntities( PlayerEntity player ) {
+		double x = player.getPosX(), y = player.getPosY(), z = player.getPosZ(), offset = this.offsetConfig.get();
+		AxisAlignedBB axisAligned = new AxisAlignedBB( x - 2 * offset, y - 2 * offset, z - 2 * offset, x + 2 * offset, y + 2 * offset,
+			z + 2 * offset
+		);
+
+		for( MonsterEntity monster : player.world.getEntitiesWithinAABB( MonsterEntity.class, axisAligned ) ) {
+			CompoundNBT data = monster.getPersistentData();
+			data.putInt( MONSTER_TAG, data.getInt( MONSTER_TAG ) - this.cooldownConfig.getDuration() );
+
+			if( data.getInt( MONSTER_TAG ) <= 0 )
+				monster.setGlowing( false );
+		}
 	}
 
 	/** Highlights nearby entities in certain range. */
@@ -76,35 +94,61 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 		double x = player.getPosX(), y = player.getPosY(), z = player.getPosZ(), offset = this.offsetConfig.get();
 		AxisAlignedBB axisAligned = new AxisAlignedBB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
 
-		for( MonsterEntity monster : player.world.getEntitiesWithinAABB( MonsterEntity.class, axisAligned ) )
-			EffectHelper.applyEffectIfPossible( monster, Effects.GLOWING, this.highlightDurationConfig.getDuration(), 0 );
+		for( MonsterEntity monster : player.world.getEntitiesWithinAABB( MonsterEntity.class, axisAligned ) ) {
+			CompoundNBT data = monster.getPersistentData();
+			data.putInt( MONSTER_TAG, this.highlightDurationConfig.getDuration() );
+
+			monster.setGlowing( true );
+		}
 	}
 
-	/** Resets player's sixth sense tick counter. */
-	private void resetCounter( PlayerEntity player ) {
+	/** Resets player's sixth sense standing still tick counter. */
+	private void resetStandingStillCounter( PlayerEntity player ) {
 		CompoundNBT data = player.getPersistentData();
 		data.putInt( SENSE_TAG, 0 );
 	}
 
-	/** Increases by 1 player's sixth sense tick counter. */
-	private void increaseCounter( PlayerEntity player ) {
+	/** Increases by 1 player's sixth sense standing still tick counter. */
+	private void increaseStandingStillCounter( PlayerEntity player ) {
 		CompoundNBT data = player.getPersistentData();
 		data.putInt( SENSE_TAG, data.getInt( SENSE_TAG ) + 1 );
+		data.putInt( TICK_TAG, data.getInt( TICK_TAG ) + 1 );
 	}
 
-	/** Returns current player's sixth sense tick counter. */
-	private int getCounter( PlayerEntity player ) {
+	/** Increases by 1 player's sixth sense tick counter. */
+	private void increaseTickCounter( PlayerEntity player ) {
+		CompoundNBT data = player.getPersistentData();
+		data.putInt( TICK_TAG, data.getInt( TICK_TAG ) + 1 );
+	}
+
+	/** Returns current player's sixth sense standing still tick counter. */
+	private int getStandingStillCounter( PlayerEntity player ) {
 		CompoundNBT data = player.getPersistentData();
 		return data.getInt( SENSE_TAG );
 	}
 
+	/** Returns current player's sixth sense tick counter. */
+	private int getTickCounter( PlayerEntity player ) {
+		CompoundNBT data = player.getPersistentData();
+		return data.getInt( TICK_TAG );
+	}
+
+	/** Checks whether entities should be highlighted. */
+	private boolean shouldRemoveHighlightsFromEntities( PlayerEntity player ) {
+		int currentTicks = getTickCounter( player );
+		int cooldownTicks = this.cooldownConfig.getDuration();
+
+		return currentTicks % cooldownTicks == 0;
+	}
+
 	/** Checks whether entities should be highlighted. */
 	private boolean shouldHighlightEntities( PlayerEntity player ) {
-		int currentTicks = getCounter( player );
+		int currentStandingStillTicks = getStandingStillCounter( player );
+		int currentTicks = getTickCounter( player );
 		int preparingTimeInTicks = this.preparingTimeConfig.getDuration();
 		int cooldownTicks = this.cooldownConfig.getDuration();
 
-		return currentTicks == preparingTimeInTicks || ( currentTicks > preparingTimeInTicks && currentTicks % cooldownTicks == 0 );
+		return currentStandingStillTicks == preparingTimeInTicks || ( currentStandingStillTicks > preparingTimeInTicks && currentTicks % cooldownTicks == 0 );
 	}
 
 	/** Checks whether player moved since last tick. */
