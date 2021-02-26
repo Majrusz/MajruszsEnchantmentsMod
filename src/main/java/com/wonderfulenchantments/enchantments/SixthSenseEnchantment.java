@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -55,7 +56,7 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void onMonsterTick( LivingEvent.LivingUpdateEvent event ) {
 		LivingEntity monster = event.getEntityLiving();
-		if( !( event.getEntityLiving() instanceof MonsterEntity ) || !( event.getEntityLiving().world instanceof ClientWorld ) )
+		if( !( event.getEntityLiving() instanceof MonsterEntity ) || event.getEntityLiving().world instanceof ServerWorld )
 			return;
 
 		CompoundNBT data = monster.getPersistentData();
@@ -67,7 +68,7 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 
 	/** Updates sixth sense logic for given player. */
 	private void update( PlayerEntity player ) {
-		if( !( player.world instanceof ClientWorld ) )
+		if( player.world instanceof ServerWorld )
 			return;
 
 		increaseTickCounter( player );
