@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlotTypes;
+import com.mlib.MajruszLibrary;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
@@ -11,11 +12,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -91,6 +95,18 @@ public class HorseFrostWalkerEnchantment extends WonderfulEnchantment {
 			world.getPendingBlockTicks()
 				.scheduleTick( blockPosition, Blocks.FROSTED_ICE, MathHelper.nextInt( animal.getRNG(), 60, 120 ) );
 		}
+	}
+
+	/** Disabling taking damage when horse is standing on Magma Block. */
+	@SubscribeEvent
+	public static void onTakingDamage( LivingDamageEvent event ) {
+		if( !( event.getEntityLiving() instanceof AnimalEntity ) || !( event.getSource() == DamageSource.HOT_FLOOR ) )
+			return;
+
+		AnimalEntity animal = ( AnimalEntity )event.getEntityLiving();
+		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( Instances.HORSE_FROST_WALKER, animal.getArmorInventoryList() );
+		if( enchantmentLevel > 0 )
+			event.setCanceled( true );
 	}
 
 	/**
