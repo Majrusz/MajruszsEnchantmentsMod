@@ -24,7 +24,7 @@ public class SwiftnessEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig movementMultiplier;
 
 	public SwiftnessEnchantment() {
-		super( Rarity.RARE, RegistryHandler.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "Swiftness" );
+		super( "swiftness", Rarity.RARE, RegistryHandler.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "Swiftness" );
 		String comment = "Horse movement speed multiplier per enchantment level.";
 		this.movementMultiplier = new DoubleConfig( "movement_multiplier", comment, false, 0.125, 0.01, 0.5 );
 		this.enchantmentGroup.addConfig( this.movementMultiplier );

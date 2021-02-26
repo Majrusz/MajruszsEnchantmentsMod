@@ -27,7 +27,7 @@ public class VampirismCurse extends WonderfulCurse {
 	protected final DurationConfig effectCooldown;
 
 	public VampirismCurse() {
-		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Vampirism" );
+		super( "vampirism_curse", Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Vampirism" );
 		String durationComment = "Duration of negative effects. (in seconds)";
 		String cooldownComment = "Cooldown between applying negative effects. (in seconds)";
 		this.effectDuration = new DurationConfig( "effect_duration", durationComment, false, 30.0, 10.0, 300.0 );

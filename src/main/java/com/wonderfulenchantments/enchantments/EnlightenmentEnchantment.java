@@ -26,7 +26,7 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 	protected final IntegerConfig levelCap;
 
 	public EnlightenmentEnchantment() {
-		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Enlightenment" );
+		super( "enlightenment", Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Enlightenment" );
 		String experienceComment = "Increases experience from all sources by that multiplier per enchantment level.";
 		String levelsComment = "Increases experience from all sources by that multiplier per enchantment level.";
 		String enchantmentComment = "Enchantment levels increase by that multiplier per enchantment level.";

@@ -31,7 +31,7 @@ public class LeechEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig leechChance;
 
 	public LeechEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "Leech" );
+		super( "leech", Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "Leech" );
 		String comment = "Chance for stealing positive effect/health from enemy.";
 		this.leechChance = new DoubleConfig( "leech_chance", comment, false, 0.25, 0.0, 1.0 );
 		this.enchantmentGroup.addConfig( this.leechChance );

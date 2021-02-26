@@ -27,7 +27,7 @@ public class HumanSlayerEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig damageBonus;
 
 	public HumanSlayerEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "AgainstHumanity" );
+		super( "human_slayer", Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "AgainstHumanity" );
 		String comment = "Damage bonus per enchantment level.";
 		this.damageBonus = new DoubleConfig( "damage_bonus", comment, false, 2.5, 1.0, 10.0 );
 		this.enchantmentGroup.addConfig( this.damageBonus );

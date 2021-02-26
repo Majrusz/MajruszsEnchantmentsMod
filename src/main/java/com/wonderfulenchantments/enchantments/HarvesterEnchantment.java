@@ -26,7 +26,7 @@ public class HarvesterEnchantment extends WonderfulEnchantment {
 	public final DoubleConfig growChance;
 
 	public HarvesterEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "Harvester" );
+		super( "harvester", Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "Harvester" );
 		String range_comment = "Range increase per enchantment level. (per block in x-axis and z-axis)";
 		String durability_comment = "Penalty for increasing age of nearby crops. (per successful increase)";
 		String grow_comment = "Chance for increasing age of nearby crops. (calculated for each crop separately)";

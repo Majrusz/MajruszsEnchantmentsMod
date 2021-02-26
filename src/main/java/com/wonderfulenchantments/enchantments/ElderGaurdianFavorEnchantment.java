@@ -32,7 +32,7 @@ public class ElderGaurdianFavorEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig waterMultiplier;
 
 	public ElderGaurdianFavorEnchantment() {
-		super( Rarity.RARE, EnchantmentType.TRIDENT, EquipmentSlotType.MAINHAND, "ElderGuardianFavor" );
+		super( "elder_guardian_favor", Rarity.RARE, EnchantmentType.TRIDENT, EquipmentSlotType.MAINHAND, "ElderGuardianFavor" );
 		String cooldown_comment = "Duration how long entities are linked before dealing damage.";
 		String damage_comment = "Damage dealt by this enchantment.";
 		String water_comment = "Damage multiplier when both entities are in water.";

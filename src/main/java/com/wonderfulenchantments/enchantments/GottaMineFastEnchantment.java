@@ -33,7 +33,7 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	protected boolean isMining = false;
 
 	public GottaMineFastEnchantment() {
-		super( Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "GottaMineFast" );
+		super( "gotta_mine_fast", Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "GottaMineFast" );
 		String exponent_comment = "Duration is raised to this exponent. (for example exponent = 1.5 and after two seconds bonus is equal 2.0 ^ 1.5 = 2.82 (total 3.82))";
 		String duration_comment = "Maximum duration increasing mining speed. (in seconds)";
 		this.exponent = new DoubleConfig( "exponent", exponent_comment, false, 1.5849625007, 1.01, 5.0 );

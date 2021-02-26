@@ -23,7 +23,7 @@ public class VitalityEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig healthBonus;
 
 	public VitalityEnchantment() {
-		super( Rarity.UNCOMMON, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Vitality" );
+		super( "vitality", Rarity.UNCOMMON, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Vitality" );
 		String comment = "Health bonus per enchantment level.";
 		this.healthBonus = new DoubleConfig( "health_bonus", comment, false, 2.0, 1.0, 20.0 );
 		this.enchantmentGroup.addConfig( this.healthBonus );

@@ -36,7 +36,7 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 	protected final IntegerConfig jumpPenalty;
 
 	public PhoenixDiveEnchantment() {
-		super( Rarity.RARE, EnchantmentType.ARMOR_FEET, EquipmentSlotType.FEET, "PheonixDive" );
+		super( "phoenix_dive", Rarity.RARE, EnchantmentType.ARMOR_FEET, EquipmentSlotType.FEET, "PheonixDive" );
 		String jumpComment = "Jumping power multiplier per enchantment level.";
 		String distanceComment = "Area of entities that will take damage. (area of square where A = (x - value, z - value) and B = (x + value, z + value))";
 		String penaltyComment = "Penalty for using special jump. (damage to durability)";

@@ -27,7 +27,7 @@ public class PufferfishVengeanceEnchantment extends WonderfulEnchantment {
 	protected final IntegerConfig hungerAmplifier, poisonAmplifier, nauseaAmplifier;
 
 	public PufferfishVengeanceEnchantment() {
-		super( Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "PufferfishVengeance" );
+		super( "pufferfish_vengeance", Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "PufferfishVengeance" );
 		String durationComment = "Pufferfish negative effects duration per enchantment level. (in seconds)";
 		String hungerComment = "Amplifier level of Hunger effect.";
 		String poisonComment = "Amplifier level of Poison effect.";

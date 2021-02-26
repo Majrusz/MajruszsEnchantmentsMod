@@ -35,7 +35,7 @@ public class DodgeEnchantment extends WonderfulEnchantment {
 	protected final DurationConfig immunityTime;
 
 	public DodgeEnchantment() {
-		super( Rarity.RARE, EnchantmentType.ARMOR_LEGS, EquipmentSlotType.LEGS, "Dodge" );
+		super( "dodge", Rarity.RARE, EnchantmentType.ARMOR_LEGS, EquipmentSlotType.LEGS, "Dodge" );
 		String chanceComment = "Chance to completely ignore any damage source per enchantment level.";
 		String damageComment = "Amount of damage converted to pants damage. (for example if this factor is equal 0.5 and player took 10 damage so its pants takes 5 damage)";
 		String immunityComment = "Duration of knockback immunity after successful dodge. (in seconds)";

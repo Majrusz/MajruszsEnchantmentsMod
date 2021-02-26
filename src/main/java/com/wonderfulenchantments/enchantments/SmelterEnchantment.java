@@ -12,7 +12,7 @@ public class SmelterEnchantment extends WonderfulEnchantment {
 	protected final AvailabilityConfig shouldIncreaseLoot;
 
 	public SmelterEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "Smelter" );
+		super( "smelter", Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "Smelter" );
 		String comment = "Should this enchantment duplicate custom items (def. iron ore and gold ore) when player have fortune enchantment.                                                                                                                                                                                         ";
 		this.shouldIncreaseLoot = new AvailabilityConfig( "should_increase_loot", comment, false, true );
 		this.enchantmentGroup.addConfig( this.shouldIncreaseLoot );

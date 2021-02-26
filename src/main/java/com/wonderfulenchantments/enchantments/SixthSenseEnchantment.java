@@ -29,7 +29,7 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	protected final DurationConfig highlightDurationConfig;
 
 	public SixthSenseEnchantment() {
-		super( Rarity.RARE, EnchantmentType.ARMOR_HEAD, EquipmentSlotType.HEAD, "SixthSense" );
+		super( "sixth_sense", Rarity.RARE, EnchantmentType.ARMOR_HEAD, EquipmentSlotType.HEAD, "SixthSense" );
 
 		String offsetComment = "Maximum distance in blocks from player to entity.";
 		String preparingComment = "Duration of standing still before the entities will be highlighted.";

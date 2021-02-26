@@ -26,7 +26,7 @@ public class CorrosionCurse extends WonderfulCurse {
 	protected final DoubleConfig damageAmount;
 
 	public CorrosionCurse() {
-		super( Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Corrosion" );
+		super( "corrosion_curse", Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Corrosion" );
 		String cooldownComment = "Damage cooldown in seconds.";
 		String damageComment = "Amount of damage dealt to the player every X seconds. (with each enchantment level)";
 		this.damageCooldown = new DurationConfig( "damage_cooldown_duration", cooldownComment, false, 3.0, 1.0, 60.0 );

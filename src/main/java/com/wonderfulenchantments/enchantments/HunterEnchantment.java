@@ -22,7 +22,7 @@ public class HunterEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig damagePenaltyMultiplier;
 
 	public HunterEnchantment() {
-		super( Rarity.RARE, RegistryHandler.BOW_AND_CROSSBOW, EquipmentSlotType.MAINHAND, "Hunter" );
+		super( "hunter", Rarity.RARE, RegistryHandler.BOW_AND_CROSSBOW, EquipmentSlotType.MAINHAND, "Hunter" );
 		String damage_comment = "Extra damage multiplier to distance per enchantment level.";
 		String distance_comment = "Minimum required distance to not get any damage penalty.";
 		String penalty_comment = "Maximum damage penalty if entity is very close.";

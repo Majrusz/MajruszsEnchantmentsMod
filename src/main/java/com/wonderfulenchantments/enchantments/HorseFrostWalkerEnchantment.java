@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class HorseFrostWalkerEnchantment extends WonderfulEnchantment {
 	public HorseFrostWalkerEnchantment() {
-		super( Rarity.RARE, RegistryHandler.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "HorseFrostWalker" );
+		super( "horse_frost_walker", Rarity.RARE, RegistryHandler.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "HorseFrostWalker" );
 
 		setMaximumEnchantmentLevel( 2 );
 		setDifferenceBetweenMinimumAndMaximum( 15 );

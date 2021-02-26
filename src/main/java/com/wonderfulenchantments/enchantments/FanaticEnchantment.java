@@ -36,7 +36,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig damageBonus;
 
 	public FanaticEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, EquipmentSlotType.MAINHAND, "FishingFanatic" );
+		super( "fishing_fanatic", Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, EquipmentSlotType.MAINHAND, "FishingFanatic" );
 		String increase_comment = "Chance for increasing enchantment level per difference to maximum level. (for example if this value is equal 0.01 then to get 1st level you will have 6 * 0.01 = 6% chance, to get 2nd level ( 6-1 ) * 0.01 = 5% chance )";
 		String loot_comment = "Independent chance for extra loot with every enchantment level.";
 		String raining_comment = "Chance multiplier when player is fishing while it is raining.";

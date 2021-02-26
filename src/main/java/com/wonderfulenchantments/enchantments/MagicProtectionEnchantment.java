@@ -11,7 +11,7 @@ public class MagicProtectionEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig protectionBonus;
 
 	public MagicProtectionEnchantment() {
-		super( Rarity.UNCOMMON, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "MagicProtection" );
+		super( "magic_protection", Rarity.UNCOMMON, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "MagicProtection" );
 		String comment = "Damage reduction bonus per enchantment level.";
 		this.protectionBonus = new DoubleConfig( "armor_bonus", comment, false, 2.0, 1.0, 10.0 );
 		this.enchantmentGroup.addConfig( this.protectionBonus );

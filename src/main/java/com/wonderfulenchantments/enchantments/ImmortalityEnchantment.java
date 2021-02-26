@@ -22,7 +22,7 @@ public class ImmortalityEnchantment extends WonderfulEnchantment {
 	protected static final int DAMAGE_ON_USE = 9001;
 
 	public ImmortalityEnchantment() {
-		super( Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Immortality" );
+		super( "immortality", Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Immortality" );
 
 		setMaximumEnchantmentLevel( 1 );
 		setDifferenceBetweenMinimumAndMaximum( 30 );
