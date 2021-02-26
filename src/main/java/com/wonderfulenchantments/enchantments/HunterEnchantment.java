@@ -4,7 +4,6 @@ import com.mlib.config.DoubleConfig;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;

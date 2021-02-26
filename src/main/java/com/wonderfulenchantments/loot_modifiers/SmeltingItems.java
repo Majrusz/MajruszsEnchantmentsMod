@@ -89,7 +89,7 @@ public class SmeltingItems extends LootModifier {
 
 	protected List< ItemStack > getSmeltedLoot( List< ItemStack > generatedLoot, ServerWorld world, Vector3d position, int fortuneLevel ) {
 		RecipeManager recipeManager = world.getRecipeManager();
-		
+
 		ArrayList< ItemStack > output = new ArrayList<>();
 		for( ItemStack itemStack : generatedLoot ) {
 			ItemStack smeltedItemStack = getSmeltedItemStack( itemStack, world );
@@ -106,8 +106,8 @@ public class SmeltingItems extends LootModifier {
 			if( experience > 0 )
 				world.addEntity( new ExperienceOrbEntity( world, position.x, position.y, position.z, experience ) );
 
-			world.spawnParticle( ParticleTypes.FLAME, position.x, position.y, position.z,
-				2 + MajruszLibrary.RANDOM.nextInt( 4 ), 0.125, 0.125, 0.125, 0.03125
+			world.spawnParticle( ParticleTypes.FLAME, position.x, position.y, position.z, 2 + MajruszLibrary.RANDOM.nextInt( 4 ), 0.125, 0.125, 0.125,
+				0.03125
 			);
 		}
 

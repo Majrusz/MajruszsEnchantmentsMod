@@ -1,7 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.config.AvailabilityConfig;
-import com.mlib.config.DoubleConfig;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.SilkTouchEnchantment;
