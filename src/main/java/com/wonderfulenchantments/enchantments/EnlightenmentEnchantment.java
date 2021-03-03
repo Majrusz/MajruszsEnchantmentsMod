@@ -35,7 +35,7 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 		this.extraLevels = new AvailabilityConfig( "extra_levels", levelsComment, false, true );
 		this.enchantmentLevelsMultiplier = new DoubleConfig( "enchantment_levels_multiplier", enchantmentComment, false, 0.125, 0.01, 0.5 );
 		this.levelCap = new IntegerConfig( "level_cap", capComment, false, 30, 30, 60 );
-		this.enchantmentGroup.addConfigs( this.experienceMultiplier, this.enchantmentLevelsMultiplier, this.levelCap );
+		this.enchantmentGroup.addConfigs( this.experienceMultiplier, this.extraLevels, this.enchantmentLevelsMultiplier, this.levelCap );
 
 		setMaximumEnchantmentLevel( 2 );
 		setDifferenceBetweenMinimumAndMaximum( 20 );
@@ -63,7 +63,7 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void onCalculatingEnchantmentLevels( EnchantmentLevelSetEvent event ) {
 		EnlightenmentEnchantment enlightenment = Instances.ENLIGHTENMENT;
-		if( !( event.getWorld() instanceof ServerWorld ) || enlightenment.areExtraLevelsDisabled() )
+		if( enlightenment.areExtraLevelsDisabled() )
 			return;
 
 		ServerWorld world = ( ServerWorld )event.getWorld();
