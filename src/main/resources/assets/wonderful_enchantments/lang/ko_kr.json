@@ -81,6 +81,10 @@
 	"enchantment.wonderful_enchantments.harvester.desc": "이제 마우스 우클릭으로도 수확을 할 수 있으며, 수확 후 추가로 주변의 작물이 성장할 확률을 부여합니다.",
 	"enchantment.wonderful_enchantments.harvester.description": "이제 마우스 우클릭으로 수확을 할 수 있으며, 수확 후 추가로 주변의 작물이 성장할 확률을 부여합니다.",
 
+	"enchantment.wonderful_enchantments.sixth_sense": "육감",
+	"enchantment.wonderful_enchantments.sixth_sense.desc": "잠시 동안 움직임을 멈추고 있으면 근처의 적대적인 몹들에게 발광 효과를 부여합니다.",
+	"enchantment.wonderful_enchantments.sixth_sense.description": "잠시 동안 움직임을 멈추고 있으면 근처의 적대적인 몹들에게 발광 효과를 부여합니다.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "둔화 저주",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "플레이어의 이동속도를 감소시킵니다.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "플레이어의 이동속도를 감소시킵니다.",
