@@ -28,11 +28,11 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 	public EnlightenmentEnchantment() {
 		super( "enlightenment", Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Enlightenment" );
 		String experienceComment = "Increases experience from all sources by that multiplier per enchantment level.";
-		String levelsComment = "Increases experience from all sources by that multiplier per enchantment level.";
+		String levelsComment = "Increases experience from all sources by that multiplier per enchantment level. (enchantment table may not work properly!)";
 		String enchantmentComment = "Enchantment levels increase by that multiplier per enchantment level.";
 		String capComment = "Enchantment levels limit at enchanting table.";
 		this.experienceMultiplier = new DoubleConfig( "experience_multiplier", experienceComment, false, 0.25, 0.01, 10.0 );
-		this.extraLevels = new AvailabilityConfig( "extra_levels", levelsComment, false, true );
+		this.extraLevels = new AvailabilityConfig( "extra_levels", levelsComment, false, false );
 		this.enchantmentLevelsMultiplier = new DoubleConfig( "enchantment_levels_multiplier", enchantmentComment, false, 0.125, 0.01, 0.5 );
 		this.levelCap = new IntegerConfig( "level_cap", capComment, false, 30, 30, 60 );
 		this.enchantmentGroup.addConfigs( this.experienceMultiplier, this.extraLevels, this.enchantmentLevelsMultiplier, this.levelCap );
