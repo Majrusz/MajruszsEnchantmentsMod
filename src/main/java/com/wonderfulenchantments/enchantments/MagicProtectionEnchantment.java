@@ -3,7 +3,10 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.EquipmentSlotTypes;
 import com.mlib.config.DoubleConfig;
 import com.wonderfulenchantments.Instances;
+import net.minecraft.enchantment.DamageEnchantment;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.util.DamageSource;
 
 /** Enchantment that reduces damage from magic sources. (like Evoker fangs, Elder Guardian laser beam etc.) */
@@ -29,5 +32,10 @@ public class MagicProtectionEnchantment extends WonderfulEnchantment {
 			return ( int )( level * Instances.MAGIC_PROTECTION.protectionBonus.get() );
 
 		return 0;
+	}
+
+	@Override
+	protected boolean canApplyTogether( Enchantment enchantment ) {
+		return !( enchantment instanceof ProtectionEnchantment ) && super.canApplyTogether( enchantment );
 	}
 }
