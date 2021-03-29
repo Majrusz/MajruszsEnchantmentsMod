@@ -54,16 +54,16 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	}
 
 	@SubscribeEvent
-	public static void onMonsterTick( LivingEvent.LivingUpdateEvent event ) {
-		LivingEntity monster = event.getEntityLiving();
-		if( !( event.getEntityLiving() instanceof MonsterEntity ) || event.getEntityLiving().world instanceof ServerWorld )
+	public static void onEntityTick( LivingEvent.LivingUpdateEvent event ) {
+		LivingEntity livingEntity = event.getEntityLiving();
+		if( event.getEntityLiving().world instanceof ServerWorld )
 			return;
 
-		CompoundNBT data = monster.getPersistentData();
+		CompoundNBT data = livingEntity.getPersistentData();
 		data.putInt( MONSTER_TAG, Math.max( data.getInt( MONSTER_TAG ) - 1, 0 ) );
 
 		if( data.getInt( MONSTER_TAG ) == 1 )
-			monster.setGlowing( false );
+			livingEntity.setGlowing( false );
 	}
 
 	/** Updates sixth sense logic for given player. */
@@ -86,11 +86,11 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 		double x = player.getPosX(), y = player.getPosY(), z = player.getPosZ(), offset = this.offsetConfig.get();
 		AxisAlignedBB axisAligned = new AxisAlignedBB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
 
-		for( MonsterEntity monster : player.world.getEntitiesWithinAABB( MonsterEntity.class, axisAligned ) ) {
-			CompoundNBT data = monster.getPersistentData();
+		for( LivingEntity livingEntity : player.world.getEntitiesWithinAABB( LivingEntity.class, axisAligned ) ) {
+			CompoundNBT data = livingEntity.getPersistentData();
 			data.putInt( MONSTER_TAG, this.highlightDurationConfig.getDuration() );
 
-			monster.setGlowing( true );
+			livingEntity.setGlowing( true );
 		}
 	}
 
