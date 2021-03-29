@@ -22,9 +22,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /** Enchantment that causes the shield to absorb all negative effects at the expense of durability. */
 @Mod.EventBusSubscriber
 public class AbsorberEnchantment extends WonderfulEnchantment {

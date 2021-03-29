@@ -1,7 +1,5 @@
 package com.wonderfulenchantments.loot_modifiers;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mlib.MajruszLibrary;
 import com.mlib.Random;
@@ -19,7 +17,6 @@ import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
@@ -115,16 +112,7 @@ public class SmeltingItems extends LootModifier {
 		if( Instances.SMELTER.isExtraLootDisabled() )
 			return false;
 
-		MajruszLibrary.LOGGER.info( Instances.SMELTER.shouldIncreaseLoot( item.getRegistryName() ) );
 		return Instances.SMELTER.shouldIncreaseLoot( item.getRegistryName() );
-		/*for( String registerName : this.extraItemsToWorkWithFortune ) {
-			ResourceLocation itemResourceLocation = item.getRegistryName();
-			if( itemResourceLocation != null && itemResourceLocation.toString()
-				.equals( registerName.substring( 1, registerName.length() - 1 ) ) )
-				return true;
-		}
-
-		return false;*/
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer< SmeltingItems > {
