@@ -181,7 +181,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		if( isRaining )
 			increaseChance *= enchantment.rainingMultiplier.get();
 
-		if( Random.tryChance( increaseChance ) ) {
+		if( Random.tryChance( increaseChance ) && !enchantment.isDisabled() ) {
 			ItemStack fishingRod = player.getHeldItemMainhand();
 
 			if( enchantmentLevel == 0 )
