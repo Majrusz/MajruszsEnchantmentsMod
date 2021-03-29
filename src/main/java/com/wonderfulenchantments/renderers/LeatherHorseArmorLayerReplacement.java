@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/** Replacement for Horse Armor that makes enchantments effect visible on it. */
 @OnlyIn( Dist.CLIENT )
 public class LeatherHorseArmorLayerReplacement extends LayerRenderer< HorseEntity, HorseModel< HorseEntity > > {
 	private final HorseModel< HorseEntity > field_215341_a = new HorseModel<>( 0.1F );

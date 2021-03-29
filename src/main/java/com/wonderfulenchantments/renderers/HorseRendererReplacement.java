@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Map;
 
+/** Replacement for Horse Renderer with visible enchantment on Horse's armor. */
 @OnlyIn( Dist.CLIENT )
 public final class HorseRendererReplacement extends AbstractHorseRenderer< HorseEntity, HorseModel< HorseEntity > > {
 	private static final Map< CoatColors, ResourceLocation > field_239383_a_ = Util.make( Maps.newEnumMap( CoatColors.class ), ( p_239384_0_ )->{

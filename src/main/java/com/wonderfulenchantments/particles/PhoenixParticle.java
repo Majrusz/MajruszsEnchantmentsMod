@@ -7,6 +7,7 @@ import net.minecraft.particles.BasicParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/** Particles created when entity falls with Phoenix Dive enchanment. */
 @OnlyIn( Dist.CLIENT )
 public class PhoenixParticle extends SpriteTexturedParticle {
 	public PhoenixParticle( ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed ) {
