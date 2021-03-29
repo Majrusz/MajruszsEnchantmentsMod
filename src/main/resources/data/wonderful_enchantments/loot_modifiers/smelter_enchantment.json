@@ -14,9 +14,5 @@
         ]
       }
     }
-  ],
-  "fortuneBonus": [
-    "minecraft:iron_ore",
-    "minecraft:gold_ore"
   ]
 }

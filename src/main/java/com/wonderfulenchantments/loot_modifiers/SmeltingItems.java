@@ -34,12 +34,8 @@ import java.util.Optional;
 
 /** Functionality of Smelter enchantment. */
 public class SmeltingItems extends LootModifier {
-	private final List< String > extraItemsToWorkWithFortune;
-
-	public SmeltingItems( ILootCondition[] conditionsIn, List< String > extraItemsToWorkWithFortune ) {
+	public SmeltingItems( ILootCondition[] conditionsIn ) {
 		super( conditionsIn );
-
-		this.extraItemsToWorkWithFortune = extraItemsToWorkWithFortune;
 	}
 
 	@Nonnull
@@ -119,25 +115,22 @@ public class SmeltingItems extends LootModifier {
 		if( Instances.SMELTER.isExtraLootDisabled() )
 			return false;
 
-		for( String registerName : this.extraItemsToWorkWithFortune ) {
+		MajruszLibrary.LOGGER.info( Instances.SMELTER.shouldIncreaseLoot( item.getRegistryName() ) );
+		return Instances.SMELTER.shouldIncreaseLoot( item.getRegistryName() );
+		/*for( String registerName : this.extraItemsToWorkWithFortune ) {
 			ResourceLocation itemResourceLocation = item.getRegistryName();
 			if( itemResourceLocation != null && itemResourceLocation.toString()
 				.equals( registerName.substring( 1, registerName.length() - 1 ) ) )
 				return true;
 		}
 
-		return false;
+		return false;*/
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer< SmeltingItems > {
 		@Override
 		public SmeltingItems read( ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn ) {
-			List< String > extraItemsToWorkWithFortune = new ArrayList<>();
-			JsonArray jsonArray = JSONUtils.getJsonArray( object, "fortuneBonus" );
-			for( JsonElement element : jsonArray )
-				extraItemsToWorkWithFortune.add( element.toString() );
-
-			return new SmeltingItems( conditionsIn, extraItemsToWorkWithFortune );
+			return new SmeltingItems( conditionsIn );
 		}
 
 		@Override
