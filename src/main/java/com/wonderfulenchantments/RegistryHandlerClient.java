@@ -29,6 +29,7 @@ public class RegistryHandlerClient {
 		);
 	}
 
+	/** Checks whether given item stack has enchantments from Wonderful Enchantments mod. */
 	private static float enchantmentBookPredicate( ItemStack itemStack, ClientWorld clientWorld, LivingEntity entity ) {
 		Map< Enchantment, Integer > enchantments = EnchantmentHelper.getEnchantments( itemStack );
 
