@@ -33,12 +33,10 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 
 	public AbsorberEnchantment() {
 		super( "absorber", Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Absorber" );
-		List< String > defaultEffects = new ArrayList< String >() {};
-		defaultEffects.add( "majruszs_difficulty:bleeding" );
 		String duration_comment = "Minimum required duration to absorb an effect. (in seconds)";
 		String effects_comment = "Effects that can not be absorbed.";
 		this.minimumEffectDuration = new DurationConfig( "minimum_duration", duration_comment, false, 2.5, 0.0, 60.0 );
-		this.forbiddenEffects = new StringListConfig( "forbidden_effects", effects_comment, false, defaultEffects );
+		this.forbiddenEffects = new StringListConfig( "forbidden_effects", effects_comment, false, "majruszs_difficulty:bleeding" );
 		this.enchantmentGroup.addConfigs( this.minimumEffectDuration, this.forbiddenEffects );
 
 		setMaximumEnchantmentLevel( 1 );
@@ -101,6 +99,6 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 	protected boolean isForbidden( Effect effect ) {
 		ResourceLocation effectRegistryName = effect.getRegistryName();
 
-		return effectRegistryName != null && this.forbiddenEffects.hasValue( effectRegistryName.toString() );
+		return effectRegistryName != null && this.forbiddenEffects.contains( effectRegistryName.toString() );
 	}
 }
