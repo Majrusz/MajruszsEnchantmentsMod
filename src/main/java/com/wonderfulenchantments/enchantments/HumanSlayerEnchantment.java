@@ -3,6 +3,8 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.config.DoubleConfig;
 import com.mlib.damage.DamageHelper;
 import com.wonderfulenchantments.Instances;
+import net.minecraft.enchantment.DamageEnchantment;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
@@ -40,6 +42,11 @@ public class HumanSlayerEnchantment extends WonderfulEnchantment {
 	@Override
 	public boolean canApply( ItemStack stack ) {
 		return stack.getItem() instanceof AxeItem || super.canApply( stack );
+	}
+
+	@Override
+	protected boolean canApplyTogether( Enchantment enchantment ) {
+		return !( enchantment instanceof DamageEnchantment ) && super.canApplyTogether( enchantment );
 	}
 
 	/** Event that increases damage when all conditions are met. */
