@@ -49,6 +49,9 @@ public class Instances {
 	public static final VampirismCurse VAMPIRISM;
 	public static final CorrosionCurse CORROSION;
 
+	// Client-side effects
+	public static final ClientEffects CLIENT_EFFECTS;
+
 	static {
 		FISHING_FANATIC = new FanaticEnchantment();
 
@@ -85,6 +88,9 @@ public class Instances {
 		VAMPIRISM = new VampirismCurse();
 		CORROSION = new CorrosionCurse();
 
+		CLIENT_EFFECTS = new ClientEffects();
+
 		WonderfulEnchantments.CONFIG_HANDLER.register( ModLoadingContext.get() );
+		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );
 	}
 }

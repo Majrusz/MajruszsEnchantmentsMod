@@ -24,9 +24,10 @@ public class RegistryHandlerClient {
 			.getRenderManager();
 		rendererManager.register( EntityType.HORSE, new HorseRendererReplacement( rendererManager ) );
 
-		ItemModelsProperties.registerProperty( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ),
-			RegistryHandlerClient::enchantmentBookPredicate
-		);
+		if( Instances.CLIENT_EFFECTS.isEnchantedBookTextureReplacementEnabled() )
+			ItemModelsProperties.registerProperty( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ),
+				RegistryHandlerClient::enchantmentBookPredicate
+			);
 	}
 
 	/** Checks whether given item stack has enchantments from Wonderful Enchantments mod. */
