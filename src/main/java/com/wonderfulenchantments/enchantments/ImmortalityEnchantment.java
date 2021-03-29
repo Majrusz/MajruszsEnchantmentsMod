@@ -12,7 +12,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -31,7 +31,7 @@ public class ImmortalityEnchantment extends WonderfulEnchantment {
 
 	/** Event on which enchantment effect is applied if it is possible. */
 	@SubscribeEvent
-	public static void onEntityHurt( LivingHurtEvent event ) {
+	public static void onEntityHurt( LivingDamageEvent event ) {
 		LivingEntity target = event.getEntityLiving();
 
 		if( ( target.getHealth() - event.getAmount() ) < 1.0f ) {
