@@ -12,9 +12,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
@@ -26,6 +28,8 @@ import java.util.List;
 
 /** Functionality of Telekinesis enchantment. */
 public class AddItemsDirectlyToInventory extends LootModifier {
+	private final String TELEKINESIS_TAG = "TelekinesisLastTimeTag";
+
 	public AddItemsDirectlyToInventory( ILootCondition[] conditions ) {
 		super( conditions );
 	}
@@ -42,6 +46,11 @@ public class AddItemsDirectlyToInventory extends LootModifier {
 			return generatedLoot;
 
 		PlayerEntity player = ( PlayerEntity )entity;
+		if( !isTimeDifferentFromPreviousTelekinesisTick( player ) ) {
+			generatedLoot.clear();
+			return generatedLoot;
+		}
+
 		int harvesterLevel = EnchantmentHelper.getEnchantmentLevel( Instances.HARVESTER, player.getHeldItemMainhand() );
 		Item seedItem = getSeedItem( entity.world, context.get( LootParameters.field_237457_g_ ), context.get( LootParameters.BLOCK_STATE ) );
 		ArrayList< ItemStack > output = new ArrayList<>();
@@ -55,6 +64,7 @@ public class AddItemsDirectlyToInventory extends LootModifier {
 				output.add( itemStack );
 			}
 		}
+		updateLastTelekinesisTime( player );
 
 		return output;
 	}
@@ -70,6 +80,19 @@ public class AddItemsDirectlyToInventory extends LootModifier {
 		CropsBlock crops = ( CropsBlock )blockState.getBlock();
 		ItemStack seeds = crops.getItem( world, new BlockPos( position ), blockState );
 		return seeds.getItem();
+	}
+
+	private void updateLastTelekinesisTime( PlayerEntity player ) {
+		World world = player.getEntityWorld();
+		CompoundNBT data = player.getPersistentData();
+		data.putLong( TELEKINESIS_TAG, world.getDayTime() );
+	}
+
+	private boolean isTimeDifferentFromPreviousTelekinesisTick( PlayerEntity player ) {
+		World world = player.getEntityWorld();
+		CompoundNBT data = player.getPersistentData();
+
+		return data.getLong( TELEKINESIS_TAG ) != world.getDayTime();
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer< AddItemsDirectlyToInventory > {
