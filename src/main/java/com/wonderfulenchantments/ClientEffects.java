@@ -9,7 +9,7 @@ public class ClientEffects {
 	protected final AvailabilityConfig enchantmentBookReplacement;
 
 	public ClientEffects() {
-		String book_comment = "Should the Enchanted Book have a different texture when it has any of the Wonderful Enchantments on it? (disabling it may fix some bugs with other mods)";
+		String book_comment = "Should the Enchanted Book have a different texture when it has any of the Wonderful Enchantments on it? (disabling it may fix some bugs with other mods) (requires game restart)";
 		this.enchantmentBookReplacement = new AvailabilityConfig( "enchantment_book_replacement", book_comment, true, true );
 
 		this.effectsGroup = new ConfigGroup( "Effects", "" );
