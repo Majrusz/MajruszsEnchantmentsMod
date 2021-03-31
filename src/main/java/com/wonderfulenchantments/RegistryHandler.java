@@ -11,6 +11,7 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.item.*;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.potion.Effect;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -26,6 +27,7 @@ public class RegistryHandler {
 	public static final DeferredRegister< ParticleType< ? > > PARTICLES = DeferredRegister.create( ForgeRegistries.PARTICLE_TYPES,
 		WonderfulEnchantments.MOD_ID
 	);
+	public static final DeferredRegister< Effect > EFFECTS = DeferredRegister.create( ForgeRegistries.POTIONS, WonderfulEnchantments.MOD_ID );
 	public static final DeferredRegister< Item > ITEMS_TO_REPLACE = DeferredRegister.create( ForgeRegistries.ITEMS, "minecraft" );
 
 	public static final EnchantmentType SHIELD = EnchantmentType.create( "shield", ( Item item )->item instanceof ShieldItem );
@@ -47,6 +49,7 @@ public class RegistryHandler {
 		addEnchantments( modEventBus );
 		replaceRestStandardMinecraftItems( modEventBus );
 		PARTICLES.register( modEventBus );
+		addEffects( modEventBus );
 		addEnchantmentTypesToItemGroups();
 		modEventBus.addListener( RegistryHandler::doClientSetup );
 		modEventBus.addListener( PacketHandler::registerPacket );
@@ -71,6 +74,13 @@ public class RegistryHandler {
 			curse.register( ENCHANTMENTS );
 
 		ENCHANTMENTS.register( modEventBus );
+	}
+
+	/** Registering all potion effects. */
+	private static void addEffects( final IEventBus modEventBus ) {
+		EFFECTS.register( "mithridatism_protection", ()->Instances.MITHRIDATISM_PROTECTION );
+
+		EFFECTS.register( modEventBus );
 	}
 
 	/**

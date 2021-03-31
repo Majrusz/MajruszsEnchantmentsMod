@@ -7,7 +7,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraftforge.fml.common.Mod;
 
-/** Enchantment that gives absorption and mithridatism immunity after any negative effect is applied to the player. */
+/** Enchantment that gives Absorption and Mithridatism Protection after any negative effect is applied to the player. */
 @Mod.EventBusSubscriber
 public class MithridatismEnchantment extends WonderfulEnchantment {
 	public MithridatismEnchantment() {
@@ -18,6 +18,11 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 		setMinimumEnchantabilityCalculator( level->( 15 + 100 * ( level - 1 ) ) );
 	}
 
+	/** Adds config group from to enchantment group. */
+	public void addConfigGroup( ConfigGroup group ) {
+		this.enchantmentGroup.addGroup( group );
+	}
+
 	/** Effect that decreases damage from certain negative effects. */
 	public static class MithridatismProtectionEffect extends Effect {
 		protected final ConfigGroup effectGroup;
@@ -26,10 +31,10 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 		protected final DoubleConfig baseDamageReduction, damageReductionPerLevel;
 		protected final DurationConfig duration;
 
-		protected MithridatismProtectionEffect() {
+		public MithridatismProtectionEffect( MithridatismEnchantment mithridatism ) {
 			super( EffectType.BENEFICIAL, 0xff76db4c );
 
-			String list_comment = "";
+			String list_comment = "Damage sources that will deal less damage when effect is active.";
 			String absorption_comment = "Level of Absorption applied to the player per enchantment level.";
 			String base_reduction_comment = "Base amount of damage decreased from negative effects.";
 			String level_reduction_comment = "Amount of damage decreased from negative effects per enchantment level.";
@@ -40,6 +45,9 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			this.baseDamageReduction = new DoubleConfig( "base_reduction", base_reduction_comment, false, 0.15, 0.0, 1.0 );
 			this.damageReductionPerLevel = new DoubleConfig( "reduction_per_level", level_reduction_comment, false, 0.15, 0.0, 1.0 );
 			this.duration = new DurationConfig( "duration", duration_comment, false, 30.0, 2.0, 600.0 );
+			this.effectGroup.addConfigs( this.damageSourceList, this.absorptionPerLevel, this.baseDamageReduction, this.damageReductionPerLevel, this.duration );
+
+			mithridatism.addConfigGroup( this.effectGroup );
 		}
 	}
 

@@ -19,6 +19,7 @@ public class Instances {
 	public static final PhoenixDiveEnchantment PHOENIX_DIVE;
 	public static final MagicProtectionEnchantment MAGIC_PROTECTION;
 	public static final SixthSenseEnchantment SIXTH_SENSE;
+	public static final MithridatismEnchantment MITHRIDATISM;
 
 	// Shield Enchantments
 	public static final VitalityEnchantment VITALITY;
@@ -49,6 +50,9 @@ public class Instances {
 	public static final VampirismCurse VAMPIRISM;
 	public static final CorrosionCurse CORROSION;
 
+	// Potion effects
+	public static final MithridatismEnchantment.MithridatismProtectionEffect MITHRIDATISM_PROTECTION;
+
 	// Client-side effects
 	public static final ClientEffects CLIENT_EFFECTS;
 
@@ -64,6 +68,7 @@ public class Instances {
 		PHOENIX_DIVE = new PhoenixDiveEnchantment();
 		MAGIC_PROTECTION = new MagicProtectionEnchantment();
 		SIXTH_SENSE = new SixthSenseEnchantment();
+		MITHRIDATISM = new MithridatismEnchantment();
 
 		VITALITY = new VitalityEnchantment();
 		IMMORTALITY = new ImmortalityEnchantment();
@@ -87,6 +92,8 @@ public class Instances {
 		INCOMPATIBILITY = new IncompatibilityCurse();
 		VAMPIRISM = new VampirismCurse();
 		CORROSION = new CorrosionCurse();
+
+		MITHRIDATISM_PROTECTION = new MithridatismEnchantment.MithridatismProtectionEffect( MITHRIDATISM );
 
 		CLIENT_EFFECTS = new ClientEffects();
 
