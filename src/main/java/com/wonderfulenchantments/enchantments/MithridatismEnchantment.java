@@ -1,15 +1,23 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.mlib.config.StringListConfig;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraftforge.fml.common.Mod;
 
-/** Enchantment that decreases damage from poison and increases armor for each negative effect applied to the player. */
+/** Enchantment that gives absorption and mithridatism immunity after any negative effect is applied to the player. */
+@Mod.EventBusSubscriber
 public class MithridatismEnchantment extends WonderfulEnchantment {
+	protected final StringListConfig damageSourceList;
+
 	public MithridatismEnchantment() {
 		super( "mithridatism", Rarity.VERY_RARE, EnchantmentType.ARMOR_CHEST, EquipmentSlotType.CHEST, "Mithridatism" );
 
-		setMaximumEnchantmentLevel( 1 );
+		String list_comment = "";
+		this.damageSourceList = new StringListConfig( "damage_source_list", list_comment, false, "poison", "wither" );
+
+		setMaximumEnchantmentLevel( 3 );
 		setDifferenceBetweenMinimumAndMaximum( 30 );
-		setMinimumEnchantabilityCalculator( level->( 15 * level ) );
+		setMinimumEnchantabilityCalculator( level->( 15 + 100 * ( level - 1 ) ) );
 	}
 }
