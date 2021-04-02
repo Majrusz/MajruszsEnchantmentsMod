@@ -97,7 +97,6 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			MithridatismProtectionEffect mithridatismEffect = Instances.MITHRIDATISM_PROTECTION;
 			DamageSource damageSource = event.getSource();
 
-			MajruszLibrary.LOGGER.info( damageSource.getDamageType() + ": " + event.getAmount() );
 			if( !mithridatismEffect.isDamageAffected( damageSource ) )
 				return;
 
@@ -106,7 +105,6 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 				return;
 
 			event.setAmount( ( float )( event.getAmount()*( 1.0-damageReduction ) ) );
-			MajruszLibrary.LOGGER.info( event.getAmount() );
 		}
 
 		/** Returns current damage reduction depending on enchantment level. */
