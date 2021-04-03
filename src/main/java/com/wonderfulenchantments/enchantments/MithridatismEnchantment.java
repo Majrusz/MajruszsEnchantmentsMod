@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.MajruszLibrary;
+import com.mlib.Random;
 import com.mlib.config.*;
 import com.mlib.effects.EffectHelper;
 import com.wonderfulenchantments.Instances;
@@ -9,6 +10,9 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
@@ -47,23 +51,25 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 	public static class MithridatismProtectionEffect extends Effect {
 		protected final ConfigGroup effectGroup;
 		protected final StringListConfig damageSourceList;
-		protected final DoubleConfig absorptionPerLevel, baseDamageReduction, damageReductionPerLevel;
+		protected final DoubleConfig absorptionPerLevel, baseDamageReduction, damageReductionPerLevel, levelUpChance;
 		protected final DurationConfig duration;
 
 		public MithridatismProtectionEffect( MithridatismEnchantment mithridatism ) {
 			super( EffectType.BENEFICIAL, 0xff76db4c );
 
-			String list_comment = "Damage sources that will deal less damage when effect is active.";
-			String absorption_comment = "Level of Absorption applied to the player per enchantment level.";
-			String base_reduction_comment = "Base amount of damage decreased from negative effects.";
-			String level_reduction_comment = "Amount of damage decreased from negative effects per enchantment level.";
-			String duration_comment = "Duration of both the Absorption and Mithridatism Protection. (in seconds)";
+			String listComment = "Damage sources that will deal less damage when effect is active.";
+			String absorptionComment = "Level of Absorption applied to the player per enchantment level.";
+			String baseReductionComment = "Base amount of damage decreased from negative effects.";
+			String levelReductionComment = "Amount of damage decreased from negative effects per enchantment level.";
+			String durationComment = "Duration of both the Absorption and Mithridatism Protection. (in seconds)";
+			String levelUpComment = "Chance for Mithridatism to increase its level.";
 			this.effectGroup = new ConfigGroup( "MithridatismProtection", "" );
-			this.damageSourceList = new StringListConfig( "damage_source_list", list_comment, false, "magic", "wither", "bleeding" );
-			this.absorptionPerLevel = new DoubleConfig( "absorption_per_level", absorption_comment, false, 0.75, 0, 3 );
-			this.baseDamageReduction = new DoubleConfig( "base_reduction", base_reduction_comment, false, 0.15, 0.0, 1.0 );
-			this.damageReductionPerLevel = new DoubleConfig( "reduction_per_level", level_reduction_comment, false, 0.15, 0.0, 1.0 );
-			this.duration = new DurationConfig( "duration", duration_comment, false, 60.0, 2.0, 600.0 );
+			this.damageSourceList = new StringListConfig( "damage_source_list", listComment, false, "magic", "wither", "bleeding" );
+			this.absorptionPerLevel = new DoubleConfig( "absorption_per_level", absorptionComment, false, 0.75, 0, 3 );
+			this.baseDamageReduction = new DoubleConfig( "base_reduction", baseReductionComment, false, 0.15, 0.0, 1.0 );
+			this.damageReductionPerLevel = new DoubleConfig( "reduction_per_level", levelReductionComment, false, 0.15, 0.0, 1.0 );
+			this.levelUpChance = new DoubleConfig( "level_up_chance", levelUpComment, false, 0.025, 0.0, 1.0 );
+			this.duration = new DurationConfig( "duration", durationComment, false, 60.0, 2.0, 600.0 );
 			this.effectGroup.addConfigs( this.damageSourceList, this.absorptionPerLevel, this.baseDamageReduction, this.damageReductionPerLevel, this.duration );
 
 			mithridatism.addConfigGroup( this.effectGroup );
@@ -89,7 +95,18 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 
 		@SubscribeEvent
 		public static void whenEffectRemoved( PotionEvent.PotionRemoveEvent event ) {
-			MajruszLibrary.LOGGER.info( event.getPotionEffect() );
+			LivingEntity entity = event.getEntityLiving();
+			MithridatismEnchantment mithridatism = Instances.MITHRIDATISM;
+			MithridatismEnchantment.MithridatismProtectionEffect mithridatismEffect = Instances.MITHRIDATISM_PROTECTION;
+			int mithridatismLevel = mithridatism.getEnchantmentLevel( entity );
+
+			if( mithridatismLevel >= mithridatism.getMaxLevel() || mithridatismLevel == 0 || mithridatism.isDisabled() )
+				return;
+
+			if( !Random.tryChance( mithridatismEffect.levelUpChance.get() ) )
+				return;
+
+			mithridatismEffect.increaseLevel( entity );
 		}
 
 		@SubscribeEvent
@@ -130,6 +147,24 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 		/** Checks whether given damage source is one from the effect list. */
 		protected boolean isDamageAffected( DamageSource damageSource ) {
 			return this.damageSourceList.contains( damageSource.getDamageType() );
+		}
+
+		/** Increases Mithridatism level for given player. */
+		protected void increaseLevel( LivingEntity entity ) {
+			ItemStack chestplate = entity.getItemStackFromSlot( EquipmentSlotType.CHEST );
+			MithridatismEnchantment mithridatism = Instances.MITHRIDATISM;
+			ListNBT listNBT = chestplate.getEnchantmentTagList();
+
+			for( int i = 0; i < listNBT.size(); ++i ) {
+				CompoundNBT compoundNBT = listNBT.getCompound( i );
+				String enchantmentID = compoundNBT.getString( "id" );
+				if( enchantmentID.contains( "mithridatism" ) ) {
+					compoundNBT.putInt( "lvl", mithridatism.getEnchantmentLevel( entity )+1 );
+					break;
+				}
+			}
+
+			chestplate.setTagInfo( "Enchantments", listNBT );
 		}
 	}
 
