@@ -95,6 +95,11 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 
 		@SubscribeEvent
 		public static void whenEffectRemoved( PotionEvent.PotionRemoveEvent event ) {
+			EffectInstance effectInstance = event.getPotionEffect();
+			if( effectInstance == null )
+				return;
+
+			Effect effect = effectInstance.getPotion();
 			LivingEntity entity = event.getEntityLiving();
 			MithridatismEnchantment mithridatism = Instances.MITHRIDATISM;
 			MithridatismEnchantment.MithridatismProtectionEffect mithridatismEffect = Instances.MITHRIDATISM_PROTECTION;
@@ -103,7 +108,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			if( mithridatismLevel >= mithridatism.getMaxLevel() || mithridatismLevel == 0 || mithridatism.isDisabled() )
 				return;
 
-			if( !Random.tryChance( mithridatismEffect.levelUpChance.get() ) )
+			if( effect.isBeneficial() || !Random.tryChance( mithridatismEffect.levelUpChance.get() ) )
 				return;
 
 			mithridatismEffect.increaseLevel( entity );
