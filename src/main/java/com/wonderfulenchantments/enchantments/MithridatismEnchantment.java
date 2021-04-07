@@ -1,13 +1,11 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.mlib.config.*;
 import com.mlib.effects.EffectHelper;
 import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -18,13 +16,10 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import javax.annotation.Nullable;
 
 /** Enchantment that gives Absorption and Mithridatism Protection after any negative effect is applied to the player. */
 public class MithridatismEnchantment extends WonderfulEnchantment {
@@ -58,7 +53,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			super( EffectType.BENEFICIAL, 0xff76db4c );
 
 			String listComment = "Damage sources that will deal less damage when effect is active.";
-			String absorptionComment = "Level of Absorption applied to the player per enchantment level.";
+			String absorptionComment = "Level of Absorption applied to the player per enchantment level rounded down. (minimum. 1lvl)";
 			String baseReductionComment = "Base amount of damage decreased from negative effects.";
 			String levelReductionComment = "Amount of damage decreased from negative effects per enchantment level.";
 			String durationComment = "Duration of both the Absorption and Mithridatism Protection. (in seconds)";
@@ -86,10 +81,11 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 
 			if( !effect.isBeneficial() && mithridatismLevel > 0 && !entity.isPotionActive( mithridatismEffect ) ) {
 				int duration = mithridatismEffect.getDuration();
-				int effectAmplifier = mithridatismEffect.getEffectAmplifier( entity );
-
 				EffectHelper.applyEffectIfPossible( entity, mithridatismEffect, duration, mithridatismLevel - 1 );
-				EffectHelper.applyEffectIfPossible( entity, Effects.ABSORPTION, duration, effectAmplifier );
+
+				int absorptionAmplifier = mithridatismEffect.getAbsorptionLevel( entity )-1;
+				if( absorptionAmplifier >= 0 )
+					EffectHelper.applyEffectIfPossible( entity, Effects.ABSORPTION, duration, absorptionAmplifier );
 			}
 		}
 
@@ -138,10 +134,10 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 		}
 
 		/** Returns current Absorption level depending on enchantment level. */
-		protected int getEffectAmplifier( LivingEntity entity ) {
+		protected int getAbsorptionLevel( LivingEntity entity ) {
 			int mithridatismLevel = Instances.MITHRIDATISM.getEnchantmentLevel( entity );
 
-			return mithridatismLevel == 0 ? 0 : ( int )( Math.max( 1, mithridatismLevel * this.absorptionPerLevel.get() ) - 1 );
+			return mithridatismLevel == 0 ? 0 : ( int )( Math.max( 0, mithridatismLevel * this.absorptionPerLevel.get() ) );
 		}
 
 		/** Returns Mithridatism effect duration. */
