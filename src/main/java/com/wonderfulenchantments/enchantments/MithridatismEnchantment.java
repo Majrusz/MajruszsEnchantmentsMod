@@ -69,7 +69,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			this.damageReductionPerLevel = new DoubleConfig( "reduction_per_level", levelReductionComment, false, 0.15, 0.0, 1.0 );
 			this.levelUpChance = new DoubleConfig( "level_up_chance", levelUpComment, false, 0.025, 0.0, 1.0 );
 			this.duration = new DurationConfig( "duration", durationComment, false, 60.0, 2.0, 600.0 );
-			this.effectGroup.addConfigs( this.damageSourceList, this.absorptionPerLevel, this.baseDamageReduction, this.damageReductionPerLevel, this.duration );
+			this.effectGroup.addConfigs( this.damageSourceList, this.absorptionPerLevel, this.baseDamageReduction, this.damageReductionPerLevel, this.levelUpChance, this.duration );
 
 			mithridatism.addConfigGroup( this.effectGroup );
 		}
