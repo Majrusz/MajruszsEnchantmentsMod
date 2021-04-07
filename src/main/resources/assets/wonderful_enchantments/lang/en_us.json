@@ -84,7 +84,7 @@
 	"enchantment.wonderful_enchantments.mithridatism": "Mithridatism",
 	"enchantment.wonderful_enchantments.mithridatism.desc": "Reduces the damage from certain negative effects and gives Absorption whenever negative effect is applied.",
 	"enchantment.wonderful_enchantments.mithridatism.description": "Reduces the damage from certain negative effects and gives Absorption whenever negative effect is applied.",
-	"effect.wonderful_enchantments.mithridatism": "Mithridatism",
+	"effect.wonderful_enchantments.mithridatism_protection": "Mithridatism",
 
 	"enchantment.wonderful_enchantments.sixth_sense": "Sixth Sense",
 	"enchantment.wonderful_enchantments.sixth_sense.desc": "Highlights nearby monsters after standing still for a while.",
