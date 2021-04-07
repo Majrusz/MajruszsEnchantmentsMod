@@ -88,8 +88,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 				EffectHelper.applyEffectIfPossible( entity, mithridatismEffect, duration, mithridatismLevel - 1 );
 
 				int absorptionAmplifier = mithridatismEffect.getAbsorptionLevel( entity )-1;
-				if( absorptionAmplifier >= 0 )
-					EffectHelper.applyEffectIfPossible( entity, Effects.ABSORPTION, duration, absorptionAmplifier );
+				EffectHelper.applyEffectIfPossible( entity, Effects.ABSORPTION, duration, Math.max( 0, absorptionAmplifier ) );
 			}
 		}
 
