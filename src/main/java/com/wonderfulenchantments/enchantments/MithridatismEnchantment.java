@@ -1,7 +1,10 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.Random;
-import com.mlib.config.*;
+import com.mlib.config.ConfigGroup;
+import com.mlib.config.DoubleConfig;
+import com.mlib.config.DurationConfig;
+import com.mlib.config.StringListConfig;
 import com.mlib.effects.EffectHelper;
 import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -69,7 +72,9 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			this.damageReductionPerLevel = new DoubleConfig( "reduction_per_level", levelReductionComment, false, 0.15, 0.0, 1.0 );
 			this.levelUpChance = new DoubleConfig( "level_up_chance", levelUpComment, false, 0.025, 0.0, 1.0 );
 			this.duration = new DurationConfig( "duration", durationComment, false, 60.0, 2.0, 600.0 );
-			this.effectGroup.addConfigs( this.damageSourceList, this.absorptionPerLevel, this.baseDamageReduction, this.damageReductionPerLevel, this.levelUpChance, this.duration );
+			this.effectGroup.addConfigs( this.damageSourceList, this.absorptionPerLevel, this.baseDamageReduction, this.damageReductionPerLevel,
+				this.levelUpChance, this.duration
+			);
 
 			mithridatism.addConfigGroup( this.effectGroup );
 		}
@@ -87,13 +92,13 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 				int duration = mithridatismEffect.getDuration();
 				EffectHelper.applyEffectIfPossible( entity, mithridatismEffect, duration, mithridatismLevel - 1 );
 
-				int absorptionAmplifier = Math.max( 0, mithridatismEffect.getAbsorptionLevel( entity )-1 );
+				int absorptionAmplifier = Math.max( 0, mithridatismEffect.getAbsorptionLevel( entity ) - 1 );
 				EffectHelper.applyEffectIfPossible( entity, Effects.ABSORPTION, duration, absorptionAmplifier );
 			}
 		}
 
 		@SubscribeEvent
-		public static void whenEffectRemoved( PotionEvent.PotionRemoveEvent event ) {
+		public static void whenEffectRemoved( PotionEvent.PotionExpiryEvent event ) {
 			EffectInstance effectInstance = event.getPotionEffect();
 			if( effectInstance == null )
 				return;
@@ -125,7 +130,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			if( damageReduction == 0.0 )
 				return;
 
-			event.setAmount( ( float )( event.getAmount()*( 1.0-damageReduction ) ) );
+			event.setAmount( ( float )( event.getAmount() * ( 1.0 - damageReduction ) ) );
 		}
 
 		/** Returns current damage reduction depending on enchantment level. */
@@ -133,7 +138,9 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			EffectInstance effectInstance = entity.getActivePotionEffect( this );
 			int mithridatismLevel = effectInstance != null ? effectInstance.getAmplifier() : 0;
 
-			return mithridatismLevel == 0 ? 0.0 : Math.min( 1, mithridatismLevel * this.damageReductionPerLevel.get() + this.baseDamageReduction.get() );
+			return mithridatismLevel == 0 ? 0.0 : Math.min( 1,
+				mithridatismLevel * this.damageReductionPerLevel.get() + this.baseDamageReduction.get()
+			);
 		}
 
 		/** Returns current Absorption level depending on enchantment level. */
@@ -163,7 +170,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 				CompoundNBT compoundNBT = listNBT.getCompound( i );
 				String enchantmentID = compoundNBT.getString( "id" );
 				if( enchantmentID.contains( "mithridatism" ) ) {
-					compoundNBT.putInt( "lvl", mithridatism.getEnchantmentLevel( entity )+1 );
+					compoundNBT.putInt( "lvl", mithridatism.getEnchantmentLevel( entity ) + 1 );
 					break;
 				}
 			}
