@@ -7,6 +7,7 @@ import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,6 +17,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -166,6 +170,19 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			}
 
 			chestplate.setTagInfo( "Enchantments", listNBT );
+			notifyAboutLevelUp( entity );
+		}
+
+		/** Notifies player when the Mithridatism level was increased. */
+		protected void notifyAboutLevelUp( LivingEntity entity ) {
+			if( !( entity instanceof PlayerEntity ) )
+				return;
+
+			IFormattableTextComponent message = new TranslationTextComponent( "wonderful_enchantments.mithridatism_level_up" );
+			message.mergeStyle( TextFormatting.BOLD );
+
+			PlayerEntity player = ( PlayerEntity )entity;
+			player.sendStatusMessage( message, true );
 		}
 	}
 
