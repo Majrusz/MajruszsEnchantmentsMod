@@ -9,6 +9,8 @@ import com.wonderfulenchantments.items.ShieldItemReplacement;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.potion.Effect;
@@ -29,6 +31,8 @@ public class RegistryHandler {
 	);
 	public static final DeferredRegister< Effect > EFFECTS = DeferredRegister.create( ForgeRegistries.POTIONS, WonderfulEnchantments.MOD_ID );
 	public static final DeferredRegister< Item > ITEMS_TO_REPLACE = DeferredRegister.create( ForgeRegistries.ITEMS, "minecraft" );
+	public static final DeferredRegister< Item > ITEMS = DeferredRegister.create( ForgeRegistries.ITEMS, WonderfulEnchantments.MOD_ID );
+	public static final DeferredRegister< IRecipeSerializer< ? > > RECIPES = DeferredRegister.create( ForgeRegistries.RECIPE_SERIALIZERS, WonderfulEnchantments.MOD_ID );
 
 	public static final EnchantmentType SHIELD = EnchantmentType.create( "shield", ( Item item )->item instanceof ShieldItem );
 	public static final EnchantmentType HORSE_ARMOR = EnchantmentType.create( "horse_armor", ( Item item )->item instanceof HorseArmorItem );
@@ -48,8 +52,10 @@ public class RegistryHandler {
 		new Instances(); // required because otherwise enchantments may not load properly before registering them
 		addEnchantments( modEventBus );
 		replaceRestStandardMinecraftItems( modEventBus );
+		addItems( modEventBus );
 		PARTICLES.register( modEventBus );
 		addEffects( modEventBus );
+		addRecipes( modEventBus );
 		addEnchantmentTypesToItemGroups();
 		modEventBus.addListener( RegistryHandler::doClientSetup );
 		modEventBus.addListener( PacketHandler::registerPacket );
@@ -63,6 +69,12 @@ public class RegistryHandler {
 		ITEMS_TO_REPLACE.register( "golden_horse_armor", ()->new HorseArmorItemReplacement( 7, "gold" ) );
 		ITEMS_TO_REPLACE.register( "diamond_horse_armor", ()->new HorseArmorItemReplacement( 11, "diamond" ) );
 		ITEMS_TO_REPLACE.register( modEventBus );
+	}
+
+	/** Registering all new items. */
+	private static void addItems( final IEventBus modEventBus ) {
+		ITEMS.register( "ultimate_book", ()->Instances.ULTIMATE_BOOK_ITEM );
+		ITEMS.register( modEventBus );
 	}
 
 	/** Registering all enchantments. */
@@ -81,6 +93,12 @@ public class RegistryHandler {
 		EFFECTS.register( "mithridatism_protection", ()->Instances.MITHRIDATISM_PROTECTION );
 
 		EFFECTS.register( modEventBus );
+	}
+
+	/** Registering all new recipe types. */
+	private static void addRecipes( final IEventBus modEventBus ) {
+		RECIPES.register( "crafting_ultimate_book_energize", Instances.ULTIMATE_BOOK_RECIPE.delegate );
+		RECIPES.register( modEventBus );
 	}
 
 	/**

@@ -2,6 +2,9 @@ package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
+import com.wonderfulenchantments.items.*;
+import com.wonderfulenchantments.recipes.*;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraftforge.fml.ModLoadingContext;
 
 public class Instances {
@@ -56,6 +59,12 @@ public class Instances {
 	// Client-side effects
 	public static final ClientEffects CLIENT_EFFECTS;
 
+	// Custom recipes
+	public static final SpecialRecipeSerializer< UltimateBookRecipe > ULTIMATE_BOOK_RECIPE;
+
+	// Items
+	public static final UltimateBookItem ULTIMATE_BOOK_ITEM;
+
 	static {
 		FISHING_FANATIC = new FanaticEnchantment();
 
@@ -96,6 +105,10 @@ public class Instances {
 		MITHRIDATISM_PROTECTION = new MithridatismEnchantment.MithridatismProtectionEffect( MITHRIDATISM );
 
 		CLIENT_EFFECTS = new ClientEffects();
+
+		ULTIMATE_BOOK_RECIPE = new SpecialRecipeSerializer<>( UltimateBookRecipe::new );
+
+		ULTIMATE_BOOK_ITEM = new UltimateBookItem();
 
 		WonderfulEnchantments.CONFIG_HANDLER.register( ModLoadingContext.get() );
 		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );
