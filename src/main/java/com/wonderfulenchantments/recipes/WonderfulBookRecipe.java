@@ -68,7 +68,7 @@ public class WonderfulBookRecipe extends SpecialRecipe {
 			}
 		}
 
-		return !wonderfulBook.isEmpty() && !list.isEmpty() ? wonderfulBook : ItemStack.EMPTY;
+		return !wonderfulBook.isEmpty() && !list.isEmpty() ? Instances.WONDERFUL_BOOK_ITEM.energizeBook( wonderfulBook, list ) : ItemStack.EMPTY;
 	}
 
 	/** Used to determine if this recipe can fit in a grid of the given width/height. */
