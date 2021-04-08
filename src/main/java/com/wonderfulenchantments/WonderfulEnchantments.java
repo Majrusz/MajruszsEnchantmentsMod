@@ -20,6 +20,7 @@ public class WonderfulEnchantments {
 	public static final ConfigHandler CONFIG_HANDLER = new ConfigHandler( ModConfig.Type.COMMON, "wonderful-enchantments-common.toml" );
 	public static final ConfigGroup ENCHANTMENT_GROUP = CONFIG_HANDLER.addConfigGroup( new ConfigGroup( "Enchantments", "" ) );
 	public static final ConfigGroup CURSE_GROUP = CONFIG_HANDLER.addConfigGroup( new ConfigGroup( "Curses", "" ) );
+	public static final ConfigGroup ITEM_GROUP = CONFIG_HANDLER.addConfigGroup( new ConfigGroup( "Items", "" ) );
 	public static final ConfigHandler CONFIG_HANDLER_CLIENT = new ConfigHandler( ModConfig.Type.CLIENT, "wonderful-enchantments-client.toml" );
 
 	public WonderfulEnchantments() {
