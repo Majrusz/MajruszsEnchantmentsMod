@@ -33,7 +33,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 	public MithridatismEnchantment() {
 		super( "mithridatism", Rarity.VERY_RARE, EnchantmentType.ARMOR_CHEST, EquipmentSlotType.CHEST, "Mithridatism" );
 
-		setMaximumEnchantmentLevel( 3 );
+		setMaximumEnchantmentLevel( 4 );
 		setDifferenceBetweenMinimumAndMaximum( 30 );
 		setMinimumEnchantabilityCalculator( level->( 15 + 100 * ( level - 1 ) ) );
 	}
@@ -67,7 +67,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 			String levelUpComment = "Chance for Mithridatism to increase its level.";
 			this.effectGroup = new ConfigGroup( "MithridatismProtection", "" );
 			this.damageSourceList = new StringListConfig( "damage_source_list", listComment, false, "magic", "wither", "bleeding" );
-			this.absorptionPerLevel = new DoubleConfig( "absorption_per_level", absorptionComment, false, 0.75, 0, 3 );
+			this.absorptionPerLevel = new DoubleConfig( "absorption_per_level", absorptionComment, false, 0.5, 0, 3 );
 			this.baseDamageReduction = new DoubleConfig( "base_reduction", baseReductionComment, false, 0.15, 0.0, 1.0 );
 			this.damageReductionPerLevel = new DoubleConfig( "reduction_per_level", levelReductionComment, false, 0.15, 0.0, 1.0 );
 			this.levelUpChance = new DoubleConfig( "level_up_chance", levelUpComment, false, 0.025, 0.0, 1.0 );
