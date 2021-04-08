@@ -60,10 +60,10 @@ public class Instances {
 	public static final ClientEffects CLIENT_EFFECTS;
 
 	// Custom recipes
-	public static final SpecialRecipeSerializer< UltimateBookRecipe > ULTIMATE_BOOK_RECIPE;
+	public static final SpecialRecipeSerializer< WonderfulBookRecipe > WONDERFUL_BOOK_RECIPE;
 
 	// Items
-	public static final UltimateBookItem ULTIMATE_BOOK_ITEM;
+	public static final WonderfulBookItem WONDERFUL_BOOK_ITEM;
 
 	static {
 		FISHING_FANATIC = new FanaticEnchantment();
@@ -106,9 +106,9 @@ public class Instances {
 
 		CLIENT_EFFECTS = new ClientEffects();
 
-		ULTIMATE_BOOK_RECIPE = new SpecialRecipeSerializer<>( UltimateBookRecipe::new );
+		WONDERFUL_BOOK_RECIPE = new SpecialRecipeSerializer<>( WonderfulBookRecipe::new );
 
-		ULTIMATE_BOOK_ITEM = new UltimateBookItem();
+		WONDERFUL_BOOK_ITEM = new WonderfulBookItem();
 
 		WonderfulEnchantments.CONFIG_HANDLER.register( ModLoadingContext.get() );
 		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );

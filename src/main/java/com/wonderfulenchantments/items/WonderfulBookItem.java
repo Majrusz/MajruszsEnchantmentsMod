@@ -16,10 +16,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-
 /** Class representing treasure bag. */
-public class UltimateBookItem extends Item {
-	public UltimateBookItem() {
+public class WonderfulBookItem extends Item {
+	public WonderfulBookItem() {
 		super( ( new Item.Properties() ).maxStackSize( 1 )
 			.group( ItemGroup.MISC )
 			.rarity( Rarity.UNCOMMON )

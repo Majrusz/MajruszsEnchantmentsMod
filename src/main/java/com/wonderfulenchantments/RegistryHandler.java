@@ -9,7 +9,6 @@ import com.wonderfulenchantments.items.ShieldItemReplacement;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleType;
@@ -73,7 +72,7 @@ public class RegistryHandler {
 
 	/** Registering all new items. */
 	private static void addItems( final IEventBus modEventBus ) {
-		ITEMS.register( "ultimate_book", ()->Instances.ULTIMATE_BOOK_ITEM );
+		ITEMS.register( "wonderful_book", ()->Instances.WONDERFUL_BOOK_ITEM );
 		ITEMS.register( modEventBus );
 	}
 
@@ -97,7 +96,7 @@ public class RegistryHandler {
 
 	/** Registering all new recipe types. */
 	private static void addRecipes( final IEventBus modEventBus ) {
-		RECIPES.register( "crafting_ultimate_book_energize", Instances.ULTIMATE_BOOK_RECIPE.delegate );
+		RECIPES.register( "energize_wonderful_book", Instances.WONDERFUL_BOOK_RECIPE.delegate );
 		RECIPES.register( modEventBus );
 	}
 
