@@ -88,6 +88,6 @@ public class WonderfulBookRecipe extends SpecialRecipe {
 
 	/** Checks whether recipe is valid. */
 	private boolean isValid( ItemStack itemStack, List< ItemStack > itemList ) {
-		return !Instances.WONDERFUL_BOOK_ITEM.hasMaximumPowerLevel( itemStack ) && !itemStack.isEmpty() && !itemList.isEmpty();
+		return !Instances.WONDERFUL_BOOK_ITEM.hasMaximumEnergyLevel( itemStack ) && !itemStack.isEmpty() && !itemList.isEmpty();
 	}
 }

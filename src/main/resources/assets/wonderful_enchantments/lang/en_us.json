@@ -112,9 +112,10 @@
 	"enchantment.wonderful_enchantments.corrosion_curse.description": "Gradually destroys the armor and hurts the owner when it comes into contact with water.",
 
 	"item.wonderful_enchantments.wonderful_book": "Wonderful Book",
-	"item.wonderful_enchantments.wonderful_book.enchanting_power": "Enchanting power:",
-	"item.wonderful_enchantments.wonderful_book.enchanting_power_max": "Maximum enchanting power!",
+	"item.wonderful_enchantments.wonderful_book.enchanting_energy": "Enchanting energy:",
+	"item.wonderful_enchantments.wonderful_book.enchanting_energy_max": "Maximum enchanting energy!",
 	"item.wonderful_enchantments.wonderful_book.enchanting_cost": "Enchanting cost:",
 	"item.wonderful_enchantments.wonderful_book.level": "level",
-	"item.wonderful_enchantments.wonderful_book.levels": "levels"
+	"item.wonderful_enchantments.wonderful_book.levels": "levels",
+	"item.wonderful_enchantments.wonderful_book.transmute": "Press the right mouse button to transmute into a enchanted book..."
 }
