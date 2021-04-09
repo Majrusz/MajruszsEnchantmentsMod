@@ -12,7 +12,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -38,8 +41,7 @@ public class WonderfulBookItem extends Item {
 	public WonderfulBookItem() {
 		super( ( new Item.Properties() ).maxStackSize( 1 )
 			.group( ItemGroup.MISC )
-			.rarity( Rarity.UNCOMMON )
-		);
+			.rarity( Rarity.UNCOMMON ) );
 
 		String startComment = "Starting enchanting energy level.";
 		String maximumComment = "Maximum level of enchanting energy.";
@@ -62,7 +64,7 @@ public class WonderfulBookItem extends Item {
 
 		if( !world.isRemote ) {
 			int energyLevel = getEnergyLevel( wonderfulBook );
-			if( player.experienceLevel >= energyLevel )  {
+			if( player.experienceLevel >= energyLevel ) {
 				if( !player.abilities.isCreativeMode )
 					player.addExperienceLevel( -energyLevel );
 			} else if( !player.abilities.isCreativeMode ) {
@@ -75,7 +77,8 @@ public class WonderfulBookItem extends Item {
 
 			List< EnchantmentData > enchantmentDataList = new ArrayList<>();
 			for( int i = 0; i < this.amountOfBooks.get(); ++i )
-				enchantmentDataList.addAll( EnchantmentHelper.buildEnchantmentList( MajruszLibrary.RANDOM, new ItemStack( Items.BOOK ), energyLevel, false ) );
+				enchantmentDataList.addAll(
+					EnchantmentHelper.buildEnchantmentList( MajruszLibrary.RANDOM, new ItemStack( Items.BOOK ), energyLevel, false ) );
 
 			removeIncompatibleEnchantments( enchantmentDataList );
 
@@ -94,7 +97,7 @@ public class WonderfulBookItem extends Item {
 	@OnlyIn( Dist.CLIENT )
 	public void addInformation( ItemStack itemStack, @Nullable World world, List< ITextComponent > toolTip, ITooltipFlag flag ) {
 		IFormattableTextComponent energyText;
-		if( hasMaximumEnergyLevel( itemStack ) && world != null && ( world.getGameTime()/TimeConverter.secondsToTicks( 2.0 ) )%2 == 0 ) {
+		if( hasMaximumEnergyLevel( itemStack ) && world != null && ( world.getGameTime() / TimeConverter.secondsToTicks( 2.0 ) ) % 2 == 0 ) {
 			energyText = new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.enchanting_energy_max" );
 			energyText.mergeStyle( TextFormatting.DARK_GREEN );
 		} else {
@@ -137,7 +140,7 @@ public class WonderfulBookItem extends Item {
 
 	/** Returns enchanting level cost depending on energy level. */
 	public int getEnchantingLevelCost( ItemStack itemStack ) {
-		return this.minimumCost.get() + ( int )Math.max( 0, ( getEnergyLevel( itemStack ) - this.minimumCost.get() )*this.costRatio.get() );
+		return this.minimumCost.get() + ( int )Math.max( 0, ( getEnergyLevel( itemStack ) - this.minimumCost.get() ) * this.costRatio.get() );
 	}
 
 	/** Checks whether book has maximum enchanting energy level. */
@@ -149,9 +152,9 @@ public class WonderfulBookItem extends Item {
 	private void removeIncompatibleEnchantments( List< EnchantmentData > enchantmentDataList ) {
 		int size = enchantmentDataList.size();
 
-		for( int i = 0; i < size-1; ++i ) {
+		for( int i = 0; i < size - 1; ++i ) {
 			EnchantmentData current = enchantmentDataList.get( i );
-			for( int j = i+1; j < size; ) {
+			for( int j = i + 1; j < size; ) {
 				EnchantmentData next = enchantmentDataList.get( j );
 
 				if( !current.enchantment.isCompatibleWith( next.enchantment ) ) {
