@@ -63,10 +63,10 @@ public class WonderfulBookItem extends Item {
 		ItemStack wonderfulBook = player.getHeldItem( hand );
 
 		if( !world.isRemote ) {
-			int energyLevel = getEnergyLevel( wonderfulBook );
-			if( player.experienceLevel >= energyLevel ) {
+			int levelCost = getEnchantingLevelCost( wonderfulBook );
+			if( player.experienceLevel >= levelCost ) {
 				if( !player.abilities.isCreativeMode )
-					player.addExperienceLevel( -energyLevel );
+					player.addExperienceLevel( -levelCost );
 			} else if( !player.abilities.isCreativeMode ) {
 				return ActionResult.func_233538_a_( wonderfulBook, world.isRemote() );
 			}
@@ -78,7 +78,10 @@ public class WonderfulBookItem extends Item {
 			List< EnchantmentData > enchantmentDataList = new ArrayList<>();
 			for( int i = 0; i < this.amountOfBooks.get(); ++i )
 				enchantmentDataList.addAll(
-					EnchantmentHelper.buildEnchantmentList( MajruszLibrary.RANDOM, new ItemStack( Items.BOOK ), energyLevel, false ) );
+					EnchantmentHelper.buildEnchantmentList( MajruszLibrary.RANDOM, new ItemStack( Items.BOOK ), getEnergyLevel( wonderfulBook ),
+						false
+					)
+				);
 
 			removeIncompatibleEnchantments( enchantmentDataList );
 
