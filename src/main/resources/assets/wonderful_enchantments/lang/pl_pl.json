@@ -85,6 +85,12 @@
 	"enchantment.wonderful_enchantments.sixth_sense.desc": "Podświetla pobliskie potwory po pewnym czasie stania w miejscu.",
 	"enchantment.wonderful_enchantments.sixth_sense.description": "Podświetla pobliskie potwory po pewnym czasie stania w miejscu.",
 
+	"enchantment.wonderful_enchantments.mithridatism": "Mitrydatyzm",
+	"enchantment.wonderful_enchantments.mithridatism.desc": "Redukuje obrażenia od negatywnych efektów oraz nakłada absorpcję, gdy negatywny efekt jest nakładany.",
+	"enchantment.wonderful_enchantments.mithridatism.description": "Redukuje obrażenia od negatywnych efektów oraz nakłada absorpcję, gdy negatywny efekt jest nakładany.",
+	"effect.wonderful_enchantments.mithridatism_protection": "Mitrydatyzm",
+	"wonderful_enchantments.mithridatism_level_up": "Osiągnięto większą odporność na negatywne efekty!",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Zmniejsza prędkość poruszania się gracza.",
@@ -103,5 +109,14 @@
 
 	"enchantment.wonderful_enchantments.corrosion_curse": "Klątwa korozji",
 	"enchantment.wonderful_enchantments.corrosion_curse.desc": "Stopniowo niszczy pancerz i rani użytkownika gdy ten ma kontakt z wodą.",
-	"enchantment.wonderful_enchantments.corrosion_curse.description": "Stopniowo niszczy pancerz i rani użytkownika gdy ten ma kontakt z wodą."
+	"enchantment.wonderful_enchantments.corrosion_curse.description": "Stopniowo niszczy pancerz i rani użytkownika gdy ten ma kontakt z wodą.",
+
+	"item.wonderful_enchantments.wonderful_book": "Wspaniała książka",
+	"item.wonderful_enchantments.wonderful_book.enchanting_energy": "Energia zaklinania:",
+	"item.wonderful_enchantments.wonderful_book.enchanting_energy_max": "Osiągnięto maksymalną energię!",
+	"item.wonderful_enchantments.wonderful_book.enchanting_cost": "Koszt poziomów:",
+	"item.wonderful_enchantments.wonderful_book.level": "poziom",
+	"item.wonderful_enchantments.wonderful_book.levels": "poziomów",
+	"item.wonderful_enchantments.wonderful_book.hint": "Możesz zwiększyć energię zaklinania przy użyciu lazurytu przy stole rzemieślniczym.",
+	"item.wonderful_enchantments.wonderful_book.transmute": "Wciśnij prawy przycisk myszy, aby transmutować do zaklętej książki podczas trzymania tego w dłoni...",
 }
