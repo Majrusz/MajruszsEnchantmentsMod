@@ -114,8 +114,12 @@ public class WonderfulBookItem extends Item {
 		costText.mergeStyle( TextFormatting.GRAY );
 		toolTip.add( costText );
 
-		toolTip.add( new StringTextComponent( " " ) );
+		if( getEnergyLevel( itemStack ) < this.startingLevel.get() + 1 ) {
+			toolTip.add( new StringTextComponent( " " ) );
+			toolTip.add( new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.hint" ).mergeStyle( TextFormatting.GRAY ) );
+		}
 
+		toolTip.add( new StringTextComponent( " " ) );
 		toolTip.add( new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.transmute" ).mergeStyle( TextFormatting.GRAY ) );
 	}
 
