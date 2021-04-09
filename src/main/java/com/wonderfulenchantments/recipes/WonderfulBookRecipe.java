@@ -41,7 +41,7 @@ public class WonderfulBookRecipe extends SpecialRecipe {
 			}
 		}
 
-		return !wonderfulBook.isEmpty() && !list.isEmpty();
+		return isValid( wonderfulBook, list );
 	}
 
 	/** Returns an Item that is the result of this recipe. */
@@ -68,7 +68,7 @@ public class WonderfulBookRecipe extends SpecialRecipe {
 			}
 		}
 
-		return !wonderfulBook.isEmpty() && !list.isEmpty() ? Instances.WONDERFUL_BOOK_ITEM.energizeBook( wonderfulBook, list ) : ItemStack.EMPTY;
+		return isValid( wonderfulBook, list ) ? Instances.WONDERFUL_BOOK_ITEM.energizeBook( wonderfulBook, list ) : ItemStack.EMPTY;
 	}
 
 	/** Used to determine if this recipe can fit in a grid of the given width/height. */
@@ -84,5 +84,10 @@ public class WonderfulBookRecipe extends SpecialRecipe {
 	/** Checks whether item is used for energizing Ultimate Book. */
 	private boolean canEnergize( ItemStack itemStack ) {
 		return itemStack.getItem() == Items.LAPIS_LAZULI;
+	}
+
+	/** Checks whether recipe is valid. */
+	private boolean isValid( ItemStack itemStack, List< ItemStack > itemList ) {
+		return !Instances.WONDERFUL_BOOK_ITEM.hasMaximumPowerLevel( itemStack ) && !itemStack.isEmpty() && !itemList.isEmpty();
 	}
 }
