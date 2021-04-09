@@ -97,9 +97,9 @@ public class WonderfulBookItem extends Item {
 	@OnlyIn( Dist.CLIENT )
 	public void addInformation( ItemStack itemStack, @Nullable World world, List< ITextComponent > toolTip, ITooltipFlag flag ) {
 		IFormattableTextComponent energyText;
-		if( hasMaximumEnergyLevel( itemStack ) && world != null && ( world.getGameTime() / TimeConverter.secondsToTicks( 2.0 ) ) % 2 == 0 ) {
+		if( hasMaximumEnergyLevel( itemStack ) && world != null && ( world.getGameTime() / TimeConverter.secondsToTicks( 2.0 ) ) % 3 == 0 ) {
 			energyText = new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.enchanting_energy_max" );
-			energyText.mergeStyle( TextFormatting.DARK_GREEN );
+			energyText.mergeStyle( TextFormatting.BLUE );
 		} else {
 			energyText = new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.enchanting_energy" );
 			energyText.appendString( " " + getEnergyLevel( itemStack ) + " " );
