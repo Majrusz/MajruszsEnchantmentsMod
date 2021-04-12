@@ -6,6 +6,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
+/** Handling connection between server and client. */
 public class PacketHandler {
 	private static final String PROTOCOL_VERSION = "1";
 	public static SimpleChannel CHANNEL;
