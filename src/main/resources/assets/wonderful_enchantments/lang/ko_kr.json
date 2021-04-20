@@ -42,8 +42,8 @@
 	"enchantment.wonderful_enchantments.gotta_mine_fast.description": "마우스 왼쪽 버튼을 지속해서 누르면 채굴속도가 증가합니다.",
 
 	"enchantment.wonderful_enchantments.leech": "착취",
-	"enchantment.wonderful_enchantments.leech.desc": "몹의 체력이나 가지고 있는 이로운 효과를 뺐어 올 수 있습니다.",
-	"enchantment.wonderful_enchantments.leech.description": "몹의 체력이나 가지고 있는 이로운 효과를 뺐어 올 수 있습니다.",
+	"enchantment.wonderful_enchantments.leech.desc": "몹의 체력이나 가지고 있는 이로운 효과를 뺏어 올 수 있습니다.",
+	"enchantment.wonderful_enchantments.leech.description": "몹의 체력이나 가지고 있는 이로운 효과를 뺏어 올 수 있습니다.",
 
 	"enchantment.wonderful_enchantments.magic_protection": "마법으로부터 보호",
 	"enchantment.wonderful_enchantments.magic_protection.desc": "고통의 물약이나 가디언의 광선 공격, 소환사의 송곳니 같은 마법 피해량이 감소합니다.",
@@ -80,10 +80,16 @@
 	"enchantment.wonderful_enchantments.harvester": "수확",
 	"enchantment.wonderful_enchantments.harvester.desc": "이제 마우스 우클릭으로도 수확을 할 수 있으며, 수확 후 추가로 주변의 작물이 성장할 확률을 부여합니다.",
 	"enchantment.wonderful_enchantments.harvester.description": "이제 마우스 우클릭으로 수확을 할 수 있으며, 수확 후 추가로 주변의 작물이 성장할 확률을 부여합니다.",
+	
+	"enchantment.wonderful_enchantments.mithridatism": "약화 저항력",
+	"enchantment.wonderful_enchantments.mithridatism.desc": "특정 부정적인 상태 효과로 인한 피해를 줄이고 부정적인 효과가 적용될 때마다 흡수 효과를 부여합니다.",
+	"enchantment.wonderful_enchantments.mithridatism.description": "특정 부정적인 효과로 인한 피해를 줄이고 부정적 효과가 적용될 때마다 흡수 효과를 부여합니다.",
+	"effect.wonderful_enchantments.mithridatism_protection": "약화 저항력",
+	"wonderful_enchantments.mithridatism_level_up": "약화 효과에 대한 저항력이 증가하였습니다!",
 
 	"enchantment.wonderful_enchantments.sixth_sense": "육감",
-	"enchantment.wonderful_enchantments.sixth_sense.desc": "잠시 동안 움직임을 멈추고 있으면 근처의 적대적인 몹들에게 발광 효과를 부여합니다.",
-	"enchantment.wonderful_enchantments.sixth_sense.description": "잠시 동안 움직임을 멈추고 있으면 근처의 적대적인 몹들에게 발광 효과를 부여합니다.",
+	"enchantment.wonderful_enchantments.sixth_sense.desc": "잠시 동안 움직임을 멈추고 있으면 근처의 몹들에게 발광 효과를 부여합니다.",
+	"enchantment.wonderful_enchantments.sixth_sense.description": "잠시 동안 움직임을 멈추고 있으면 근처의 몹들에게 발광 효과를 부여합니다.",
 
 	"enchantment.wonderful_enchantments.slowness_curse": "둔화 저주",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "플레이어의 이동속도를 감소시킵니다.",
@@ -104,4 +110,13 @@
 	"enchantment.wonderful_enchantments.corrosion_curse": "부식 저주",
 	"enchantment.wonderful_enchantments.corrosion_curse.desc": "플레이어가 물에 닿을 경우 플레이어와 장비의 내구도에 피해를 줍니다.",
 	"enchantment.wonderful_enchantments.corrosion_curse.description": "플레이어가 물에 닿을 경우 플레이어와 장비의 내구도에 피해를 줍니다."
+	
+	"item.wonderful_enchantments.wonderful_book": "마법 부여 주문의 책",
+	"item.wonderful_enchantments.wonderful_book.enchanting_energy": "마법 부여 에너지:",
+	"item.wonderful_enchantments.wonderful_book.enchanting_energy_max": "마법 부여 에너지 최대치!",
+	"item.wonderful_enchantments.wonderful_book.enchanting_cost": "레벨 비용:",
+	"item.wonderful_enchantments.wonderful_book.level": "레벨",
+	"item.wonderful_enchantments.wonderful_book.levels": "레벨",
+	"item.wonderful_enchantments.wonderful_book.hint": "제작대에서 청금석으로 마법 부여 에너지를 높일 수 있습니다.",
+	"item.wonderful_enchantments.wonderful_book.transmute": "마우스 오른쪽 버튼을 누르면 마법이 부여 된 책으로 변환됩니다."
 }
