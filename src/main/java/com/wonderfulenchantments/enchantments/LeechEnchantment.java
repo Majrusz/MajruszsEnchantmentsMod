@@ -2,6 +2,7 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
+import com.mlib.config.DurationConfig;
 import com.mlib.damage.DamageHelper;
 import com.mlib.effects.EffectHelper;
 import com.mlib.enchantments.EnchantmentHelperPlus;
@@ -29,12 +30,15 @@ import java.util.Collection;
 @Mod.EventBusSubscriber
 public class LeechEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig leechChance;
+	protected final DurationConfig maximumDuration;
 
 	public LeechEnchantment() {
 		super( "leech", Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "Leech" );
-		String comment = "Chance for stealing positive effect/health from enemy.";
-		this.leechChance = new DoubleConfig( "leech_chance", comment, false, 0.25, 0.0, 1.0 );
-		this.enchantmentGroup.addConfig( this.leechChance );
+		String chanceComment = "Chance for stealing positive effect/health from enemy.";
+		String durationComment = "Maximum duration in seconds that effect can have.";
+		this.leechChance = new DoubleConfig( "leech_chance", chanceComment, false, 0.25, 0.0, 1.0 );
+		this.maximumDuration = new DurationConfig( "maximum_duration", durationComment, false, 120.0, 0.1, 600.0 );
+		this.enchantmentGroup.addConfigs( this.leechChance, this.maximumDuration );
 
 		setMaximumEnchantmentLevel( 1 );
 		setDifferenceBetweenMinimumAndMaximum( 20 );
@@ -100,7 +104,8 @@ public class LeechEnchantment extends WonderfulEnchantment {
 		for( EffectInstance effect : possibleEffects )
 			if( effect.getPotion()
 				.isBeneficial() ) {
-				EffectHelper.applyEffectIfPossible( stealer, effect );
+				int maximumDurationInTicks = Math.min( effect.getDuration(), Instances.LEECH.maximumDuration.getDuration() );
+				EffectHelper.applyEffectIfPossible( stealer, effect.getPotion(), maximumDurationInTicks, effect.getAmplifier() );
 				target.removePotionEffect( effect.getPotion() );
 
 				return true;
