@@ -91,6 +91,10 @@
 	"effect.wonderful_enchantments.mithridatism_protection": "Mitrydatyzm",
 	"wonderful_enchantments.mithridatism_level_up": "Osiągnięto większą odporność na negatywne efekty!",
 
+	"enchantment.wonderful_enchantments.fuse_cutter": "Przecinak przewodów",
+	"enchantment.wonderful_enchantments.fuse_cutter.desc": "Powoduje, że pobliskie eksplozje nie niszczą bloków oraz nie zadają obrażeń.",
+	"enchantment.wonderful_enchantments.fuse_cutter.description": "Powoduje, że pobliskie eksplozje nie niszczą bloków oraz nie zadają obrażeń.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Zmniejsza prędkość poruszania się gracza.",

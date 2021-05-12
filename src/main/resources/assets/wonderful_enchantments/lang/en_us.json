@@ -87,6 +87,10 @@
 	"effect.wonderful_enchantments.mithridatism_protection": "Mithridatism",
 	"wonderful_enchantments.mithridatism_level_up": "You have developed greater resilience to negative effects!",
 
+	"enchantment.wonderful_enchantments.fuse_cutter": "Fuse Cutter",
+	"enchantment.wonderful_enchantments.fuse_cutter.desc": "Makes nearby explosions do not destroy blocks and not deal any damage.",
+	"enchantment.wonderful_enchantments.fuse_cutter.description": "Makes nearby explosions do not destroy blocks and not deal any damage.",
+
 	"enchantment.wonderful_enchantments.sixth_sense": "Sixth Sense",
 	"enchantment.wonderful_enchantments.sixth_sense.desc": "Highlights nearby monsters after standing still for a while.",
 	"enchantment.wonderful_enchantments.sixth_sense.description": "Highlights nearby monsters after standing still for a while.",
