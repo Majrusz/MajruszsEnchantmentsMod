@@ -87,6 +87,9 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 		AxisAlignedBB axisAligned = new AxisAlignedBB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
 
 		for( LivingEntity livingEntity : player.world.getEntitiesWithinAABB( LivingEntity.class, axisAligned ) ) {
+			if( livingEntity == player )
+				continue;
+
 			CompoundNBT data = livingEntity.getPersistentData();
 			data.putInt( MONSTER_TAG, this.highlightDurationConfig.getDuration() );
 
