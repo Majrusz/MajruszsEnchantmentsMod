@@ -83,10 +83,14 @@
 	
 	"enchantment.wonderful_enchantments.mithridatism": "약화 저항력",
 	"enchantment.wonderful_enchantments.mithridatism.desc": "특정 부정적인 상태 효과로 인한 피해를 줄이고 부정적인 효과가 적용될 때마다 흡수 효과를 부여합니다.",
-	"enchantment.wonderful_enchantments.mithridatism.description": "특정 부정적인 효과로 인한 피해를 줄이고 부정적 효과가 적용될 때마다 흡수 효과를 부여합니다.",
+	"enchantment.wonderful_enchantments.mithridatism.description": "특정 부정적인 효과로 인한 피해를 줄이고 부정적인 효과가 적용될 때마다 흡수 효과를 부여합니다.",
 	"effect.wonderful_enchantments.mithridatism_protection": "약화 저항력",
 	"wonderful_enchantments.mithridatism_level_up": "약화 효과에 대한 저항력이 증가하였습니다!",
 
+	"enchantment.wonderful_enchantments.fuse_cutter": "폭발 차단막",
+	"enchantment.wonderful_enchantments.fuse_cutter.desc": "근처의 폭발이 블록을 파괴하지 않고 피해를 주지 않도록 합니다.",
+	"enchantment.wonderful_enchantments.fuse_cutter.description": "근처의 폭발이 블록을 파괴하지 않고 피해를 주지 않도록 합니다.",
+	
 	"enchantment.wonderful_enchantments.sixth_sense": "육감",
 	"enchantment.wonderful_enchantments.sixth_sense.desc": "잠시 동안 움직임을 멈추고 있으면 근처의 몹들에게 발광 효과를 부여합니다.",
 	"enchantment.wonderful_enchantments.sixth_sense.description": "잠시 동안 움직임을 멈추고 있으면 근처의 몹들에게 발광 효과를 부여합니다.",
