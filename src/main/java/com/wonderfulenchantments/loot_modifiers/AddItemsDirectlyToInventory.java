@@ -16,7 +16,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
@@ -28,7 +27,8 @@ import java.util.List;
 
 /** Functionality of Telekinesis enchantment. */
 public class AddItemsDirectlyToInventory extends LootModifier {
-	private final String TELEKINESIS_TAG = "TelekinesisLastTimeTag";
+	private final String TELEKINESIS_TIME_TAG = "TelekinesisLastTimeTag";
+	private final String TELEKINESIS_POSITION_TAG = "TelekinesisLastPositionTag";
 
 	public AddItemsDirectlyToInventory( ILootCondition[] conditions ) {
 		super( conditions );
@@ -38,18 +38,18 @@ public class AddItemsDirectlyToInventory extends LootModifier {
 	@Override
 	public List< ItemStack > doApply( List< ItemStack > generatedLoot, LootContext context ) {
 		ItemStack tool = context.get( LootParameters.TOOL );
-		if( tool == null )
-			return generatedLoot;
-
+		Vector3d position = context.get( LootParameters.field_237457_g_ );
 		Entity entity = context.get( LootParameters.THIS_ENTITY );
-		if( !( entity instanceof PlayerEntity ) )
+		if( tool == null || position == null || !( entity instanceof PlayerEntity ) )
 			return generatedLoot;
 
 		PlayerEntity player = ( PlayerEntity )entity;
-		if( !isTimeDifferentFromPreviousTelekinesisTick( player ) ) {
+		if( isSameTimeAsPreviousTelekinesisTick( player ) && isSamePosition( player, position ) ) {
 			generatedLoot.clear();
 			return generatedLoot;
 		}
+		updateLastTelekinesisTime( player );
+		updateLastBlockPosition( player, position );
 
 		int harvesterLevel = EnchantmentHelper.getEnchantmentLevel( Instances.HARVESTER, player.getHeldItemMainhand() );
 		Item seedItem = getSeedItem( entity.world, context.get( LootParameters.field_237457_g_ ), context.get( LootParameters.BLOCK_STATE ) );
@@ -64,7 +64,6 @@ public class AddItemsDirectlyToInventory extends LootModifier {
 				output.add( itemStack );
 			}
 		}
-		updateLastTelekinesisTime( player );
 
 		return output;
 	}
@@ -85,14 +84,26 @@ public class AddItemsDirectlyToInventory extends LootModifier {
 	private void updateLastTelekinesisTime( PlayerEntity player ) {
 		World world = player.getEntityWorld();
 		CompoundNBT data = player.getPersistentData();
-		data.putLong( TELEKINESIS_TAG, world.getDayTime() );
+		data.putLong( TELEKINESIS_TIME_TAG, world.getDayTime() );
 	}
 
-	private boolean isTimeDifferentFromPreviousTelekinesisTick( PlayerEntity player ) {
+	private boolean isSameTimeAsPreviousTelekinesisTick( PlayerEntity player ) {
 		World world = player.getEntityWorld();
 		CompoundNBT data = player.getPersistentData();
 
-		return data.getLong( TELEKINESIS_TAG ) != world.getDayTime();
+		return data.getLong( TELEKINESIS_TIME_TAG ) == world.getDayTime();
+	}
+
+	private void updateLastBlockPosition( PlayerEntity player, Vector3d position ) {
+		CompoundNBT data = player.getPersistentData();
+		data.putString( TELEKINESIS_POSITION_TAG, position.toString() );
+	}
+
+	private boolean isSamePosition( PlayerEntity player, Vector3d position ) {
+		CompoundNBT data = player.getPersistentData();
+
+		return data.getString( TELEKINESIS_POSITION_TAG )
+			.equals( position.toString() );
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer< AddItemsDirectlyToInventory > {

@@ -52,7 +52,7 @@ public class SmeltingItems extends LootModifier {
 			.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world )
 			.map( FurnaceRecipe::getRecipeOutput )
 			.filter( i->!i.isEmpty() )
-			.map( i->ItemHandlerHelper.copyStackWithSize( i, i.getCount() * i.getCount() ) )
+			.map( i->ItemHandlerHelper.copyStackWithSize( i, itemStack.getCount() * i.getCount() ) )
 			.orElse( itemStack );
 	}
 
