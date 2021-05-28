@@ -9,7 +9,7 @@ game plenty of new and unique enchantments.
 - [Planet Minecraft](https://www.planetminecraft.com/mod/wonderful-enchantments/)
 
 ## Current Mod Releases (Source Code)
-- [v1.2.0 for Minecraft 1.16.4](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/1.16.4)
+- [v1.3.2 for Minecraft 1.16.4](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/1.16.4)
 - [v0.9.1 for Minecraft 1.16.3](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/old-main/WonderfulEnchantments1-16-3) *(not supported anymore)*
 - [v0.8.1 for Minecraft 1.15.2](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/old-main/WonderfulEnchantments1-15-2) *(not supported anymore)*
 - [v0.6.0 for Minecraft 1.12.2](https://github.com/Majrusz/WonderfulEnchantmentsMod/tree/old-main/WonderfulEnchantments1-12-2) *(not supported anymore)*
