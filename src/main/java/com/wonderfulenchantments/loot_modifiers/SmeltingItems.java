@@ -6,7 +6,9 @@ import com.mlib.Random;
 import com.wonderfulenchantments.Instances;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -39,7 +41,12 @@ public class SmeltingItems extends LootModifier {
 	@Override
 	public List< ItemStack > doApply( List< ItemStack > generatedLoot, LootContext context ) {
 		ItemStack tool = context.get( LootParameters.TOOL );
-		if( tool == null )
+		Entity entity = context.get( LootParameters.THIS_ENTITY );
+		if( tool == null || !( entity instanceof PlayerEntity ) )
+			return generatedLoot;
+
+		PlayerEntity player = ( PlayerEntity )entity;
+		if( player.isCrouching() )
 			return generatedLoot;
 
 		int fortuneLevel = EnchantmentHelper.getEnchantmentLevel( Enchantments.FORTUNE, tool );
