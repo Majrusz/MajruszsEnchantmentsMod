@@ -34,7 +34,7 @@ public class HarvesterEnchantment extends WonderfulEnchantment {
 		this.range = new IntegerConfig( "range", rangeComment, false, 1, 1, 3 );
 		this.durabilityPenalty = new IntegerConfig( "durability_penalty", durabilityComment, false, 1, 1, 10 );
 		this.growChance = new DoubleConfig( "grow_chance", growComment, false, 0.04, 0.0, 1.0 );
-		this.netherWartGrowChance = new DoubleConfig( "nether_wart_grow_chance", wartComment, false, 0.02, 0.0, 1.0 );
+		this.netherWartGrowChance = new DoubleConfig( "nether_wart_grow_chance", wartComment, false, 0.01, 0.0, 1.0 );
 		this.enchantmentGroup.addConfigs( this.range, this.durabilityPenalty, this.growChance, this.netherWartGrowChance );
 
 		setMaximumEnchantmentLevel( 3 );
