@@ -6,6 +6,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.SilkTouchEnchantment;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 /** Enchantment that automatically smelts destroyed blocks. (if possible) */
@@ -39,5 +41,10 @@ public class SmelterEnchantment extends WonderfulEnchantment {
 	@Override
 	public boolean canApplyTogether( Enchantment enchantment ) {
 		return !( enchantment instanceof SilkTouchEnchantment ) && super.canApplyTogether( enchantment );
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable( ItemStack stack ) {
+		return !( stack.getItem() instanceof HoeItem ) && super.canApplyAtEnchantingTable( stack );
 	}
 }
