@@ -34,7 +34,6 @@ public class RegistryHandlerClient {
 	private static float enchantmentBookPredicate( ItemStack itemStack, ClientWorld clientWorld, LivingEntity entity ) {
 		Map< Enchantment, Integer > enchantments = EnchantmentHelper.getEnchantments( itemStack );
 
-		boolean hasWonderfulEnchantment = false;
 		for( Map.Entry< Enchantment, Integer > enchantmentPair : enchantments.entrySet() ) {
 			Enchantment enchantment = enchantmentPair.getKey();
 			ResourceLocation enchantmentLocation = enchantment.getRegistryName();
@@ -42,12 +41,10 @@ public class RegistryHandlerClient {
 				continue;
 
 			String enchantmentName = enchantmentLocation.getNamespace();
-			if( enchantmentName.contains( "wonderful_enchantments" ) ) {
-				hasWonderfulEnchantment = true;
-				break;
-			}
+			if( enchantmentName.contains( "wonderful_enchantments" ) )
+				return 1.0f;
 		}
 
-		return hasWonderfulEnchantment ? 1.0f : 0.0f;
+		return 0.0f;
 	}
 }
