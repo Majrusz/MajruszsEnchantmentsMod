@@ -22,7 +22,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.3.4'
+version = '1.3.5'
 group = 'com.wonderfulenchantments' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'wonderful-enchantments-1.16.4'
 
