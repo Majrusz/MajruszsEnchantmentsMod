@@ -22,11 +22,11 @@ game plenty of new and unique enchantments.
 - [Minecraft Forge API](https://github.com/MinecraftForge/MinecraftForge)
 
 ## Supported languages
-- English
-- Polish
-- Russian (thanks to [@chechnyacool488](https://www.curseforge.com/members/chechnyacool488)) (v0.8.3+)
-- Korean (thanks to [@0골덕0](https://www.curseforge.com/members/kw2341)) (v0.10.1+)
-- Italian (thanks to [@giovyxz_00](https://www.curseforge.com/members/giovyxz_00)) (v0.10.3+)
-- Chinese (thanks to [@Pancakes0228](https://github.com/Pancakes0228)) (v1.0.4+)
-- Spanish (thanks to [@crafting-Aaron](https://github.com/crafting-Aaron)) (v1.0.4+)
-- French (thanks to [@Coliop](https://www.curseforge.com/member/coliop/)) (v1.3.3+)
+1. **English**
+2. **Polish**
+3. **Russian** (thanks to [@chechnyacool488](https://www.curseforge.com/members/chechnyacool488)) (v0.8.3+)
+4. **Korean** (thanks to [@0골덕0](https://www.curseforge.com/members/kw2341)) (v0.10.1+)
+5. **Italian** (thanks to [@giovyxz_00](https://www.curseforge.com/members/giovyxz_00)) (v0.10.3+)
+6. **Chinese** (thanks to [@Pancakes0228](https://github.com/Pancakes0228)) (v1.0.4+)
+7. **Spanish** (thanks to [@crafting-Aaron](https://github.com/crafting-Aaron)) (v1.0.4+)
+8. **French** (thanks to [@Coliop](https://www.curseforge.com/member/coliop/)) (v1.3.3+)
