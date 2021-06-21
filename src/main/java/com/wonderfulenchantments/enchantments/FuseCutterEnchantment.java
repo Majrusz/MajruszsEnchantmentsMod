@@ -61,7 +61,7 @@ public class FuseCutterEnchantment extends WonderfulEnchantment {
 				livingEntity.getItemStackFromSlot( EquipmentSlotType.OFFHAND )
 			);
 
-			if( Math.max( offHandEnchantmentLevel, mainHandEnchantmentLevel ) > 0 )
+			if( livingEntity.isHandActive() && Math.max( offHandEnchantmentLevel, mainHandEnchantmentLevel ) > 0 )
 				return 1;
 		}
 
