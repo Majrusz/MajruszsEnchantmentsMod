@@ -93,8 +93,8 @@ public class DodgeEnchantment extends WonderfulEnchantment {
 		for( double d = 0.0; d < 3.0; d++ ) {
 			Vector3d emitterPosition = new Vector3d( 0.0, entity.getHeight() * 0.25 * ( d + 1.0 ), 0.0 ).add( entity.getPositionVec() );
 			for( int i = 0; i < 2; i++ )
-				world.spawnParticle( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, emitterPosition.getX(), emitterPosition.getY(),
-					emitterPosition.getZ(), 16 * i, 0.125, 0.0, 0.125, 0.075
+				world.spawnParticle( i == 0 ? ParticleTypes.CAMPFIRE_COSY_SMOKE : ParticleTypes.LARGE_SMOKE, emitterPosition.getX(), emitterPosition.getY(),
+					emitterPosition.getZ(), 8 * ( i+1 ), 0.125, 0.0, 0.125, ( i == 0 ? 0.1 : 0.4 ) * 0.075
 				);
 		}
 		world.playSound( null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE,
