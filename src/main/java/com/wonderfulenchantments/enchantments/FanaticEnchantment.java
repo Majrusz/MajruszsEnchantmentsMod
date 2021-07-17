@@ -31,23 +31,32 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 @Mod.EventBusSubscriber
 public class FanaticEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig levelIncreaseChanceMultiplier;
+	protected final DoubleConfig highLevelIncreaseChanceMultiplier;
 	protected final DoubleConfig extraLootChance;
 	protected final DoubleConfig rainingMultiplier;
 	protected final DoubleConfig damageBonus;
 
 	public FanaticEnchantment() {
 		super( "fishing_fanatic", Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, EquipmentSlotType.MAINHAND, "FishingFanatic" );
-		String increase_comment = "Chance for increasing enchantment level per difference to maximum level. (for example if this value is equal 0.01 then to get 1st level you will have 6 * 0.01 = 6% chance, to get 2nd level ( 6-1 ) * 0.01 = 5% chance )";
-		String loot_comment = "Independent chance for extra loot with every enchantment level.";
-		String raining_comment = "Chance multiplier when player is fishing while it is raining.";
-		String damage_comment = "Damage increase with every level.";
-		this.levelIncreaseChanceMultiplier = new DoubleConfig( "level_increase_chance", increase_comment, false, 0.01, 0.01, 0.15 );
-		this.extraLootChance = new DoubleConfig( "extra_loot_chance", loot_comment, false, 0.33333, 0.01, 1.0 );
-		this.rainingMultiplier = new DoubleConfig( "raining_multiplier", raining_comment, false, 2.0, 1.0, 10.0 );
-		this.damageBonus = new DoubleConfig( "damage_bonus", damage_comment, false, 1.0, 0.0, 5.0 );
-		this.enchantmentGroup.addConfigs( this.levelIncreaseChanceMultiplier, this.extraLootChance, this.rainingMultiplier, this.damageBonus );
 
-		setMaximumEnchantmentLevel( 6 );
+		String increaseComment = "Chance for increasing enchantment level per every missing level to 6th level. (for example if this value is equal 0.01 then to get 1st level you have 6 * 0.01 = 6% chance, to get 2nd level ( 6-1 ) * 0.01 = 5% chance)";
+		this.levelIncreaseChanceMultiplier = new DoubleConfig( "level_increase_chance", increaseComment, false, 0.01, 0.01, 0.15 );
+
+		String highIncreaseComment = "Chance for increasing enchantment level per every missing level from 6th to 8th level. (for example if this value is equal 0.001 then to get 7th level you have 2 * 0.002 = 0.4% chance and to get 8th level 1 * 0.002 = 0.2% chance)";
+		this.highLevelIncreaseChanceMultiplier = new DoubleConfig( "high_level_increase_chance", highIncreaseComment, false, 0.002, 0.01, 0.15 );
+
+		String lootComment = "Independent chance for extra loot with every enchantment level.";
+		this.extraLootChance = new DoubleConfig( "extra_loot_chance", lootComment, false, 0.33333, 0.01, 1.0 );
+
+		String rainingComment = "Chance multiplier when player is fishing while it is raining.";
+		this.rainingMultiplier = new DoubleConfig( "raining_multiplier", rainingComment, false, 2.0, 1.0, 10.0 );
+
+		String damageComment = "Amount of extra damage dealt by the fishing rod for every enchantment level.";
+		this.damageBonus = new DoubleConfig( "damage_bonus", damageComment, false, 1.0, 0.0, 5.0 );
+
+		this.enchantmentGroup.addConfigs( this.levelIncreaseChanceMultiplier, this.highLevelIncreaseChanceMultiplier, this.extraLootChance, this.rainingMultiplier, this.damageBonus );
+
+		setMaximumEnchantmentLevel( 8 );
 		setDifferenceBetweenMinimumAndMaximum( 20 );
 		setMinimumEnchantabilityCalculator( level->( 10 * level ) );
 	}
@@ -165,6 +174,15 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		world.addEntity( itemEntity );
 	}
 
+	/** Returns a chance to increase Fishing Fanatic level. */
+	protected static double getIncreaseChance( FanaticEnchantment enchantment, int level ) {
+		if( level < 6 ) {
+			return ( 6 - level ) * enchantment.levelIncreaseChanceMultiplier.get();
+		} else {
+			return ( enchantment.getMaxLevel() - level ) * enchantment.highLevelIncreaseChanceMultiplier.get();
+		}
+	}
+
 	/**
 	 Trying to increase level when player is fishing. Chance is increased when it is raining.
 
@@ -176,7 +194,8 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	protected static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player, boolean isRaining ) {
 		FanaticEnchantment enchantment = Instances.FISHING_FANATIC;
 		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( enchantment, player );
-		double increaseChance = ( enchantment.getMaxLevel() - enchantmentLevel ) * enchantment.levelIncreaseChanceMultiplier.get();
+		double increaseChance = getIncreaseChance( enchantment, enchantmentLevel );
+		MajruszLibrary.LOGGER.info( increaseChance );
 
 		if( isRaining )
 			increaseChance *= enchantment.rainingMultiplier.get();
