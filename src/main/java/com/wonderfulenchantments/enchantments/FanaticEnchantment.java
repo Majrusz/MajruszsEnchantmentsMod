@@ -7,7 +7,9 @@ import com.google.common.collect.Multisets;
 import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
+import com.mlib.config.IntegerConfig;
 import com.wonderfulenchantments.Instances;
+import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.CreatureAttribute;
@@ -19,6 +21,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.*;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -27,14 +30,17 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
-/** Enchantment that increases loot from fishing. */
+/** Enchantment that increases quality and quantity of loot gathered from fishing. */
 @Mod.EventBusSubscriber
 public class FanaticEnchantment extends WonderfulEnchantment {
+	private static final ResourceLocation SPECIAL_LOOT_TABLE = WonderfulEnchantments.getLocation( "gameplay/fishing/fishing_fanatic_extra" );
 	protected final DoubleConfig levelIncreaseChanceMultiplier;
 	protected final DoubleConfig highLevelIncreaseChanceMultiplier;
 	protected final DoubleConfig extraLootChance;
 	protected final DoubleConfig rainingMultiplier;
 	protected final DoubleConfig damageBonus;
+	protected final IntegerConfig specialDropMinimumLevel;
+	protected final DoubleConfig specialDropChance;
 
 	public FanaticEnchantment() {
 		super( "fishing_fanatic", Rarity.UNCOMMON, EnchantmentType.FISHING_ROD, EquipmentSlotType.MAINHAND, "FishingFanatic" );
@@ -54,7 +60,15 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		String damageComment = "Amount of extra damage dealt by the fishing rod for every enchantment level.";
 		this.damageBonus = new DoubleConfig( "damage_bonus", damageComment, false, 1.0, 0.0, 5.0 );
 
-		this.enchantmentGroup.addConfigs( this.levelIncreaseChanceMultiplier, this.highLevelIncreaseChanceMultiplier, this.extraLootChance, this.rainingMultiplier, this.damageBonus );
+		String minimumComment = "Minimum required level of Fishing Fanatic to have a chance to drop special items.";
+		this.specialDropMinimumLevel = new IntegerConfig( "special_minimum_level", minimumComment, false, 6, 1, 8 );
+
+		String specialComment = "Chance to drop special items instead of regular one. (chance is separate for each item)";
+		this.specialDropChance = new DoubleConfig( "special_drop_chance", specialComment, false, 0.05, 0.0, 1.0 );
+
+		this.enchantmentGroup.addConfigs( this.levelIncreaseChanceMultiplier, this.highLevelIncreaseChanceMultiplier, this.extraLootChance,
+			this.rainingMultiplier, this.damageBonus, this.specialDropMinimumLevel, this.specialDropChance
+		);
 
 		setMaximumEnchantmentLevel( 8 );
 		setDifferenceBetweenMinimumAndMaximum( 20 );
@@ -63,7 +77,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 
 	@Override
 	public float calcDamageByCreature( int level, CreatureAttribute creature ) {
-		return ( float )( level * Instances.FISHING_FANATIC.damageBonus.get() );
+		return ( float )( level * this.damageBonus.get() );
 	}
 
 	/** Method that displays enchantment name. It is overridden because at maximum level the enchantment will change its name. */
@@ -71,11 +85,10 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	public ITextComponent getDisplayName( int level ) {
 		if( level == this.getMaxLevel() ) {
 			IFormattableTextComponent output = new TranslationTextComponent( "wonderful_enchantments.true_level" );
-			output.appendString( " " );
-			output.append( new TranslationTextComponent( this.getName() ) );
-			output.mergeStyle( TextFormatting.GRAY );
 
-			return output;
+			return output.appendString( " " )
+				.append( new TranslationTextComponent( this.getName() ) )
+				.mergeStyle( TextFormatting.GRAY );
 		}
 
 		return super.getDisplayName( level );
