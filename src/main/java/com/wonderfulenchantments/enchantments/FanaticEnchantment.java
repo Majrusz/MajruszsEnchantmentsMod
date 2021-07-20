@@ -63,7 +63,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		this.damageBonus = new DoubleConfig( "damage_bonus", damageComment, false, 1.0, 0.0, 5.0 );
 
 		String minimumComment = "Minimum required level of Fishing Fanatic to have a chance to drop special items.";
-		this.specialDropMinimumLevel = new IntegerConfig( "special_minimum_level", minimumComment, false, 6, 1, 8 );
+		this.specialDropMinimumLevel = new IntegerConfig( "special_minimum_level", minimumComment, false, 7, 1, 8 );
 
 		String specialComment = "Chance to drop special items instead of regular one. (chance is separate for each item)";
 		this.specialDropChance = new DoubleConfig( "special_drop_chance", specialComment, false, 0.05, 0.0, 1.0 );
