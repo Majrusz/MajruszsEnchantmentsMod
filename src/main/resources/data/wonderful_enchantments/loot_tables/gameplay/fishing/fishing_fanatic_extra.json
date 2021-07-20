@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 50,
+          "weight": 40,
           "name": "minecraft:emerald"
         },
         {
@@ -18,6 +18,16 @@
           "type": "minecraft:loot_table",
           "weight": 10,
           "name": "minecraft:gameplay/fishing/treasure"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:shield",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
@@ -41,7 +51,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:gold_horse_armor",
+          "name": "minecraft:golden_horse_armor",
           "weight": 3,
           "functions": [
             {
