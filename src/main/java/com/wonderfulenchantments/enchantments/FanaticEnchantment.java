@@ -22,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.*;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -106,7 +107,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		World world = player.getEntityWorld();
 		FanaticEnchantment enchantment = Instances.FISHING_FANATIC;
 		LootContext lootContext = generateLootContext( player );
-		LootTable lootTable = getFishingLootTable();
+		LootTable standardLootTable = getFishingLootTable(), specialLootTable = getLootTable( SPECIAL_LOOT_TABLE );
 		int fanaticLevel = EnchantmentHelper.getMaxEnchantmentLevel( enchantment, player );
 
 		Multiset< String > rewards = HashMultiset.create();
@@ -118,7 +119,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		int extraRewardsCounter = 0;
 		for( int i = 0; i < fanaticLevel && enchantment.availabilityConfig.isEnabled(); i++ )
 			if( Random.tryChance( enchantment.extraLootChance.get() ) )
-				for( ItemStack extraReward : lootTable.generate( lootContext ) ) {
+				for( ItemStack extraReward : standardLootTable.generate( lootContext ) ) {
 					spawnReward( extraReward, player, world, event.getHookEntity() );
 
 					rewards.add( extraReward.getDisplayName()
@@ -141,11 +142,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		) );
 	}
 
-	/**
-	 Generating loot context at which player was fishing. (tool, position etc.)
-
-	 @param player Player for which context will be generated.
-	 */
+	/** Generates fishing loot context for given player. */
 	protected static LootContext generateLootContext( PlayerEntity player ) {
 		LootContext.Builder lootContextBuilder = new LootContext.Builder( ( ServerWorld )player.getEntityWorld() );
 		lootContextBuilder.withParameter( LootParameters.TOOL, player.getHeldItemMainhand() )
@@ -156,44 +153,30 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		return lootContextBuilder.build( LootParameterSets.FISHING );
 	}
 
-	/** Method that returns fishing loot table. (possible items to get) */
-	protected static LootTable getFishingLootTable() {
+	/** Returns loot table at given resource location. (possible items to get) */
+	protected static LootTable getLootTable( ResourceLocation location ) {
 		return ServerLifecycleHooks.getCurrentServer()
 			.getLootTableManager()
-			.getLootTableFromLocation( LootTables.GAMEPLAY_FISHING );
+			.getLootTableFromLocation( location );
 	}
 
-	/**
-	 Spawning extra reward in world.
+	/** Returns fishing loot table. (possible items to get) */
+	protected static LootTable getFishingLootTable() {
+		return getLootTable( LootTables.GAMEPLAY_FISHING );
+	}
 
-	 @param reward       Item stack that player will receive.
-	 @param player       Player that receive extra reward.
-	 @param world        World where the player is fishing.
-	 @param bobberEntity Fishing bobber where item will be spawned.
-	 */
+	/** Spawns item entity in the world and sets motion towards the player. */
 	protected static void spawnReward( ItemStack reward, PlayerEntity player, World world, FishingBobberEntity bobberEntity ) {
-		ItemEntity itemEntity = new ItemEntity( world, bobberEntity.getPosX() + 0.50 * MajruszLibrary.RANDOM.nextDouble(),
-			bobberEntity.getPosY() + 0.25 * MajruszLibrary.RANDOM.nextDouble(), bobberEntity.getPosZ() + 0.50 * MajruszLibrary.RANDOM.nextDouble(),
-			reward
-		);
+		Vector3d spawnPosition = bobberEntity.getPositionVec()
+			.add( Random.getRandomVector3d( -0.25, 0.25, 0.125, 0.5, -0.25, 0.25 ) );
 
-		double deltaX = player.getPosX() - itemEntity.getPosX();
-		double deltaY = player.getPosY() - itemEntity.getPosY();
-		double deltaZ = player.getPosZ() - itemEntity.getPosZ();
-		itemEntity.setMotion( 0.1 * deltaX,
-			0.1 * deltaY + Math.pow( Math.pow( deltaX, 2 ) + Math.pow( deltaY, 2 ) + Math.pow( deltaZ, 2 ), 0.25 ) * 0.08, 0.1 * deltaZ
-		);
+		ItemEntity itemEntity = new ItemEntity( world, spawnPosition.x, spawnPosition.y, spawnPosition.z, reward );
+		Vector3d motion = player.getPositionVec()
+			.subtract( itemEntity.getPositionVec() )
+			.mul( 0.1, 0.1, 0.1 );
 
+		itemEntity.setMotion( motion.add( 0.0, Math.pow( motion.squareDistanceTo( 0.0, 0.0, 0.0 ), 0.5 ) * 0.25, 0.0 ) );
 		world.addEntity( itemEntity );
-	}
-
-	/** Returns a chance to increase Fishing Fanatic level. */
-	protected static double getIncreaseChance( FanaticEnchantment enchantment, int level ) {
-		if( level < 6 ) {
-			return ( 6 - level ) * enchantment.levelIncreaseChanceMultiplier.get();
-		} else {
-			return ( enchantment.getMaxLevel() - level ) * enchantment.highLevelIncreaseChanceMultiplier.get();
-		}
 	}
 
 	/**
@@ -207,11 +190,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	protected static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player, boolean isRaining ) {
 		FanaticEnchantment enchantment = Instances.FISHING_FANATIC;
 		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( enchantment, player );
-		double increaseChance = getIncreaseChance( enchantment, enchantmentLevel );
-		MajruszLibrary.LOGGER.info( increaseChance );
-
-		if( isRaining )
-			increaseChance *= enchantment.rainingMultiplier.get();
+		double increaseChance = enchantment.getChanceForLevelIncrease( enchantmentLevel, isRaining );
 
 		if( Random.tryChance( increaseChance ) && !enchantment.isDisabled() ) {
 			ItemStack fishingRod = player.getHeldItemMainhand();
@@ -239,12 +218,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		return false;
 	}
 
-	/**
-	 Displaying information on screen for player when he fished more than one item.
-
-	 @param rewards Rewards that player get.
-	 @param player  Player that will see the notification.
-	 */
+	/** Displays custom information on player's screen about fished items. */
 	protected static void notifyPlayerAboutRewards( Multiset< String > rewards, PlayerEntity player ) {
 		StringTextComponent message = new StringTextComponent( TextFormatting.WHITE + "(" );
 
@@ -263,5 +237,17 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 
 		message.append( new StringTextComponent( TextFormatting.WHITE + ")" ) );
 		player.sendStatusMessage( message, true );
+	}
+
+	/** Returns a chance to increase Fishing Fanatic level. */
+	protected double getChanceForLevelIncrease( int level, boolean isRaining ) {
+		double baseChance;
+		if( level < 6 ) {
+			baseChance = ( 6 - level ) * this.levelIncreaseChanceMultiplier.get();
+		} else {
+			baseChance = ( this.getMaxLevel() - level ) * this.highLevelIncreaseChanceMultiplier.get();
+		}
+
+		return baseChance * ( isRaining ? this.rainingMultiplier.get() : 1.0 );
 	}
 }
