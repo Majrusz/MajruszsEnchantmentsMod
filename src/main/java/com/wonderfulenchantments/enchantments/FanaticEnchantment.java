@@ -20,6 +20,7 @@ import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.*;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
@@ -49,7 +50,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		String increaseComment = "Chance for increasing enchantment level per every missing level to 6th level. (for example if this value is equal 0.01 then to get 1st level you have 6 * 0.01 = 6% chance, to get 2nd level ( 6-1 ) * 0.01 = 5% chance)";
 		this.levelIncreaseChanceMultiplier = new DoubleConfig( "level_increase_chance", increaseComment, false, 0.01, 0.01, 0.15 );
 
-		String highIncreaseComment = "Chance for increasing enchantment level per every missing level from 6th to 8th level. (for example if this value is equal 0.001 then to get 7th level you have 2 * 0.002 = 0.4% chance and to get 8th level 1 * 0.002 = 0.2% chance)";
+		String highIncreaseComment = "Chance for increasing enchantment level per every missing level from 6th to 8th level. (for example if this value is equal 0.002 then to get 7th level you have 2 * 0.002 = 0.4% chance and to get 8th level 1 * 0.002 = 0.2% chance)";
 		this.highLevelIncreaseChanceMultiplier = new DoubleConfig( "high_level_increase_chance", highIncreaseComment, false, 0.002, 0.01, 0.15 );
 
 		String lootComment = "Independent chance for extra loot with every enchantment level.";
@@ -100,7 +101,6 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		return true;
 	}
 
-	/** Event that increase loot if all conditions were met. */
 	@SubscribeEvent
 	public static void onFishedItem( ItemFishedEvent event ) {
 		PlayerEntity player = event.getPlayer();
@@ -118,26 +118,27 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 
 		int extraRewardsCounter = 0;
 		for( int i = 0; i < fanaticLevel && enchantment.availabilityConfig.isEnabled(); i++ )
-			if( Random.tryChance( enchantment.extraLootChance.get() ) )
-				for( ItemStack extraReward : standardLootTable.generate( lootContext ) ) {
+			if( Random.tryChance( enchantment.extraLootChance.get() ) ) {
+				LootTable lootTable = enchantment.shouldDropSpecialLoot( fanaticLevel ) ? specialLootTable : standardLootTable;
+				for( ItemStack extraReward : lootTable.generate( lootContext ) ) {
 					spawnReward( extraReward, player, world, event.getHookEntity() );
 
 					rewards.add( extraReward.getDisplayName()
 						.getString() );
 					extraRewardsCounter++;
 				}
+			}
 
 		boolean isRaining = ( world instanceof ServerWorld && world.isRaining() );
-		if( tryIncreaseFishingFanaticLevel( player, isRaining ) )
+		if( tryIncreaseFishingFanaticLevel( player, isRaining ) ) {
 			player.sendStatusMessage( new TranslationTextComponent( "wonderful_enchantments.fanatic_level_up" ).mergeStyle( TextFormatting.BOLD ),
 				true
 			);
-
-		else if( rewards.size() > 1 )
+		} else if( rewards.size() > 1 )
 			notifyPlayerAboutRewards( rewards, player );
 
 		event.damageRodBy( event.getRodDamage() + extraRewardsCounter );
-		world.addEntity( new ExperienceOrbEntity( world, player.getPosX(), player.getPosY() + 0.5D, player.getPosZ() + 0.5D,
+		world.addEntity( new ExperienceOrbEntity( world, player.getPosX(), player.getPosY() + 0.5, player.getPosZ() + 0.5,
 			extraRewardsCounter + MajruszLibrary.RANDOM.nextInt( 2 * extraRewardsCounter + 1 )
 		) );
 	}
@@ -180,19 +181,15 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	}
 
 	/**
-	 Trying to increase level when player is fishing. Chance is increased when it is raining.
-
-	 @param player    Player that is currently fishing.
-	 @param isRaining Flag that tells if it is currently raining.
+	 Tries to increase level after player fished an item. Chance is higher when it is raining.
 
 	 @return Returns whether the level was increased or not.
 	 */
 	protected static boolean tryIncreaseFishingFanaticLevel( PlayerEntity player, boolean isRaining ) {
 		FanaticEnchantment enchantment = Instances.FISHING_FANATIC;
 		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( enchantment, player );
-		double increaseChance = enchantment.getChanceForLevelIncrease( enchantmentLevel, isRaining );
 
-		if( Random.tryChance( increaseChance ) && !enchantment.isDisabled() ) {
+		if( enchantment.shouldLevelBeIncreased( enchantmentLevel, isRaining ) ) {
 			ItemStack fishingRod = player.getHeldItemMainhand();
 
 			if( enchantmentLevel == 0 )
@@ -200,14 +197,15 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 			else {
 				ListNBT nbt = fishingRod.getEnchantmentTagList();
 
-				for( int i = 0; i < nbt.size(); ++i )
-					if( nbt.getCompound( i )
-						.getString( "id" )
-						.contains( "fishing_fanatic" ) ) {
-						nbt.getCompound( i )
-							.putInt( "lvl", enchantmentLevel + 1 );
+				for( int i = 0; i < nbt.size(); ++i ) {
+					CompoundNBT enchantmentData = nbt.getCompound( i );
+					String enchantmentID = enchantmentData.getString( "id" );
+
+					if( enchantmentID.contains( "fishing_fanatic" ) ) {
+						enchantmentData.putInt( "lvl", enchantmentLevel + 1 );
 						break;
 					}
+				}
 
 				fishingRod.setTagInfo( "Enchantments", nbt );
 			}
@@ -240,14 +238,26 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	}
 
 	/** Returns a chance to increase Fishing Fanatic level. */
-	protected double getChanceForLevelIncrease( int level, boolean isRaining ) {
-		double baseChance;
+	protected double getChanceForLevelIncrease( int level ) {
 		if( level < 6 ) {
-			baseChance = ( 6 - level ) * this.levelIncreaseChanceMultiplier.get();
+			return ( 6 - level ) * this.levelIncreaseChanceMultiplier.get();
 		} else {
-			baseChance = ( this.getMaxLevel() - level ) * this.highLevelIncreaseChanceMultiplier.get();
+			return  ( this.getMaxLevel() - level ) * this.highLevelIncreaseChanceMultiplier.get();
 		}
+	}
 
-		return baseChance * ( isRaining ? this.rainingMultiplier.get() : 1.0 );
+	/** Returns a chance to increase Fishing Fanatic level. (and multiplies it by config value if it is raining) */
+	protected double getChanceForLevelIncrease( int level, boolean isRaining ) {
+		return getChanceForLevelIncrease( level ) * ( isRaining ? this.rainingMultiplier.get() : 1.0 );
+	}
+
+	/** Returns whether level should be increased after fishing an item. */
+	protected boolean shouldLevelBeIncreased( int currentLevel, boolean isRaining ) {
+		return !isDisabled() && Random.tryChance( this.getChanceForLevelIncrease( currentLevel, isRaining ) );
+	}
+
+	/** Returns whether current drop should be generated from special loot table. */
+	protected boolean shouldDropSpecialLoot( int level ) {
+		return this.specialDropMinimumLevel.get() <= level && Random.tryChance( this.specialDropChance.get() );
 	}
 }
