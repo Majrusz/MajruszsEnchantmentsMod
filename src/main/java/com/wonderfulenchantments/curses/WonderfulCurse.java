@@ -21,9 +21,10 @@ public class WonderfulCurse extends ExtendedCurse {
 		String configName
 	) {
 		super( registerName, rarity, enchantmentType, equipmentSlotTypes );
-		String comment = "Makes this curse obtainable in survival mode.";
 
 		this.curseGroup = CURSE_GROUP.addGroup( new ConfigGroup( configName, "" ) );
+
+		String comment = "Makes this curse obtainable in survival mode.";
 		this.availabilityConfig = this.curseGroup.addConfig( new AvailabilityConfig( "is_enabled", comment, false, true ) );
 
 		CURSE_LIST.add( this );

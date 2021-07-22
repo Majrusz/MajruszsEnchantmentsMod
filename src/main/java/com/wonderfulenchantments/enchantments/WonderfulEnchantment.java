@@ -21,9 +21,10 @@ public class WonderfulEnchantment extends ExtendedEnchantment {
 		String configName
 	) {
 		super( registerName, rarity, enchantmentType, equipmentSlotTypes );
-		String comment = "Makes this enchantment obtainable in survival mode.";
 
 		this.enchantmentGroup = ENCHANTMENT_GROUP.addGroup( new ConfigGroup( configName, "" ) );
+
+		String comment = "Makes this enchantment obtainable in survival mode.";
 		this.availabilityConfig = this.enchantmentGroup.addConfig( new AvailabilityConfig( "is_enabled", comment, false, true ) );
 
 		ENCHANTMENT_LIST.add( this );
