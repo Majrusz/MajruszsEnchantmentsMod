@@ -1,70 +1,70 @@
 package com.wonderfulenchantments.particles;
 
 import com.mlib.MajruszLibrary;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 /** Particles created when entity falls with Phoenix Dive enchanment. */
 @OnlyIn( Dist.CLIENT )
-public class PhoenixParticle extends SpriteTexturedParticle {
-	public PhoenixParticle( ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed ) {
-		super( world, x, y, z, xSpeed, ySpeed, zSpeed );
-		this.motionX = this.motionX * 0.01D + xSpeed;
-		this.motionY = this.motionY * 0.01D + ySpeed * 0.0D;
-		this.motionZ = this.motionZ * 0.01D + zSpeed;
+public class PhoenixParticle extends TextureSheetParticle {
+	public PhoenixParticle( ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed ) {
+		super( level, x, y, z, xSpeed, ySpeed, zSpeed );
+		this.xd = this.xd * 0.01D + xSpeed;
+		this.yd = this.yd * 0.01D + ySpeed * 0.0D;
+		this.zd = this.zd * 0.01D + zSpeed;
 
-		this.maxAge = ( 20 + MajruszLibrary.RANDOM.nextInt( 10 ) );
+		this.lifetime = ( 20 + MajruszLibrary.RANDOM.nextInt( 10 ) );
 	}
 
 	@Override
-	public float getScale( float scaleFactor ) {
-		float factor = ( ( float )this.age + scaleFactor ) / ( float )this.maxAge;
-		return this.particleScale * ( 1.0F - factor * 0.5F );
+	public float getQuadSize( float sizeFactor ) {
+		float factor = ( ( float )this.age + sizeFactor ) / ( float )this.lifetime;
+		return this.quadSize * ( 1.0F - factor * 0.5F );
 	}
 
 	@Override
 	public void tick() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
 
-		if( this.age++ >= this.maxAge )
-			this.setExpired();
+		if( this.age++ >= this.lifetime )
+			this.remove();
 
 		else {
-			this.move( this.motionX, this.motionY, this.motionZ );
-			this.motionX *= 0.75D;
-			this.motionY *= 0.75D;
-			this.motionZ *= 0.75D;
+			this.move( this.xd, this.yd, this.zd );
+			this.xd *= 0.75D;
+			this.yd *= 0.75D;
+			this.zd *= 0.75D;
 			if( this.onGround ) {
-				this.motionX *= 0.5D;
-				this.motionZ *= 0.5D;
+				this.xd *= 0.5D;
+				this.zd *= 0.5D;
 			}
 		}
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() {
-		return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
 	}
 
 	@OnlyIn( Dist.CLIENT )
-	public static class Factory implements IParticleFactory< BasicParticleType > {
-		private final IAnimatedSprite spriteSet;
+	public static class Factory implements ParticleProvider< SimpleParticleType > {
+		private final SpriteSet spriteSet;
 
-		public Factory( IAnimatedSprite sprite ) {
+		public Factory( SpriteSet sprite ) {
 			this.spriteSet = sprite;
 		}
 
 		@Override
-		public Particle makeParticle( BasicParticleType type, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed,
+		public Particle createParticle( SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed,
 			double zSpeed
 		) {
-			PhoenixParticle particle = new PhoenixParticle( world, x, y, z, xSpeed, ySpeed, zSpeed );
-			particle.selectSpriteRandomly( this.spriteSet );
+			PhoenixParticle particle = new PhoenixParticle( level, x, y, z, xSpeed, ySpeed, zSpeed );
+			particle.pickSprite( this.spriteSet );
 
 			return particle;
 		}
