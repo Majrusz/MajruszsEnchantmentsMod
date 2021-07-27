@@ -3,8 +3,8 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.config.AvailabilityConfig;
 import com.mlib.config.ConfigGroup;
 import com.mlib.enchantments.ExtendedEnchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,10 @@ public class WonderfulEnchantment extends ExtendedEnchantment {
 	protected final ConfigGroup enchantmentGroup;
 	protected final AvailabilityConfig availabilityConfig;
 
-	protected WonderfulEnchantment( String registerName, Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType[] equipmentSlotTypes,
+	protected WonderfulEnchantment( String registerName, Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot[] equipmentSlots,
 		String configName
 	) {
-		super( registerName, rarity, enchantmentType, equipmentSlotTypes );
+		super( registerName, rarity, enchantmentCategory, equipmentSlots );
 
 		this.enchantmentGroup = ENCHANTMENT_GROUP.addGroup( new ConfigGroup( configName, "" ) );
 
@@ -30,10 +30,10 @@ public class WonderfulEnchantment extends ExtendedEnchantment {
 		ENCHANTMENT_LIST.add( this );
 	}
 
-	protected WonderfulEnchantment( String registerName, Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType equipmentSlotType,
+	protected WonderfulEnchantment( String registerName, Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot equipmentSlotType,
 		String configName
 	) {
-		this( registerName, rarity, enchantmentType, new EquipmentSlotType[]{ equipmentSlotType }, configName );
+		this( registerName, rarity, enchantmentCategory, new EquipmentSlot[]{ equipmentSlotType }, configName );
 	}
 
 	@Override
