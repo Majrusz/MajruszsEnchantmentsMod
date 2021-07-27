@@ -11,6 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 public class ParticleUtil {
 	@SubscribeEvent
 	public static void registerParticles( ParticleFactoryRegisterEvent event ) {
-		Minecraft.getInstance().particles.registerFactory( RegistryHandler.PHOENIX_PARTICLE.get(), PhoenixParticle.Factory::new );
+		Minecraft.getInstance().particleEngine.register( RegistryHandler.PHOENIX_PARTICLE.get(), PhoenixParticle.Factory::new );
 	}
 }
