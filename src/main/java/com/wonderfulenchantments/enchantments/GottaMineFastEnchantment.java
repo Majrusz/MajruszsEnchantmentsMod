@@ -5,20 +5,20 @@ import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.PacketHandler;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -33,7 +33,7 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	protected boolean isMining = false;
 
 	public GottaMineFastEnchantment() {
-		super( "gotta_mine_fast", Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "GottaMineFast" );
+		super( "gotta_mine_fast", Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND, "GottaMineFast" );
 		String exponent_comment = "Duration is raised to this exponent. (for example exponent = 1.5 and after two minutes bonus is equal 2.0 ^ 1.5 = 2.82 (total 3.82))";
 		String duration_comment = "Maximum duration increasing mining speed. (in seconds)";
 		this.exponent = new DoubleConfig( "exponent", exponent_comment, false, 1.5849625007, 1.01, 5.0 );
@@ -55,11 +55,11 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	/** Event that increases ticks when player is holding left mouse button. */
 	@SubscribeEvent
 	public static void onUpdate( TickEvent.PlayerTickEvent event ) {
-		PlayerEntity player = event.player;
-		if( player.world instanceof ServerWorld )
+		Player player = event.player;
+		if( player.level instanceof ServerLevel )
 			return;
 
-		CompoundNBT data = player.getPersistentData();
+		CompoundTag data = player.getPersistentData();
 		data.putInt( COUNTER_TAG, Instances.GOTTA_MINE_FAST.isMining ? data.getInt( COUNTER_TAG ) + 1 : 0 );
 		Instances.GOTTA_MINE_FAST.counter = ( Instances.GOTTA_MINE_FAST.counter + 1 ) % 20;
 
@@ -70,9 +70,9 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	/** Event that increases damage dealt to block each tick when player is holding left mouse button and have this enchantment. */
 	@SubscribeEvent
 	public static void onBreakingBlock( PlayerEvent.BreakSpeed event ) {
-		PlayerEntity player = event.getPlayer();
-		CompoundNBT data = player.getPersistentData();
-		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( Instances.GOTTA_MINE_FAST, player );
+		Player player = event.getPlayer();
+		CompoundTag data = player.getPersistentData();
+		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( Instances.GOTTA_MINE_FAST, player );
 
 		if( enchantmentLevel > 0 ) {
 			if( getMiningMultiplier( player ) > 0.0f )
@@ -89,9 +89,9 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 
 	 @return Returns multiplier which represents how fast the player will mine the block. (2.0f will mean twice as fast)
 	 */
-	protected static float getMiningMultiplier( PlayerEntity player ) {
+	protected static float getMiningMultiplier( Player player ) {
 		GottaMineFastEnchantment enchantment = Instances.GOTTA_MINE_FAST;
-		CompoundNBT data = player.getPersistentData();
+		CompoundTag data = player.getPersistentData();
 
 		return ( float )Math.pow(
 			Math.min( data.getInt( COUNTER_TAG ), enchantment.maximumDuration.getDuration() ) / ( float )TimeConverter.minutesToTicks( 1.0 ),
@@ -106,21 +106,21 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 			this.multiplier = multiplier;
 		}
 
-		public GottaMineFastMultiplier( PacketBuffer buffer ) {
+		public GottaMineFastMultiplier( FriendlyByteBuf buffer ) {
 			this.multiplier = buffer.readFloat();
 		}
 
-		public void encode( PacketBuffer buffer ) {
+		public void encode( FriendlyByteBuf buffer ) {
 			buffer.writeFloat( this.multiplier );
 		}
 
 		public void handle( Supplier< NetworkEvent.Context > contextSupplier ) {
 			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork( ()->{
-				ServerPlayerEntity sender = context.getSender();
+				ServerPlayer sender = context.getSender();
 				if( sender == null )
 					return;
-				CompoundNBT data = sender.getPersistentData();
+				CompoundTag data = sender.getPersistentData();
 				data.putFloat( MINING_MULTIPLIER_TAG, this.multiplier );
 			} );
 			context.setPacketHandled( true );

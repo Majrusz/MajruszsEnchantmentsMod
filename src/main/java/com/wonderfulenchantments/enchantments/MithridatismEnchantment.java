@@ -7,22 +7,22 @@ import com.mlib.config.DurationConfig;
 import com.mlib.config.StringListConfig;
 import com.mlib.effects.EffectHelper;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.Mod;
 /** Enchantment that gives Absorption and Mithridatism Protection after any negative effect is applied to the player. */
 public class MithridatismEnchantment extends WonderfulEnchantment {
 	public MithridatismEnchantment() {
-		super( "mithridatism", Rarity.VERY_RARE, EnchantmentType.ARMOR_CHEST, EquipmentSlotType.CHEST, "Mithridatism" );
+		super( "mithridatism", Rarity.VERY_RARE, EnchantmentCategory.ARMOR_CHEST, EquipmentSlot.CHEST, "Mithridatism" );
 
 		setMaximumEnchantmentLevel( 4 );
 		setDifferenceBetweenMinimumAndMaximum( 30 );
@@ -44,20 +44,20 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 	}
 
 	/** Returns current Mithridatism enchantment level. */
-	public int getEnchantmentLevel( LivingEntity entity ) {
-		return EnchantmentHelper.getEnchantmentLevel( this, entity.getItemStackFromSlot( EquipmentSlotType.CHEST ) );
+	public int getItemEnchantmentLevel( LivingEntity entity ) {
+		return EnchantmentHelper.getItemEnchantmentLevel( this, entity.getItemBySlot( EquipmentSlot.CHEST ) );
 	}
 
-	/** Effect that decreases damage from certain negative effects. */
+	/** MobEffect that decreases damage from certain negative effects. */
 	@Mod.EventBusSubscriber
-	public static class MithridatismProtectionEffect extends Effect {
+	public static class MithridatismProtectionEffect extends MobEffect {
 		protected final ConfigGroup effectGroup;
 		protected final StringListConfig damageSourceList;
 		protected final DoubleConfig absorptionPerLevel, baseDamageReduction, damageReductionPerLevel, levelUpChance;
 		protected final DurationConfig duration;
 
 		public MithridatismProtectionEffect( MithridatismEnchantment mithridatism ) {
-			super( EffectType.BENEFICIAL, 0xff76db4c );
+			super( MobEffectCategory.BENEFICIAL, 0xff76db4c );
 
 			String listComment = "Damage sources that will deal less damage when effect is active.";
 			String absorptionComment = "Level of Absorption applied to the player per enchantment level rounded down. (minimum. 1lvl)";
@@ -81,33 +81,33 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 
 		@SubscribeEvent
 		public static void whenEffectApplied( PotionEvent.PotionAddedEvent event ) {
-			EffectInstance effectInstance = event.getPotionEffect();
-			Effect effect = effectInstance.getPotion();
+			MobEffectInstance effectInstance = event.getPotionEffect();
+			MobEffect effect = effectInstance.getEffect();
 			LivingEntity entity = event.getEntityLiving();
 			MithridatismEnchantment mithridatism = Instances.MITHRIDATISM;
 			MithridatismEnchantment.MithridatismProtectionEffect mithridatismEffect = Instances.MITHRIDATISM_PROTECTION;
-			int mithridatismLevel = mithridatism.getEnchantmentLevel( entity );
+			int mithridatismLevel = mithridatism.getItemEnchantmentLevel( entity );
 
-			if( !effect.isBeneficial() && mithridatismLevel > 0 && !entity.isPotionActive( mithridatismEffect ) ) {
+			if( !effect.isBeneficial() && mithridatismLevel > 0 && !entity.hasEffect( mithridatismEffect ) ) {
 				int duration = mithridatismEffect.getDuration();
 				EffectHelper.applyEffectIfPossible( entity, mithridatismEffect, duration, mithridatismLevel - 1 );
 
 				int absorptionAmplifier = Math.max( 0, mithridatismEffect.getAbsorptionLevel( entity ) - 1 );
-				EffectHelper.applyEffectIfPossible( entity, Effects.ABSORPTION, duration, absorptionAmplifier );
+				EffectHelper.applyEffectIfPossible( entity, MobEffects.ABSORPTION, duration, absorptionAmplifier );
 			}
 		}
 
 		@SubscribeEvent
 		public static void whenEffectRemoved( PotionEvent.PotionExpiryEvent event ) {
-			EffectInstance effectInstance = event.getPotionEffect();
+			MobEffectInstance effectInstance = event.getPotionEffect();
 			if( effectInstance == null )
 				return;
 
-			Effect effect = effectInstance.getPotion();
+			MobEffect effect = effectInstance.getEffect();
 			LivingEntity entity = event.getEntityLiving();
 			MithridatismEnchantment mithridatism = Instances.MITHRIDATISM;
 			MithridatismEnchantment.MithridatismProtectionEffect mithridatismEffect = Instances.MITHRIDATISM_PROTECTION;
-			int mithridatismLevel = mithridatism.getEnchantmentLevel( entity );
+			int mithridatismLevel = mithridatism.getItemEnchantmentLevel( entity );
 
 			if( mithridatismLevel >= mithridatism.getMaxLevel() || mithridatismLevel == 0 || mithridatism.isDisabled() )
 				return;
@@ -135,7 +135,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 
 		/** Returns current damage reduction depending on enchantment level. */
 		protected double getDamageReduction( LivingEntity entity ) {
-			EffectInstance effectInstance = entity.getActivePotionEffect( this );
+			MobEffectInstance effectInstance = entity.getEffect( this );
 			int mithridatismLevel = effectInstance != null ? effectInstance.getAmplifier() : 0;
 
 			return mithridatismLevel == 0 ? 0.0 : Math.min( 1,
@@ -145,7 +145,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 
 		/** Returns current Absorption level depending on enchantment level. */
 		protected int getAbsorptionLevel( LivingEntity entity ) {
-			int mithridatismLevel = Instances.MITHRIDATISM.getEnchantmentLevel( entity );
+			int mithridatismLevel = Instances.MITHRIDATISM.getItemEnchantmentLevel( entity );
 
 			return mithridatismLevel == 0 ? 0 : ( int )( Math.max( 0, mithridatismLevel * this.absorptionPerLevel.get() ) );
 		}
@@ -157,38 +157,38 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 
 		/** Checks whether given damage source is one from the effect list. */
 		protected boolean isDamageAffected( DamageSource damageSource ) {
-			return this.damageSourceList.contains( damageSource.getDamageType() );
+			return this.damageSourceList.contains( damageSource.getMsgId() );
 		}
 
 		/** Increases Mithridatism level for given player. */
 		protected void increaseLevel( LivingEntity entity ) {
-			ItemStack chestplate = entity.getItemStackFromSlot( EquipmentSlotType.CHEST );
+			ItemStack chestplate = entity.getItemBySlot( EquipmentSlot.CHEST );
 			MithridatismEnchantment mithridatism = Instances.MITHRIDATISM;
-			ListNBT listNBT = chestplate.getEnchantmentTagList();
+			ListTag listNBT = chestplate.getEnchantmentTags();
 
 			for( int i = 0; i < listNBT.size(); ++i ) {
-				CompoundNBT compoundNBT = listNBT.getCompound( i );
+				CompoundTag compoundNBT = listNBT.getCompound( i );
 				String enchantmentID = compoundNBT.getString( "id" );
 				if( enchantmentID.contains( "mithridatism" ) ) {
-					compoundNBT.putInt( "lvl", mithridatism.getEnchantmentLevel( entity ) + 1 );
+					compoundNBT.putInt( "lvl", mithridatism.getItemEnchantmentLevel( entity ) + 1 );
 					break;
 				}
 			}
 
-			chestplate.setTagInfo( "Enchantments", listNBT );
+			chestplate.addTagElement( "Enchantments", listNBT );
 			notifyAboutLevelUp( entity );
 		}
 
 		/** Notifies player when the Mithridatism level was increased. */
 		protected void notifyAboutLevelUp( LivingEntity entity ) {
-			if( !( entity instanceof PlayerEntity ) )
+			if( !( entity instanceof Player ) )
 				return;
 
-			IFormattableTextComponent message = new TranslationTextComponent( "wonderful_enchantments.mithridatism_level_up" );
-			message.mergeStyle( TextFormatting.BOLD );
+			MutableComponent message = new TranslatableComponent( "wonderful_enchantments.mithridatism_level_up" );
+			message.withStyle( ChatFormatting.BOLD );
 
-			PlayerEntity player = ( PlayerEntity )entity;
-			player.sendStatusMessage( message, true );
+			Player player = ( Player )entity;
+			player.displayClientMessage( message, true );
 		}
 	}
 

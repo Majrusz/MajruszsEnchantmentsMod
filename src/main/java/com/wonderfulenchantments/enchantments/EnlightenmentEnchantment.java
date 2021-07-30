@@ -1,17 +1,17 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.EquipmentSlotTypes;
+import com.mlib.EquipmentSlots;
 import com.mlib.MajruszLibrary;
 import com.mlib.config.AvailabilityConfig;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.IntegerConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,7 +26,7 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 	protected final IntegerConfig levelCap;
 
 	public EnlightenmentEnchantment() {
-		super( "enlightenment", Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Enlightenment" );
+		super( "enlightenment", Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlots.ARMOR, "Enlightenment" );
 		String experienceComment = "Increases experience from all sources by that multiplier per enchantment level.";
 		String levelsComment = "Increases experience from all sources by that multiplier per enchantment level. (enchantment table may not work properly!)";
 		String enchantmentComment = "Enchantment levels increase by that multiplier per enchantment level.";
@@ -46,14 +46,14 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void onXPPickUp( PlayerXpEvent.PickupXp event ) {
 		EnlightenmentEnchantment enlightenment = Instances.ENLIGHTENMENT;
-		PlayerEntity player = event.getPlayer();
+		Player player = event.getPlayer();
 
-		int enlightenmentSum = EnchantmentHelperPlus.calculateEnchantmentSum( enlightenment, player, EquipmentSlotTypes.ARMOR );
+		int enlightenmentSum = EnchantmentHelperPlus.calculateEnchantmentSum( enlightenment, player, EquipmentSlots.ARMOR );
 		if( enlightenmentSum > 0 ) {
 			double bonusRatio = enlightenment.experienceMultiplier.get() * enlightenmentSum;
 			double randomBonus = bonusRatio * MajruszLibrary.RANDOM.nextDouble();
 			int bonusExperience = ( int )( Math.round( randomBonus * ( double )event.getOrb()
-				.getXpValue() )
+				.value )
 			);
 			player.giveExperiencePoints( bonusExperience );
 		}
@@ -66,14 +66,14 @@ public class EnlightenmentEnchantment extends WonderfulEnchantment {
 		if( enlightenment.areExtraLevelsDisabled() )
 			return;
 
-		ServerWorld world = ( ServerWorld )event.getWorld();
+		ServerLevel world = ( ServerLevel )event.getWorld();
 		BlockPos position = event.getPos();
-		PlayerEntity player = world.getClosestPlayer( EntityPredicate.DEFAULT, position.getX(), position.getY(), position.getZ() );
+		Player player = world.getNearestPlayer( TargetingConditions.DEFAULT, position.getX(), position.getY(), position.getZ() );
 
 		if( player == null )
 			return;
 
-		int enlightenmentSum = EnchantmentHelperPlus.calculateEnchantmentSum( enlightenment, player, EquipmentSlotTypes.ARMOR );
+		int enlightenmentSum = EnchantmentHelperPlus.calculateEnchantmentSum( enlightenment, player, EquipmentSlots.ARMOR );
 		if( enlightenmentSum > 0 ) {
 			int bonus = ( int )Math.max( 0, Math.min( event.getLevel() * enlightenmentSum * enlightenment.enchantmentLevelsMultiplier.get(),
 				enlightenment.levelCap.get() - event.getLevel()

@@ -1,18 +1,18 @@
 package com.wonderfulenchantments.items;
 
-import net.minecraft.item.HorseArmorItem;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.HorseArmorItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
 /** Makes horse armor enchantable. */
 public class HorseArmorItemReplacement extends HorseArmorItem {
 	public HorseArmorItemReplacement( int armorBonus, String resource ) {
-		super( armorBonus, resource, ( new Properties() ).maxStackSize( 1 )
-			.group( ItemGroup.MISC ) );
+		super( armorBonus, resource, ( new Properties() ).stacksTo( 1 )
+			.tab( CreativeModeTab.TAB_MISC ) );
 	}
 
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 1;
 	}
 

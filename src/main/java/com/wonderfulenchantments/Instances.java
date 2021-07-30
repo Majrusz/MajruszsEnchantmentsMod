@@ -2,9 +2,10 @@ package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
-import com.wonderfulenchantments.items.*;
-import com.wonderfulenchantments.recipes.*;
-import net.minecraft.item.crafting.SpecialRecipeSerializer;
+import com.wonderfulenchantments.items.WonderfulBookItem;
+import com.wonderfulenchantments.recipes.WonderfulBookRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.fml.ModLoadingContext;
 
 public class Instances {
@@ -48,7 +49,7 @@ public class Instances {
 	public static final ElderGaurdianFavorEnchantment ELDER_GAURDIAN_FAVOR;
 
 	// Curses
-	public static final SlownessCurse SLOWNESS;
+	public static final SlownessCurse MOVEMENT_SLOWDOWN;
 	public static final FatigueCurse FATIGUE;
 	public static final IncompatibilityCurse INCOMPATIBILITY;
 	public static final VampirismCurse VAMPIRISM;
@@ -61,7 +62,7 @@ public class Instances {
 	public static final ClientEffects CLIENT_EFFECTS;
 
 	// Custom recipes
-	public static final SpecialRecipeSerializer< WonderfulBookRecipe > WONDERFUL_BOOK_RECIPE;
+	public static final SimpleRecipeSerializer< WonderfulBookRecipe > WONDERFUL_BOOK_RECIPE;
 
 	// Items
 	public static final WonderfulBookItem WONDERFUL_BOOK_ITEM;
@@ -98,7 +99,7 @@ public class Instances {
 
 		ELDER_GAURDIAN_FAVOR = new ElderGaurdianFavorEnchantment();
 
-		SLOWNESS = new SlownessCurse();
+		MOVEMENT_SLOWDOWN = new SlownessCurse();
 		FATIGUE = new FatigueCurse();
 		INCOMPATIBILITY = new IncompatibilityCurse();
 		VAMPIRISM = new VampirismCurse();
@@ -108,7 +109,7 @@ public class Instances {
 
 		CLIENT_EFFECTS = new ClientEffects();
 
-		WONDERFUL_BOOK_RECIPE = new SpecialRecipeSerializer<>( WonderfulBookRecipe::new );
+		WONDERFUL_BOOK_RECIPE = new SimpleRecipeSerializer<>( WonderfulBookRecipe::new );
 
 		WONDERFUL_BOOK_ITEM = new WonderfulBookItem();
 

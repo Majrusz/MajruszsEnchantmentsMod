@@ -1,16 +1,16 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.EquipmentSlotTypes;
+import com.mlib.EquipmentSlots;
 import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.item.HorseArmorItem;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.HorseArmorItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,7 +24,7 @@ public class SwiftnessEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig movementMultiplier;
 
 	public SwiftnessEnchantment() {
-		super( "swiftness", Rarity.RARE, RegistryHandler.HORSE_ARMOR, EquipmentSlotTypes.ARMOR, "Swiftness" );
+		super( "swiftness", Rarity.RARE, RegistryHandler.HORSE_ARMOR, EquipmentSlots.ARMOR, "Swiftness" );
 		String comment = "Horse movement speed multiplier per enchantment level.";
 		this.movementMultiplier = new DoubleConfig( "movement_multiplier", comment, false, 0.125, 0.01, 0.5 );
 		this.enchantmentGroup.addConfig( this.movementMultiplier );
@@ -39,8 +39,8 @@ public class SwiftnessEnchantment extends WonderfulEnchantment {
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
 		LivingEntity entity = event.getEntityLiving();
 
-		if( entity instanceof AnimalEntity )
-			ATTRIBUTE_HANDLER.setValueAndApply( entity, getMovementSpeedMultiplier( ( AnimalEntity )entity ) );
+		if( entity instanceof Animal )
+			ATTRIBUTE_HANDLER.setValueAndApply( entity, getMovementSpeedMultiplier( ( Animal )entity ) );
 	}
 
 	/**
@@ -48,8 +48,8 @@ public class SwiftnessEnchantment extends WonderfulEnchantment {
 
 	 @param animal Animal on which the movement bonus is calculated.
 	 */
-	protected static double getMovementSpeedMultiplier( AnimalEntity animal ) {
-		int swiftnessLevel = EnchantmentHelperPlus.calculateEnchantmentSumIfIsInstanceOf( Instances.SWIFTNESS, animal.getArmorInventoryList(),
+	protected static double getMovementSpeedMultiplier( Animal animal ) {
+		int swiftnessLevel = EnchantmentHelperPlus.calculateEnchantmentSumIfIsInstanceOf( Instances.SWIFTNESS, animal.getArmorSlots(),
 			HorseArmorItem.class
 		);
 

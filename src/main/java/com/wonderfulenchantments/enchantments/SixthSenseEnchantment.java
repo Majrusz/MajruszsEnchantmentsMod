@@ -3,16 +3,14 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,7 +28,7 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	protected final DurationConfig highlightDurationConfig;
 
 	public SixthSenseEnchantment() {
-		super( "sixth_sense", Rarity.RARE, EnchantmentType.ARMOR_HEAD, EquipmentSlotType.HEAD, "SixthSense" );
+		super( "sixth_sense", Rarity.RARE, EnchantmentCategory.ARMOR_HEAD, EquipmentSlot.HEAD, "SixthSense" );
 
 		String offsetComment = "Maximum distance in blocks from player to entity.";
 		String preparingComment = "Duration of standing still before the entities will be highlighted.";
@@ -56,19 +54,19 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void onEntityTick( LivingEvent.LivingUpdateEvent event ) {
 		LivingEntity livingEntity = event.getEntityLiving();
-		if( event.getEntityLiving().world instanceof ServerWorld )
+		if( event.getEntityLiving().level instanceof ServerLevel )
 			return;
 
-		CompoundNBT data = livingEntity.getPersistentData();
+		CompoundTag data = livingEntity.getPersistentData();
 		data.putInt( MONSTER_TAG, Math.max( data.getInt( MONSTER_TAG ) - 1, 0 ) );
 
 		if( data.getInt( MONSTER_TAG ) == 1 )
-			livingEntity.setGlowing( false );
+			livingEntity.setGlowingTag( false );
 	}
 
 	/** Updates sixth sense logic for given player. */
-	private void update( PlayerEntity player ) {
-		if( player.world instanceof ServerWorld )
+	private void update( Player player ) {
+		if( player.level instanceof ServerLevel )
 			return;
 
 		increaseTickCounter( player );
@@ -82,53 +80,53 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	}
 
 	/** Highlights nearby entities in certain range. */
-	private void highlightNearbyEntities( PlayerEntity player ) {
-		double x = player.getPosX(), y = player.getPosY(), z = player.getPosZ(), offset = this.offsetConfig.get();
-		AxisAlignedBB axisAligned = new AxisAlignedBB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
+	private void highlightNearbyEntities( Player player ) {
+		double x = player.getX(), y = player.getY(), z = player.getZ(), offset = this.offsetConfig.get();
+		AABB axisAligned = new AABB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
 
-		for( LivingEntity livingEntity : player.world.getEntitiesWithinAABB( LivingEntity.class, axisAligned ) ) {
+		for( LivingEntity livingEntity : player.level.getEntitiesOfClass( LivingEntity.class, axisAligned ) ) {
 			if( livingEntity == player )
 				continue;
 
-			CompoundNBT data = livingEntity.getPersistentData();
+			CompoundTag data = livingEntity.getPersistentData();
 			data.putInt( MONSTER_TAG, this.highlightDurationConfig.getDuration() );
 
-			livingEntity.setGlowing( true );
+			livingEntity.setGlowingTag( true );
 		}
 	}
 
 	/** Resets player's sixth sense standing still tick counter. */
-	private void resetStandingStillCounter( PlayerEntity player ) {
-		CompoundNBT data = player.getPersistentData();
+	private void resetStandingStillCounter( Player player ) {
+		CompoundTag data = player.getPersistentData();
 		data.putInt( SENSE_TAG, 0 );
 	}
 
 	/** Increases by 1 player's sixth sense standing still tick counter. */
-	private void increaseStandingStillCounter( PlayerEntity player ) {
-		CompoundNBT data = player.getPersistentData();
+	private void increaseStandingStillCounter( Player player ) {
+		CompoundTag data = player.getPersistentData();
 		data.putInt( SENSE_TAG, data.getInt( SENSE_TAG ) + 1 );
 	}
 
 	/** Increases by 1 player's sixth sense tick counter. */
-	private void increaseTickCounter( PlayerEntity player ) {
-		CompoundNBT data = player.getPersistentData();
+	private void increaseTickCounter( Player player ) {
+		CompoundTag data = player.getPersistentData();
 		data.putInt( TICK_TAG, data.getInt( TICK_TAG ) + 1 );
 	}
 
 	/** Returns current player's sixth sense standing still tick counter. */
-	private int getStandingStillCounter( PlayerEntity player ) {
-		CompoundNBT data = player.getPersistentData();
+	private int getStandingStillCounter( Player player ) {
+		CompoundTag data = player.getPersistentData();
 		return data.getInt( SENSE_TAG );
 	}
 
 	/** Returns current player's sixth sense tick counter. */
-	private int getTickCounter( PlayerEntity player ) {
-		CompoundNBT data = player.getPersistentData();
+	private int getTickCounter( Player player ) {
+		CompoundTag data = player.getPersistentData();
 		return data.getInt( TICK_TAG );
 	}
 
 	/** Checks whether entities should be highlighted. */
-	private boolean shouldHighlightEntities( PlayerEntity player ) {
+	private boolean shouldHighlightEntities( Player player ) {
 		int currentStandingStillTicks = getStandingStillCounter( player );
 		int currentTicks = getTickCounter( player );
 		int preparingTimeInTicks = this.preparingTimeConfig.getDuration();
@@ -138,12 +136,12 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	}
 
 	/** Checks whether player moved since last tick. */
-	private boolean isPlayerMoving( PlayerEntity player ) {
-		return player.lastTickPosX != player.getPosX() || player.lastTickPosY != player.getPosY() || player.lastTickPosZ != player.getPosZ();
+	private boolean isPlayerMoving( Player player ) {
+		return player.xo != player.getX() || player.yo != player.getY() || player.zo != player.getZ();
 	}
 
 	/** Checks whether player has Sixth Sense enchantment on its helmet. */
-	private boolean hasEnchantment( PlayerEntity player ) {
-		return EnchantmentHelper.getEnchantmentLevel( this, player.getItemStackFromSlot( EquipmentSlotType.HEAD ) ) > 0;
+	private boolean hasEnchantment( Player player ) {
+		return EnchantmentHelper.getItemEnchantmentLevel( this, player.getItemBySlot( EquipmentSlot.HEAD ) ) > 0;
 	}
 }

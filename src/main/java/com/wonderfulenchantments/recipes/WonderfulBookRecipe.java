@@ -3,30 +3,31 @@ package com.wonderfulenchantments.recipes;
 import com.google.common.collect.Lists;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.items.WonderfulBookItem;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.SpecialRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 /** Recipe for increasing the energy of the book. */
-public class WonderfulBookRecipe extends SpecialRecipe {
+public class WonderfulBookRecipe extends CustomRecipe {
 	public WonderfulBookRecipe( ResourceLocation id ) {
 		super( id );
 	}
 
 	/** Used to check if a recipe matches current crafting inventory. */
-	public boolean matches( CraftingInventory inventory, World world ) {
+	@Override
+	public boolean matches( CraftingContainer inventory, Level world ) {
 		ItemStack wonderfulBook = ItemStack.EMPTY;
 		List< ItemStack > list = Lists.newArrayList();
 
-		for( int i = 0; i < inventory.getSizeInventory(); ++i ) {
-			ItemStack itemStack = inventory.getStackInSlot( i );
+		for( int i = 0; i < inventory.getContainerSize(); ++i ) {
+			ItemStack itemStack = inventory.getItem( i );
 			if( itemStack.isEmpty() )
 				continue;
 
@@ -46,13 +47,18 @@ public class WonderfulBookRecipe extends SpecialRecipe {
 		return isValid( wonderfulBook, list );
 	}
 
+	@Override
+	public ItemStack assemble( CraftingContainer container ) {
+		return null;
+	}
+
 	/** Returns an Item that is the result of this recipe. */
-	public ItemStack getCraftingResult( CraftingInventory inventory ) {
+	public ItemStack getCraftingResult( CraftingContainer inventory ) {
 		ItemStack wonderfulBook = ItemStack.EMPTY;
 		List< ItemStack > list = Lists.newArrayList();
 
-		for( int i = 0; i < inventory.getSizeInventory(); ++i ) {
-			ItemStack itemStack = inventory.getStackInSlot( i );
+		for( int i = 0; i < inventory.getContainerSize(); ++i ) {
+			ItemStack itemStack = inventory.getItem( i );
 			if( itemStack.isEmpty() )
 				continue;
 
@@ -74,12 +80,14 @@ public class WonderfulBookRecipe extends SpecialRecipe {
 	}
 
 	/** Used to determine if this recipe can fit in a grid of the given width/height. */
-	public boolean canFit( int width, int height ) {
+	@Override
+	public boolean canCraftInDimensions( int width, int height ) {
 		return width * height >= 2;
 	}
 
 	/** Returns instance of recipe serializer. */
-	public IRecipeSerializer< ? > getSerializer() {
+	@Override
+	public RecipeSerializer< ? > getSerializer() {
 		return Instances.WONDERFUL_BOOK_RECIPE;
 	}
 

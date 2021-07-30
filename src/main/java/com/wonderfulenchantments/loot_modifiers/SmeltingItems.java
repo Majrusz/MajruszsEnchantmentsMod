@@ -3,25 +3,26 @@ package com.wonderfulenchantments.loot_modifiers;
 import com.google.gson.JsonObject;
 import com.mlib.MajruszLibrary;
 import com.mlib.Random;
+import com.mlib.loot_modifiers.LootHelper;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -33,31 +34,31 @@ import java.util.Optional;
 
 /** Functionality of Smelter enchantment. */
 public class SmeltingItems extends LootModifier {
-	public SmeltingItems( ILootCondition[] conditionsIn ) {
+	public SmeltingItems( LootItemCondition[] conditionsIn ) {
 		super( conditionsIn );
 	}
 
 	@Nonnull
 	@Override
 	public List< ItemStack > doApply( List< ItemStack > generatedLoot, LootContext context ) {
-		ItemStack tool = context.get( LootParameters.TOOL );
-		Entity entity = context.get( LootParameters.THIS_ENTITY );
-		if( tool == null || !( entity instanceof PlayerEntity ) )
+		ItemStack tool = LootHelper.getParameter( context, LootContextParams.TOOL );
+		Entity entity = LootHelper.getParameter( context, LootContextParams.THIS_ENTITY );
+		if( tool == null || !( entity instanceof Player ) )
 			return generatedLoot;
 
-		PlayerEntity player = ( PlayerEntity )entity;
+		Player player = ( Player )entity;
 		if( player.isCrouching() )
 			return generatedLoot;
 
-		int fortuneLevel = EnchantmentHelper.getEnchantmentLevel( Enchantments.FORTUNE, tool );
-		return getSmeltedLoot( generatedLoot, context.getWorld(), context.get( LootParameters.field_237457_g_ ), fortuneLevel );
+		int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel( Enchantments.BLOCK_FORTUNE, tool );
+		return getSmeltedLoot( generatedLoot, context.getLevel(), LootHelper.getParameter( context, LootContextParams.ORIGIN ), fortuneLevel );
 	}
 
 	/** Smelts given item stack if possible. */
-	protected static ItemStack smeltIfPossible( ItemStack itemStack, ServerWorld world ) {
+	protected static ItemStack smeltIfPossible( ItemStack itemStack, ServerLevel world ) {
 		return world.getRecipeManager()
-			.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world )
-			.map( FurnaceRecipe::getRecipeOutput )
+			.getRecipeFor( RecipeType.SMELTING, new SimpleContainer( itemStack ), world )
+			.map( SmeltingRecipe::getResultItem )
 			.filter( i->!i.isEmpty() )
 			.map( i->ItemHandlerHelper.copyStackWithSize( i, itemStack.getCount() * i.getCount() ) )
 			.orElse( itemStack );
@@ -69,12 +70,12 @@ public class SmeltingItems extends LootModifier {
 	 0.4 XP * 6 = 2.4 XP
 	 This will give player 2 XP point and has 40% (0.4) chance for another 1 XP point.
 	 */
-	protected static int calculateRandomExperienceForRecipe( FurnaceRecipe recipe, int smeltedItems ) {
+	protected static int calculateRandomExperienceForRecipe( SmeltingRecipe recipe, int smeltedItems ) {
 		return Random.randomizeExperience( recipe.getExperience() * smeltedItems );
 	}
 
 	/** Returns smelted item stack. */
-	protected static ItemStack getSmeltedItemStack( ItemStack itemStackToSmelt, ServerWorld world ) {
+	protected static ItemStack getSmeltedItemStack( ItemStack itemStackToSmelt, ServerLevel world ) {
 		ItemStack smeltedItemStack = smeltIfPossible( itemStackToSmelt, world );
 		if( smeltedItemStack.getCount() != itemStackToSmelt.getCount() )
 			smeltedItemStack.setCount( itemStackToSmelt.getCount() );
@@ -87,7 +88,7 @@ public class SmeltingItems extends LootModifier {
 		itemStack.setCount( itemStack.getCount() * ( 1 + MajruszLibrary.RANDOM.nextInt( fortuneLevel + 1 ) ) );
 	}
 
-	protected List< ItemStack > getSmeltedLoot( List< ItemStack > generatedLoot, ServerWorld world, Vector3d position, int fortuneLevel ) {
+	protected List< ItemStack > getSmeltedLoot( List< ItemStack > generatedLoot, ServerLevel world, Vec3 position, int fortuneLevel ) {
 		RecipeManager recipeManager = world.getRecipeManager();
 
 		ArrayList< ItemStack > output = new ArrayList<>();
@@ -97,16 +98,16 @@ public class SmeltingItems extends LootModifier {
 				affectByFortune( fortuneLevel, smeltedItemStack );
 
 			output.add( smeltedItemStack );
-			Optional< FurnaceRecipe > recipe = recipeManager.getRecipe( IRecipeType.SMELTING, new Inventory( itemStack ), world );
+			Optional< SmeltingRecipe > recipe = recipeManager.getRecipeFor( RecipeType.SMELTING, new SimpleContainer( itemStack ), world );
 
 			if( !recipe.isPresent() )
 				continue;
 
 			int experience = calculateRandomExperienceForRecipe( recipe.get(), itemStack.getCount() );
 			if( experience > 0 )
-				world.addEntity( new ExperienceOrbEntity( world, position.x, position.y, position.z, experience ) );
+				world.addFreshEntity( new ExperienceOrb( world, position.x, position.y, position.z, experience ) );
 
-			world.spawnParticle( ParticleTypes.FLAME, position.x, position.y, position.z, 2 + MajruszLibrary.RANDOM.nextInt( 4 ), 0.125, 0.125, 0.125,
+			world.sendParticles( ParticleTypes.FLAME, position.x, position.y, position.z, 2 + MajruszLibrary.RANDOM.nextInt( 4 ), 0.125, 0.125, 0.125,
 				0.03125
 			);
 		}
@@ -124,7 +125,7 @@ public class SmeltingItems extends LootModifier {
 
 	public static class Serializer extends GlobalLootModifierSerializer< SmeltingItems > {
 		@Override
-		public SmeltingItems read( ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn ) {
+		public SmeltingItems read( ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn ) {
 			return new SmeltingItems( conditionsIn );
 		}
 

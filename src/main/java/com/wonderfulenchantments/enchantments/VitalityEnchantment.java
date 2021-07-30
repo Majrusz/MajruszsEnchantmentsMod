@@ -1,15 +1,15 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.EquipmentSlotTypes;
+import com.mlib.EquipmentSlots;
 import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.item.ShieldItem;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +23,7 @@ public class VitalityEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig healthBonus;
 
 	public VitalityEnchantment() {
-		super( "vitality", Rarity.UNCOMMON, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "Vitality" );
+		super( "vitality", Rarity.UNCOMMON, RegistryHandler.SHIELD, EquipmentSlots.BOTH_HANDS, "Vitality" );
 		String comment = "Health bonus per enchantment level.";
 		this.healthBonus = new DoubleConfig( "health_bonus", comment, false, 2.0, 1.0, 20.0 );
 		this.enchantmentGroup.addConfig( this.healthBonus );
@@ -47,7 +47,7 @@ public class VitalityEnchantment extends WonderfulEnchantment {
 	 @param livingEntity Entity on which the health bonus is calculated.
 	 */
 	protected static double getHealthBonus( LivingEntity livingEntity ) {
-		int sum = EnchantmentHelperPlus.calculateEnchantmentSumIfIsInstanceOf( Instances.VITALITY, livingEntity, EquipmentSlotTypes.BOTH_HANDS,
+		int sum = EnchantmentHelperPlus.calculateEnchantmentSumIfIsInstanceOf( Instances.VITALITY, livingEntity, EquipmentSlots.BOTH_HANDS,
 			ShieldItem.class
 		);
 

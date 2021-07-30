@@ -1,14 +1,16 @@
 package com.wonderfulenchantments.renderers;
 
 import com.google.common.collect.Maps;
+import net.minecraft.Util;
+import net.minecraft.client.model.HorseModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.layers.HorseMarkingsLayer;
-import net.minecraft.client.renderer.entity.model.HorseModel;
-import net.minecraft.entity.passive.horse.CoatColors;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.layers.HorseArmorLayer;
+import net.minecraft.client.renderer.entity.layers.HorseMarkingLayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.animal.horse.Variant;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,27 +18,24 @@ import java.util.Map;
 
 /** Replacement for Horse Renderer with visible enchantment on Horse's armor. */
 @OnlyIn( Dist.CLIENT )
-public final class HorseRendererReplacement extends AbstractHorseRenderer< HorseEntity, HorseModel< HorseEntity > > {
-	private static final Map< CoatColors, ResourceLocation > field_239383_a_ = Util.make( Maps.newEnumMap( CoatColors.class ), ( p_239384_0_ )->{
-		p_239384_0_.put( CoatColors.WHITE, new ResourceLocation( "textures/entity/horse/horse_white.png" ) );
-		p_239384_0_.put( CoatColors.CREAMY, new ResourceLocation( "textures/entity/horse/horse_creamy.png" ) );
-		p_239384_0_.put( CoatColors.CHESTNUT, new ResourceLocation( "textures/entity/horse/horse_chestnut.png" ) );
-		p_239384_0_.put( CoatColors.BROWN, new ResourceLocation( "textures/entity/horse/horse_brown.png" ) );
-		p_239384_0_.put( CoatColors.BLACK, new ResourceLocation( "textures/entity/horse/horse_black.png" ) );
-		p_239384_0_.put( CoatColors.GRAY, new ResourceLocation( "textures/entity/horse/horse_gray.png" ) );
-		p_239384_0_.put( CoatColors.DARKBROWN, new ResourceLocation( "textures/entity/horse/horse_darkbrown.png" ) );
+public final class HorseRendererReplacement extends AbstractHorseRenderer< Horse, HorseModel< Horse > > {
+	private static final Map< Variant, ResourceLocation > LOCATION_BY_VARIANT = Util.make( Maps.newEnumMap( Variant.class ), ( p_114874_ )->{
+		p_114874_.put( Variant.WHITE, new ResourceLocation( "textures/entity/horse/horse_white.png" ) );
+		p_114874_.put( Variant.CREAMY, new ResourceLocation( "textures/entity/horse/horse_creamy.png" ) );
+		p_114874_.put( Variant.CHESTNUT, new ResourceLocation( "textures/entity/horse/horse_chestnut.png" ) );
+		p_114874_.put( Variant.BROWN, new ResourceLocation( "textures/entity/horse/horse_brown.png" ) );
+		p_114874_.put( Variant.BLACK, new ResourceLocation( "textures/entity/horse/horse_black.png" ) );
+		p_114874_.put( Variant.GRAY, new ResourceLocation( "textures/entity/horse/horse_gray.png" ) );
+		p_114874_.put( Variant.DARKBROWN, new ResourceLocation( "textures/entity/horse/horse_darkbrown.png" ) );
 	} );
 
-	public HorseRendererReplacement( EntityRendererManager renderManagerIn ) {
-		super( renderManagerIn, new HorseModel<>( 0.0F ), 1.1F );
-		this.addLayer( new HorseMarkingsLayer( this ) );
-		this.addLayer( new LeatherHorseArmorLayerReplacement( this ) );
+	public HorseRendererReplacement( EntityRendererProvider.Context p_174167_ ) {
+		super( p_174167_, new HorseModel<>( p_174167_.bakeLayer( ModelLayers.HORSE ) ), 1.1F );
+		this.addLayer( new HorseMarkingLayer( this ) );
+		this.addLayer( new HorseArmorLayerReplacement( this, p_174167_.getModelSet() ) );
 	}
 
-	/**
-	 Returns the location of an entity's texture.
-	 */
-	public ResourceLocation getEntityTexture( HorseEntity entity ) {
-		return field_239383_a_.get( entity.func_234239_eK_() );
+	public ResourceLocation getTextureLocation( Horse p_114872_ ) {
+		return LOCATION_BY_VARIANT.get( p_114872_.getVariant() );
 	}
 }

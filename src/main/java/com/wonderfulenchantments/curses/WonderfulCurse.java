@@ -3,8 +3,8 @@ package com.wonderfulenchantments.curses;
 import com.mlib.config.AvailabilityConfig;
 import com.mlib.config.ConfigGroup;
 import com.mlib.enchantments.ExtendedCurse;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,10 @@ public class WonderfulCurse extends ExtendedCurse {
 	protected final ConfigGroup curseGroup;
 	protected final AvailabilityConfig availabilityConfig;
 
-	protected WonderfulCurse( String registerName, Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType[] equipmentSlotTypes,
+	protected WonderfulCurse( String registerName, Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot[] equipmentSlots,
 		String configName
 	) {
-		super( registerName, rarity, enchantmentType, equipmentSlotTypes );
+		super( registerName, rarity, enchantmentCategory, equipmentSlots );
 
 		this.curseGroup = CURSE_GROUP.addGroup( new ConfigGroup( configName, "" ) );
 
@@ -30,10 +30,10 @@ public class WonderfulCurse extends ExtendedCurse {
 		CURSE_LIST.add( this );
 	}
 
-	protected WonderfulCurse( String registerName, Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType equipmentSlotType,
+	protected WonderfulCurse( String registerName, Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot equipmentSlotType,
 		String configName
 	) {
-		this( registerName, rarity, enchantmentType, new EquipmentSlotType[]{ equipmentSlotType }, configName );
+		this( registerName, rarity, enchantmentCategory, new EquipmentSlot[]{ equipmentSlotType }, configName );
 	}
 
 	@Override

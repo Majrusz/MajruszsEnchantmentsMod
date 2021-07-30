@@ -2,13 +2,13 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.config.AvailabilityConfig;
 import com.mlib.config.StringListConfig;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.SilkTouchEnchantment;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.UntouchingEnchantment;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 
 /** Enchantment that automatically smelts destroyed blocks. (if possible) */
 public class SmelterEnchantment extends WonderfulEnchantment {
@@ -16,7 +16,7 @@ public class SmelterEnchantment extends WonderfulEnchantment {
 	protected final StringListConfig fortuneBonusList;
 
 	public SmelterEnchantment() {
-		super( "smelter", Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND, "Smelter" );
+		super( "smelter", Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND, "Smelter" );
 		String availability_comment = "Should this enchantment duplicate custom items (def. iron ore and gold ore) when player have fortune enchantment.";
 		String bonus_comment = "List of blocks that will drop more items when player has both Fortune and Smelter enchantment.";
 		this.shouldIncreaseLoot = new AvailabilityConfig( "should_increase_loot", availability_comment, false, true );
@@ -39,8 +39,8 @@ public class SmelterEnchantment extends WonderfulEnchantment {
 	}
 
 	@Override
-	public boolean canApplyTogether( Enchantment enchantment ) {
-		return !( enchantment instanceof SilkTouchEnchantment ) && super.canApplyTogether( enchantment );
+	public boolean checkCompatibility( Enchantment enchantment ) {
+		return !( enchantment instanceof UntouchingEnchantment ) && super.checkCompatibility( enchantment );
 	}
 
 	@Override

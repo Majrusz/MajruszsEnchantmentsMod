@@ -6,17 +6,17 @@ import com.wonderfulenchantments.enchantments.WonderfulEnchantment;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.potion.Effect;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -28,19 +28,21 @@ public class RegistryHandler {
 	public static final DeferredRegister< ParticleType< ? > > PARTICLES = DeferredRegister.create( ForgeRegistries.PARTICLE_TYPES,
 		WonderfulEnchantments.MOD_ID
 	);
-	public static final DeferredRegister< Effect > EFFECTS = DeferredRegister.create( ForgeRegistries.POTIONS, WonderfulEnchantments.MOD_ID );
+	public static final DeferredRegister< MobEffect > EFFECTS = DeferredRegister.create( ForgeRegistries.POTIONS, WonderfulEnchantments.MOD_ID );
 	public static final DeferredRegister< Item > ITEMS_TO_REPLACE = DeferredRegister.create( ForgeRegistries.ITEMS, "minecraft" );
 	public static final DeferredRegister< Item > ITEMS = DeferredRegister.create( ForgeRegistries.ITEMS, WonderfulEnchantments.MOD_ID );
-	public static final DeferredRegister< IRecipeSerializer< ? > > RECIPES = DeferredRegister.create( ForgeRegistries.RECIPE_SERIALIZERS, WonderfulEnchantments.MOD_ID );
+	public static final DeferredRegister< RecipeSerializer< ? > > RECIPES = DeferredRegister.create( ForgeRegistries.RECIPE_SERIALIZERS,
+		WonderfulEnchantments.MOD_ID
+	);
 
-	public static final EnchantmentType SHIELD = EnchantmentType.create( "shield", ( Item item )->item instanceof ShieldItem );
-	public static final EnchantmentType HORSE_ARMOR = EnchantmentType.create( "horse_armor", ( Item item )->item instanceof HorseArmorItem );
-	public static final EnchantmentType BOW_AND_CROSSBOW = EnchantmentType.create( "bow_and_crossbow",
+	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create( "shield", ( Item item )->item instanceof ShieldItem );
+	public static final EnchantmentCategory HORSE_ARMOR = EnchantmentCategory.create( "horse_armor", ( Item item )->item instanceof HorseArmorItem );
+	public static final EnchantmentCategory BOW_AND_CROSSBOW = EnchantmentCategory.create( "bow_and_crossbow",
 		( Item item )->( item instanceof BowItem || item instanceof CrossbowItem )
 	);
 
-	public static final RegistryObject< BasicParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle",
-		()->new BasicParticleType( true )
+	public static final RegistryObject< SimpleParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle",
+		()->new SimpleParticleType( true )
 	);
 
 	/** General initialization of all objects. */
@@ -105,8 +107,8 @@ public class RegistryHandler {
 	 automatically added to this group)
 	 */
 	private static void addEnchantmentTypesToItemGroups() {
-		ItemHelper.addEnchantmentTypesToItemGroup( ItemGroup.COMBAT, SHIELD, BOW_AND_CROSSBOW );
-		ItemHelper.addEnchantmentTypeToItemGroup( HORSE_ARMOR, ItemGroup.MISC );
+		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW );
+		ItemHelper.addEnchantmentTypeToItemGroup( HORSE_ARMOR, CreativeModeTab.TAB_MISC );
 	}
 
 	private static void doClientSetup( final FMLClientSetupEvent event ) {

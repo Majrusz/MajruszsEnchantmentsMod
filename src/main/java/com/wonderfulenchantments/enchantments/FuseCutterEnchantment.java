@@ -1,20 +1,21 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.EquipmentSlotTypes;
+import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +26,7 @@ public class FuseCutterEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig maximumOffset;
 
 	public FuseCutterEnchantment() {
-		super( "fuse_cutter", Rarity.UNCOMMON, RegistryHandler.SHIELD, EquipmentSlotTypes.BOTH_HANDS, "FuseCutter" );
+		super( "fuse_cutter", Rarity.UNCOMMON, RegistryHandler.SHIELD, EquipmentSlots.BOTH_HANDS, "FuseCutter" );
 
 		String distanceComment = "Maximum distance in blocks from player to entity.";
 		this.maximumOffset = new DoubleConfig( "maximum_offset", distanceComment, false, 6.0, 1.0, 100.0 );
@@ -49,19 +50,19 @@ public class FuseCutterEnchantment extends WonderfulEnchantment {
 	}
 
 	/** Returns the highest level of the Fuse Cutter enchantment near given position. */
-	protected int getMaximumEnchantmentLevelNearby( World world, Vector3d position ) {
+	protected int getMaximumEnchantmentLevelNearby( Level world, Vec3 position ) {
 		double x = position.x, y = position.y, z = position.z, offset = this.maximumOffset.get();
-		AxisAlignedBB axisAligned = new AxisAlignedBB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
+		AABB axisAligned = new AABB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
 
-		for( LivingEntity livingEntity : world.getEntitiesWithinAABB( LivingEntity.class, axisAligned ) ) {
-			int mainHandEnchantmentLevel = EnchantmentHelper.getEnchantmentLevel( this,
-				livingEntity.getItemStackFromSlot( EquipmentSlotType.MAINHAND )
+		for( LivingEntity livingEntity : world.getEntitiesOfClass( LivingEntity.class, axisAligned ) ) {
+			int mainHandEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel( this,
+				livingEntity.getItemBySlot( EquipmentSlot.MAINHAND )
 			);
-			int offHandEnchantmentLevel = EnchantmentHelper.getEnchantmentLevel( this,
-				livingEntity.getItemStackFromSlot( EquipmentSlotType.OFFHAND )
+			int offHandEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel( this,
+				livingEntity.getItemBySlot( EquipmentSlot.OFFHAND )
 			);
 
-			if( livingEntity.isHandActive() && Math.max( offHandEnchantmentLevel, mainHandEnchantmentLevel ) > 0 )
+			if( livingEntity.isBlocking() && Math.max( offHandEnchantmentLevel, mainHandEnchantmentLevel ) > 0 )
 				return 1;
 		}
 
@@ -72,19 +73,19 @@ public class FuseCutterEnchantment extends WonderfulEnchantment {
 	protected void cancelExplosion( ExplosionEvent explosionEvent ) {
 		explosionEvent.setCanceled( true );
 
-		if( !( explosionEvent.getWorld() instanceof ServerWorld ) )
+		if( !( explosionEvent.getWorld() instanceof ServerLevel ) )
 			return;
 
-		ServerWorld world = ( ServerWorld )explosionEvent.getWorld();
+		ServerLevel world = ( ServerLevel )explosionEvent.getWorld();
 		Explosion explosion = explosionEvent.getExplosion();
-		Vector3d position = explosion.getPosition();
+		Vec3 position = explosion.getPosition();
 
 		for( int i = 0; i < 2; ++i )
-			world.spawnParticle( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, position.getX(), position.getY() + 0.5, position.getZ(),
+			world.sendParticles( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, position.x, position.y + 0.5, position.z,
 				16 * i, 0.125, 0.25, 0.125, 0.025
 			);
 
-		world.playSound( null, position.getX(), position.getY(), position.getZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.AMBIENT,
+		world.playSound( null, position.x, position.y, position.z, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.AMBIENT,
 			1.0f, 1.0f
 		);
 	}

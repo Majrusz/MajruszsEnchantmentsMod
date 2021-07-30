@@ -1,24 +1,25 @@
 package com.wonderfulenchantments.items;
 
-import net.minecraft.item.DyeableHorseArmorItem;
-import net.minecraft.item.IDyeableArmorItem;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeableHorseArmorItem;
+import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.ItemStack;
 
 /** Makes leather horse armor enchantable. */
-public class DyeableHorseArmorItemReplacement extends DyeableHorseArmorItem implements IDyeableArmorItem {
+public class DyeableHorseArmorItemReplacement extends DyeableHorseArmorItem implements DyeableLeatherItem {
 	public DyeableHorseArmorItemReplacement( int armorBonus, String resource ) {
-		super( armorBonus, resource, ( new Properties() ).maxStackSize( 1 )
-			.group( ItemGroup.MISC ) );
+		super( armorBonus, resource, ( new Properties() ).stacksTo( 1 )
+			.tab( CreativeModeTab.TAB_MISC ) );
 	}
 
-	public DyeableHorseArmorItemReplacement( int armorBonus, net.minecraft.util.ResourceLocation texture ) {
-		super( armorBonus, texture, ( new Properties() ).maxStackSize( 1 )
-			.group( ItemGroup.MISC ) );
+	public DyeableHorseArmorItemReplacement( int armorBonus, ResourceLocation texture ) {
+		super( armorBonus, texture, ( new Properties() ).stacksTo( 1 )
+			.tab( CreativeModeTab.TAB_MISC ) );
 	}
 
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 1;
 	}
 

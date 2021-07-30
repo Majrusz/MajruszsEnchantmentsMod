@@ -5,19 +5,22 @@ import com.mlib.TimeConverter;
 import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.IntegerConfig;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.*;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -39,8 +42,8 @@ public class WonderfulBookItem extends Item {
 	protected final DoubleConfig costRatio;
 
 	public WonderfulBookItem() {
-		super( ( new Item.Properties() ).maxStackSize( 1 )
-			.group( ItemGroup.MISC )
+		super( ( new Item.Properties() ).stacksTo( 1 )
+			.tab( CreativeModeTab.TAB_MISC )
 			.rarity( Rarity.UNCOMMON ) );
 
 		String startComment = "Starting enchanting energy level.";
@@ -59,82 +62,81 @@ public class WonderfulBookItem extends Item {
 
 	/** Enchanting Wonderful Book on right click. */
 	@Override
-	public ActionResult< ItemStack > onItemRightClick( World world, PlayerEntity player, Hand hand ) {
-		ItemStack wonderfulBook = player.getHeldItem( hand );
+	public InteractionResultHolder< ItemStack > use( Level world, Player player, InteractionHand hand ) {
+		ItemStack wonderfulBook = player.getItemInHand( hand );
 
-		if( !world.isRemote ) {
+		if( !world.isClientSide ) {
 			int levelCost = getEnchantingLevelCost( wonderfulBook );
 			if( player.experienceLevel >= levelCost ) {
-				if( !player.abilities.isCreativeMode )
-					player.addExperienceLevel( -levelCost );
-			} else if( !player.abilities.isCreativeMode ) {
-				return ActionResult.func_233538_a_( wonderfulBook, world.isRemote() );
+				if( !player.getAbilities().instabuild )
+					player.giveExperienceLevels( -levelCost );
+			} else if( !player.getAbilities().instabuild ) {
+				return InteractionResultHolder.sidedSuccess( wonderfulBook, world.isClientSide() );
 			}
 			ItemStack enchantedBook = new ItemStack( Items.ENCHANTED_BOOK );
 
-			player.addStat( Stats.ITEM_USED.get( this ) );
-			world.playSound( null, player.getPosition(), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT, 0.75f, 0.75f );
+			player.awardStat( Stats.ITEM_USED.get( this ) );
+			world.playSound( null, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.AMBIENT, 0.75f, 0.75f );
 
-			List< EnchantmentData > enchantmentDataList = new ArrayList<>();
+			List< EnchantmentInstance > enchantmentDataList = new ArrayList<>();
 			for( int i = 0; i < this.amountOfBooks.get(); ++i )
 				enchantmentDataList.addAll(
-					EnchantmentHelper.buildEnchantmentList( MajruszLibrary.RANDOM, new ItemStack( Items.BOOK ), getEnergyLevel( wonderfulBook ),
+					EnchantmentHelper.selectEnchantment( MajruszLibrary.RANDOM, new ItemStack( Items.BOOK ), getEnergyLevel( wonderfulBook ),
 						false
-					)
-				);
+					) );
 
 			removeIncompatibleEnchantments( enchantmentDataList );
 
-			for( EnchantmentData enchantmentData : enchantmentDataList )
+			for( EnchantmentInstance enchantmentData : enchantmentDataList )
 				EnchantedBookItem.addEnchantment( enchantedBook, enchantmentData );
 
-			player.setHeldItem( hand, enchantedBook );
-			return ActionResult.func_233538_a_( enchantedBook, world.isRemote() );
+			player.setItemInHand( hand, enchantedBook );
+			return InteractionResultHolder.sidedSuccess( enchantedBook, world.isClientSide() );
 		}
 
-		return ActionResult.func_233538_a_( wonderfulBook, world.isRemote() );
+		return InteractionResultHolder.sidedSuccess( wonderfulBook, world.isClientSide() );
 	}
 
 	/** Adding simple tooltip to Wonderful Book about enchanting energy, cost etc. */
 	@Override
 	@OnlyIn( Dist.CLIENT )
-	public void addInformation( ItemStack itemStack, @Nullable World world, List< ITextComponent > toolTip, ITooltipFlag flag ) {
-		IFormattableTextComponent energyText;
+	public void appendHoverText( ItemStack itemStack, @Nullable Level world, List< Component > toolTip, TooltipFlag flag ) {
+		MutableComponent energyText;
 		if( hasMaximumEnergyLevel( itemStack ) && world != null && ( world.getGameTime() / TimeConverter.secondsToTicks( 2.0 ) ) % 3 == 0 ) {
-			energyText = new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.enchanting_energy_max" );
-			energyText.mergeStyle( TextFormatting.BLUE );
+			energyText = new TranslatableComponent( "item.wonderful_enchantments.wonderful_book.enchanting_energy_max" );
+			energyText.withStyle( ChatFormatting.BLUE );
 		} else {
-			energyText = new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.enchanting_energy" );
-			energyText.appendString( " " + getEnergyLevel( itemStack ) + " " );
-			energyText.append( new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.level" ) );
-			energyText.mergeStyle( TextFormatting.GRAY );
+			energyText = new TranslatableComponent( "item.wonderful_enchantments.wonderful_book.enchanting_energy" );
+			energyText.append( " " + getEnergyLevel( itemStack ) + " " );
+			energyText.append( new TranslatableComponent( "item.wonderful_enchantments.wonderful_book.level" ) );
+			energyText.withStyle( ChatFormatting.GRAY );
 		}
 		toolTip.add( energyText );
 
-		IFormattableTextComponent costText = new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.enchanting_cost" );
-		costText.appendString( " " + getEnchantingLevelCost( itemStack ) + " " );
-		costText.append( new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.levels" ) );
-		costText.mergeStyle( TextFormatting.GRAY );
+		MutableComponent costText = new TranslatableComponent( "item.wonderful_enchantments.wonderful_book.enchanting_cost" );
+		costText.append( " " + getEnchantingLevelCost( itemStack ) + " " );
+		costText.append( new TranslatableComponent( "item.wonderful_enchantments.wonderful_book.levels" ) );
+		costText.withStyle( ChatFormatting.GRAY );
 		toolTip.add( costText );
 
 		if( getEnergyLevel( itemStack ) < this.startingLevel.get() + 1 ) {
-			toolTip.add( new StringTextComponent( " " ) );
-			toolTip.add( new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.hint" ).mergeStyle( TextFormatting.GRAY ) );
+			toolTip.add( new TextComponent( " " ) );
+			toolTip.add( new TranslatableComponent( "item.wonderful_enchantments.wonderful_book.hint" ).withStyle( ChatFormatting.GRAY ) );
 		}
 
-		toolTip.add( new StringTextComponent( " " ) );
-		toolTip.add( new TranslationTextComponent( "item.wonderful_enchantments.wonderful_book.transmute" ).mergeStyle( TextFormatting.GRAY ) );
+		toolTip.add( new TextComponent( " " ) );
+		toolTip.add( new TranslatableComponent( "item.wonderful_enchantments.wonderful_book.transmute" ).withStyle( ChatFormatting.GRAY ) );
 	}
 
 	/** Returns current book energy level. */
 	public int getEnergyLevel( ItemStack itemStack ) {
-		CompoundNBT compoundNBT = itemStack.getChildTag( BOOK_TAG );
+		CompoundTag compoundNBT = itemStack.getTagElement( BOOK_TAG );
 		return compoundNBT != null && compoundNBT.contains( ENERGY_TAG, 99 ) ? compoundNBT.getInt( ENERGY_TAG ) : this.startingLevel.get();
 	}
 
 	/** Sets new energy level for given item stack. */
 	public void setEnergyLevel( ItemStack itemStack, int energyLevel ) {
-		CompoundNBT compoundNBT = itemStack.getOrCreateChildTag( BOOK_TAG );
+		CompoundTag compoundNBT = itemStack.getOrCreateTagElement( BOOK_TAG );
 		compoundNBT.putInt( ENERGY_TAG, Math.max( this.startingLevel.get(), Math.min( energyLevel, this.maximumLevel.get() ) ) );
 	}
 
@@ -156,13 +158,13 @@ public class WonderfulBookItem extends Item {
 	}
 
 	/** Remove all incompatible enchantments. */
-	private void removeIncompatibleEnchantments( List< EnchantmentData > enchantmentDataList ) {
+	private void removeIncompatibleEnchantments( List< EnchantmentInstance > enchantmentDataList ) {
 		int size = enchantmentDataList.size();
 
 		for( int i = 0; i < size - 1; ++i ) {
-			EnchantmentData current = enchantmentDataList.get( i );
+			EnchantmentInstance current = enchantmentDataList.get( i );
 			for( int j = i + 1; j < size; ) {
-				EnchantmentData next = enchantmentDataList.get( j );
+				EnchantmentInstance next = enchantmentDataList.get( j );
 
 				if( !current.enchantment.isCompatibleWith( next.enchantment ) ) {
 					enchantmentDataList.remove( j );

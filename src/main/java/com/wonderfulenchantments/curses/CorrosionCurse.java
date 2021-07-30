@@ -1,19 +1,19 @@
 package com.wonderfulenchantments.curses;
 
-import com.mlib.EquipmentSlotTypes;
-import com.mlib.WorldHelper;
+import com.mlib.EquipmentSlots;
+import com.mlib.LevelHelper;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,7 +26,7 @@ public class CorrosionCurse extends WonderfulCurse {
 	protected final DoubleConfig damageAmount;
 
 	public CorrosionCurse() {
-		super( "corrosion_curse", Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Corrosion" );
+		super( "corrosion_curse", Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlots.ARMOR, "Corrosion" );
 		String cooldownComment = "Damage cooldown in seconds.";
 		String damageComment = "Amount of damage dealt to the player every X seconds. (with each enchantment level)";
 		this.damageCooldown = new DurationConfig( "damage_cooldown_duration", cooldownComment, false, 3.0, 1.0, 60.0 );
@@ -41,19 +41,19 @@ public class CorrosionCurse extends WonderfulCurse {
 	@SubscribeEvent
 	public static void onUpdate( LivingEvent.LivingUpdateEvent event ) {
 		LivingEntity entity = event.getEntityLiving();
-		if( !( entity.world instanceof ServerWorld ) )
+		if( !( entity.level instanceof ServerLevel ) )
 			return;
 
 		CorrosionCurse corrosionCurse = Instances.CORROSION;
-		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( corrosionCurse, entity.getArmorInventoryList() );
-		CompoundNBT data = entity.getPersistentData();
+		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( corrosionCurse, entity.getArmorSlots() );
+		CompoundTag data = entity.getPersistentData();
 
 		int counter = data.getInt( CORROSION_TAG ) + 1;
-		boolean hasContactWithWater = WorldHelper.isEntityOutsideWhenItIsRaining( entity ) || entity.isInWater();
+		boolean hasContactWithWater = LevelHelper.isEntityOutsideWhenItIsRaining( entity ) || entity.isInWater();
 		if( enchantmentLevel > 0 && hasContactWithWater && counter > corrosionCurse.damageCooldown.getDuration() ) {
 			counter = 0;
 			if( corrosionCurse.damageAmount.get() > 0 )
-				entity.attackEntityFrom( DamageSource.DROWN, ( float )( enchantmentLevel * corrosionCurse.damageAmount.get() ) );
+				entity.hurt( DamageSource.DROWN, ( float )( enchantmentLevel * corrosionCurse.damageAmount.get() ) );
 			damageArmor( entity );
 		}
 		data.putInt( CORROSION_TAG, counter );
@@ -61,11 +61,11 @@ public class CorrosionCurse extends WonderfulCurse {
 
 	/** Deals damage to each armor piece with corrosion curse. */
 	protected static void damageArmor( LivingEntity entity ) {
-		for( EquipmentSlotType equipmentSlotType : EquipmentSlotTypes.ARMOR ) {
-			ItemStack itemStack = entity.getItemStackFromSlot( equipmentSlotType );
+		for( EquipmentSlot equipmentSlotType : EquipmentSlots.ARMOR ) {
+			ItemStack itemStack = entity.getItemBySlot( equipmentSlotType );
 
-			if( EnchantmentHelper.getEnchantmentLevel( Instances.CORROSION, itemStack ) > 0 )
-				itemStack.damageItem( 1, entity, owner->owner.sendBreakAnimation( equipmentSlotType ) );
+			if( EnchantmentHelper.getItemEnchantmentLevel( Instances.CORROSION, itemStack ) > 0 )
+				itemStack.hurtAndBreak( 1, entity, owner->owner.broadcastBreakEvent( equipmentSlotType ) );
 		}
 	}
 }

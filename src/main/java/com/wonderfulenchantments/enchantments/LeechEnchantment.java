@@ -7,19 +7,19 @@ import com.mlib.damage.DamageHelper;
 import com.mlib.effects.EffectHelper;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,7 +33,7 @@ public class LeechEnchantment extends WonderfulEnchantment {
 	protected final DurationConfig maximumDuration;
 
 	public LeechEnchantment() {
-		super( "leech", Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "Leech" );
+		super( "leech", Rarity.UNCOMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND, "Leech" );
 		String chanceComment = "Chance for stealing positive effect/health from enemy.";
 		String durationComment = "Maximum duration in seconds that effect can have.";
 		this.leechChance = new DoubleConfig( "leech_chance", chanceComment, false, 0.25, 0.0, 1.0 );
@@ -46,8 +46,8 @@ public class LeechEnchantment extends WonderfulEnchantment {
 	}
 
 	@Override
-	public boolean canApply( ItemStack stack ) {
-		return stack.getItem() instanceof AxeItem || super.canApply( stack );
+	public boolean canEnchant( ItemStack stack ) {
+		return stack.getItem() instanceof AxeItem || super.canEnchant( stack );
 	}
 
 	/** Event that applies enchantment effect when attacker has an appropriate enchantment level and if 'leeching' succeeded. */
@@ -62,14 +62,14 @@ public class LeechEnchantment extends WonderfulEnchantment {
 			return;
 
 		LivingEntity attacker = ( LivingEntity )event.getSource()
-			.getImmediateSource();
+			.getDirectEntity();
 		LivingEntity target = event.getEntityLiving();
 
 		int vampirismLevel = 0;
 		if( attacker != null )
-			vampirismLevel = EnchantmentHelperPlus.calculateEnchantmentSum( enchantment, attacker.getArmorInventoryList() );
+			vampirismLevel = EnchantmentHelperPlus.calculateEnchantmentSum( enchantment, attacker.getArmorSlots() );
 
-		if( EnchantmentHelper.getMaxEnchantmentLevel( enchantment, attacker ) > 0 ) {
+		if( EnchantmentHelper.getEnchantmentLevel( enchantment, attacker ) > 0 ) {
 			for( int i = 0; i < 1 + vampirismLevel; i++ )
 				steal( attacker, target );
 			spawnParticlesAndPlaySounds( attacker, target );
@@ -83,7 +83,7 @@ public class LeechEnchantment extends WonderfulEnchantment {
 	 @param target  Entity which will lose something.
 	 */
 	protected static void steal( LivingEntity stealer, LivingEntity target ) {
-		Collection< EffectInstance > targetEffects = target.getActivePotionEffects();
+		Collection< MobEffectInstance > targetEffects = target.getActiveEffects();
 
 		if( !( targetEffects.size() > 0 && stealEffect( stealer, target, targetEffects ) ) )
 			stealHealth( stealer, target );
@@ -98,15 +98,15 @@ public class LeechEnchantment extends WonderfulEnchantment {
 
 	 @return Returns whether stealing effect succeeded. May be false when target has only negative effects.
 	 */
-	protected static boolean stealEffect( LivingEntity stealer, LivingEntity target, Collection< EffectInstance > effects ) {
-		EffectInstance[] possibleEffects = effects.toArray( new EffectInstance[]{} );
+	protected static boolean stealEffect( LivingEntity stealer, LivingEntity target, Collection< MobEffectInstance > effects ) {
+		MobEffectInstance[] possibleEffects = effects.toArray( new MobEffectInstance[]{} );
 
-		for( EffectInstance effect : possibleEffects )
-			if( effect.getPotion()
+		for( MobEffectInstance effect : possibleEffects )
+			if( effect.getEffect()
 				.isBeneficial() ) {
 				int maximumDurationInTicks = Math.min( effect.getDuration(), Instances.LEECH.maximumDuration.getDuration() );
-				EffectHelper.applyEffectIfPossible( stealer, effect.getPotion(), maximumDurationInTicks, effect.getAmplifier() );
-				target.removePotionEffect( effect.getPotion() );
+				EffectHelper.applyEffectIfPossible( stealer, effect.getEffect(), maximumDurationInTicks, effect.getAmplifier() );
+				target.removeEffect( effect.getEffect() );
 
 				return true;
 			}
@@ -121,7 +121,7 @@ public class LeechEnchantment extends WonderfulEnchantment {
 	 @param target  Entity which will be damage from magic source.
 	 */
 	protected static void stealHealth( LivingEntity stealer, LivingEntity target ) {
-		target.attackEntityFrom( DamageSource.MAGIC, 1.0f );
+		target.hurt( DamageSource.MAGIC, 1.0f );
 		stealer.heal( 1.0f );
 	}
 
@@ -132,29 +132,29 @@ public class LeechEnchantment extends WonderfulEnchantment {
 	 @param target   One of two entities.
 	 */
 	protected static void spawnParticlesAndPlaySounds( LivingEntity attacker, LivingEntity target ) {
-		if( !( attacker.getEntityWorld() instanceof ServerWorld ) )
+		if( !( attacker.level instanceof ServerLevel ) )
 			return;
 
-		ServerWorld world = ( ServerWorld )attacker.getEntityWorld();
+		ServerLevel world = ( ServerLevel )attacker.level;
 
-		Vector3d startPosition = attacker.getPositionVec()
-			.add( new Vector3d( 0.0D, attacker.getHeight() * 0.75D, 0.0D ) );
-		Vector3d endPosition = target.getPositionVec()
-			.add( new Vector3d( 0.0D, target.getHeight() * 0.75D, 0.0D ) );
+		Vec3 startPosition = attacker.position()
+			.add( new Vec3( 0.0D, attacker.getBbHeight() * 0.75D, 0.0D ) );
+		Vec3 endPosition = target.position()
+			.add( new Vec3( 0.0D, target.getBbHeight() * 0.75D, 0.0D ) );
 
-		Vector3d difference = endPosition.subtract( startPosition );
+		Vec3 difference = endPosition.subtract( startPosition );
 		int amountOfParticles = ( int )( Math.ceil( startPosition.distanceTo( endPosition ) * 5.0D ) );
 
 		for( int i = 0; i <= amountOfParticles; i++ ) {
-			Vector3d step = difference.scale( ( float )( i ) / amountOfParticles );
-			Vector3d finalPosition = startPosition.add( step );
-			world.spawnParticle( ParticleTypes.ENCHANTED_HIT, finalPosition.getX(), finalPosition.getY(), finalPosition.getZ(), 1, 0.0D, 0.0D, 0.0D,
+			Vec3 step = difference.scale( ( float )( i ) / amountOfParticles );
+			Vec3 finalPosition = startPosition.add( step );
+			world.sendParticles( ParticleTypes.ENCHANTED_HIT, finalPosition.x, finalPosition.y, finalPosition.z, 1, 0.0D, 0.0D, 0.0D,
 				0.0D
 			);
 		}
 
-		world.playSound( null, startPosition.getX(), startPosition.getY(), startPosition.getZ(), SoundEvents.ENTITY_GENERIC_DRINK,
-			SoundCategory.AMBIENT, 0.25F, 1.0F
+		world.playSound( null, startPosition.x, startPosition.y, startPosition.z, SoundEvents.GENERIC_DRINK,
+			SoundSource.AMBIENT, 0.25F, 1.0F
 		);
 	}
 }

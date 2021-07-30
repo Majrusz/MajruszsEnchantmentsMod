@@ -12,7 +12,7 @@ public class ClientEffects {
 		String book_comment = "Should the Enchanted Book have a different texture when it has any of the Wonderful Enchantments on it? (disabling it may fix some bugs with other mods) (requires game restart)";
 		this.enchantmentBookReplacement = new AvailabilityConfig( "enchantment_book_replacement", book_comment, true, true );
 
-		this.effectsGroup = new ConfigGroup( "Effects", "" );
+		this.effectsGroup = new ConfigGroup( "MobEffects", "" );
 		this.effectsGroup.addConfig( this.enchantmentBookReplacement );
 
 		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.addConfigGroup( this.effectsGroup );

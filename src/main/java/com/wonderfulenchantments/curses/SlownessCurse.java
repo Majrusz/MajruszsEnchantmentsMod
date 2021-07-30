@@ -1,14 +1,14 @@
 package com.wonderfulenchantments.curses;
 
-import com.mlib.EquipmentSlotTypes;
+import com.mlib.EquipmentSlots;
 import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +22,7 @@ public class SlownessCurse extends WonderfulCurse {
 	protected final DoubleConfig slownessMultiplierConfig;
 
 	public SlownessCurse() {
-		super( "slowness_curse", Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotTypes.ARMOR, "Slowness" );
+		super( "slowness_curse", Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlots.ARMOR, "Slowness" );
 		String comment = "Cumulative movement speed reduction with each item with this curse.";
 		this.slownessMultiplierConfig = new DoubleConfig( "multiplier", comment, false, 0.875, 0.1, 0.95 );
 		this.curseGroup.addConfig( this.slownessMultiplierConfig );
@@ -37,12 +37,12 @@ public class SlownessCurse extends WonderfulCurse {
 	public static void onEquipmentChange( LivingEquipmentChangeEvent event ) {
 		LivingEntity entity = event.getEntityLiving();
 
-		ATTRIBUTE_HANDLER.setValueAndApply( entity, Instances.SLOWNESS.getTotalSlownessMultiplier( entity ) - 1.0 );
+		ATTRIBUTE_HANDLER.setValueAndApply( entity, Instances.MOVEMENT_SLOWDOWN.getTotalSlownessMultiplier( entity ) - 1.0 );
 	}
 
 	/** Calculates total slowness multiplier. (sum of slowness enchantment level on every armor piece) */
 	private double getTotalSlownessMultiplier( LivingEntity entity ) {
-		int sum = EnchantmentHelperPlus.calculateEnchantmentSum( Instances.SLOWNESS, entity, EquipmentSlotTypes.ARMOR );
+		int sum = EnchantmentHelperPlus.calculateEnchantmentSum( Instances.MOVEMENT_SLOWDOWN, entity, EquipmentSlots.ARMOR );
 
 		return Math.pow( this.slownessMultiplierConfig.get(), sum );
 	}

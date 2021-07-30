@@ -5,17 +5,18 @@ import com.mlib.config.DurationConfig;
 import com.mlib.config.IntegerConfig;
 import com.mlib.effects.EffectHelper;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,7 +28,7 @@ public class PufferfishVengeanceEnchantment extends WonderfulEnchantment {
 	protected final IntegerConfig hungerAmplifier, poisonAmplifier, nauseaAmplifier;
 
 	public PufferfishVengeanceEnchantment() {
-		super( "pufferfish_vengeance", Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "PufferfishVengeance" );
+		super( "pufferfish_vengeance", Rarity.RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND, "PufferfishVengeance" );
 		String durationComment = "Pufferfish negative effects duration per enchantment level. (in seconds)";
 		String hungerComment = "Amplifier level of Hunger effect.";
 		String poisonComment = "Amplifier level of Poison effect.";
@@ -44,8 +45,8 @@ public class PufferfishVengeanceEnchantment extends WonderfulEnchantment {
 	}
 
 	@Override
-	public boolean canApply( ItemStack stack ) {
-		return stack.getItem() instanceof AxeItem || super.canApply( stack );
+	public boolean canEnchant( ItemStack stack ) {
+		return stack.getItem() instanceof AxeItem || super.canEnchant( stack );
 	}
 
 	/** Event that checks if attacker has an appropriate enchantment level. */
@@ -53,20 +54,20 @@ public class PufferfishVengeanceEnchantment extends WonderfulEnchantment {
 	public static void onHit( LivingAttackEvent event ) {
 		DamageSource damageSource = event.getSource();
 
-		if( !( damageSource.getImmediateSource() instanceof LivingEntity ) )
+		if( !( damageSource.getDirectEntity() instanceof LivingEntity ) )
 			return;
 
-		LivingEntity attacker = ( LivingEntity )damageSource.getImmediateSource();
-		int enchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel( Instances.PUFFERFISH_VENGEANCE, attacker );
+		LivingEntity attacker = ( LivingEntity )damageSource.getDirectEntity();
+		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( Instances.PUFFERFISH_VENGEANCE, attacker );
 
 		if( enchantmentLevel <= 0 )
 			return;
 
 		LivingEntity target = event.getEntityLiving();
-		World world = attacker.getEntityWorld();
+		Level world = attacker.level;
 
 		Instances.PUFFERFISH_VENGEANCE.applyEffects( target );
-		world.playSound( null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT, SoundCategory.AMBIENT,
+		world.playSound( null, target.getX(), target.getY(), target.getZ(), SoundEvents.PUFFER_FISH_BLOW_OUT, SoundSource.AMBIENT,
 			1.0f, 1.0f
 		);
 	}
@@ -79,8 +80,8 @@ public class PufferfishVengeanceEnchantment extends WonderfulEnchantment {
 	protected void applyEffects( LivingEntity target ) {
 		int durationInTicks = this.durationConfig.getDuration() + TimeConverter.secondsToTicks( 1.0 );
 
-		EffectHelper.applyEffectIfPossible( target, Effects.HUNGER, durationInTicks, this.hungerAmplifier.get() );
-		EffectHelper.applyEffectIfPossible( target, Effects.POISON, durationInTicks, this.poisonAmplifier.get() );
-		EffectHelper.applyEffectIfPossible( target, Effects.NAUSEA, durationInTicks, this.nauseaAmplifier.get() );
+		EffectHelper.applyEffectIfPossible( target, MobEffects.HUNGER, durationInTicks, this.hungerAmplifier.get() );
+		EffectHelper.applyEffectIfPossible( target, MobEffects.POISON, durationInTicks, this.poisonAmplifier.get() );
+		EffectHelper.applyEffectIfPossible( target, MobEffects.CONFUSION, durationInTicks, this.nauseaAmplifier.get() );
 	}
 }

@@ -3,22 +3,22 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.config.DoubleConfig;
 import com.mlib.damage.DamageHelper;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.merchant.villager.WanderingTraderEntity;
-import net.minecraft.entity.monster.AbstractIllagerEntity;
-import net.minecraft.entity.monster.WitchEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.entity.monster.Witch;
+import net.minecraft.world.entity.npc.*;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -29,7 +29,7 @@ public class HumanSlayerEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig damageBonus;
 
 	public HumanSlayerEnchantment() {
-		super( "human_slayer", Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND, "AgainstHumanity" );
+		super( "human_slayer", Rarity.UNCOMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND, "AgainstHumanity" );
 		String comment = "Damage bonus per enchantment level.";
 		this.damageBonus = new DoubleConfig( "damage_bonus", comment, false, 2.5, 1.0, 10.0 );
 		this.enchantmentGroup.addConfig( this.damageBonus );
@@ -40,13 +40,13 @@ public class HumanSlayerEnchantment extends WonderfulEnchantment {
 	}
 
 	@Override
-	public boolean canApply( ItemStack stack ) {
-		return stack.getItem() instanceof AxeItem || super.canApply( stack );
+	public boolean canEnchant( ItemStack stack ) {
+		return stack.getItem() instanceof AxeItem || super.canEnchant( stack );
 	}
 
 	@Override
-	protected boolean canApplyTogether( Enchantment enchantment ) {
-		return !( enchantment instanceof DamageEnchantment ) && super.canApplyTogether( enchantment );
+	protected boolean checkCompatibility( Enchantment enchantment ) {
+		return !( enchantment instanceof DamageEnchantment ) && super.checkCompatibility( enchantment );
 	}
 
 	/** Event that increases damage when all conditions are met. */
@@ -56,14 +56,14 @@ public class HumanSlayerEnchantment extends WonderfulEnchantment {
 			return;
 
 		LivingEntity attacker = ( LivingEntity )event.getSource()
-			.getImmediateSource();
+			.getDirectEntity();
 		LivingEntity target = event.getEntityLiving();
 		HumanSlayerEnchantment enchantment = Instances.HUMAN_SLAYER;
-		float extraDamage = ( float )Math.floor( enchantment.damageBonus.get() * EnchantmentHelper.getMaxEnchantmentLevel( enchantment, attacker ) );
+		float extraDamage = ( float )Math.floor( enchantment.damageBonus.get() * EnchantmentHelper.getEnchantmentLevel( enchantment, attacker ) );
 
 		if( extraDamage > 0.0f && isHuman( target ) ) {
-			( ( ServerWorld )attacker.getEntityWorld() ).spawnParticle( ParticleTypes.ENCHANTED_HIT, target.getPosX(), target.getPosYHeight( 0.625 ),
-				target.getPosZ(), 24, 0.125, 0.25, 0.125, 0.5
+			( ( ServerLevel )attacker.level ).sendParticles( ParticleTypes.ENCHANTED_HIT, target.getX(), target.getY( 0.625 ),
+				target.getZ(), 24, 0.125, 0.25, 0.125, 0.5
 			);
 			event.setAmount( event.getAmount() + extraDamage );
 		}
@@ -75,6 +75,6 @@ public class HumanSlayerEnchantment extends WonderfulEnchantment {
 	 @param entity Entity to check.
 	 */
 	protected static boolean isHuman( Entity entity ) {
-		return ( entity instanceof VillagerEntity || entity instanceof WanderingTraderEntity || entity instanceof PlayerEntity || entity instanceof WitchEntity || entity instanceof AbstractIllagerEntity );
+		return ( entity instanceof Villager || entity instanceof WanderingTrader || entity instanceof Player || entity instanceof Witch || entity instanceof Pillager );
 	}
 }

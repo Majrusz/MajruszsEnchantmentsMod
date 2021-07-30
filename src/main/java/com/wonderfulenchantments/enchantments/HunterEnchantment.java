@@ -3,11 +3,11 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.config.DoubleConfig;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +21,7 @@ public class HunterEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig damagePenaltyMultiplier;
 
 	public HunterEnchantment() {
-		super( "hunter", Rarity.RARE, RegistryHandler.BOW_AND_CROSSBOW, EquipmentSlotType.MAINHAND, "Hunter" );
+		super( "hunter", Rarity.RARE, RegistryHandler.BOW_AND_CROSSBOW, EquipmentSlot.MAINHAND, "Hunter" );
 		String damage_comment = "Extra damage multiplier to distance per enchantment level.";
 		String distance_comment = "Minimum required distance to not get any damage penalty.";
 		String penalty_comment = "Maximum damage penalty if entity is very close.";
@@ -43,8 +43,8 @@ public class HunterEnchantment extends WonderfulEnchantment {
 		if( !isValid( damageSource ) )
 			return;
 
-		LivingEntity entity = ( LivingEntity )damageSource.getTrueSource();
-		int hunterLevel = EnchantmentHelper.getEnchantmentLevel( Instances.HUNTER, entity.getHeldItemMainhand() );
+		LivingEntity entity = ( LivingEntity )damageSource.getEntity();
+		int hunterLevel = EnchantmentHelper.getItemEnchantmentLevel( Instances.HUNTER, entity.getMainHandItem() );
 		event.setLootingLevel( event.getLootingLevel() + hunterLevel );
 	}
 
@@ -57,14 +57,14 @@ public class HunterEnchantment extends WonderfulEnchantment {
 		if( !isValid( damageSource ) )
 			return;
 
-		LivingEntity attacker = ( LivingEntity )damageSource.getTrueSource();
+		LivingEntity attacker = ( LivingEntity )damageSource.getEntity();
 		HunterEnchantment enchantment = Instances.HUNTER;
-		int hunterLevel = EnchantmentHelper.getEnchantmentLevel( enchantment, attacker.getHeldItemMainhand() );
+		int hunterLevel = EnchantmentHelper.getItemEnchantmentLevel( enchantment, attacker.getMainHandItem() );
 		if( hunterLevel <= 0 )
 			return;
 
-		double distance = attacker.getPositionVec()
-			.squareDistanceTo( target.getPositionVec() );
+		double distance = attacker.position()
+			.distanceToSqr( target.position() );
 		double penaltyMultiplier = Math.max( 1.0 - distance / enchantment.minimumDistance.get(), 0.0 ) * enchantment.damagePenaltyMultiplier.get();
 		double extraDamageMultiplier = distance * enchantment.damageMultiplier.get() * hunterLevel + 1.0 - penaltyMultiplier;
 		event.setAmount( ( float )( event.getAmount() * extraDamageMultiplier ) );
@@ -76,6 +76,6 @@ public class HunterEnchantment extends WonderfulEnchantment {
 	 @param source Damage source to check.
 	 */
 	protected static boolean isValid( DamageSource source ) {
-		return source != null && source.getImmediateSource() instanceof ArrowEntity && source.getTrueSource() instanceof LivingEntity;
+		return source != null && source.getDirectEntity() instanceof Arrow && source.getEntity() instanceof LivingEntity;
 	}
 }

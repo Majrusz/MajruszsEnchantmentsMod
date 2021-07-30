@@ -1,7 +1,7 @@
 buildscript {
     repositories {
+        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
         maven { url = 'https://maven.minecraftforge.net' }
-        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -15,22 +15,17 @@ apply plugin: 'maven-publish'
 
 version = '1.4.0'
 group = 'com.wonderfulenchantments'
-archivesBaseName = 'wonderful-enchantments-1.16.4'
+archivesBaseName = 'wonderful-enchantments-1.17.1'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
     mappings channel: 'official', version: '1.17.1'
 
     runs {
         client {
             workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -42,11 +37,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -58,16 +49,10 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
             mods {
                 examplemod {
                     source sourceSets.main
@@ -78,19 +63,18 @@ minecraft {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 repositories {
-    jcenter()
     flatDir {
-        dirs 'libs'
+        dir 'libs'
     }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.17.1-37.0.8'
-    implementation fg.deobf('com.mlib:majrusz-library-1.17.1:2.1.0')
+    minecraft 'net.minecraftforge:forge:1.17.1-37.0.15'
+    implementation fg.deobf( 'com.mlib:majrusz-library-1.17.1:2.1.0' )
 }
 
+// Example for how to get properties into the manifest for reading at runtime.
 jar {
     manifest {
         attributes([
