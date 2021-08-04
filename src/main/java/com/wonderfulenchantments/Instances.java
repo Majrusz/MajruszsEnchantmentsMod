@@ -2,9 +2,8 @@ package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
-import com.wonderfulenchantments.items.WonderfulBookItem;
-import com.wonderfulenchantments.recipes.WonderfulBookRecipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import com.wonderfulenchantments.items.*;
+import com.wonderfulenchantments.recipes.*;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.fml.ModLoadingContext;
 
