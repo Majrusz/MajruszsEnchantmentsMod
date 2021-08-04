@@ -28,7 +28,7 @@ public class RegistryHandler {
 	public static final DeferredRegister< ParticleType< ? > > PARTICLES = DeferredRegister.create( ForgeRegistries.PARTICLE_TYPES,
 		WonderfulEnchantments.MOD_ID
 	);
-	public static final DeferredRegister< MobEffect > EFFECTS = DeferredRegister.create( ForgeRegistries.POTIONS, WonderfulEnchantments.MOD_ID );
+	public static final DeferredRegister< MobEffect > EFFECTS = DeferredRegister.create( ForgeRegistries.MOB_EFFECTS, WonderfulEnchantments.MOD_ID );
 	public static final DeferredRegister< Item > ITEMS_TO_REPLACE = DeferredRegister.create( ForgeRegistries.ITEMS, "minecraft" );
 	public static final DeferredRegister< Item > ITEMS = DeferredRegister.create( ForgeRegistries.ITEMS, WonderfulEnchantments.MOD_ID );
 	public static final DeferredRegister< RecipeSerializer< ? > > RECIPES = DeferredRegister.create( ForgeRegistries.RECIPE_SERIALIZERS,
