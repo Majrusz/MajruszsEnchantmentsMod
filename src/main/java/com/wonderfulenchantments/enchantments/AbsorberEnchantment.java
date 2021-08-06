@@ -35,7 +35,7 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 		this.minimumEffectDuration = new DurationConfig( "minimum_duration", durationComment, false, 2.5, 0.0, 60.0 );
 
 		String effectsComment = "MobEffects that can not be absorbed.";
-		this.forbiddenEffects = new StringListConfig( "forbidden_effects", effectsComment, false, "majruszs_difficulty:bleeding" );
+		this.forbiddenEffects = new StringListConfig( "forbidden_effects", effectsComment, false, "majruszs_difficulty:bleeding", "majruszs_difficulty:infested" );
 
 		this.enchantmentGroup.addConfigs( this.minimumEffectDuration, this.forbiddenEffects );
 
