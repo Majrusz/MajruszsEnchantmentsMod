@@ -18,8 +18,10 @@ public class FatigueCurse extends WonderfulCurse {
 
 	public FatigueCurse() {
 		super( "fatigue_curse", Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND, "Fatigue" );
+
 		String comment = "Mining speed reduction with each level.";
 		this.miningMultiplierConfig = new DoubleConfig( "multiplier", comment, false, 0.8, 0.1, 0.95 );
+
 		this.curseGroup.addConfig( this.miningMultiplierConfig );
 
 		setMaximumEnchantmentLevel( 3 );

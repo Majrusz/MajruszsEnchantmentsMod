@@ -28,10 +28,13 @@ public class VampirismCurse extends WonderfulCurse {
 
 	public VampirismCurse() {
 		super( "vampirism_curse", Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlots.ARMOR, "Vampirism" );
+
 		String durationComment = "Duration of negative effects. (in seconds)";
-		String cooldownComment = "Cooldown between applying negative effects. (in seconds)";
 		this.effectDuration = new DurationConfig( "effect_duration", durationComment, false, 30.0, 10.0, 300.0 );
+
+		String cooldownComment = "Cooldown between applying negative effects. (in seconds)";
 		this.effectCooldown = new DurationConfig( "effect_cooldown", cooldownComment, false, 2.0, 1.0, 60.0 );
+
 		this.curseGroup.addConfigs( this.effectDuration, this.effectCooldown );
 
 		setMaximumEnchantmentLevel( 1 );

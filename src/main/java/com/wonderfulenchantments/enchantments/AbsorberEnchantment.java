@@ -30,10 +30,13 @@ public class AbsorberEnchantment extends WonderfulEnchantment {
 
 	public AbsorberEnchantment() {
 		super( "absorber", Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlots.BOTH_HANDS, "Absorber" );
-		String duration_comment = "Minimum required duration to absorb an effect. (in seconds)";
-		String effects_comment = "MobEffects that can not be absorbed.";
-		this.minimumEffectDuration = new DurationConfig( "minimum_duration", duration_comment, false, 2.5, 0.0, 60.0 );
-		this.forbiddenEffects = new StringListConfig( "forbidden_effects", effects_comment, false, "majruszs_difficulty:bleeding" );
+
+		String durationComment = "Minimum required duration to absorb an effect. (in seconds)";
+		this.minimumEffectDuration = new DurationConfig( "minimum_duration", durationComment, false, 2.5, 0.0, 60.0 );
+
+		String effectsComment = "MobEffects that can not be absorbed.";
+		this.forbiddenEffects = new StringListConfig( "forbidden_effects", effectsComment, false, "majruszs_difficulty:bleeding" );
+
 		this.enchantmentGroup.addConfigs( this.minimumEffectDuration, this.forbiddenEffects );
 
 		setMaximumEnchantmentLevel( 1 );

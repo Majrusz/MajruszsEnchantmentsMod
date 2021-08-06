@@ -8,6 +8,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 public class IncompatibilityCurse extends WonderfulCurse {
 	public IncompatibilityCurse() {
 		super( "incompatibility_curse", Rarity.RARE, EnchantmentCategory.BREAKABLE, EquipmentSlots.ARMOR_AND_HANDS, "Incompatibility" );
+
 		setMaximumEnchantmentLevel( 1 );
 		setDifferenceBetweenMinimumAndMaximum( 40 );
 		setMinimumEnchantabilityCalculator( level->10 );

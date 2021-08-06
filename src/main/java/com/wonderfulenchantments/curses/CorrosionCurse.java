@@ -27,10 +27,13 @@ public class CorrosionCurse extends WonderfulCurse {
 
 	public CorrosionCurse() {
 		super( "corrosion_curse", Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlots.ARMOR, "Corrosion" );
+
 		String cooldownComment = "Damage cooldown in seconds.";
-		String damageComment = "Amount of damage dealt to the player every X seconds. (with each enchantment level)";
 		this.damageCooldown = new DurationConfig( "damage_cooldown_duration", cooldownComment, false, 3.0, 1.0, 60.0 );
+
+		String damageComment = "Amount of damage dealt to the player every X seconds. (with each enchantment level)";
 		this.damageAmount = new DoubleConfig( "damage_amount", damageComment, false, 0.25, 0.0, 20.0 );
+
 		this.curseGroup.addConfigs( this.damageCooldown, this.damageAmount );
 
 		setMaximumEnchantmentLevel( 1 );
