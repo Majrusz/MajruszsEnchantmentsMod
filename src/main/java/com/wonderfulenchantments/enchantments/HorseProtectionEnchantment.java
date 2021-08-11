@@ -25,8 +25,10 @@ public class HorseProtectionEnchantment extends WonderfulEnchantment {
 
 	public HorseProtectionEnchantment() {
 		super( "horse_protection", Rarity.UNCOMMON, RegistryHandler.HORSE_ARMOR, EquipmentSlots.ARMOR, "HorseProtection" );
+
 		String comment = "Horse armor bonus per enchantment level.";
 		this.armorBonus = new IntegerConfig( "armor_bonus", comment, false, 2, 1, 10 );
+
 		this.enchantmentGroup.addConfig( this.armorBonus );
 
 		setMaximumEnchantmentLevel( 4 );
