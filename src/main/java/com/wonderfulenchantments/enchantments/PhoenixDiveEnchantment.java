@@ -1,5 +1,6 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.IntegerConfig;
 import com.wonderfulenchantments.Instances;
@@ -13,6 +14,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -27,6 +30,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /** Enchantment that releases fire wave when entity falls. (inspired by Divinity: Original Sin 2) */
 @Mod.EventBusSubscriber
@@ -142,15 +146,33 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 	/**
 	 Getting entities in certain range.
 
-	 @param entity Entity as a start position.
-	 @param world  Current entity world.
+	 @param livingEntity Entity as a start position.
+	 @param world        Current entity world.
 
 	 @return Returns list with entities that were in range.
 	 */
-	protected static List< Entity > getEntitiesInRange( LivingEntity entity, ServerLevel world ) {
+	protected static List< Entity > getEntitiesInRange( LivingEntity livingEntity, ServerLevel world ) {
 		double range = Instances.PHOENIX_DIVE.damageDistance.get();
-		return world.getEntities( entity, entity.getBoundingBox()
-			.inflate( range, entity.getBbHeight(), range ) );
+		List< Entity > entities = world.getEntities( livingEntity, livingEntity.getBoundingBox()
+			.inflate( range, livingEntity.getBbHeight(), range ) );
+
+		return entities.stream()
+			.filter( getEntitiesPredicate( livingEntity ) )
+			.toList();
+	}
+
+	/** Returns predicate to check whether given entity is valid target. */
+	protected static Predicate< Entity > getEntitiesPredicate( LivingEntity livingEntity ) {
+		return entity->{
+			boolean canAttack = entity instanceof LivingEntity && AttributeHandler.hasAttribute( ( LivingEntity )entity, Attributes.ATTACK_DAMAGE );
+			boolean isTamedByEntity = entity instanceof TamableAnimal && ( ( TamableAnimal )entity ).isOwnedBy( livingEntity );
+			boolean isTargetedByEntity = livingEntity.getLastHurtByMob() != null && livingEntity.getLastHurtByMob()
+				.is( entity );
+			boolean wasAttackedByEntity = livingEntity.getLastHurtMob() != null && livingEntity.getLastHurtMob()
+				.is( entity );
+
+			return canAttack && !isTamedByEntity || isTargetedByEntity || wasAttackedByEntity;
+		};
 	}
 
 	/**
