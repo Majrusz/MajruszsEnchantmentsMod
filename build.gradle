@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.4.2'
+version = '1.4.3'
 group = 'com.wonderfulenchantments'
 archivesBaseName = 'wonderful-enchantments-1.17.1'
 
