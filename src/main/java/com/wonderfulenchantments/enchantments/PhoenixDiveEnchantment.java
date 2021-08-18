@@ -124,7 +124,7 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 		if( !player.isCrouching() || enchantmentLevel <= 0 )
 			return;
 
-		double angleInRadians = Math.toRadians( player.yBodyRot + 90.0 );
+		double angleInRadians = Math.toRadians( player.yRotO + 90.0 );
 		double factor = ( enchantmentLevel + 1 ) * Instances.PHOENIX_DIVE.jumpMultiplier.get();
 		player.setDeltaMovement( player.getDeltaMovement()
 			.multiply( new Vec3( 0.0, 1.0 + factor, 0.0 ) )
