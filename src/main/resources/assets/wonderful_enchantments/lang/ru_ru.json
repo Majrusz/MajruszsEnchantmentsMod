@@ -81,6 +81,20 @@
   "enchantment.wonderful_enchantments.harvester.desc": "Дает возможность правой кнопкой мыши собирать урожай и выращивать близлежащие культуры.",
   "enchantment.wonderful_enchantments.harvester.description": "Дает возможность правой кнопкой мыши собирать урожай и выращивать близлежащие культуры.",
 
+  "enchantment.wonderful_enchantments.mithridatism": "Митридатизм",
+  "enchantment.wonderful_enchantments.mithridatism.desc": "Уменьшает урон от некоторых негативных эффектов и дает Поглощение при наложении негативного эффекта.",
+  "enchantment.wonderful_enchantments.mithridatism.description": "Уменьшает урон от некоторых негативных эффектов и дает Поглощение при наложении негативного эффекта.",
+  "effect.wonderful_enchantments.mithridatism_protection": "Митридатизм",
+  "wonderful_enchantments.mithridatism_level_up": "You have developed greater resilience to negative effects!",
+
+  "enchantment.wonderful_enchantments.fuse_cutter": "Прерывание взрывателя",
+  "enchantment.wonderful_enchantments.fuse_cutter.desc": "Отменяет взрывы поблизости и не наносит урона, если игрок защищается щитом.",
+  "enchantment.wonderful_enchantments.fuse_cutter.description": "Отменяет взрывы поблизости и не наносит урона, если игрок защищается щитом.",
+
+  "enchantment.wonderful_enchantments.sixth_sense": "Шестое чувство",
+  "enchantment.wonderful_enchantments.sixth_sense.desc": "Выделяет ближайших монстров после того, как игрок постоит неподвижно несколько секунд.",
+  "enchantment.wonderful_enchantments.sixth_sense.description": "Выделяет ближайших монстров после того, как игрок постоит неподвижно несколько секунд.",
+
   "enchantment.wonderful_enchantments.slowness_curse": "Проклятие медлительности",
   "enchantment.wonderful_enchantments.slowness_curse.desc": "Уменьшает скорость передвижения игрока.",
   "enchantment.wonderful_enchantments.slowness_curse.description": "Уменьшает скорость передвижения игрока.",
