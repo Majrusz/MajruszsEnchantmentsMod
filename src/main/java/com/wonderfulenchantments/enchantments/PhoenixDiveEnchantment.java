@@ -37,7 +37,7 @@ import java.util.function.Predicate;
 public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 	private static final String FOOT_PARTICLE_TAG = "PhoenixDiveFootParticleTick";
 	protected final DoubleConfig jumpMultiplier, damageDistance;
-	protected final IntegerConfig jumpPenalty;
+	protected final IntegerConfig jumpPenalty, secondsOnFire;
 
 	public PhoenixDiveEnchantment() {
 		super( "phoenix_dive", Rarity.RARE, EnchantmentCategory.ARMOR_FEET, EquipmentSlot.FEET, "PheonixDive" );
@@ -51,7 +51,10 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 		String penaltyComment = "Penalty for using special jump. (damage to durability)";
 		this.jumpPenalty = new IntegerConfig( "jump_penalty", penaltyComment, false, 3, 0, 100 );
 
-		this.enchantmentGroup.addConfigs( this.jumpMultiplier, this.jumpPenalty, this.damageDistance );
+		String fireComment = "Duration of igniting nearby opponents per enchantment level. (in seconds)";
+		this.secondsOnFire = new IntegerConfig( "jump_penalty", fireComment, false, 3, 1, 100 );
+
+		this.enchantmentGroup.addConfigs( this.jumpMultiplier, this.jumpPenalty, this.damageDistance, this.secondsOnFire );
 
 		setMaximumEnchantmentLevel( 3 );
 		setDifferenceBetweenMinimumAndMaximum( 30 );
@@ -79,7 +82,7 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 		for( Entity entity : getEntitiesInRange( attacker, world ) )
 			if( entity instanceof LivingEntity ) {
 				LivingEntity target = ( LivingEntity )entity;
-				target.setSecondsOnFire( 3 * enchantmentLevel );
+				target.setSecondsOnFire( Instances.PHOENIX_DIVE.secondsOnFire.get() * enchantmentLevel );
 				target.hurt( DamageSource.explosion( attacker ), 0 );
 				target.hurt( DamageSource.ON_FIRE, ( float )Math.sqrt( enchantmentLevel * event.getDistance() ) );
 			}
