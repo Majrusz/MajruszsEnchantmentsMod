@@ -43,7 +43,7 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 		super( "phoenix_dive", Rarity.RARE, EnchantmentCategory.ARMOR_FEET, EquipmentSlot.FEET, "PheonixDive" );
 
 		String jumpComment = "Jumping power multiplier per enchantment level.";
-		this.jumpMultiplier = new DoubleConfig( "jump_multiplier", jumpComment, false, 0.25, 0.01, 1.0 );
+		this.jumpMultiplier = new DoubleConfig( "jump_multiplier", jumpComment, false, 0.3, 0.01, 1.0 );
 
 		String distanceComment = "Area of entities that will take damage. (area of square where A = (x - value, z - value) and B = (x + value, z + value))";
 		this.damageDistance = new DoubleConfig( "damage_range", distanceComment, false, 5.0, 1.0, 100.0 );
