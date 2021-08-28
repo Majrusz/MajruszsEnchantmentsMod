@@ -92,7 +92,6 @@ public class RegistryHandler {
 	/** Registering all potion effects. */
 	private static void addEffects( final IEventBus modEventBus ) {
 		EFFECTS.register( "mithridatism_protection", ()->Instances.MITHRIDATISM_PROTECTION );
-
 		EFFECTS.register( modEventBus );
 	}
 
