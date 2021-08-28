@@ -50,11 +50,8 @@ public class RegistryHandlerClient {
 		}
 
 		ClientEffects clientEffects = Instances.CLIENT_EFFECTS;
-		hasWonderfulEnchantments = hasWonderfulEnchantments && clientEffects.isEnchantedBookTextureReplacementEnabled();
-		if( hasWonderfulEnchantments && hasOtherEnchantments && clientEffects.isCombinedBookTextureReplacementEnabled() )
-			return 2.0f;
-		else if( hasWonderfulEnchantments )
-			return 1.0f;
+		if( hasWonderfulEnchantments && clientEffects.isEnchantedBookTextureReplacementEnabled() )
+			return hasOtherEnchantments && clientEffects.isCombinedBookTextureReplacementEnabled() ? 2.0f : 1.0f;
 
 		return 0.0f;
 	}
