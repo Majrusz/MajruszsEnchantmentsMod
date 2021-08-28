@@ -7,19 +7,28 @@ import com.mlib.config.ConfigGroup;
 public class ClientEffects {
 	protected final ConfigGroup effectsGroup;
 	protected final AvailabilityConfig enchantmentBookReplacement;
+	protected final AvailabilityConfig combinedBookReplacement;
 
 	public ClientEffects() {
-		String book_comment = "Should the Enchanted Book have a different texture when it has any of the Wonderful Enchantments on it? (disabling it may fix some bugs with other mods) (requires game restart)";
-		this.enchantmentBookReplacement = new AvailabilityConfig( "enchantment_book_replacement", book_comment, true, true );
+		String bookComment = "Should the Enchanted Book has a different texture when it has any of the Wonderful Enchantments on it? (disabling it may fix some bugs with other mods) (requires world/game restart)";
+		this.enchantmentBookReplacement = new AvailabilityConfig( "enchantment_book_replacement", bookComment, true, true );
 
-		this.effectsGroup = new ConfigGroup( "MobEffects", "" );
-		this.effectsGroup.addConfig( this.enchantmentBookReplacement );
+		String combinedComment = "Should the Enchanted Book has a different texture when it has any of the Wonderful Enchantments and other enchantments on it? (disabling it may fix some bugs with other mods) (requires world/game restart)";
+		this.combinedBookReplacement = new AvailabilityConfig( "combined_book_replacement", combinedComment, true, true );
+
+		this.effectsGroup = new ConfigGroup( "VisualEffects", "" );
+		this.effectsGroup.addConfigs( this.enchantmentBookReplacement, this.combinedBookReplacement );
 
 		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.addConfigGroup( this.effectsGroup );
 	}
 
-	/** Checks whether enchantment books will have new texture with Wonderful Enchantments. */
+	/** Checks whether enchantment book should has a new texture when it has any of the Wonderful Enchantments on it. */
 	public boolean isEnchantedBookTextureReplacementEnabled() {
 		return this.enchantmentBookReplacement.isEnabled();
+	}
+
+	/** Checks whether enchantment book should has a new texture when it has any of the Wonderful Enchantments and other enchantments on it. */
+	public boolean isCombinedBookTextureReplacementEnabled() {
+		return this.combinedBookReplacement.isEnabled();
 	}
 }

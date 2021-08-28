@@ -21,14 +21,17 @@ public class RegistryHandlerClient {
 	public static void setup() {
 		EntityRenderers.register( EntityType.HORSE, HorseRendererReplacement::new );
 
-		if( Instances.CLIENT_EFFECTS.isEnchantedBookTextureReplacementEnabled() )
+		ClientEffects clientEffects = Instances.CLIENT_EFFECTS;
+		if( clientEffects.isEnchantedBookTextureReplacementEnabled() || clientEffects.isCombinedBookTextureReplacementEnabled() )
 			ItemProperties.register( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ), RegistryHandlerClient::enchantmentBookPredicate );
 	}
 
-	/** Checks whether given item stack has enchantments from Wonderful Enchantments mod. */
+	/** Checks for different enchantments on enchanted book to determine witch texture should be used. */
 	private static float enchantmentBookPredicate( ItemStack itemStack, ClientLevel clientWorld, LivingEntity entity, int i ) {
 		Map< Enchantment, Integer > enchantments = EnchantmentHelper.getEnchantments( itemStack );
 
+		boolean hasWonderfulEnchantments = false;
+		boolean hasOtherEnchantments = false;
 		for( Map.Entry< Enchantment, Integer > enchantmentPair : enchantments.entrySet() ) {
 			Enchantment enchantment = enchantmentPair.getKey();
 			ResourceLocation enchantmentLocation = enchantment.getRegistryName();
@@ -36,9 +39,22 @@ public class RegistryHandlerClient {
 				continue;
 
 			String enchantmentName = enchantmentLocation.getNamespace();
-			if( enchantmentName.contains( "wonderful_enchantments" ) )
-				return 1.0f;
+			if( enchantmentName.contains( "wonderful_enchantments" ) ) {
+				hasWonderfulEnchantments = true;
+			} else {
+				hasOtherEnchantments = true;
+			}
+
+			if( hasWonderfulEnchantments && hasOtherEnchantments )
+				break;
 		}
+
+		ClientEffects clientEffects = Instances.CLIENT_EFFECTS;
+		hasWonderfulEnchantments = hasWonderfulEnchantments && clientEffects.isEnchantedBookTextureReplacementEnabled();
+		if( hasWonderfulEnchantments && hasOtherEnchantments && clientEffects.isCombinedBookTextureReplacementEnabled() )
+			return 2.0f;
+		else if( hasWonderfulEnchantments )
+			return 1.0f;
 
 		return 0.0f;
 	}

@@ -5,6 +5,7 @@
   },
   "overrides": [
     { "predicate": { "book_type": 0.0 }, "model": "item/enchanted_book" },
-    { "predicate": { "book_type": 1.0 }, "model": "wonderful_enchantments:item/majrusz_book" }
+    { "predicate": { "book_type": 1.0 }, "model": "wonderful_enchantments:item/majrusz_book" },
+    { "predicate": { "book_type": 2.0 }, "model": "wonderful_enchantments:item/majrusz_book_combined" }
   ]
 }
