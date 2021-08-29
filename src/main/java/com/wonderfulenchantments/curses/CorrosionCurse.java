@@ -47,16 +47,16 @@ public class CorrosionCurse extends WonderfulCurse {
 
 		CorrosionCurse corrosionCurse = Instances.CORROSION;
 		int enchantmentLevel = corrosionCurse.getEnchantmentSum( entity.getArmorSlots() );
+		NBTHelper.IntegerData integerData = new NBTHelper.IntegerData( entity, CORROSION_TAG );
 
-		int counter = NBTHelper.getNBTInteger( entity, CORROSION_TAG ) + 1;
+		integerData.set( value->value + 1 );
 		boolean hasContactWithWater = LevelHelper.isEntityOutsideWhenItIsRaining( entity ) || entity.isInWater();
-		if( enchantmentLevel > 0 && hasContactWithWater && counter > corrosionCurse.damageCooldown.getDuration() ) {
-			counter = 0;
+		if( enchantmentLevel > 0 && hasContactWithWater && integerData.get() > corrosionCurse.damageCooldown.getDuration() ) {
+			integerData.set( 0 );
 			if( corrosionCurse.damageAmount.get() > 0 )
 				entity.hurt( DamageSource.DROWN, ( float )( enchantmentLevel * corrosionCurse.damageAmount.get() ) );
 			corrosionCurse.damageArmor( entity );
 		}
-		NBTHelper.setNBTInteger( entity, CORROSION_TAG, counter );
 	}
 
 	/** Deals damage to each armor piece with corrosion curse. */
