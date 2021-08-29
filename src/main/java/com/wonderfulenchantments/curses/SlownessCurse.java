@@ -44,8 +44,6 @@ public class SlownessCurse extends WonderfulCurse {
 
 	/** Calculates total slowness multiplier. (sum of slowness enchantment level on every armor piece) */
 	private double getTotalSlownessMultiplier( LivingEntity entity ) {
-		int sum = EnchantmentHelperPlus.calculateEnchantmentSum( Instances.MOVEMENT_SLOWDOWN, entity, EquipmentSlots.ARMOR );
-
-		return Math.pow( this.slownessMultiplierConfig.get(), sum );
+		return Math.pow( this.slownessMultiplierConfig.get(), getEnchantmentSum( entity, EquipmentSlots.ARMOR ) );
 	}
 }
