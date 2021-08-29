@@ -5,7 +5,9 @@ import com.mlib.TimeConverter;
 import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.IntegerConfig;
+import com.mlib.entities.EntityHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -47,15 +49,20 @@ public class WonderfulBookItem extends Item {
 			.rarity( Rarity.UNCOMMON ) );
 
 		String startComment = "Starting enchanting energy level.";
-		String maximumComment = "Maximum level of enchanting energy.";
-		String minimumComment = "Minimum cost of enchanting.";
-		String bookComment = "Amount of books combined together.";
-		String ratioComment = "Enchanting cost ratio for each extra level beyond starting enchanting energy level.";
 		this.startingLevel = new IntegerConfig( "starting_level", startComment, false, 6, 6, 100 );
+
+		String maximumComment = "Maximum level of enchanting energy.";
 		this.maximumLevel = new IntegerConfig( "maximum_level", maximumComment, false, 30, 6, 100 );
+
+		String minimumComment = "Minimum cost of enchanting.";
 		this.minimumCost = new IntegerConfig( "minimum_cost", minimumComment, false, 6, 6, 100 );
+
+		String bookComment = "Amount of books combined together.";
 		this.amountOfBooks = new IntegerConfig( "book_amount", bookComment, false, 3, 1, 10 );
+
+		String ratioComment = "Enchanting cost ratio for each extra level beyond starting enchanting energy level.";
 		this.costRatio = new DoubleConfig( "cost_ratio", ratioComment, false, 0.75, 0.0, 1.0 );
+
 		this.itemGroup = ITEM_GROUP.addGroup( new ConfigGroup( "WonderfulBook", "" ) );
 		this.itemGroup.addConfigs( this.startingLevel, this.maximumLevel, this.minimumCost, this.amountOfBooks, this.costRatio );
 	}
@@ -67,10 +74,11 @@ public class WonderfulBookItem extends Item {
 
 		if( !world.isClientSide ) {
 			int levelCost = getEnchantingLevelCost( wonderfulBook );
+			boolean isOnCreativeMode = EntityHelper.isOnCreativeMode( player );
 			if( player.experienceLevel >= levelCost ) {
-				if( !player.getAbilities().instabuild )
+				if( !isOnCreativeMode )
 					player.giveExperienceLevels( -levelCost );
-			} else if( !player.getAbilities().instabuild ) {
+			} else if( !isOnCreativeMode ) {
 				return InteractionResultHolder.sidedSuccess( wonderfulBook, world.isClientSide() );
 			}
 			ItemStack enchantedBook = new ItemStack( Items.ENCHANTED_BOOK );
@@ -126,6 +134,17 @@ public class WonderfulBookItem extends Item {
 
 		toolTip.add( new TextComponent( " " ) );
 		toolTip.add( new TranslatableComponent( "item.wonderful_enchantments.wonderful_book.transmute" ).withStyle( ChatFormatting.GRAY ) );
+	}
+
+	@Override
+	public void fillItemCategory( CreativeModeTab itemGroup, NonNullList< ItemStack > itemStacks ) {
+		double max = this.maximumLevel.get(), min = this.startingLevel.get();
+		double range = max - min;
+		for( int i = 0; i <= 2; ++i ) {
+			ItemStack wonderfulBook = new ItemStack( this );
+			setEnergyLevel( wonderfulBook, ( int )( min + range * i / 2.0f ) );
+			itemStacks.add( wonderfulBook );
+		}
 	}
 
 	/** Returns current book energy level. */
