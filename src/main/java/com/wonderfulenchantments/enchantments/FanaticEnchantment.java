@@ -125,7 +125,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		Multiset< String > rewards = HashMultiset.create();
 		rewards.add( event.getDrops()
 			.get( 0 )
-			.getDisplayName()
+			.getHoverName()
 			.getString() );
 
 		int extraRewardsCounter = 0;
@@ -135,7 +135,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 				for( ItemStack extraReward : lootTable.getRandomItems( lootContext ) ) {
 					spawnReward( extraReward, player, level, event.getHookEntity() );
 
-					rewards.add( extraReward.getDisplayName()
+					rewards.add( extraReward.getHoverName()
 						.getString() );
 					extraRewardsCounter++;
 				}
