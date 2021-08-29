@@ -4,11 +4,13 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
+import com.mlib.CommonHelper;
 import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.IntegerConfig;
 import com.mlib.math.VectorHelper;
+import com.mlib.triggers.BasicTrigger;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.WonderfulEnchantments;
 import net.minecraft.ChatFormatting;
@@ -20,6 +22,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.MobType;
@@ -57,10 +60,10 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		super( "fishing_fanatic", Rarity.UNCOMMON, EnchantmentCategory.FISHING_ROD, EquipmentSlot.MAINHAND, "FishingFanatic" );
 
 		String increaseComment = "Chance for increasing enchantment level per every missing level to 6th level. (for example if this value is equal 0.01 then to get 1st level you have 6 * 0.01 = 6% chance, to get 2nd level ( 6-1 ) * 0.01 = 5% chance)";
-		this.levelIncreaseChanceMultiplier = new DoubleConfig( "level_increase_chance", increaseComment, false, 0.01, 0.01, 0.15 );
+		this.levelIncreaseChanceMultiplier = new DoubleConfig( "level_increase_chance", increaseComment, false, 0.01, 0.0001, 1.0 );
 
 		String highIncreaseComment = "Chance for increasing enchantment level per every missing level from 6th to 8th level. (for example if this value is equal 0.002 then to get 7th level you have 2 * 0.002 = 0.4% chance and to get 8th level 1 * 0.002 = 0.2% chance)";
-		this.highLevelIncreaseChanceMultiplier = new DoubleConfig( "high_level_increase_chance", highIncreaseComment, false, 0.002, 0.01, 0.15 );
+		this.highLevelIncreaseChanceMultiplier = new DoubleConfig( "high_level_increase_chance", highIncreaseComment, false, 0.002, 0.0001, 1.0 );
 
 		String lootComment = "Independent chance for extra loot with every enchantment level.";
 		this.extraLootChance = new DoubleConfig( "extra_loot_chance", lootComment, false, 0.33333, 0.01, 1.0 );
@@ -217,6 +220,17 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 				}
 
 				fishingRod.addTagElement( "Enchantments", nbt );
+			}
+
+			ServerPlayer serverPlayer = CommonHelper.castIfPossible( ServerPlayer.class, player );
+			if( serverPlayer != null ) {
+				BasicTrigger basicTrigger = Instances.BASIC_TRIGGER;
+				if( isRaining )
+					basicTrigger.trigger( serverPlayer, "nothing_can_stop_me" );
+				if( enchantmentLevel+1 == 1 )
+					basicTrigger.trigger( serverPlayer, "fishing_fanatic" );
+				if( enchantmentLevel+1 == 8 )
+					basicTrigger.trigger( serverPlayer, "fishing_fanatic_true" );
 			}
 
 			return true;
