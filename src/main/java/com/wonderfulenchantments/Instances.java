@@ -15,6 +15,7 @@ public class Instances {
 	public static final HumanSlayerEnchantment HUMAN_SLAYER;
 	public static final PufferfishVengeanceEnchantment PUFFERFISH_VENGEANCE;
 	public static final LeechEnchantment LEECH;
+	public static final DeathWishEnchantment DEATH_WISH;
 
 	// Armor Enchantments
 	public static final DodgeEnchantment DODGE;
@@ -72,6 +73,7 @@ public class Instances {
 		HUMAN_SLAYER = new HumanSlayerEnchantment();
 		PUFFERFISH_VENGEANCE = new PufferfishVengeanceEnchantment();
 		LEECH = new LeechEnchantment();
+		DEATH_WISH = new DeathWishEnchantment();
 
 		DODGE = new DodgeEnchantment();
 		ENLIGHTENMENT = new EnlightenmentEnchantment();
