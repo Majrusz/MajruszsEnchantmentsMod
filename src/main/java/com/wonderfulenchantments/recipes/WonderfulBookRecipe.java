@@ -47,13 +47,9 @@ public class WonderfulBookRecipe extends CustomRecipe {
 		return isValid( wonderfulBook, list );
 	}
 
-	@Override
-	public ItemStack assemble( CraftingContainer container ) {
-		return null;
-	}
-
 	/** Returns an Item that is the result of this recipe. */
-	public ItemStack getCraftingResult( CraftingContainer inventory ) {
+	@Override
+	public ItemStack assemble( CraftingContainer inventory ) {
 		ItemStack wonderfulBook = ItemStack.EMPTY;
 		List< ItemStack > list = Lists.newArrayList();
 
