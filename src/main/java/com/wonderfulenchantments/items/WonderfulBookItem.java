@@ -138,6 +138,9 @@ public class WonderfulBookItem extends Item {
 
 	@Override
 	public void fillItemCategory( CreativeModeTab itemGroup, NonNullList< ItemStack > itemStacks ) {
+		if( itemGroup != CreativeModeTab.TAB_MISC )
+			return;
+
 		double max = this.maximumLevel.get(), min = this.startingLevel.get();
 		double range = max - min;
 		for( int i = 0; i <= 2; ++i ) {
