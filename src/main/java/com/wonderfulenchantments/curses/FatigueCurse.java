@@ -37,7 +37,7 @@ public class FatigueCurse extends WonderfulCurse {
 	@SubscribeEvent
 	public static void onBreakingBlock( PlayerEvent.BreakSpeed event ) {
 		FatigueCurse fatigueCurse = Instances.FATIGUE;
-		int fatigueLevel = EnchantmentHelper.getEnchantmentLevel( fatigueCurse, event.getPlayer() );
+		int fatigueLevel = fatigueCurse.getEnchantmentLevel( event.getPlayer() );
 
 		if( fatigueLevel > 0 )
 			event.setNewSpeed( event.getNewSpeed() * fatigueCurse.getMiningMultiplier( fatigueLevel ) );
