@@ -40,6 +40,9 @@ public class RegistryHandler {
 	public static final EnchantmentCategory BOW_AND_CROSSBOW = EnchantmentCategory.create( "bow_and_crossbow",
 		( Item item )->( item instanceof BowItem || item instanceof CrossbowItem )
 	);
+	public static final EnchantmentCategory MELEE_WEAPON = EnchantmentCategory.create( "melee_weapon",
+		( Item item )->( item instanceof SwordItem || item instanceof AxeItem || item instanceof TridentItem )
+	);
 
 	public static final RegistryObject< SimpleParticleType > PHOENIX_PARTICLE = PARTICLES.register( "phoenix_particle",
 		()->new SimpleParticleType( true )
