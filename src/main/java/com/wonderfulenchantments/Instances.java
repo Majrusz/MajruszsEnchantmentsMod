@@ -1,5 +1,6 @@
 package com.wonderfulenchantments;
 
+import com.mlib.triggers.BasicTrigger;
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.*;
@@ -69,6 +70,9 @@ public class Instances {
 	// Items
 	public static final WonderfulBookItem WONDERFUL_BOOK_ITEM;
 
+	// Triggers
+	public static final BasicTrigger BASIC_TRIGGER;
+
 	static {
 		FISHING_FANATIC = new FanaticEnchantment();
 
@@ -116,6 +120,8 @@ public class Instances {
 		WONDERFUL_BOOK_RECIPE = new SimpleRecipeSerializer<>( WonderfulBookRecipe::new );
 
 		WONDERFUL_BOOK_ITEM = new WonderfulBookItem();
+
+		BASIC_TRIGGER = BasicTrigger.createRegisteredInstance( WonderfulEnchantments.MOD_ID );
 
 		WonderfulEnchantments.CONFIG_HANDLER.register( ModLoadingContext.get() );
 		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );

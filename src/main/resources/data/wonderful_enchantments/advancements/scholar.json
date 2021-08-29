@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:story/enchant_item",
+  "display": {
+    "icon": {
+      "item": "minecraft:experience_bottle"
+    },
+    "title": {
+      "translate": "advancements.wonderful_enchantments.scholar.title"
+    },
+    "description": {
+      "translate": "advancements.wonderful_enchantments.scholar.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "criteria": {
+    "has_met_requirement": {
+      "trigger": "majrusz_library:basic_trigger",
+      "conditions": {
+        "mod_id": "wonderful_enchantments",
+        "type": "enlightenment_8"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_met_requirement"
+    ]
+  ]
+}
