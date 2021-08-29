@@ -4,16 +4,14 @@ import com.mlib.EquipmentSlots;
 import com.mlib.LevelHelper;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
-import com.mlib.enchantments.EnchantmentHelperPlus;
+import com.mlib.nbt.NBTHelper;
 import com.wonderfulenchantments.Instances;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -48,26 +46,24 @@ public class CorrosionCurse extends WonderfulCurse {
 			return;
 
 		CorrosionCurse corrosionCurse = Instances.CORROSION;
-		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( corrosionCurse, entity.getArmorSlots() );
-		CompoundTag data = entity.getPersistentData();
+		int enchantmentLevel = corrosionCurse.getEnchantmentSum( entity.getArmorSlots() );
 
-		int counter = data.getInt( CORROSION_TAG ) + 1;
+		int counter = NBTHelper.getNBTInteger( entity, CORROSION_TAG ) + 1;
 		boolean hasContactWithWater = LevelHelper.isEntityOutsideWhenItIsRaining( entity ) || entity.isInWater();
 		if( enchantmentLevel > 0 && hasContactWithWater && counter > corrosionCurse.damageCooldown.getDuration() ) {
 			counter = 0;
 			if( corrosionCurse.damageAmount.get() > 0 )
 				entity.hurt( DamageSource.DROWN, ( float )( enchantmentLevel * corrosionCurse.damageAmount.get() ) );
-			damageArmor( entity );
+			corrosionCurse.damageArmor( entity );
 		}
-		data.putInt( CORROSION_TAG, counter );
+		NBTHelper.setNBTInteger( entity, CORROSION_TAG, counter );
 	}
 
 	/** Deals damage to each armor piece with corrosion curse. */
-	protected static void damageArmor( LivingEntity entity ) {
+	protected void damageArmor( LivingEntity entity ) {
 		for( EquipmentSlot equipmentSlotType : EquipmentSlots.ARMOR ) {
 			ItemStack itemStack = entity.getItemBySlot( equipmentSlotType );
-
-			if( EnchantmentHelper.getItemEnchantmentLevel( Instances.CORROSION, itemStack ) > 0 )
+			if( hasEnchantment( itemStack ) )
 				itemStack.hurtAndBreak( 1, entity, owner->owner.broadcastBreakEvent( equipmentSlotType ) );
 		}
 	}
