@@ -50,7 +50,7 @@ public class VampirismCurse extends WonderfulCurse {
 
 		ServerLevel world = ( ServerLevel )entity.level;
 		VampirismCurse vampirism = Instances.VAMPIRISM;
-		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( vampirism, entity.getArmorSlots() );
+		int enchantmentLevel = vampirism.getEnchantmentSum( entity.getArmorSlots() );
 		CompoundTag data = entity.getPersistentData();
 
 		int counter = data.getInt( VAMPIRISM_TAG ) + 1;
