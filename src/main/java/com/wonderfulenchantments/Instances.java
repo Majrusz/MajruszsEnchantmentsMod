@@ -11,11 +11,13 @@ public class Instances {
 	// Fishing Rod Enchantments
 	public static final FanaticEnchantment FISHING_FANATIC;
 
+	// Melee Enchantments (sword, axe and trident)
+	public static final DeathWishEnchantment DEATH_WISH;
+
 	// Sword Enchantments
 	public static final HumanSlayerEnchantment HUMAN_SLAYER;
 	public static final PufferfishVengeanceEnchantment PUFFERFISH_VENGEANCE;
 	public static final LeechEnchantment LEECH;
-	public static final DeathWishEnchantment DEATH_WISH;
 
 	// Armor Enchantments
 	public static final DodgeEnchantment DODGE;
@@ -70,10 +72,11 @@ public class Instances {
 	static {
 		FISHING_FANATIC = new FanaticEnchantment();
 
+		DEATH_WISH = new DeathWishEnchantment();
+
 		HUMAN_SLAYER = new HumanSlayerEnchantment();
 		PUFFERFISH_VENGEANCE = new PufferfishVengeanceEnchantment();
 		LEECH = new LeechEnchantment();
-		DEATH_WISH = new DeathWishEnchantment();
 
 		DODGE = new DodgeEnchantment();
 		ENLIGHTENMENT = new EnlightenmentEnchantment();
