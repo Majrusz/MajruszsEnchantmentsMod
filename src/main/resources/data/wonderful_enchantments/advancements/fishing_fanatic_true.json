@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:story/enchant_item",
+  "display": {
+    "icon": {
+      "item": "minecraft:fishing_rod",
+      "nbt": "{Damage:0, Enchantments:[{}]}"
+    },
+    "title": {
+      "translate": "advancements.wonderful_enchantments.fishing_fanatic_true.title"
+    },
+    "description": {
+      "translate": "advancements.wonderful_enchantments.fishing_fanatic_true.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "rewards": {
+    "experience": 750
+  },
+  "criteria": {
+    "has_met_requirement": {
+      "trigger": "majrusz_library:basic_trigger",
+      "conditions": {
+        "mod_id": "wonderful_enchantments",
+        "type": "fishing_fanatic_true"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_met_requirement"
+    ]
+  ]
+}

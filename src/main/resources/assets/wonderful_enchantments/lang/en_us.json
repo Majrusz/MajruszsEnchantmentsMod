@@ -126,5 +126,14 @@
 	"item.wonderful_enchantments.wonderful_book.level": "level",
 	"item.wonderful_enchantments.wonderful_book.levels": "levels",
 	"item.wonderful_enchantments.wonderful_book.hint": "You can increase enchanting energy with Lapis Lazuli in Crafting Table.",
-	"item.wonderful_enchantments.wonderful_book.transmute": "Press the right mouse button to transmute into a enchanted book while holding it..."
+	"item.wonderful_enchantments.wonderful_book.transmute": "Press the right mouse button to transmute into a enchanted book while holding it...",
+
+	"advancements.wonderful_enchantments.scholar.title": "Scholar",
+	"advancements.wonderful_enchantments.scholar.description": "Acquire the Enlightenment II on all armor pieces",
+	"advancements.wonderful_enchantments.nothing_can_stop_me.title": "Nothing Can Stop Me",
+	"advancements.wonderful_enchantments.nothing_can_stop_me.description": "Obtain the next level of the Fishing Fanatic even though it is raining",
+	"advancements.wonderful_enchantments.fishing_fanatic.title": "I quite like it",
+	"advancements.wonderful_enchantments.fishing_fanatic.description": "Acquire the first level of the Fishing Fanatic",
+	"advancements.wonderful_enchantments.fishing_fanatic_true.title": "Well... I am addicted",
+	"advancements.wonderful_enchantments.fishing_fanatic_true.description": "Acquire the eighth level of the Fishing Fanatic"
 }
