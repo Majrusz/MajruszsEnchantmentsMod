@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:story/enchant_item",
+  "parent": "minecraft:husbandry/fishy_business",
   "display": {
     "icon": {
       "item": "minecraft:fishing_rod",
