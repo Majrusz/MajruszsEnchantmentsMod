@@ -4,17 +4,16 @@ import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -40,32 +39,22 @@ public class FuseCutterEnchantment extends WonderfulEnchantment {
 	public static void onExplosion( ExplosionEvent.Start explosionEvent ) {
 		FuseCutterEnchantment enchantment = Instances.FUSE_CUTTER;
 		Explosion explosion = explosionEvent.getExplosion();
-		int enchantmentLevel = enchantment.getMaximumEnchantmentLevelNearby( explosionEvent.getWorld(), explosion.getPosition() );
-
-		if( enchantmentLevel == 0 )
+		if( !enchantment.isAnyoneBlockingWithFuseCutter( explosionEvent.getWorld(), explosion.getPosition() ) )
 			return;
 
 		enchantment.cancelExplosion( explosionEvent );
 	}
 
-	/** Returns the highest level of the Fuse Cutter enchantment near given position. */
-	protected int getMaximumEnchantmentLevelNearby( Level world, Vec3 position ) {
+	/** Checks whether anyone is blocking using Shield with Fuse Cutter near given position. */
+	protected boolean isAnyoneBlockingWithFuseCutter( Level world, Vec3 position ) {
 		double x = position.x, y = position.y, z = position.z, offset = this.maximumOffset.get();
-		AABB axisAligned = new AABB( x - offset, y - offset, z - offset, x + offset, y + offset, z + offset );
+		AABB axisAligned = new AABB( x, y, z, x, y, z ).inflate( offset );
 
-		for( LivingEntity livingEntity : world.getEntitiesOfClass( LivingEntity.class, axisAligned ) ) {
-			int mainHandEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel( this,
-				livingEntity.getItemBySlot( EquipmentSlot.MAINHAND )
-			);
-			int offHandEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel( this,
-				livingEntity.getItemBySlot( EquipmentSlot.OFFHAND )
-			);
+		for( LivingEntity livingEntity : world.getEntitiesOfClass( LivingEntity.class, axisAligned ) )
+			if( livingEntity.isBlocking() && hasEnchantment( livingEntity.getItemBySlot( EquipmentSlot.MAINHAND ) ) )
+				return true;
 
-			if( livingEntity.isBlocking() && Math.max( offHandEnchantmentLevel, mainHandEnchantmentLevel ) > 0 )
-				return 1;
-		}
-
-		return 0;
+		return false;
 	}
 
 	/** Disables explosion completely and spawns particle effects with sound. */
@@ -80,12 +69,10 @@ public class FuseCutterEnchantment extends WonderfulEnchantment {
 		Vec3 position = explosion.getPosition();
 
 		for( int i = 0; i < 2; ++i )
-			world.sendParticles( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, position.x, position.y + 0.5, position.z,
-				16 * i, 0.125, 0.25, 0.125, 0.025
+			world.sendParticles( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, position.x, position.y + 0.5, position.z, 16 * i, 0.125,
+				0.25, 0.125, 0.025
 			);
 
-		world.playSound( null, position.x, position.y, position.z, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.AMBIENT,
-			1.0f, 1.0f
-		);
+		world.playSound( null, position.x, position.y, position.z, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.AMBIENT, 1.0f, 1.0f );
 	}
 }
