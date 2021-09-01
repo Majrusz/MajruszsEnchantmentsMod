@@ -1,14 +1,12 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.mlib.CommonHelper;
 import com.mlib.EquipmentSlots;
 import com.mlib.LevelHelper;
-import com.mlib.enchantments.EnchantmentHelperPlus;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.HorseArmorItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,44 +31,22 @@ public class HorseFrostWalkerEnchantment extends WonderfulEnchantment {
 	/** Event that freezes nearby water each tick when all conditions are met. */
 	@SubscribeEvent
 	public static void freezeNearby( LivingEvent.LivingUpdateEvent event ) {
-		if( !isValid( event ) )
+		Animal animal = CommonHelper.castIfPossible( Animal.class, event.getEntityLiving() );
+		if( animal == null || animal.level.isClientSide() )
 			return;
 
-		Animal animal = ( Animal )event.getEntityLiving();
-		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( Instances.HORSE_FROST_WALKER, animal.getArmorSlots() );
-		if( enchantmentLevel > 0 )
-			LevelHelper.freezeWater( animal, 2 + enchantmentLevel, 60, 120 );
+		int frostLevel = Instances.HORSE_FROST_WALKER.getEnchantmentSum( animal.getArmorSlots() );
+		LevelHelper.freezeWater( animal, 2 + frostLevel, 60, 120 );
 	}
 
 	/** Disabling taking damage when horse is standing on Magma Block. */
 	@SubscribeEvent
 	public static void onTakingDamage( LivingDamageEvent event ) {
-		if( !( event.getEntityLiving() instanceof Animal ) || !( event.getSource() == DamageSource.HOT_FLOOR ) )
+		if( event.getSource() != DamageSource.HOT_FLOOR )
 			return;
 
-		Animal animal = ( Animal )event.getEntityLiving();
-		int enchantmentLevel = EnchantmentHelperPlus.calculateEnchantmentSum( Instances.HORSE_FROST_WALKER, animal.getArmorSlots() );
-		if( enchantmentLevel > 0 )
+		Animal animal = CommonHelper.castIfPossible( Animal.class, event.getEntityLiving() );
+		if( animal != null && Instances.HORSE_FROST_WALKER.getEnchantmentSum( animal.getArmorSlots() ) > 0 )
 			event.setCanceled( true );
-	}
-
-	/**
-	 Checking whether all conditions are met.
-
-	 @param event Living entity update event.
-	 */
-	protected static boolean isValid( LivingEvent.LivingUpdateEvent event ) {
-		if( !( event.getEntityLiving() instanceof Animal ) )
-			return false;
-
-		Animal animal = ( Animal )event.getEntityLiving();
-		if( animal.level.isClientSide() || !animal.isOnGround() )
-			return false;
-
-		for( ItemStack itemStack : animal.getArmorSlots() )
-			if( itemStack.getItem() instanceof HorseArmorItem )
-				return true;
-
-		return false;
 	}
 }
