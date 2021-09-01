@@ -30,7 +30,7 @@ public class HarvesterEnchantment extends WonderfulEnchantment {
 			@Override
 			public boolean shouldBeExecuted( ServerLevel serverLevel, Player player, ItemStack itemStack ) {
 				HarvesterEnchantment harvester = Instances.HARVESTER;
-				return EnchantmentHelper.getItemEnchantmentLevel( harvester, itemStack ) >= harvester.getMaxLevel();
+				return harvester.getEnchantmentLevel( itemStack ) >= harvester.getMaxLevel();
 			}
 		} );
 	}
@@ -71,10 +71,9 @@ public class HarvesterEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void onRightClick( PlayerInteractEvent.RightClickBlock event ) {
 		ItemStack itemStack = event.getItemStack();
-		int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel( Instances.HARVESTER, itemStack );
 		Player player = event.getPlayer();
 		BlockPos position = event.getPos();
-		if( enchantmentLevel <= 0 )
+		if( !Instances.HARVESTER.hasEnchantment( itemStack ) )
 			return;
 
 		BlockState blockState = player.level.getBlockState( position );
