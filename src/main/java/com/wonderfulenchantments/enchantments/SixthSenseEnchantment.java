@@ -58,24 +58,22 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void onEntityTick( LivingEvent.LivingUpdateEvent event ) {
 		LivingEntity livingEntity = event.getEntityLiving();
-		if( livingEntity.level instanceof ServerLevel )
-			return;
-
 		NBTHelper.IntegerData monsterTagData = new NBTHelper.IntegerData( livingEntity, MONSTER_TAG );
-		monsterTagData.set( value->Math.max( value - 1, 0 ) );
+		if( livingEntity.level instanceof ServerLevel )
+			monsterTagData.set( value->Math.max( value - 1, 0 ) );
+
 		if( monsterTagData.get() == 1 )
 			livingEntity.setGlowingTag( false );
 	}
 
 	/** Updates sixth sense's logic for a given player. */
 	private void update( Player player ) {
-		if( player.level instanceof ServerLevel )
-			return;
-
 		NBTHelper.IntegerData senseTagData = new NBTHelper.IntegerData( player, SENSE_TAG );
 		NBTHelper.IntegerData tickTagData = new NBTHelper.IntegerData( player, TICK_TAG );
-		tickTagData.set( value->value + 1 );
-		senseTagData.set( isPlayerMoving( player ) ? value->0 : value->value + 1 );
+		if( player.level instanceof ServerLevel ) {
+			tickTagData.set( value->value + 1 );
+			senseTagData.set( isPlayerMoving( player ) ? value->0 : value->value + 1 );
+		}
 
 		if( hasEnchantment( player.getItemBySlot( EquipmentSlot.HEAD ) ) && shouldHighlightEntities( senseTagData, tickTagData ) )
 			highlightNearbyEntities( player );
