@@ -5,6 +5,7 @@ import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.mlib.loot_modifiers.LootHelper;
 import com.wonderfulenchantments.Instances;
+import com.wonderfulenchantments.enchantments.SmelterEnchantment;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -99,8 +100,7 @@ public class SmeltingItems extends LootModifier {
 
 			output.add( smeltedItemStack );
 			Optional< SmeltingRecipe > recipe = recipeManager.getRecipeFor( RecipeType.SMELTING, new SimpleContainer( itemStack ), world );
-
-			if( !recipe.isPresent() )
+			if( recipe.isEmpty() )
 				continue;
 
 			int experience = calculateRandomExperienceForRecipe( recipe.get(), itemStack.getCount() );
@@ -117,10 +117,8 @@ public class SmeltingItems extends LootModifier {
 
 	/** Checks whether item should be affected by Fortune enchantment. */
 	protected boolean isItemAffectedByFortune( Item item ) {
-		if( Instances.SMELTER.isExtraLootDisabled() )
-			return false;
-
-		return Instances.SMELTER.shouldIncreaseLoot( item.getRegistryName() );
+		SmelterEnchantment smelter = Instances.SMELTER;
+		return !smelter.isExtraLootDisabled() && smelter.shouldIncreaseLoot( item.getRegistryName() );
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer< SmeltingItems > {
