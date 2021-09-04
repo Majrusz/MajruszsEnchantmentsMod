@@ -2,7 +2,6 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
-import com.wonderfulenchantments.Instances;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -14,8 +13,10 @@ public class MagicProtectionEnchantment extends WonderfulEnchantment {
 
 	public MagicProtectionEnchantment() {
 		super( "magic_protection", Rarity.UNCOMMON, EnchantmentCategory.ARMOR, EquipmentSlots.ARMOR, "MagicProtection" );
+
 		String comment = "Damage reduction bonus per enchantment level.";
 		this.protectionBonus = new DoubleConfig( "armor_bonus", comment, false, 2.0, 1.0, 10.0 );
+
 		this.enchantmentGroup.addConfig( this.protectionBonus );
 
 		setMaximumEnchantmentLevel( 4 );
@@ -28,7 +29,7 @@ public class MagicProtectionEnchantment extends WonderfulEnchantment {
 		if( source.isCreativePlayer() )
 			return 0;
 		else if( source.isMagic() )
-			return ( int )( level * Instances.MAGIC_PROTECTION.protectionBonus.get() );
+			return ( int )( level * this.protectionBonus.get() );
 
 		return 0;
 	}
