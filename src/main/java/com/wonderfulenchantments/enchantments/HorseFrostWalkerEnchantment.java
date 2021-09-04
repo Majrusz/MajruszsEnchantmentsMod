@@ -36,7 +36,8 @@ public class HorseFrostWalkerEnchantment extends WonderfulEnchantment {
 			return;
 
 		int frostLevel = Instances.HORSE_FROST_WALKER.getEnchantmentSum( animal.getArmorSlots() );
-		LevelHelper.freezeWater( animal, 2 + frostLevel, 60, 120 );
+		if( frostLevel > 0 )
+			LevelHelper.freezeWater( animal, 2 + frostLevel, 60, 120 );
 	}
 
 	/** Disabling taking damage when horse is standing on Magma Block. */
