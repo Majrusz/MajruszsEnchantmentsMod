@@ -46,7 +46,7 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 
 	/** Returns current Mithridatism enchantment level. */
 	public int getItemEnchantmentLevel( LivingEntity entity ) {
-		return EnchantmentHelper.getItemEnchantmentLevel( this, entity.getItemBySlot( EquipmentSlot.CHEST ) );
+		return getEnchantmentLevel( entity.getItemBySlot( EquipmentSlot.CHEST ) );
 	}
 
 	/** MobEffect that decreases damage from certain negative effects. */
@@ -60,19 +60,25 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 		public MithridatismProtectionEffect( MithridatismEnchantment mithridatism ) {
 			super( MobEffectCategory.BENEFICIAL, 0xff76db4c );
 
-			String listComment = "Damage sources that will deal less damage when effect is active.";
-			String absorptionComment = "Level of Absorption applied to the player per enchantment level rounded down. (minimum. 1lvl)";
-			String baseReductionComment = "Base amount of damage decreased from negative effects.";
-			String levelReductionComment = "Amount of damage decreased from negative effects per enchantment level.";
-			String durationComment = "Duration of both the Absorption and Mithridatism Protection. (in seconds)";
-			String levelUpComment = "Chance for Mithridatism to increase its level.";
-			this.effectGroup = new ConfigGroup( "MithridatismProtection", "" );
+			String listComment = "Damage sources that deal less damage when the effect is active.";
 			this.damageSourceList = new StringListConfig( "damage_source_list", listComment, false, "magic", "wither", "bleeding" );
+
+			String absorptionComment = "Level of Absorption applied to the player per enchantment level rounded down. (minimum. 1lvl)";
 			this.absorptionPerLevel = new DoubleConfig( "absorption_per_level", absorptionComment, false, 0.5, 0, 3 );
+
+			String baseReductionComment = "Base amount of damage decreased from negative effects.";
 			this.baseDamageReduction = new DoubleConfig( "base_reduction", baseReductionComment, false, 0.2, 0.0, 1.0 );
+
+			String levelReductionComment = "Amount of damage decreased from negative effects per enchantment level.";
 			this.damageReductionPerLevel = new DoubleConfig( "reduction_per_level", levelReductionComment, false, 0.1, 0.0, 1.0 );
-			this.levelUpChance = new DoubleConfig( "level_up_chance", levelUpComment, false, 0.025, 0.0, 1.0 );
+
+			String durationComment = "Duration of both the Absorption and Mithridatism Protection. (in seconds)";
 			this.duration = new DurationConfig( "duration", durationComment, false, 60.0, 2.0, 600.0 );
+
+			String levelUpComment = "Chance for Mithridatism to increase its level.";
+			this.levelUpChance = new DoubleConfig( "level_up_chance", levelUpComment, false, 0.025, 0.0, 1.0 );
+
+			this.effectGroup = new ConfigGroup( "MithridatismProtection", "" );
 			this.effectGroup.addConfigs( this.damageSourceList, this.absorptionPerLevel, this.baseDamageReduction, this.damageReductionPerLevel,
 				this.levelUpChance, this.duration
 			);
@@ -164,19 +170,8 @@ public class MithridatismEnchantment extends WonderfulEnchantment {
 		/** Increases Mithridatism level for given player. */
 		protected void increaseLevel( LivingEntity entity ) {
 			ItemStack chestplate = entity.getItemBySlot( EquipmentSlot.CHEST );
-			MithridatismEnchantment mithridatism = Instances.MITHRIDATISM;
-			ListTag listNBT = chestplate.getEnchantmentTags();
+			Instances.MITHRIDATISM.increaseEnchantmentLevel( chestplate );
 
-			for( int i = 0; i < listNBT.size(); ++i ) {
-				CompoundTag compoundNBT = listNBT.getCompound( i );
-				String enchantmentID = compoundNBT.getString( "id" );
-				if( enchantmentID.contains( "mithridatism" ) ) {
-					compoundNBT.putInt( "lvl", mithridatism.getItemEnchantmentLevel( entity ) + 1 );
-					break;
-				}
-			}
-
-			chestplate.addTagElement( "Enchantments", listNBT );
 			notifyAboutLevelUp( entity );
 		}
 
