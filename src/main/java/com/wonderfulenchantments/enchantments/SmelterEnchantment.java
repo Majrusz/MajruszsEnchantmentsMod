@@ -18,10 +18,10 @@ public class SmelterEnchantment extends WonderfulEnchantment {
 	public SmelterEnchantment() {
 		super( "smelter", Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND, "Smelter" );
 
-		String lootComment = "Should this enchantment duplicate custom items when player have fortune enchantment.";
+		String lootComment = "Should this enchantment duplicate custom items when a player have fortune enchantment.";
 		this.shouldIncreaseLoot = new AvailabilityConfig( "should_increase_loot", lootComment, false, true );
 
-		String bonusComment = "List of blocks that will drop more items when player has both Fortune and Smelter enchantment.";
+		String bonusComment = "List of blocks that drops more items when a player has both Fortune and Smelter enchantment.";
 		this.fortuneBonusList = new StringListConfig( "fortune_bonus_list", bonusComment, false, "for example: minecraft:iron_ore" );
 
 		this.enchantmentGroup.addConfigs( this.shouldIncreaseLoot, this.fortuneBonusList );
