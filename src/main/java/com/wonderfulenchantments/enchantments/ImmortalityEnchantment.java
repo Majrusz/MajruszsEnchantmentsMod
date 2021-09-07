@@ -35,27 +35,25 @@ public class ImmortalityEnchantment extends WonderfulEnchantment {
 		LivingEntity target = event.getEntityLiving();
 
 		if( ( target.getHealth() - event.getAmount() ) < 1.0f ) {
-			if( tryCheatDeath( target, target.getMainHandItem() ) )
+			if( tryCheatDeath( target, EquipmentSlot.MAINHAND ) )
 				event.setCanceled( true );
-			else if( tryCheatDeath( target, target.getOffhandItem() ) )
+			else if( tryCheatDeath( target, EquipmentSlot.OFFHAND ) )
 				event.setCanceled( true );
 		}
 	}
 
 	/**
-	 Cheating death when players is holding shield and it has this enchantment.
-
-	 @param target    Entity which will receive full health on death.
-	 @param itemStack Item stack to check.
+	 Cheats death when player holds shield and it has this enchantment.
 
 	 @return Returns whether player successfully cheated death.
 	 */
-	protected static boolean tryCheatDeath( LivingEntity target, ItemStack itemStack ) {
-		if( itemStack.getItem() instanceof ShieldItem && EnchantmentHelper.getItemEnchantmentLevel( Instances.IMMORTALITY, itemStack ) > 0 ) {
+	protected static boolean tryCheatDeath( LivingEntity target, EquipmentSlot equipmentSlot ) {
+		ItemStack itemStack = target.getItemBySlot( equipmentSlot );
+		if( itemStack.getItem() instanceof ShieldItem && Instances.IMMORTALITY.hasEnchantment( itemStack ) ) {
 			target.setHealth( target.getMaxHealth() );
 
 			spawnParticlesAndPlaySounds( target );
-			itemStack.hurtAndBreak( DAMAGE_ON_USE, target, ( entity )->entity.broadcastBreakEvent( EquipmentSlot.OFFHAND ) );
+			itemStack.hurtAndBreak( DAMAGE_ON_USE, target, ( entity )->entity.broadcastBreakEvent( equipmentSlot ) );
 
 			return true;
 		}
@@ -63,11 +61,7 @@ public class ImmortalityEnchantment extends WonderfulEnchantment {
 		return false;
 	}
 
-	/**
-	 Spawning particles and playing sound on cheating death.
-
-	 @param livingEntity Entity where the effects will be generated.
-	 */
+	/** Spawns particles and plays sound when cheating death. */
 	protected static void spawnParticlesAndPlaySounds( LivingEntity livingEntity ) {
 		ServerLevel world = ( ServerLevel )livingEntity.level;
 		world.sendParticles( ParticleTypes.TOTEM_OF_UNDYING, livingEntity.getX(), livingEntity.getY( 0.75 ), livingEntity.getZ(), 64,
