@@ -3,6 +3,7 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.TimeConverter;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
+import com.mlib.nbt.NBTHelper;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.PacketHandler;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -34,10 +34,13 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 
 	public GottaMineFastEnchantment() {
 		super( "gotta_mine_fast", Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND, "GottaMineFast" );
-		String exponent_comment = "Duration is raised to this exponent. (for example exponent = 1.5 and after two minutes bonus is equal 2.0 ^ 1.5 = 2.82 (total 3.82))";
-		String duration_comment = "Maximum duration increasing mining speed. (in seconds)";
-		this.exponent = new DoubleConfig( "exponent", exponent_comment, false, 1.5849625007, 1.01, 5.0 );
-		this.maximumDuration = new DurationConfig( "maximum_duration", duration_comment, false, 120.0, 1.0, 3600.0 );
+
+		String exponentComment = "Duration is raised to this exponent. (for example exponent = 1.5 and after two minutes bonus is equal 2.0 ^ 1.5 = 2.82 (total 3.82))";
+		this.exponent = new DoubleConfig( "exponent", exponentComment, false, 1.5849625007, 1.01, 5.0 );
+
+		String durationComment = "Maximum duration increasing mining speed. (in seconds)";
+		this.maximumDuration = new DurationConfig( "maximum_duration", durationComment, false, 120.0, 1.0, 3600.0 );
+
 		this.enchantmentGroup.addConfigs( this.exponent, this.maximumDuration );
 
 		setMaximumEnchantmentLevel( 1 );
@@ -59,11 +62,12 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 		if( player.level instanceof ServerLevel )
 			return;
 
-		CompoundTag data = player.getPersistentData();
-		data.putInt( COUNTER_TAG, Instances.GOTTA_MINE_FAST.isMining ? data.getInt( COUNTER_TAG ) + 1 : 0 );
-		Instances.GOTTA_MINE_FAST.counter = ( Instances.GOTTA_MINE_FAST.counter + 1 ) % 20;
+		GottaMineFastEnchantment gottaMineFast = Instances.GOTTA_MINE_FAST;
+		NBTHelper.IntegerData counterData = new NBTHelper.IntegerData( player, COUNTER_TAG );
+		counterData.set( value->gottaMineFast.isMining ? value + 1 : 0 );
+		gottaMineFast.counter = ( gottaMineFast.counter + 1 ) % 20;
 
-		if( Instances.GOTTA_MINE_FAST.counter == 0 )
+		if( gottaMineFast.counter == 0 )
 			PacketHandler.CHANNEL.sendToServer( new GottaMineFastMultiplier( getMiningMultiplier( player ) ) );
 	}
 
@@ -72,7 +76,7 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	public static void onBreakingBlock( PlayerEvent.BreakSpeed event ) {
 		Player player = event.getPlayer();
 		CompoundTag data = player.getPersistentData();
-		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( Instances.GOTTA_MINE_FAST, player );
+		int enchantmentLevel = Instances.GOTTA_MINE_FAST.getEnchantmentLevel( player );
 
 		if( enchantmentLevel > 0 ) {
 			if( getMiningMultiplier( player ) > 0.0f )

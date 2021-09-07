@@ -38,7 +38,7 @@ public class DeathWishEnchantment extends WonderfulEnchantment {
 	public static void onDamageDealt( LivingHurtEvent event ) {
 		DeathWishEnchantment deathWish = Instances.DEATH_WISH;
 
-		LivingEntity attacker = DamageHelper.getEntityFromDamageSource( LivingEntity.class, event.getSource() );
+		LivingEntity attacker = DamageHelper.castEntityIfPossible( LivingEntity.class, event.getSource() );
 		if( attacker != null && deathWish.hasEnchantment( attacker ) )
 			event.setAmount( event.getAmount() * deathWish.getDamageMultiplier( attacker ) );
 
