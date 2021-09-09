@@ -4,6 +4,7 @@ import com.mlib.TimeConverter;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.mlib.nbt.NBTHelper;
+import com.mlib.network.FloatMessage;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.PacketHandler;
 import net.minecraft.nbt.CompoundTag;
@@ -18,9 +19,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-
-import java.util.function.Supplier;
 
 /** Enchantment that increases mining speed the longer the player hold left mouse button. */
 @Mod.EventBusSubscriber
@@ -68,7 +66,7 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 		gottaMineFast.counter = ( gottaMineFast.counter + 1 ) % 20;
 
 		if( gottaMineFast.counter == 0 )
-			PacketHandler.CHANNEL.sendToServer( new GottaMineFastMultiplier( getMiningMultiplier( player ) ) );
+			PacketHandler.CHANNEL.sendToServer( new MultiplierMessage( getMiningMultiplier( player ) ) );
 	}
 
 	/** Event that increases damage dealt to block each tick when player is holding left mouse button and have this enchantment. */
@@ -103,31 +101,19 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 		);
 	}
 
-	public static class GottaMineFastMultiplier {
-		private final float multiplier;
-
-		public GottaMineFastMultiplier( float multiplier ) {
-			this.multiplier = multiplier;
+	/** Sends information from client to server about how long player holded mouse button. */
+	public static class MultiplierMessage extends FloatMessage {
+		public MultiplierMessage( float value ) {
+			super( value );
 		}
 
-		public GottaMineFastMultiplier( FriendlyByteBuf buffer ) {
-			this.multiplier = buffer.readFloat();
+		public MultiplierMessage( FriendlyByteBuf buffer ) {
+			super( buffer );
 		}
 
-		public void encode( FriendlyByteBuf buffer ) {
-			buffer.writeFloat( this.multiplier );
-		}
-
-		public void handle( Supplier< NetworkEvent.Context > contextSupplier ) {
-			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork( ()->{
-				ServerPlayer sender = context.getSender();
-				if( sender == null )
-					return;
-				CompoundTag data = sender.getPersistentData();
-				data.putFloat( MINING_MULTIPLIER_TAG, this.multiplier );
-			} );
-			context.setPacketHandled( true );
+		@Override
+		public void receiveMessage( ServerPlayer sender, CompoundTag data ) {
+			data.putFloat( MINING_MULTIPLIER_TAG, this.value );
 		}
 	}
 }
