@@ -1,10 +1,12 @@
 package com.wonderfulenchantments.enchantments;
 
+import com.mlib.MajruszLibrary;
 import com.mlib.TimeConverter;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.mlib.nbt.NBTHelper;
 import com.mlib.network.FloatMessage;
+import com.mlib.time.TimeHelper;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.PacketHandler;
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +29,6 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	private static final String MINING_MULTIPLIER_TAG = "GottaMineFastMultiplier";
 	protected final DoubleConfig exponent;
 	protected final DurationConfig maximumDuration;
-	protected int counter = 0;
 	protected boolean isMining = false;
 
 	public GottaMineFastEnchantment() {
@@ -57,47 +58,48 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void onUpdate( TickEvent.PlayerTickEvent event ) {
 		Player player = event.player;
-		if( player.level instanceof ServerLevel )
+		if( player.level instanceof ServerLevel || !TimeHelper.isEndPhase( event ) )
 			return;
 
 		GottaMineFastEnchantment gottaMineFast = Instances.GOTTA_MINE_FAST;
 		NBTHelper.IntegerData counterData = new NBTHelper.IntegerData( player, COUNTER_TAG );
 		counterData.set( value->gottaMineFast.isMining ? value + 1 : 0 );
-		gottaMineFast.counter = ( gottaMineFast.counter + 1 ) % 20;
 
-		if( gottaMineFast.counter == 0 )
-			PacketHandler.CHANNEL.sendToServer( new MultiplierMessage( getMiningMultiplier( player ) ) );
+		if( TimeHelper.hasClientTicksPassed( 20 ) )
+			gottaMineFast.sendMultiplierMessage( counterData );
 	}
 
 	/** Event that increases damage dealt to block each tick when player is holding left mouse button and have this enchantment. */
 	@SubscribeEvent
 	public static void onBreakingBlock( PlayerEvent.BreakSpeed event ) {
 		Player player = event.getPlayer();
-		CompoundTag data = player.getPersistentData();
-		int enchantmentLevel = Instances.GOTTA_MINE_FAST.getEnchantmentLevel( player );
+		GottaMineFastEnchantment gottaMineFast = Instances.GOTTA_MINE_FAST;
+		int enchantmentLevel = gottaMineFast.getEnchantmentLevel( player );
 
 		if( enchantmentLevel > 0 ) {
-			if( getMiningMultiplier( player ) > 0.0f )
-				event.setNewSpeed( event.getNewSpeed() * ( 1.0f + getMiningMultiplier( player ) ) );
+			NBTHelper.FloatData miningData = new NBTHelper.FloatData( player, MINING_MULTIPLIER_TAG );
+			NBTHelper.IntegerData counterData = new NBTHelper.IntegerData( player, COUNTER_TAG );
+
+			float miningMultiplier = gottaMineFast.getMiningMultiplier( counterData.get() );
+			if( miningMultiplier > 0.0f )
+				event.setNewSpeed( event.getNewSpeed() * ( 1.0f + miningMultiplier ) );
 			else
-				event.setNewSpeed( event.getNewSpeed() * ( 1.0f + data.getFloat( MINING_MULTIPLIER_TAG ) ) );
+				event.setNewSpeed( event.getNewSpeed() * ( 1.0f + miningData.get() ) );
 		}
+	}
+
+	public void sendMultiplierMessage( NBTHelper.IntegerData counterData ) {
+		PacketHandler.CHANNEL.sendToServer( new MultiplierMessage( getMiningMultiplier( counterData.get() ) ) );
 	}
 
 	/**
 	 Calculating mining multiplier depending on ticks the player was holding left mouse.
 
-	 @param player Player to calculate bonus on.
-
 	 @return Returns multiplier which represents how fast the player will mine the block. (2.0f will mean twice as fast)
 	 */
-	protected static float getMiningMultiplier( Player player ) {
-		GottaMineFastEnchantment enchantment = Instances.GOTTA_MINE_FAST;
-		CompoundTag data = player.getPersistentData();
-
+	protected float getMiningMultiplier( int miningTicks ) {
 		return ( float )Math.pow(
-			Math.min( data.getInt( COUNTER_TAG ), enchantment.maximumDuration.getDuration() ) / ( float )TimeConverter.minutesToTicks( 1.0 ),
-			enchantment.exponent.get()
+			Math.min( miningTicks, this.maximumDuration.getDuration() ) / ( float )TimeConverter.minutesToTicks( 1.0 ), this.exponent.get()
 		);
 	}
 
