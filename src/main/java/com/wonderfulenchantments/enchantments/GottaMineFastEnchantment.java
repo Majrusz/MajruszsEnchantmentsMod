@@ -4,7 +4,7 @@ import com.mlib.TimeConverter;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.mlib.nbt.NBTHelper;
-import com.mlib.network.FloatMessage;
+import com.mlib.network.message.FloatMessage;
 import com.mlib.time.TimeHelper;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.PacketHandler;
@@ -20,6 +20,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /** Enchantment that increases mining speed the longer the player hold left mouse button. */
 @Mod.EventBusSubscriber
@@ -110,7 +111,7 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 		}
 
 		@Override
-		public void receiveMessage( ServerPlayer sender, CompoundTag data ) {
+		public void receiveMessage( ServerPlayer sender, NetworkEvent.Context context ) {
 			NBTHelper.FloatData miningData = new NBTHelper.FloatData( sender, MINING_MULTIPLIER_TAG );
 			miningData.set( this.value );
 		}
