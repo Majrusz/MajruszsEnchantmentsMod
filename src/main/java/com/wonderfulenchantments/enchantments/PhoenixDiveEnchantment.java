@@ -3,6 +3,7 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.IntegerConfig;
+import com.mlib.time.TimeHelper;
 import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,7 +36,6 @@ import java.util.function.Predicate;
 /** Enchantment that releases fire wave when entity falls. (inspired by Divinity: Original Sin 2) */
 @Mod.EventBusSubscriber
 public class PhoenixDiveEnchantment extends WonderfulEnchantment {
-	private static final String FOOT_PARTICLE_TAG = "PhoenixDiveFootParticleTick";
 	protected final DoubleConfig jumpMultiplier, damageDistance;
 	protected final IntegerConfig jumpPenalty, secondsOnFire;
 
@@ -95,20 +95,11 @@ public class PhoenixDiveEnchantment extends WonderfulEnchantment {
 	public static void onUpdate( TickEvent.PlayerTickEvent event ) {
 		Player player = event.player;
 		CompoundTag data = player.getPersistentData();
-		if( getPhoenixDiveLevel( player ) <= 0 || !( player.level instanceof ServerLevel ) )
+		if( getPhoenixDiveLevel( player ) <= 0 || !( player.level instanceof ServerLevel ) || !TimeHelper.isEndPhase( event ) )
 			return;
 
-		int ticks = data.getInt( FOOT_PARTICLE_TAG );
-
-		if( ticks % 3 == 0 )
-			spawnFootParticle( player, ( ServerLevel )player.level, ticks % 6 == 0 );
-
-		ticks++;
-
-		if( ticks >= 6 )
-			ticks = 0;
-
-		data.putInt( FOOT_PARTICLE_TAG, ticks );
+		if( TimeHelper.hasServerTicksPassed( 3 ) )
+			spawnFootParticle( player, ( ServerLevel )player.level, TimeHelper.hasServerTicksPassed( 6 ) );
 	}
 
 	/** Event that increases jump height when player is holding sneak key. */
