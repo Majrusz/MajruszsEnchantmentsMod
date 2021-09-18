@@ -44,8 +44,10 @@ public class HunterEnchantment extends WonderfulEnchantment {
 	@SubscribeEvent
 	public static void spawnExtraLoot( LootingLevelEvent event ) {
 		DamageSource damageSource = event.getDamageSource();
-		LivingEntity entity = CommonHelper.castIfPossible( LivingEntity.class, damageSource.getEntity() );
+		if( damageSource == null )
+			return;
 
+		LivingEntity entity = CommonHelper.castIfPossible( LivingEntity.class, damageSource.getEntity() );
 		if( isValid( damageSource ) && entity != null )
 			event.setLootingLevel( event.getLootingLevel() + Instances.HUNTER.getEnchantmentLevel( entity.getMainHandItem() ) );
 	}
