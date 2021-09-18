@@ -1,6 +1,7 @@
 package com.wonderfulenchantments;
 
 import com.wonderfulenchantments.enchantments.GottaMineFastEnchantment.MultiplierMessage;
+import com.wonderfulenchantments.enchantments.SixthSenseEnchantment.VelocityMessage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fmllegacy.network.NetworkRegistry;
@@ -15,8 +16,7 @@ public class PacketHandler {
 		CHANNEL = NetworkRegistry.newSimpleChannel( new ResourceLocation( "wonderful_enchantments", "main" ), ()->PROTOCOL_VERSION,
 			PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals
 		);
-		CHANNEL.registerMessage( 0, MultiplierMessage.class, MultiplierMessage::encode, MultiplierMessage::new,
-			MultiplierMessage::handle
-		);
+		CHANNEL.registerMessage( 0, MultiplierMessage.class, MultiplierMessage::encode, MultiplierMessage::new, MultiplierMessage::handle );
+		CHANNEL.registerMessage( 1, VelocityMessage.class, VelocityMessage::encode, VelocityMessage::new, VelocityMessage::handle );
 	}
 }
