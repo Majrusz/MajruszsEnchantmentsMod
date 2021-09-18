@@ -31,7 +31,7 @@ public class GuardianEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig redirectDistance;
 
 	public GuardianEnchantment() {
-		super( "guardian", Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlots.BOTH_HANDS, "Guardian" );
+		super( "guardian_angel", Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlots.BOTH_HANDS, "GuardianAngel" );
 
 		String redirectComment = "Amount of damage redirected to the player. (in percentage)";
 		this.redirectMultiplier = new DoubleConfig( "redirect_multiplier", redirectComment, false, 0.25, 0.01, 1.0 );
