@@ -90,8 +90,8 @@ public class GuardianEnchantment extends WonderfulEnchantment {
 		) <= this.redirectDistance.get();
 		Predicate< LivingEntity > friendPredicate = entity->isTargetFriendly( target, entity );
 		Predicate< LivingEntity > healthPredicate = entity->EntityHelper.getHealthRatio( entity ) >= this.minimumHealthRatio.get();
-		Predicate< LivingEntity > differentPredicate = entity->!entity.equals( damageSource.getEntity() );
-		Predicate< LivingEntity > oneGuardianPredicate = entity -> hasEnchantment( entity ) && !hasEnchantment( target );
+		Predicate< LivingEntity > differentPredicate = entity->!entity.equals( damageSource.getEntity() ) && !entity.equals( target );
+		Predicate< LivingEntity > oneGuardianPredicate = entity->hasEnchantment( entity ) && !hasEnchantment( target );
 
 		return distancePredicate.and( friendPredicate.and( healthPredicate.and( differentPredicate.and( oneGuardianPredicate ) ) ) );
 	}
