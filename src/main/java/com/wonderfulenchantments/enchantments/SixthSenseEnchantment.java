@@ -3,6 +3,7 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.mlib.math.AABBHelper;
+import com.mlib.math.VectorHelper;
 import com.mlib.nbt.NBTHelper;
 import com.mlib.network.message.BooleanMessage;
 import com.mlib.time.TimeHelper;
@@ -21,6 +22,8 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
+import java.util.function.Predicate;
 
 /** Enchantment that highlights nearby entities when player is standing still. (inspired by PayDay2) */
 @Mod.EventBusSubscriber
@@ -79,7 +82,7 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 		if( player.level instanceof ServerLevel ) {
 			boolean isPlayerMoving = velocityData.get();
 			senseTagData.set( isPlayerMoving ? value->0 : value->value + 1 );
-		} else if( TimeHelper.hasClientSecondsPassed( 0.75 ) ) {
+		} else if( TimeHelper.hasClientSecondsPassed( 0.25 ) ) {
 			PacketHandler.CHANNEL.sendToServer( new VelocityMessage( hasPlayerMoved( player ) ) );
 		}
 
@@ -90,8 +93,9 @@ public class SixthSenseEnchantment extends WonderfulEnchantment {
 	/** Highlights nearby entities in certain range. */
 	private void highlightNearbyEntities( Player player ) {
 		AABB axisAligned = AABBHelper.createInflatedAABB( player.position(), this.offsetConfig.get() );
+		Predicate< LivingEntity > predicate = entity ->VectorHelper.distance( entity.position(), player.position() ) < this.offsetConfig.get();
 
-		for( LivingEntity livingEntity : player.level.getEntitiesOfClass( LivingEntity.class, axisAligned ) ) {
+		for( LivingEntity livingEntity : player.level.getEntitiesOfClass( LivingEntity.class, axisAligned, predicate ) ) {
 			if( livingEntity == player )
 				continue;
 
