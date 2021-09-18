@@ -33,6 +33,7 @@ public class Instances {
 	public static final ImmortalityEnchantment IMMORTALITY;
 	public static final AbsorberEnchantment ABSORBER;
 	public static final FuseCutterEnchantment FUSE_CUTTER;
+	public static final GuardianEnchantment GUARDIAN;
 
 	// Tool Enchantments
 	public static final SmelterEnchantment SMELTER;
@@ -93,6 +94,7 @@ public class Instances {
 		IMMORTALITY = new ImmortalityEnchantment();
 		ABSORBER = new AbsorberEnchantment();
 		FUSE_CUTTER = new FuseCutterEnchantment();
+		GUARDIAN = new GuardianEnchantment();
 
 		SMELTER = new SmelterEnchantment();
 		GOTTA_MINE_FAST = new GottaMineFastEnchantment();
