@@ -3,6 +3,9 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.CommonHelper;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
+import com.mlib.config.DurationConfig;
+import com.mlib.config.IntegerConfig;
+import com.mlib.effects.EffectHelper;
 import com.mlib.entities.EntityHelper;
 import com.mlib.math.AABBHelper;
 import com.mlib.math.VectorHelper;
@@ -10,6 +13,9 @@ import com.wonderfulenchantments.Instances;
 import com.wonderfulenchantments.RegistryHandler;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.npc.Villager;
@@ -29,6 +35,9 @@ public class GuardianEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig minimumHealthRatio;
 	protected final DoubleConfig minimumDamageToRedirect;
 	protected final DoubleConfig redirectDistance;
+	protected final IntegerConfig maximumAmplifier;
+	protected final DurationConfig effectDuration;
+	protected static final MobEffect RESISTANCE_EFFECT = MobEffects.DAMAGE_RESISTANCE;
 
 	public GuardianEnchantment() {
 		super( "guardian_angel", Rarity.RARE, RegistryHandler.SHIELD, EquipmentSlots.BOTH_HANDS, "GuardianAngel" );
@@ -45,7 +54,13 @@ public class GuardianEnchantment extends WonderfulEnchantment {
 		String distanceComment = "Maximum distance to the entity to redirect damage.";
 		this.redirectDistance = new DoubleConfig( "redirect_distance", distanceComment, false, 10.0, 1.0, 100.0 );
 
-		this.enchantmentGroup.addConfigs( this.redirectMultiplier, this.minimumHealthRatio, this.minimumDamageToRedirect, this.redirectDistance );
+		String amplifierComment = "Maximum amplifier of 'Resistance' effect.";
+		this.maximumAmplifier = new IntegerConfig( "maximum_amplifier", amplifierComment, false, 2, 0, 4 );
+
+		String durationComment = "Duration of 'Resistance' effect.";
+		this.effectDuration = new DurationConfig( "effect_duration", durationComment, false, 12.0, 0.0, 600.0 );
+
+		this.enchantmentGroup.addConfigs( this.redirectMultiplier, this.minimumHealthRatio, this.minimumDamageToRedirect, this.redirectDistance, this.maximumAmplifier, this.effectDuration );
 
 		setMaximumEnchantmentLevel( 1 );
 		setDifferenceBetweenMinimumAndMaximum( 38 );
@@ -56,19 +71,23 @@ public class GuardianEnchantment extends WonderfulEnchantment {
 	public static void onEntityAttacked( LivingHurtEvent event ) {
 		LivingEntity target = event.getEntityLiving();
 		DamageSource damageSource = event.getSource();
+		GuardianEnchantment guardian = Instances.GUARDIAN;
 		ServerLevel level = CommonHelper.castIfPossible( ServerLevel.class, target.level );
 		if( level == null )
 			return;
 
-		GuardianEnchantment guardian = Instances.GUARDIAN;
 		double redirectMultiplier = guardian.redirectMultiplier.get();
 		for( LivingEntity nearbyGuardian : guardian.getNearbyGuardians( level, damageSource, target ) ) {
 			float damage = event.getAmount();
 			if( damage < guardian.minimumDamageToRedirect.get() )
 				break;
 
-			nearbyGuardian.hurt( damageSource, ( float )( damage * redirectMultiplier ) );
-			event.setAmount( ( float )( damage * ( 1.0f - redirectMultiplier ) ) );
+			if( !guardian.hasEnchantment( target ) ) {
+				nearbyGuardian.hurt( damageSource, ( float )( damage * redirectMultiplier ) );
+				event.setAmount( ( float )( damage * ( 1.0f - redirectMultiplier ) ) );
+			}
+			guardian.applyResistance( nearbyGuardian );
+			guardian.applyResistance( target );
 		}
 	}
 
@@ -90,10 +109,10 @@ public class GuardianEnchantment extends WonderfulEnchantment {
 		) <= this.redirectDistance.get();
 		Predicate< LivingEntity > friendPredicate = entity->isTargetFriendly( target, entity );
 		Predicate< LivingEntity > healthPredicate = entity->EntityHelper.getHealthRatio( entity ) >= this.minimumHealthRatio.get();
-		Predicate< LivingEntity > differentPredicate = entity->!entity.equals( damageSource.getEntity() ) && !entity.equals( target );
-		Predicate< LivingEntity > oneGuardianPredicate = entity->hasEnchantment( entity ) && !hasEnchantment( target );
+		Predicate< LivingEntity > differentPredicate = entity->!entity.equals( damageSource.getEntity() );
+		Predicate< LivingEntity > hasGuardianPredicate = this::hasEnchantment;
 
-		return distancePredicate.and( friendPredicate.and( healthPredicate.and( differentPredicate.and( oneGuardianPredicate ) ) ) );
+		return distancePredicate.and( friendPredicate.and( healthPredicate.and( differentPredicate.and( hasGuardianPredicate ) ) ) );
 	}
 
 	/** Returns whether target and nearby entity are valid. (to redirect damage) */
@@ -101,5 +120,21 @@ public class GuardianEnchantment extends WonderfulEnchantment {
 		TamableAnimal animal = CommonHelper.castIfPossible( TamableAnimal.class, target );
 
 		return ( animal != null && animal.getOwnerUUID() == nearbyEntity.getUUID() ) || target instanceof Villager;
+	}
+
+	/** Applies next resistance effect to given entity. (or increase amplifier if it has one) */
+	protected void applyResistance( LivingEntity entity ) {
+		EffectHelper.applyEffectIfPossible( entity, RESISTANCE_EFFECT, this.effectDuration.getDuration(), getResistanceAmplifier( entity ) );
+	}
+
+	/** Calculates new resistance amplifier. */
+	protected int getResistanceAmplifier( LivingEntity entity ) {
+		if( entity.hasEffect( RESISTANCE_EFFECT ) ) {
+			MobEffectInstance effectInstance = entity.getEffect( RESISTANCE_EFFECT );
+			if( effectInstance != null )
+				return Math.min( effectInstance.getAmplifier() + 1, this.maximumAmplifier.get() );
+		}
+
+		return 0;
 	}
 }
