@@ -1,6 +1,5 @@
 package com.wonderfulenchantments.enchantments;
 
-import com.mlib.MajruszLibrary;
 import com.mlib.TimeConverter;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
@@ -74,36 +73,33 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 	public static void onBreakingBlock( PlayerEvent.BreakSpeed event ) {
 		Player player = event.getPlayer();
 		GottaMineFastEnchantment gottaMineFast = Instances.GOTTA_MINE_FAST;
-		int enchantmentLevel = gottaMineFast.getEnchantmentLevel( player );
 
-		if( enchantmentLevel > 0 ) {
+		if( gottaMineFast.hasEnchantment( player ) ) {
 			NBTHelper.FloatData miningData = new NBTHelper.FloatData( player, MINING_MULTIPLIER_TAG );
 			NBTHelper.IntegerData counterData = new NBTHelper.IntegerData( player, COUNTER_TAG );
 
 			float miningMultiplier = gottaMineFast.getMiningMultiplier( counterData.get() );
-			if( miningMultiplier > 0.0f )
-				event.setNewSpeed( event.getNewSpeed() * ( 1.0f + miningMultiplier ) );
-			else
-				event.setNewSpeed( event.getNewSpeed() * ( 1.0f + miningData.get() ) );
+			event.setNewSpeed( event.getNewSpeed() * ( 1.0f + ( miningMultiplier > 0.0f ? miningMultiplier : miningData.get() ) ) );
 		}
 	}
 
+	/** Sends mining multiplier from client to the server. */
 	public void sendMultiplierMessage( NBTHelper.IntegerData counterData ) {
 		PacketHandler.CHANNEL.sendToServer( new MultiplierMessage( getMiningMultiplier( counterData.get() ) ) );
 	}
 
 	/**
-	 Calculating mining multiplier depending on ticks the player was holding left mouse.
+	 Calculates mining multiplier depending on ticks the player was holding the left mouse button.
 
-	 @return Returns multiplier which represents how fast the player will mine the block. (2.0f will mean twice as fast)
+	 @return Returns multiplier which represents how fast the player can mine the block. (2.0f will mean twice as fast)
 	 */
 	protected float getMiningMultiplier( int miningTicks ) {
-		return ( float )Math.pow(
-			Math.min( miningTicks, this.maximumDuration.getDuration() ) / ( float )TimeConverter.minutesToTicks( 1.0 ), this.exponent.get()
+		return ( float )Math.pow( Math.min( miningTicks, this.maximumDuration.getDuration() ) / ( float )TimeConverter.minutesToTicks( 1.0 ),
+			this.exponent.get()
 		);
 	}
 
-	/** Sends information from client to server about how long player holded mouse button. */
+	/** Sends information from client to server about how long player held mouse button. */
 	public static class MultiplierMessage extends FloatMessage {
 		public MultiplierMessage( float value ) {
 			super( value );
@@ -115,7 +111,8 @@ public class GottaMineFastEnchantment extends WonderfulEnchantment {
 
 		@Override
 		public void receiveMessage( ServerPlayer sender, CompoundTag data ) {
-			data.putFloat( MINING_MULTIPLIER_TAG, this.value );
+			NBTHelper.FloatData miningData = new NBTHelper.FloatData( sender, MINING_MULTIPLIER_TAG );
+			miningData.set( this.value );
 		}
 	}
 }
