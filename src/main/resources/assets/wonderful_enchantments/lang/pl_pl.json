@@ -100,8 +100,8 @@
 	"enchantment.wonderful_enchantments.death_wish.description": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
 
 	"enchantment.wonderful_enchantments.guardian_angel": "Anioł stróż",
-	"enchantment.wonderful_enchantments.guardian_angel.desc": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza.",
-	"enchantment.wonderful_enchantments.guardian_angel.description": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza.",
+	"enchantment.wonderful_enchantments.guardian_angel.desc": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
+	"enchantment.wonderful_enchantments.guardian_angel.description": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
 
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
