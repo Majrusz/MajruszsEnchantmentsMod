@@ -99,6 +99,10 @@
 	"enchantment.wonderful_enchantments.death_wish.desc": "Increases damage dealt equal to the percentage of the health lost.",
 	"enchantment.wonderful_enchantments.death_wish.description": "Increases damage dealt equal to the percentage of the health lost.",
 
+	"enchantment.wonderful_enchantments.guardian": "Guardian",
+	"enchantment.wonderful_enchantments.guardian.desc": "Redirects part of the damage from tamed animals and villagers to the player.",
+	"enchantment.wonderful_enchantments.guardian.description": "Redirects part of the damage from tamed animals and villagers to the player.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Curse of Slowness",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Decreases the player's movement speed.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Decreases the player's movement speed.",

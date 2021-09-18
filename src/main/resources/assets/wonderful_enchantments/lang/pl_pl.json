@@ -99,6 +99,10 @@
 	"enchantment.wonderful_enchantments.death_wish.desc": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
 	"enchantment.wonderful_enchantments.death_wish.description": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
 
+	"enchantment.wonderful_enchantments.guardian": "Obrońca",
+	"enchantment.wonderful_enchantments.guardian.desc": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza.",
+	"enchantment.wonderful_enchantments.guardian.description": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza.",
+
 	"enchantment.wonderful_enchantments.slowness_curse": "Klątwa spowolnienia",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "Zmniejsza prędkość poruszania się gracza.",
