@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.5.1-unfinished'
+version = '1.5.1'
 group = 'com.wonderfulenchantments'
 archivesBaseName = 'wonderful-enchantments-1.17.1'
 
@@ -71,7 +71,7 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.17.1-37.0.69'
-    implementation fg.deobf( 'com.mlib:majrusz-library-1.17.1:2.5.0-unfinished' )
+    implementation fg.deobf( 'com.mlib:majrusz-library-1.17.1:2.5.0' )
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
