@@ -20,9 +20,8 @@
   },
   "criteria": {
     "has_met_requirement": {
-      "trigger": "majrusz_library:basic_trigger",
+      "trigger": "wonderful_enchantments:basic_trigger",
       "conditions": {
-        "mod_id": "wonderful_enchantments",
         "type": "enlightenment_8"
       }
     }
