@@ -21,7 +21,7 @@
   "enchantment.wonderful_enchantments.vitality.desc": "Увеличивает здоровье игрока.",
   "enchantment.wonderful_enchantments.vitality.description": "Увеличивает здоровье игрока.",
 
-  "enchantment.wonderful_enchantments.phoenix_dive": "Приземление феникса",
+  "enchantment.wonderful_enchantments.phoenix_dive": "Падение феникса",
   "enchantment.wonderful_enchantments.phoenix_dive.desc": "Падение с высоты вызывает выброс волны огня, которая наносит урон и поджигает ближайших врагов. Кроме того, пока вы кродетесь (def. SHIFT) вы прыгнете выше!",
   "enchantment.wonderful_enchantments.phoenix_dive.description": "Падение с высоты вызывает выброс волны огня, которая наносит урон и поджигает ближайших врагов. Кроме того, пока вы кродетесь (def. SHIFT) вы прыгнете выше!",
 
@@ -70,12 +70,12 @@
   "enchantment.wonderful_enchantments.absorber.description": "Щит поглощает все негативные эффекты за счет прочности.",
 
   "enchantment.wonderful_enchantments.hunter": "Охотник",
-  "enchantment.wonderful_enchantments.hunter.desc": "Увеличивает наносимый урон вместе с увеличением дистанции до цели. Также увеличивает количество добычи.",
-  "enchantment.wonderful_enchantments.hunter.description": "Увеличивает наносимый урон вместе с увеличением дистанции до цели. Также увеличивает количество добычи.",
+  "enchantment.wonderful_enchantments.hunter.desc": "Увеличивает наносимый урон вместе с увеличением дистанции до цели. Также увеличивает количество добычи. Накладывает штраф к урону, если цель слишком близко",
+  "enchantment.wonderful_enchantments.hunter.description": "Увеличивает наносимый урон вместе с увеличением дистанции до цели. Также увеличивает количество добычи. Накладывает штраф к урону, если цель слишком близко",
 
   "enchantment.wonderful_enchantments.elder_guardian_favor": "Благословение древнего стража",
-  "enchantment.wonderful_enchantments.elder_guardian_favor.desc": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать.",
-  "enchantment.wonderful_enchantments.elder_guardian_favor.description": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать.",
+  "enchantment.wonderful_enchantments.elder_guardian_favor.desc": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать. Наносит повышенный урон, когда игрок и цель находятся в воде.",
+  "enchantment.wonderful_enchantments.elder_guardian_favor.description": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать. Наносит повышенный урон, когда игрок и цель находятся в воде.",
 
   "enchantment.wonderful_enchantments.harvester": "Жнец",
   "enchantment.wonderful_enchantments.harvester.desc": "Дает возможность правой кнопкой мыши собирать урожай и выращивать близлежащие культуры.",
@@ -85,15 +85,23 @@
   "enchantment.wonderful_enchantments.mithridatism.desc": "Уменьшает урон от некоторых негативных эффектов и дает Поглощение при наложении негативного эффекта.",
   "enchantment.wonderful_enchantments.mithridatism.description": "Уменьшает урон от некоторых негативных эффектов и дает Поглощение при наложении негативного эффекта.",
   "effect.wonderful_enchantments.mithridatism_protection": "Митридатизм",
-  "wonderful_enchantments.mithridatism_level_up": "You have developed greater resilience to negative effects!",
+  "wonderful_enchantments.mithridatism_level_up": "Вы развили большую устойчивость к негативным воздействиям!",
 
-  "enchantment.wonderful_enchantments.fuse_cutter": "Прерывание взрывателя",
+  "enchantment.wonderful_enchantments.fuse_cutter": "Сапер",
   "enchantment.wonderful_enchantments.fuse_cutter.desc": "Отменяет взрывы поблизости и не наносит урона, если игрок защищается щитом.",
   "enchantment.wonderful_enchantments.fuse_cutter.description": "Отменяет взрывы поблизости и не наносит урона, если игрок защищается щитом.",
 
   "enchantment.wonderful_enchantments.sixth_sense": "Шестое чувство",
-  "enchantment.wonderful_enchantments.sixth_sense.desc": "Выделяет ближайших монстров после того, как игрок постоит неподвижно несколько секунд.",
-  "enchantment.wonderful_enchantments.sixth_sense.description": "Выделяет ближайших монстров после того, как игрок постоит неподвижно несколько секунд.",
+  "enchantment.wonderful_enchantments.sixth_sense.desc": "Выделяет монстров в радиусе 15 блоков после того, как игрок постоит неподвижно несколько секунд.",
+  "enchantment.wonderful_enchantments.sixth_sense.description": "Выделяет монстров в радиусе 15 блоков после того, как игрок постоит неподвижно несколько секунд.",
+
+  "enchantment.wonderful_enchantments.death_wish": "Последняя воля",
+  "enchantment.wonderful_enchantments.death_wish.desc": "Увеличивает наносимый урон, равный проценту потерянного здоровья.",
+  "enchantment.wonderful_enchantments.death_wish.description": "Увеличивает наносимый урон, равный проценту потерянного здоровья.",
+
+  "enchantment.wonderful_enchantments.guardian_angel": "Ангел-хранитель",
+  "enchantment.wonderful_enchantments.guardian_angel.desc": "Перенаправляет игроку 25% урона от прирученных животных и жителей деревни и применяет к ним суммируемое снижение урона.",
+  "enchantment.wonderful_enchantments.guardian_angel.description": "Перенаправляет игроку 25% урона от прирученных животных и жителей деревни и применяет к ним суммируемое снижение урона.",
 
   "enchantment.wonderful_enchantments.slowness_curse": "Проклятие медлительности",
   "enchantment.wonderful_enchantments.slowness_curse.desc": "Уменьшает скорость передвижения игрока.",
@@ -113,5 +121,23 @@
 
   "enchantment.wonderful_enchantments.corrosion_curse": "Проклятье коррозии",
   "enchantment.wonderful_enchantments.corrosion_curse.desc": "Постепенно разрушает броню и вредит владельцу при соприкосновении с водой.",
-  "enchantment.wonderful_enchantments.corrosion_curse.description": "Постепенно разрушает броню и вредит владельцу при соприкосновении с водой."
+  "enchantment.wonderful_enchantments.corrosion_curse.description": "Постепенно разрушает броню и вредит владельцу при соприкосновении с водой.",
+
+  "item.wonderful_enchantments.wonderful_book": "Восхитительная книга",
+  "item.wonderful_enchantments.wonderful_book.enchanting_energy": "Сила зачарования:",
+  "item.wonderful_enchantments.wonderful_book.enchanting_energy_max": "Максимальная сила зачарования!",
+  "item.wonderful_enchantments.wonderful_book.enchanting_cost": "Цена:",
+  "item.wonderful_enchantments.wonderful_book.level": "уровень",
+  "item.wonderful_enchantments.wonderful_book.levels": "уровней",
+  "item.wonderful_enchantments.wonderful_book.hint": "Вы можете увеличить силу зачарования с помощью лазурита в таблице крафта.",
+  "item.wonderful_enchantments.wonderful_book.transmute": "Нажмите ПКМ, чтобы превратить в книгу зачарования со случайными эффектами",
+
+  "advancements.wonderful_enchantments.scholar.title": "Ученый",
+  "advancements.wonderful_enchantments.scholar.description": "Получите Озарение II на всех доспехах",
+  "advancements.wonderful_enchantments.nothing_can_stop_me.title": "Ничто Не Может Остановить Меня",
+  "advancements.wonderful_enchantments.nothing_can_stop_me.description": "Получите следующий уровень Фаната рыбалки, даже если идет дождь",
+  "advancements.wonderful_enchantments.fishing_fanatic.title": "Мне Это Очень Нравится",
+  "advancements.wonderful_enchantments.fishing_fanatic.description": "Приобретите первый уровень Фаната рыбалки",
+  "advancements.wonderful_enchantments.fishing_fanatic_true.title": "Хорошо... Я Зависим От Этого",
+  "advancements.wonderful_enchantments.fishing_fanatic_true.description": "Получите восьмой уровень Рыболовного Фаната"
 }
