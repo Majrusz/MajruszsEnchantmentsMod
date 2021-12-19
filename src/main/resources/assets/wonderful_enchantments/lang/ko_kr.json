@@ -95,6 +95,14 @@
 	"enchantment.wonderful_enchantments.sixth_sense.desc": "잠시 동안 움직임을 멈추고 있으면 근처의 몹들에게 발광 효과를 부여합니다.",
 	"enchantment.wonderful_enchantments.sixth_sense.description": "잠시 동안 움직임을 멈추고 있으면 근처의 몹들에게 발광 효과를 부여합니다.",
 
+	"enchantment.wonderful_enchantments.death_wish": "파멸의 소원",
+	"enchantment.wonderful_enchantments.death_wish.desc": "잃은 체력에 비례하여 적에게 가하는 피해량이 증가합니다.",
+	"enchantment.wonderful_enchantments.death_wish.description": "잃은 체력에 비례하여 적에게 가하는 피해량이 증가합니다.",
+
+	"enchantment.wonderful_enchantments.guardian_angel": "수호천사",
+	"enchantment.wonderful_enchantments.guardian_angel.desc": "길들인 동물과 주민이 입은 피해의 일부를 플레이어가 대신 받고 피해량을 감소시킵니다.",
+	"enchantment.wonderful_enchantments.guardian_angel.description": "길들인 동물과 주민이 입은 피해의 일부를 플레이어가 대신 받고 피해량을 감소시킵니다.",
+	
 	"enchantment.wonderful_enchantments.slowness_curse": "둔화 저주",
 	"enchantment.wonderful_enchantments.slowness_curse.desc": "플레이어의 이동속도를 감소시킵니다.",
 	"enchantment.wonderful_enchantments.slowness_curse.description": "플레이어의 이동속도를 감소시킵니다.",
@@ -123,4 +131,13 @@
 	"item.wonderful_enchantments.wonderful_book.levels": "레벨",
 	"item.wonderful_enchantments.wonderful_book.hint": "제작대에서 청금석으로 마법 부여 에너지를 높일 수 있습니다.",
 	"item.wonderful_enchantments.wonderful_book.transmute": "마우스 오른쪽 버튼을 누르면 마법이 부여 된 책으로 변환됩니다."
+	
+	"advancements.wonderful_enchantments.scholar.title": "학자",
+	"advancements.wonderful_enchantments.scholar.description": "모든 부위의 갑옷에 마법부여 통달II를 적용하세요.",
+	"advancements.wonderful_enchantments.nothing_can_stop_me.title": "누구도 날 막지 못해",
+	"advancements.wonderful_enchantments.nothing_can_stop_me.description": "비가 오는 상황에서 마법부여 낚시광의 등급을 올리세요",
+	"advancements.wonderful_enchantments.fishing_fanatic.title": "낚시가 너무 좋아",
+	"advancements.wonderful_enchantments.fishing_fanatic.description": "마법부여 낚시광의 등급을 첫 단계까지 올리세요",
+	"advancements.wonderful_enchantments.fishing_fanatic_true.title": "음... 맛들려버렸군",
+	"advancements.wonderful_enchantments.fishing_fanatic_true.description": "마법부여 낚시광의 등급을 여덟 번째 단계까지 올리세요"
 }
