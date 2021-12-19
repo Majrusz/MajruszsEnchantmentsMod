@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.mlib.CommonHelper;
+import com.mlib.EquipmentSlots;
 import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
@@ -23,12 +24,12 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -42,7 +43,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 /** Enchantment that increases quality and quantity of loot gathered from fishing. */
 @Mod.EventBusSubscriber
@@ -57,7 +58,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig specialDropChance;
 
 	public FanaticEnchantment() {
-		super( "fishing_fanatic", Rarity.UNCOMMON, EnchantmentCategory.FISHING_ROD, EquipmentSlot.MAINHAND, "FishingFanatic" );
+		super( "fishing_fanatic", Rarity.UNCOMMON, EnchantmentCategory.FISHING_ROD, EquipmentSlots.BOTH_HANDS, "FishingFanatic" );
 
 		String increaseComment = "Chance for increasing enchantment level per every missing level to 6th level. (for example if this value is equal 0.01 then to get 1st level you have 6 * 0.01 = 6% chance, to get 2nd level ( 6-1 ) * 0.01 = 5% chance)";
 		this.levelIncreaseChanceMultiplier = new DoubleConfig( "level_increase_chance", increaseComment, false, 0.01, 0.0001, 1.0 );
@@ -120,7 +121,7 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		FanaticEnchantment enchantment = Instances.FISHING_FANATIC;
 		LootContext lootContext = generateLootContext( player );
 		LootTable standardLootTable = getFishingLootTable(), specialLootTable = getLootTable( SPECIAL_LOOT_TABLE );
-		int fanaticLevel = EnchantmentHelper.getEnchantmentLevel( enchantment, player );
+		int fanaticLevel = EnchantmentHelper.getItemEnchantmentLevel( enchantment, getFishingRodItemStack( player ) );
 
 		Multiset< String > rewards = HashMultiset.create();
 		rewards.add( event.getDrops()
@@ -199,11 +200,10 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 	 */
 	protected static boolean tryIncreaseFishingFanaticLevel( Player player, boolean isRaining ) {
 		FanaticEnchantment enchantment = Instances.FISHING_FANATIC;
-		int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel( enchantment, player );
+		ItemStack fishingRod = getFishingRodItemStack( player );
+		int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel( enchantment, fishingRod );
 
 		if( enchantment.shouldLevelBeIncreased( enchantmentLevel, isRaining ) ) {
-			ItemStack fishingRod = player.getMainHandItem();
-
 			if( enchantmentLevel == 0 )
 				fishingRod.enchant( enchantment, 1 );
 			else {
@@ -237,6 +237,13 @@ public class FanaticEnchantment extends WonderfulEnchantment {
 		}
 
 		return false;
+	}
+
+	protected static ItemStack getFishingRodItemStack( Player player ) {
+		ItemStack mainHandItemStack = player.getMainHandItem();
+		ItemStack offHandItemStack = player.getOffhandItem();
+
+		return mainHandItemStack.getItem() instanceof FishingRodItem ? mainHandItemStack : offHandItemStack;
 	}
 
 	/** Displays custom information on player's screen about fished items. */
