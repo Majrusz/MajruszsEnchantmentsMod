@@ -4,8 +4,8 @@ import com.wonderfulenchantments.enchantments.GottaMineFastEnchantment.Multiplie
 import com.wonderfulenchantments.enchantments.SixthSenseEnchantment.VelocityMessage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fmllegacy.network.NetworkRegistry;
-import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 /** Handling connection between server and client. */
 public class PacketHandler {

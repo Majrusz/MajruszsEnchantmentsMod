@@ -15,12 +15,12 @@ apply plugin: 'maven-publish'
 
 version = '1.5.2'
 group = 'com.wonderfulenchantments'
-archivesBaseName = 'wonderful-enchantments-1.17.1'
+archivesBaseName = 'wonderful-enchantments-1.18.1'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'official', version: '1.17.1'
+    mappings channel: 'official', version: '1.18.1'
 
     runs {
         client {
@@ -70,8 +70,8 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.17.1-37.0.69'
-    implementation fg.deobf( 'com.mlib:majrusz-library-1.17.1:2.5.0' )
+    minecraft 'net.minecraftforge:forge:1.18.1-39.0.5'
+    implementation fg.deobf( 'com.mlib:majrusz-library-1.18.1:2.6.0' )
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

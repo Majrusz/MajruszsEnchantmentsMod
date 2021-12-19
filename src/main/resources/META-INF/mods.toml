@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[37,)"
+loaderVersion="[39,)"
 license="MIT License"
 issueTrackerURL="https://github.com/Majrusz/WonderfulEnchantmentsMod/issues"
 
@@ -17,20 +17,20 @@ issueTrackerURL="https://github.com/Majrusz/WonderfulEnchantmentsMod/issues"
 [[dependencies.wonderful_enchantments]]
     modId="forge"
     mandatory=true
-    versionRange="[37,)"
+    versionRange="[39,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.wonderful_enchantments]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.17.1,1.18)"
+    versionRange="[1.18.1,1.19)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.wonderful_enchantments]]
     modId="majrusz_library"
     mandatory=true
-    versionRange="[2.5.0,3.0.0)"
+    versionRange="[2.6.0,3.0.0)"
     ordering="NONE"
     side="BOTH"
