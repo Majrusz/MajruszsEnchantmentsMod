@@ -51,7 +51,7 @@ public class FuseCutterEnchantment extends WonderfulEnchantment {
 		AABB axisAligned = new AABB( x, y, z, x, y, z ).inflate( offset );
 
 		for( LivingEntity livingEntity : world.getEntitiesOfClass( LivingEntity.class, axisAligned ) )
-			if( livingEntity.isBlocking() && hasEnchantment( livingEntity.getItemBySlot( EquipmentSlot.MAINHAND ) ) )
+			if( livingEntity.isBlocking() && ( hasEnchantment( livingEntity.getItemBySlot( EquipmentSlot.MAINHAND ) ) || hasEnchantment( livingEntity.getItemBySlot( EquipmentSlot.OFFHAND ) ) ) )
 				return true;
 
 		return false;
