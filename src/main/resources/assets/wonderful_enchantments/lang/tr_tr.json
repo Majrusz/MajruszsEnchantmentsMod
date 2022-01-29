@@ -1,0 +1,143 @@
+{
+  "enchantment.wonderful_enchantments.fishing_fanatic": "Balıkçılık Meraklısı",
+  "enchantment.wonderful_enchantments.fishing_fanatic.desc": "Balıkçılıktan ek öğeler yakalama şansı verir.",
+  "enchantment.wonderful_enchantments.fishing_fanatic.description": "Balıkçılıktan ek öğeler yakalama şansı verir.",
+  "wonderful_enchantments.fanatic_level_up": "Daha iyi bir Balıkçılık Meraklısı oldun!",
+  "wonderful_enchantments.true_level": "Gerçek",
+
+  "enchantment.wonderful_enchantments.human_slayer": "Büyüler İnsanlığa Karşı",
+  "enchantment.wonderful_enchantments.human_slayer.desc": "Köylülere, Yağmacılara, Cadılara ve diğer oyunculara vuruş hasarını artırır.",
+  "enchantment.wonderful_enchantments.human_slayer.description": "Köylülere, Yağmacılara, Cadılara ve diğer oyunculara vuruş hasarını artırır.",
+
+  "enchantment.wonderful_enchantments.dodge": "Savuşturma",
+  "enchantment.wonderful_enchantments.dodge.desc": "Bir hasarı tamamen savuşturma şansı verir.",
+  "enchantment.wonderful_enchantments.dodge.description": "Bir hasarı tamamen savuşturma şansı verir.",
+
+  "enchantment.wonderful_enchantments.enlightenment": "Aydınlanma",
+  "enchantment.wonderful_enchantments.enlightenment.desc": "Bütün kaynaklardan kazanılan deneyimi artırır.",
+  "enchantment.wonderful_enchantments.enlightenment.description": "Bütün kaynaklardan kazanılan deneyimi artırır.",
+
+  "enchantment.wonderful_enchantments.vitality": "Canlılık",
+  "enchantment.wonderful_enchantments.vitality.desc": "Oyuncunun canını artırır.",
+  "enchantment.wonderful_enchantments.vitality.description": "Oyuncunun canını artırır.",
+
+  "enchantment.wonderful_enchantments.phoenix_dive": "Anka Dalışı",
+  "enchantment.wonderful_enchantments.phoenix_dive.desc": "Yüksekten düşmek ateş dalgası yayılmasına, yakındaki düşmanlara hasar vermesine ve yakmasına sebep olur. Ek olarak eğilme tuşuna (varsayılan SHIFT) basarken daha yükseğe zıplarsın!",
+  "enchantment.wonderful_enchantments.phoenix_dive.description": "Yüksekten düşmek ateş dalgası yayılmasına, yakındaki düşmanlara hasar vermesine ve yakmasına sebep olur. Ek olarak eğilme tuşuna (varsayılan SHIFT) basarken daha yükseğe zıplarsın!",
+
+  "enchantment.wonderful_enchantments.pufferfish_vengeance": "Kirpi Balığının İntikamı",
+  "enchantment.wonderful_enchantments.pufferfish_vengeance.desc": "Saldırılar, hedeflere birkaç olumsuz efekt uygular.",
+  "enchantment.wonderful_enchantments.pufferfish_vengeance.description": "Saldırılar, hedeflere birkaç olumsuz efekt uygular.",
+
+  "enchantment.wonderful_enchantments.immortality": "Ölümsüzlük",
+  "enchantment.wonderful_enchantments.immortality.desc": "Öldürücü bir darbede ölümü aldatırsın.",
+  "enchantment.wonderful_enchantments.immortality.description": "Öldürücü bir darbede ölümü aldatırsın.",
+
+  "enchantment.wonderful_enchantments.smelter": "Eritici",
+  "enchantment.wonderful_enchantments.smelter.desc": "Kırılan bloklar otomatik eritilir.",
+  "enchantment.wonderful_enchantments.smelter.description": "Kırılan bloklar otomatik eritilir.",
+
+  "enchantment.wonderful_enchantments.gotta_mine_fast": "Hızlı Kazmalı",
+  "enchantment.wonderful_enchantments.gotta_mine_fast.desc": "Sol fare tuşuna uzun basıldıkça kazış hızı artar.",
+  "enchantment.wonderful_enchantments.gotta_mine_fast.description": "Sol fare tuşuna uzun basıldıkça kazış hızı artar.",
+
+  "enchantment.wonderful_enchantments.leech": "Sülük",
+  "enchantment.wonderful_enchantments.leech.desc": "Düşmanlardan pozitif efektler ve can çalma şansı verir.",
+  "enchantment.wonderful_enchantments.leech.description": "Düşmanlardan pozitif efektler ve can çalma şansı verir.",
+
+  "enchantment.wonderful_enchantments.magic_protection": "Büyü Koruması",
+  "enchantment.wonderful_enchantments.magic_protection.desc": "Uyandırıcı Kapanları, Gardiyanlar ve Anında Hasar iksirlerini kapsayan büyü hasarlarına karşı korur.",
+  "enchantment.wonderful_enchantments.magic_protection.description": "Uyandırıcı Kapanları, Gardiyanlar ve Anında Hasar iksirlerini kapsayan büyü hasarlarına karşı korur.",
+
+  "enchantment.wonderful_enchantments.swiftness": "Sürat",
+  "enchantment.wonderful_enchantments.swiftness.desc": "Atın hareket hızını artırır.",
+  "enchantment.wonderful_enchantments.swiftness.description": "Atın hareket hızını artırır.",
+
+  "enchantment.wonderful_enchantments.horse_protection": "At Koruması",
+  "enchantment.wonderful_enchantments.horse_protection.desc": "Atın aldığı hasarı azaltır.",
+  "enchantment.wonderful_enchantments.horse_protection.description": "Atın aldığı hasarı azaltır.",
+
+  "enchantment.wonderful_enchantments.horse_frost_walker": "Kırağılaştırıcı Binici",
+  "enchantment.wonderful_enchantments.horse_frost_walker.desc": "Atla suyun üstünde yürürken buzdan bir yol yaratır.",
+  "enchantment.wonderful_enchantments.horse_frost_walker.description": "Atla suyun üstünde yürürken buzdan bir yol yaratır.",
+
+  "enchantment.wonderful_enchantments.telekinesis": "Telekinezi",
+  "enchantment.wonderful_enchantments.telekinesis.desc": "Kırılan blokları direk oyuncunun envanterine ekler.",
+  "enchantment.wonderful_enchantments.telekinesis.description": "Kırılan blokları doğrudan oyuncunun envanterine ekler.",
+
+  "enchantment.wonderful_enchantments.absorber": "Emici",
+  "enchantment.wonderful_enchantments.absorber.desc": "Kalkanlar bütün olumsuz efektleri emer ve dayanıklılığını azaltır.",
+  "enchantment.wonderful_enchantments.absorber.description": "Kalkanlar bütün olumsuz efektleri emer ve dayanıklılığını azaltır.",
+
+  "enchantment.wonderful_enchantments.hunter": "Avcı",
+  "enchantment.wonderful_enchantments.hunter.desc": "Yararatıkların düşürdüklerini artırır ve uzaklaştıkça verilen hasarı artırır.",
+  "enchantment.wonderful_enchantments.hunter.description": "Yararatıkların düşürdüklerini artırır ve uzaklaştıkça verilen hasarı artırır.",
+
+  "enchantment.wonderful_enchantments.elder_guardian_favor": "Yaşlı Gardiyanın İsteği",
+  "enchantment.wonderful_enchantments.elder_guardian_favor.desc": "Bararılı bir vuruştan sonra düşmanlar kaçılamayan yada savuşturulamayan bir lazer ışını tarafından vurulurlar.",
+  "enchantment.wonderful_enchantments.elder_guardian_favor.description": "Bararılı bir vuruştan sonra düşmanlar kaçılamayan yada savuşturulamayan bir lazer ışını tarafından vurulurlar.",
+
+  "enchantment.wonderful_enchantments.harvester": "Hasatçı",
+  "enchantment.wonderful_enchantments.harvester.desc": "Sağ fare tuşuyla hasat yapma ve yakındaki ekinleri büyütebilme hakkı verir.",
+  "enchantment.wonderful_enchantments.harvester.description": "Sağ fare tuşuyla hasat yapma ve yakındaki ekinleri büyütebilme hakkı verir.",
+
+  "enchantment.wonderful_enchantments.mithridatism": "Mitridatizm",
+  "enchantment.wonderful_enchantments.mithridatism.desc": "Bazı olumsuz etkilerden kaynaklanan hasarı azaltır ve olumsuz etkiler uygulandığında Emiş verir.",
+  "enchantment.wonderful_enchantments.mithridatism.description": "Bazı olumsuz etkilerden kaynaklanan hasarı azaltır ve olumsuz etkiler uygulandığında Emiş verir.",
+  "effect.wonderful_enchantments.mithridatism_protection": "Mitridatism",
+  "wonderful_enchantments.mithridatism_level_up": "Olumsuz efektere karşı daha fazla direnç geliştirdiniz!",
+
+  "enchantment.wonderful_enchantments.fuse_cutter": "Fitil Kesici",
+  "enchantment.wonderful_enchantments.fuse_cutter.desc": "Yakındaki patlamalar blok yok etmeyecek veya hasar vermeyecek.",
+  "enchantment.wonderful_enchantments.fuse_cutter.description": "Yakındaki patlamalar blok yok etmeyecek veya hasar vermeyecek.",
+
+  "enchantment.wonderful_enchantments.sixth_sense": "Altıncı His",
+  "enchantment.wonderful_enchantments.sixth_sense.desc": "Bir süre hareketsiz kaldıktan sonra yakındaki canavarları belirtir.",
+  "enchantment.wonderful_enchantments.sixth_sense.description": "Bir süre hareketsiz kaldıktan sonra yakındaki canavarları belirtir.",
+
+  "enchantment.wonderful_enchantments.death_wish": "Ölüm Dileği",
+  "enchantment.wonderful_enchantments.death_wish.desc": "Verilen hasarı, kaybedilen sağlık yüzdesine eşit olarak artırır.",
+  "enchantment.wonderful_enchantments.death_wish.description": "Verilen hasarı, kaybedilen sağlık yüzdesine eşit olarak artırır.",
+
+  "enchantment.wonderful_enchantments.guardian_angel": "Koruyucu Melek",
+  "enchantment.wonderful_enchantments.guardian_angel.desc": "Evcilleştirilmiş hayvanlardan ve köylülerden gelen hasarın bir kısmını oyuncuya yönlendirir ve onlara verilen hasarı azaltır.",
+  "enchantment.wonderful_enchantments.guardian_angel.description": "Evcilleştirilmiş hayvanlardan ve köylülerden gelen hasarın bir kısmını oyuncuya yönlendirir ve onlara verilen hasarı azaltır.",
+
+  "enchantment.wonderful_enchantments.slowness_curse": "Yavaşlık Laneti",
+  "enchantment.wonderful_enchantments.slowness_curse.desc": "Oyuncunun hareket hızını azaltır.",
+  "enchantment.wonderful_enchantments.slowness_curse.description": "Oyuncunun hareket hızını azaltır.",
+
+  "enchantment.wonderful_enchantments.fatigue_curse": "Yorgunluk Laneti",
+  "enchantment.wonderful_enchantments.fatigue_curse.desc": "Oyuncunun kazış hızını azaltır.",
+  "enchantment.wonderful_enchantments.fatigue_curse.description": "Oyuncunun kazış hızını azaltır.",
+
+  "enchantment.wonderful_enchantments.incompatibility_curse": "Uyuşmazlık Laneti",
+  "enchantment.wonderful_enchantments.incompatibility_curse.desc": "Eşyayı büyülenemez yapar.",
+  "enchantment.wonderful_enchantments.incompatibility_curse.description": "Eşyayı büyülenemez yapar.",
+
+  "enchantment.wonderful_enchantments.vampirism_curse": "Vampirlik Laneti",
+  "enchantment.wonderful_enchantments.vampirism_curse.desc": "Gün ışığında oynatıcıyı zayıflatır ve yakar. Sülük büyüsünü güçlendirir.",
+  "enchantment.wonderful_enchantments.vampirism_curse.description": "Gün ışığında oynatıcıyı zayıflatır ve yakar. Sülük büyüsünü güçlendirir.",
+
+  "enchantment.wonderful_enchantments.corrosion_curse": "Aşınma Laneti",
+  "enchantment.wonderful_enchantments.corrosion_curse.desc": "Yavaş yavaş zırhı yok eder ve sudayken kullanıcıya hasar verir.",
+  "enchantment.wonderful_enchantments.corrosion_curse.description": "Yavaş yavaş zırhı yok eder ve sudayken kullanıcıya hasar verir.",
+
+  "item.wonderful_enchantments.wonderful_book": "Harika Kitap",
+  "item.wonderful_enchantments.wonderful_book.enchanting_energy": "Büyü enerjisi:",
+  "item.wonderful_enchantments.wonderful_book.enchanting_energy_max": "Maximum büyü enerjisi!",
+  "item.wonderful_enchantments.wonderful_book.enchanting_cost": "Seviye maliyeti:",
+  "item.wonderful_enchantments.wonderful_book.level": "seviye",
+  "item.wonderful_enchantments.wonderful_book.levels": "seviye",
+  "item.wonderful_enchantments.wonderful_book.hint": "Çalışma Masası'nda Lapis Lazuli ile büyü enerjinizi artırabilirsiniz.",
+  "item.wonderful_enchantments.wonderful_book.transmute": "Tutarken büyülü bir kitaba dönüştürmek için farenin sağ tuşuna basın...",
+
+  "advancements.wonderful_enchantments.scholar.title": "Bilge",
+  "advancements.wonderful_enchantments.scholar.description": "Tüm zırh parçalarına Aydınlanma II uygulayın.",
+  "advancements.wonderful_enchantments.nothing_can_stop_me.title": "Hiçbir Şey Beni Durdurmaz",
+  "advancements.wonderful_enchantments.nothing_can_stop_me.description": "Yağmur yağıyor olsa bile Balıkçılık Meraklısı'nın bir sonraki seviyesini elde edin",
+  "advancements.wonderful_enchantments.fishing_fanatic.title": "Oldukça Beğendim",
+  "advancements.wonderful_enchantments.fishing_fanatic.description": "Balıkçılık Meraklısı'nın ilk seviyesini elde edin",
+  "advancements.wonderful_enchantments.fishing_fanatic_true.title": "Şey... Bağımlısıyım",
+  "advancements.wonderful_enchantments.fishing_fanatic_true.description": "Balıkçılık Meraklısı'nın sekizinci seviyesini elde edin"
+}
