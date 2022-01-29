@@ -2,6 +2,7 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.Random;
 import com.mlib.attributes.AttributeHandler;
+import com.mlib.config.AvailabilityConfig;
 import com.mlib.config.DoubleConfig;
 import com.mlib.config.DurationConfig;
 import com.wonderfulenchantments.Instances;
@@ -33,16 +34,19 @@ public class DodgeEnchantment extends WonderfulEnchantment {
 	protected final DoubleConfig dodgeChancePerLevel;
 	protected final DoubleConfig damageAmountFactor;
 	protected final DurationConfig immunityTime;
+	protected final AvailabilityConfig spawnParticles;
 
 	public DodgeEnchantment() {
 		super( "dodge", Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS, "Dodge" );
 		String chanceComment = "Chance to completely ignore any damage source per enchantment level.";
 		String damageComment = "Amount of damage converted to pants damage. (for example if this factor is equal 0.5 and player took 10 damage so its pants takes 5 damage)";
 		String immunityComment = "Duration of knockback immunity after successful dodge. (in seconds)";
+		String particlesComment = "Should the enchantment particles be visible?";
 		this.dodgeChancePerLevel = new DoubleConfig( "dodge_chance", chanceComment, false, 0.125, 0.01, 0.4 );
 		this.damageAmountFactor = new DoubleConfig( "damage_factor", damageComment, false, 0.5, 0.0, 10.0 );
 		this.immunityTime = new DurationConfig( "immunity_duration", immunityComment, false, 3.0, 0.0, 30.0 );
-		this.enchantmentGroup.addConfigs( this.dodgeChancePerLevel, this.damageAmountFactor, this.immunityTime );
+		this.spawnParticles = new AvailabilityConfig( "particles", particlesComment, false, true );
+		this.enchantmentGroup.addConfigs( this.dodgeChancePerLevel, this.damageAmountFactor, this.immunityTime, this.spawnParticles );
 
 		setMaximumEnchantmentLevel( 2 );
 		setDifferenceBetweenMinimumAndMaximum( 20 );
@@ -90,12 +94,14 @@ public class DodgeEnchantment extends WonderfulEnchantment {
 
 	protected static void spawnParticlesAndPlaySounds( LivingEntity entity ) {
 		ServerLevel world = ( ServerLevel )entity.level;
-		for( double d = 0.0; d < 3.0; d++ ) {
-			Vec3 emitterPosition = new Vec3( 0.0, entity.getBbHeight() * 0.25 * ( d + 1.0 ), 0.0 ).add( entity.position() );
-			for( int i = 0; i < 2; i++ )
-				world.sendParticles( i == 0 ? ParticleTypes.CAMPFIRE_COSY_SMOKE : ParticleTypes.LARGE_SMOKE, emitterPosition.x, emitterPosition.y,
-					emitterPosition.z, 8 * ( i+1 ), 0.125, 0.0, 0.125, ( i == 0 ? 0.1 : 0.4 ) * 0.075
-				);
+		if( Instances.DODGE.spawnParticles.isEnabled() ) {
+			for( double d = 0.0; d < 3.0; d++ ) {
+				Vec3 emitterPosition = new Vec3( 0.0, entity.getBbHeight() * 0.25 * ( d + 1.0 ), 0.0 ).add( entity.position() );
+				for( int i = 0; i < 2; i++ )
+					world.sendParticles( i == 0 ? ParticleTypes.CAMPFIRE_COSY_SMOKE : ParticleTypes.LARGE_SMOKE, emitterPosition.x, emitterPosition.y,
+						emitterPosition.z, 8 * ( i + 1 ), 0.125, 0.0, 0.125, ( i == 0 ? 0.1 : 0.4 ) * 0.075
+					);
+			}
 		}
 		world.playSound( null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE,
 			SoundSource.AMBIENT, 1.0f, 1.0f
