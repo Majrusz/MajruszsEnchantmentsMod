@@ -5,8 +5,7 @@ import com.mlib.items.ItemHelper;
 import com.mlib.loot_modifiers.AnyModification;
 import com.mlib.loot_modifiers.HarvestCrop;
 import com.mlib.registries.DeferredRegisterHelper;
-import com.wonderfulenchantments.curses.FatigueCurse;
-import com.wonderfulenchantments.curses.IncompatibilityCurse;
+import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
@@ -51,6 +50,7 @@ public class Registries {
 	// Enchantments
 
 	// Curses
+	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse.create() );
 	public static final RegistryObject< FatigueCurse > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse.create() );
 	public static final RegistryObject< IncompatibilityCurse > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse.create() );
 
