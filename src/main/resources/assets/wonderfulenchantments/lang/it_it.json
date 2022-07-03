@@ -1,0 +1,103 @@
+{
+	"enchantment.wonderfulenchantments.fishing_fanatic": "Fanatico della pesca",
+	"enchantment.wonderfulenchantments.fishing_fanatic.desc": "Ti dà la possibilità di catturare oggetti aggiuntivi dalla pesca.",
+	"enchantment.wonderfulenchantments.fishing_fanatic.description": "Ti dà la possibilità di catturare oggetti aggiuntivi dalla pesca.",
+	"wonderfulenchantments.fanatic_level_up": "Sei diventato un grande fanatico della pesca!",
+	"wonderfulenchantments.true_level": "Il vero",
+
+	"enchantment.wonderfulenchantments.human_slayer": "Misantropia",
+	"enchantment.wonderfulenchantments.human_slayer.desc": "Aumenta il danno su i villici, i predoni, le streghe e gli altri giocatori.",
+	"enchantment.wonderfulenchantments.human_slayer.description": "Aumenta il danno su i villici, i predoni, le streghe e gli altri giocatori.",
+
+	"enchantment.wonderfulenchantments.dodge": "Elusione",
+	"enchantment.wonderfulenchantments.dodge.desc": "Ti dà la possibilità di evitare completamente qualsiasi tipo di danno.",
+	"enchantment.wonderfulenchantments.dodge.description": "Ti dà la possibilità di evitare completamente qualsiasi tipo di danno.",
+
+	"enchantment.wonderfulenchantments.enlightenment": "Illuminismo",
+	"enchantment.wonderfulenchantments.enlightenment.desc": "Aumenta l'esperienza acquisita in qualsiasi modo.",
+	"enchantment.wonderfulenchantments.enlightenment.description": "Aumenta l'esperienza acquisita in qualsiasi modo.",
+
+	"enchantment.wonderfulenchantments.vitality": "Vitalità",
+	"enchantment.wonderfulenchantments.vitality.desc": "Aumenta la vita dei giocatori.",
+	"enchantment.wonderfulenchantments.vitality.description": "Aumenta la vita dei giocatori.",
+
+	"enchantment.wonderfulenchantments.phoenix_dive": "Fiamme della fenice",
+	"enchantment.wonderfulenchantments.phoenix_dive.desc": "La caduta dall'alto provoca il rilascio di un'onda di fuoco che danneggia e incendia i nemici vicini. Inoltre, se tieni premuto il tasto per accovacciarsi (di solito è SHIFT) salterai più in alto!",
+	"enchantment.wonderfulenchantments.phoenix_dive.description": "La caduta dall'alto provoca il rilascio di un'onda di fuoco che danneggia e incendia i nemici vicini. Inoltre, se tieni premuto il tasto per accovacciarsi (di solito è SHIFT) salterai più in alto!",
+
+	"enchantment.wonderfulenchantments.pufferfish_vengeance": "Vendetta del pesce palla",
+	"enchantment.wonderfulenchantments.pufferfish_vengeance.desc": "A ogni attacco infliggerai diversi debuff.",
+	"enchantment.wonderfulenchantments.pufferfish_vengeance.description": "A ogni attacco infliggerai diversi debuff.",
+
+	"enchantment.wonderfulenchantments.immortality": "Immortalità",
+	"enchantment.wonderfulenchantments.immortality.desc": "Ti salverai da un colpo fatale.",
+	"enchantment.wonderfulenchantments.immortality.description": "ti salverai da un colpo fatale.",
+
+	"enchantment.wonderfulenchantments.smelter": "Fonderia",
+	"enchantment.wonderfulenchantments.smelter.desc": "Quando rompi un blocco viene automanticamente sciolto.",
+	"enchantment.wonderfulenchantments.smelter.description": "Quando rompi un blocco viene automanticamente sciolto.",
+
+	"enchantment.wonderfulenchantments.gotta_mine_fast": "Trivella Umana",
+	"enchantment.wonderfulenchantments.gotta_mine_fast.desc": "Aumenta la tua velocità di scavo più a lungo tieni premuto il sinistro del mouse.",
+	"enchantment.wonderfulenchantments.gotta_mine_fast.description": "Aumenta la tua velocità di scavo più a lungo tieni premuto il sinistro del mouse.",
+
+	"enchantment.wonderfulenchantments.leech": "Sanguisuga",
+	"enchantment.wonderfulenchantments.leech.desc": "ti dà la possibilità di rubare effetti positivi o salute ai nemici.",
+	"enchantment.wonderfulenchantments.leech.description": "ti dà la possibilità di rubare effetti positivi o salute ai nemici.",
+
+	"enchantment.wonderfulenchantments.magic_protection": "Protezione dalla magia",
+	"enchantment.wonderfulenchantments.magic_protection.desc": "Protegge da danni magici come Zanne dei evocatori, raggio dei guardiani e dalle pozione di danno istantaneo.",
+	"enchantment.wonderfulenchantments.magic_protection.description": "Protegge da danni magici come Zanne dei evocatori, raggio dei guardiani e dalle pozione di danno istantaneo.",
+
+	"enchantment.wonderfulenchantments.swiftness": "Rapidità",
+	"enchantment.wonderfulenchantments.swiftness.desc": "Aumenta la velocità del cavallo.",
+	"enchantment.wonderfulenchantments.swiftness.description": "Aumenta la velocità del cavallo.",
+
+	"enchantment.wonderfulenchantments.horse_protection": "Protezione Equina",
+	"enchantment.wonderfulenchantments.horse_protection.desc": "Riduce la quantità di danni ricevuti dal cavallo.",
+	"enchantment.wonderfulenchantments.horse_protection.description": "Riduce la quantità di danni ricevuti dal cavallo.",
+
+	"enchantment.wonderfulenchantments.horse_frost_walker": "Galoppo ghiacciato",
+	"enchantment.wonderfulenchantments.horse_frost_walker.desc": "Ghiaccia l'acqua temporaneamente mentre il cavallo si muove sopra di essa.",
+	"enchantment.wonderfulenchantments.horse_frost_walker.description": "Ghiaccia l'acqua temporaneamente mentre il cavallo si muove sopra di essa.",
+
+	"enchantment.wonderfulenchantments.telekinesis": "Telecinesi",
+	"enchantment.wonderfulenchantments.telekinesis.desc": "Aggiunge gli oggetti che rompi/scavi direttamente nell'inventario.",
+	"enchantment.wonderfulenchantments.telekinesis.description": "Aggiunge gli oggetti che rompi/scavi direttamente nell'inventario.",
+
+	"enchantment.wonderfulenchantments.absorber": "Assorbitore",
+	"enchantment.wonderfulenchantments.absorber.desc": "Lo scudo assorbe al costo della sua durabilitá tutti gli effetti negativi.",
+	"enchantment.wonderfulenchantments.absorber.description": "Lo scudo assorbe al costo della sua durabilitá tutti gli effetti negativi.",
+
+	"enchantment.wonderfulenchantments.hunter": "Cacciatore",
+	"enchantment.wonderfulenchantments.hunter.desc": "Aumenta bottino e i danni che fai più è lontano il tuo bersaglio.",
+	"enchantment.wonderfulenchantments.hunter.description": "Aumenta bottino e i danni che fai più è lontano il tuo bersaglio.",
+
+	"enchantment.wonderfulenchantments.elder_guardian_favor": "Il favore del guardiano antico",
+	"enchantment.wonderfulenchantments.elder_guardian_favor.desc": "Dopo aver colpito con successo, il nemico viene attaccato da un raggio che non può essere schivato o bloccato.",
+	"enchantment.wonderfulenchantments.elder_guardian_favor.description": "Dopo aver colpito con successo, il nemico viene attaccato da un raggio che non può essere schivato o bloccato.",
+
+	"enchantment.wonderfulenchantments.harvester": "Mietitore",
+	"enchantment.wonderfulenchantments.harvester.desc": "Puoi prendere il raccolto col tasto destro ripiantandolo e hai la possibilità di coltivare raccolti vicini.",
+	"enchantment.wonderfulenchantments.harvester.description": "Puoi prendere il raccolto col tasto destro ripiantandolo e hai la possibilità di coltivare raccolti vicini.",
+
+	"enchantment.wonderfulenchantments.slowness_curse": "Maledizione della lentezza",
+	"enchantment.wonderfulenchantments.slowness_curse.desc": "Ti rende più lento.",
+	"enchantment.wonderfulenchantments.slowness_curse.description": "Ti rende più lento.",
+
+	"enchantment.wonderfulenchantments.fatigue_curse": "Maledizione della fatica",
+	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Ti rende più lento nel minare.",
+	"enchantment.wonderfulenchantments.fatigue_curse.description": "Ti rende più lento nel minare.",
+
+	"enchantment.wonderfulenchantments.incompatibility_curse": "Maledizione dell'incobatibilità",
+	"enchantment.wonderfulenchantments.incompatibility_curse.desc": "Rende impossibile aggiungere un incantesimo sul oggetto.",
+	"enchantment.wonderfulenchantments.incompatibility_curse.description": "Rende impossibile aggiungere un incantesimo sul oggetto.",
+
+	"enchantment.wonderfulenchantments.vampirism_curse": "Maledizione vampirica",
+	"enchantment.wonderfulenchantments.vampirism_curse.desc": "Indebolisce e dà fuoco al giocatore quando è fuori durante il giorno. Rende più forte l'incantesimo Sanguisuga.",
+	"enchantment.wonderfulenchantments.vampirism_curse.description": "Indebolisce e dà fuoco al giocatore quando è fuori durante il giorno. Rende più forte l'incantesimo Sanguisuga.",
+
+	"enchantment.wonderfulenchantments.corrosion_curse": "Maledizione della corrosione",
+	"enchantment.wonderfulenchantments.corrosion_curse.desc": "Distrugge gradualmente l'armatura e ti ferisce quando vieni a contatto con l'acqua.",
+	"enchantment.wonderfulenchantments.corrosion_curse.description": "Distrugge gradualmente l'armatura e ti ferisce quando vieni a contatto con l'acqua."
+}

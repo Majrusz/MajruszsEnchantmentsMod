@@ -1,0 +1,103 @@
+{
+  "enchantment.wonderfulenchantments.fishing_fanatic": "Fanático de la Pesca",
+  "enchantment.wonderfulenchantments.fishing_fanatic.desc": "Posibilidad the pescar objetos extra.",
+  "enchantment.wonderfulenchantments.fishing_fanatic.description": "Posibilidad the pescar objetos extra.",
+  "wonderfulenchantments.fanatic_level_up": "Has mejorado en la pesca!",
+  "wonderfulenchantments.true_level": "Cierto",
+
+  "enchantment.wonderfulenchantments.human_slayer": "Encantamiento Contra La Humanidad",
+  "enchantment.wonderfulenchantments.human_slayer.desc": "Incrementa el daño contra los Aldeanos, Saqueadores, Brujas y otros jugadores.",
+  "enchantment.wonderfulenchantments.human_slayer.description": "Incrementa el daño contra los Aldeanos, Saqueadores, Brujas y otros jugadores.",
+
+  "enchantment.wonderfulenchantments.dodge": "Esquiva",
+  "enchantment.wonderfulenchantments.dodge.desc": "Posibilidad de prevenir cualquier typo de daño.",
+  "enchantment.wonderfulenchantments.dodge.description": "Posibilidad de prevenir cualquier typo de daño.",
+
+  "enchantment.wonderfulenchantments.enlightenment": "Iluminación",
+  "enchantment.wonderfulenchantments.enlightenment.desc": "Incrementa la experiencia de qualquier fuente.",
+  "enchantment.wonderfulenchantments.enlightenment.description": "Incrementa la experiencia de qualquier fuente.",
+
+  "enchantment.wonderfulenchantments.vitality": "Vitalidad",
+  "enchantment.wonderfulenchantments.vitality.desc": "Incrementa la vida del jugador.",
+  "enchantment.wonderfulenchantments.vitality.description": "Incrementa la vida del jugador.",
+
+  "enchantment.wonderfulenchantments.phoenix_dive": "Phoenix Dive",
+  "enchantment.wonderfulenchantments.phoenix_dive.desc": "Al caer de cierta altura, causa una ola de fuego que daña enemigos cercanos y los prende en llamas. Tambien saltaras mas alto si presionas sneak antes de saltar! (def. SHIFT)",
+  "enchantment.wonderfulenchantments.phoenix_dive.description": "Al caer de cierta altura, causa una ola de fuego que daña enemigos cercanos y los prende en llamas. Tambien saltaras mas alto si presionas sneak antes de saltar! (def. SHIFT)",
+
+  "enchantment.wonderfulenchantments.pufferfish_vengeance": "Venganza del Pez Globo",
+  "enchantment.wonderfulenchantments.pufferfish_vengeance.desc": "Cada attaque infligira varios debuffs al enemigo.",
+  "enchantment.wonderfulenchantments.pufferfish_vengeance.description": "Cada attaque infligira varios debuffs al enemigo.",
+
+  "enchantment.wonderfulenchantments.immortality": "Immortalidad",
+  "enchantment.wonderfulenchantments.immortality.desc": "Engañaras a la muerte en un golpe fatal al costo del objeto.",
+  "enchantment.wonderfulenchantments.immortality.description": "Engañaras a la muerte en un golpe fatal al costo del objeto.",
+
+  "enchantment.wonderfulenchantments.smelter": "Fundir",
+  "enchantment.wonderfulenchantments.smelter.desc": "Cuando el bloque se destruye, se fundira automaticamente.",
+  "enchantment.wonderfulenchantments.smelter.description": "Cuando el bloque se destruye, se fundira automaticamente.",
+
+  "enchantment.wonderfulenchantments.gotta_mine_fast": "Gotta Mine Fast",
+  "enchantment.wonderfulenchantments.gotta_mine_fast.desc": "Incrementa la velocidad de excavación lo mas que sostengas el boton del mouse izquierdo.",
+  "enchantment.wonderfulenchantments.gotta_mine_fast.description": "Incrementa la velocidad de excavación lo mas que sostengas el boton del mouse izquierdo.",
+
+  "enchantment.wonderfulenchantments.leech": "Sanguijuela",
+  "enchantment.wonderfulenchantments.leech.desc": "Posibilidad de robar un poco de vida o effectos positivos de los enemigos.",
+  "enchantment.wonderfulenchantments.leech.description": "Posiblidad de robar un poco de vida o effectos positivos de los enemigos.",
+
+  "enchantment.wonderfulenchantments.magic_protection": "Proteccion Magica",
+  "enchantment.wonderfulenchantments.magic_protection.desc": "Proteje contra daño magico como los Colmillos del Evocador, laseres de Guardianes y pociones de Daño Instantaneo.",
+  "enchantment.wonderfulenchantments.magic_protection.description": "Proteje contra daño magico como los Colmillos del Evocador, laseres de Guardianes y pociones de Daño Instantaneo.",
+
+  "enchantment.wonderfulenchantments.swiftness": "Rapidez",
+  "enchantment.wonderfulenchantments.swiftness.desc": "Incrementa la velocidad del caballo.",
+  "enchantment.wonderfulenchantments.swiftness.description": "Incrementa la velocidad del caballo.",
+
+  "enchantment.wonderfulenchantments.horse_protection": "Bronco",
+  "enchantment.wonderfulenchantments.horse_protection.desc": "Reduce el daño recibido al caballo",
+  "enchantment.wonderfulenchantments.horse_protection.description": "Reduce el daño recibido al caballo.",
+
+  "enchantment.wonderfulenchantments.horse_frost_walker": "Frost Rider",
+  "enchantment.wonderfulenchantments.horse_frost_walker.desc": "Crea bloques de hielo cuando el caballo camine sobre agua.",
+  "enchantment.wonderfulenchantments.horse_frost_walker.description": "Crea bloques de hielo cuando el caballo camine sobre agua.",
+
+  "enchantment.wonderfulenchantments.telekinesis": "Telequinesia",
+  "enchantment.wonderfulenchantments.telekinesis.desc": "Directamente añade objectos al inventario si es posible cuando se destruye bloques.",
+  "enchantment.wonderfulenchantments.telekinesis.description": "Directamente añade objectos al inventario si es posible cuando se destruye bloques.",
+
+  "enchantment.wonderfulenchantments.absorber": "Absorbiente",
+  "enchantment.wonderfulenchantments.absorber.desc": "El escudo absorbe todo los efectos negativos al costo de la durabilidad.",
+  "enchantment.wonderfulenchantments.absorber.description": "El escudo absorbe todo los efectos negativos al costo de la durabilidad.",
+
+  "enchantment.wonderfulenchantments.hunter": "Cazador",
+  "enchantment.wonderfulenchantments.hunter.desc": "Incrementa el numero de objectos recibidos y lo mas lejos que este el blanco, daras mas daño.",
+  "enchantment.wonderfulenchantments.hunter.description": "Incrementa el numero de objetos recibidos y lo mas lejos que este el blanco, daras mas daño.",
+
+  "enchantment.wonderfulenchantments.elder_guardian_favor": "Favor del Guardián Mayor",
+  "enchantment.wonderfulenchantments.elder_guardian_favor.desc": "Cada golpe sucesivo, ataca al enemigo con un laser que no puede ser esquivado o bloqueado.",
+  "enchantment.wonderfulenchantments.elder_guardian_favor.description": "Cada golpe sucesivo, ataca al enemigo con un laser que no puede ser esquivado o bloqueado.",
+
+  "enchantment.wonderfulenchantments.harvester": "Cosecha",
+  "enchantment.wonderfulenchantments.harvester.desc": "Da la opcion the cosechar al hacer click derecho y la posibilidad de crecer cultivos cercanos.",
+  "enchantment.wonderfulenchantments.harvester.description": "Da la opcion the cosechar al hacer click derecho y la posibilidad de crecer cultivos cercanos.",
+
+  "enchantment.wonderfulenchantments.slowness_curse": "Maldición de la Lentitud",
+  "enchantment.wonderfulenchantments.slowness_curse.desc": "Disminuye la velocidad del jugador.",
+  "enchantment.wonderfulenchantments.slowness_curse.description": "Disminuye la velocidad del jugador.",
+
+  "enchantment.wonderfulenchantments.fatigue_curse": "Maldición de la Fatigua",
+  "enchantment.wonderfulenchantments.fatigue_curse.desc": "Disminuye la velocidad al minar.",
+  "enchantment.wonderfulenchantments.fatigue_curse.description": "Disminuye la velocidad al minar.",
+
+  "enchantment.wonderfulenchantments.incompatibility_curse": "Maldición de Incompatibilidad",
+  "enchantment.wonderfulenchantments.incompatibility_curse.desc": "Hace que el objeto rechaze cualquier encantamiento que se trate de añadir.",
+  "enchantment.wonderfulenchantments.incompatibility_curse.description": "Hace que el objeto rechaze cualquier encantamiento que se trate de añadir.",
+
+  "enchantment.wonderfulenchantments.vampirism_curse": "Maldición de Vampirismo",
+  "enchantment.wonderfulenchantments.vampirism_curse.desc": "Debilita al jugador y lo enciende en llamas durante el dia. El encantamiento de Sanguijuela es mas potente.",
+  "enchantment.wonderfulenchantments.vampirism_curse.description": "Debilita al jugador y lo enciende en llamas durante el dia. El encantamiento de Sanguijuela es mas potente.",
+
+  "enchantment.wonderfulenchantments.corrosion_curse": "Maldición de Corrosión",
+  "enchantment.wonderfulenchantments.corrosion_curse.desc": "Gradualmente daña la armadura y al dueño cuando hace contacto con el agua.",
+  "enchantment.wonderfulenchantments.corrosion_curse.description": "Gradualmente daña la armadura y al dueño cuando hace contacto con el agua."
+}

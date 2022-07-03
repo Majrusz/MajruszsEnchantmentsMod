@@ -9,13 +9,11 @@ import net.minecraft.world.item.ItemStack;
 /** Makes leather horse armor enchantable. */
 public class DyeableHorseArmorItemReplacement extends DyeableHorseArmorItem implements DyeableLeatherItem {
 	public DyeableHorseArmorItemReplacement( int armorBonus, String resource ) {
-		super( armorBonus, resource, ( new Properties() ).stacksTo( 1 )
-			.tab( CreativeModeTab.TAB_MISC ) );
+		super( armorBonus, resource, new Properties().stacksTo( 1 ).tab( CreativeModeTab.TAB_MISC ) );
 	}
 
 	public DyeableHorseArmorItemReplacement( int armorBonus, ResourceLocation texture ) {
-		super( armorBonus, texture, ( new Properties() ).stacksTo( 1 )
-			.tab( CreativeModeTab.TAB_MISC ) );
+		super( armorBonus, texture, new Properties().stacksTo( 1 ).tab( CreativeModeTab.TAB_MISC ) );
 	}
 
 	@Override

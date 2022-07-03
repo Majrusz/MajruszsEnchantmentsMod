@@ -1,8 +1,7 @@
 {
 	"replace": false,
 	"entries": [
-		"wonderful_enchantments:smelter_enchantment",
-		"wonderful_enchantments:telekinesis_enchantment",
-		"wonderful_enchantments:harvester_enchantment"
+		"wonderfulenchantments:telekinesis_enchantment",
+		"wonderfulenchantments:harvester_enchantment"
 	]
 }

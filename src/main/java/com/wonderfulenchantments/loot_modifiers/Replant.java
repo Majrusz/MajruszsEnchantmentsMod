@@ -3,7 +3,7 @@ package com.wonderfulenchantments.loot_modifiers;
 import com.google.gson.JsonObject;
 import com.mlib.Random;
 import com.mlib.loot_modifiers.LootHelper;
-import com.wonderfulenchantments.Instances;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -40,7 +40,7 @@ public class Replant extends LootModifier {
 
 	@Nonnull
 	@Override
-	public List< ItemStack > doApply( List< ItemStack > generatedLoot, LootContext context ) {
+	public ObjectArrayList< ItemStack > doApply( ObjectArrayList< ItemStack > generatedLoot, LootContext context ) {
 		BlockState blockState = LootHelper.getParameter( context, LootContextParams.BLOCK_STATE );
 		Entity entity = LootHelper.getParameter( context, LootContextParams.THIS_ENTITY );
 		ItemStack hoe = LootHelper.getParameter( context, LootContextParams.TOOL );
@@ -49,11 +49,11 @@ public class Replant extends LootModifier {
 			return generatedLoot;
 
 		BlockPos position = new BlockPos( origin );
-		int rangeFactor = Instances.HARVESTER.range.get() * EnchantmentHelper.getItemEnchantmentLevel( Instances.HARVESTER, hoe );
+		/*int rangeFactor = Registries.HARVESTER.range.get() * EnchantmentHelper.getItemEnchantmentLevel( Registries.HARVESTER, hoe );
 
 		removeSeedsFromLoot( generatedLoot, entity.level, blockState, position );
 		if( entity.level instanceof ServerLevel && entity instanceof LivingEntity )
-			tickInRange( rangeFactor, ( ServerLevel )entity.level, position, ( LivingEntity )entity, hoe );
+			tickInRange( rangeFactor, ( ServerLevel )entity.level, position, ( LivingEntity )entity, hoe );*/
 
 		return generatedLoot;
 	}
@@ -105,7 +105,7 @@ public class Replant extends LootModifier {
 
 	/** Increases nearby crops age and damages hoe. */
 	protected static void tickInRange( int range, ServerLevel world, BlockPos position, LivingEntity entity, ItemStack hoe ) {
-		for( int z = -range; z <= range; z++ )
+		/*for( int z = -range; z <= range; z++ )
 			for( int x = -range; x <= range; x++ ) {
 				if( x == 0 && z == 0 )
 					continue;
@@ -115,10 +115,10 @@ public class Replant extends LootModifier {
 
 				if( blockState.getBlock() instanceof CropBlock ) {
 					CropBlock cropsBlock = ( CropBlock )blockState.getBlock();
-					double growChance = Instances.HARVESTER.growChance.get();
+					double growChance = Registries.HARVESTER.growChance.get();
 					if( growChance > 0.0 ) {
 						if( Random.tryChance( growChance ) ) {
-							int penalty = Instances.HARVESTER.durabilityPenalty.get();
+							int penalty = Registries.HARVESTER.durabilityPenalty.get();
 							cropsBlock.growCrops( world, neighbourPosition, blockState );
 							spawnParticles( world, neighbourPosition, 3 );
 							if( penalty > 0 )
@@ -128,10 +128,10 @@ public class Replant extends LootModifier {
 					}
 				} else if( blockState.getBlock() instanceof NetherWartBlock ) {
 					NetherWartBlock netherWartBlock = ( NetherWartBlock )blockState.getBlock();
-					double growChance = Instances.HARVESTER.netherWartGrowChance.get();
+					double growChance = Registries.HARVESTER.netherWartGrowChance.get();
 					if( growChance > 0.0 ) {
 						if( Random.tryChance( growChance ) ) {
-							int penalty = Instances.HARVESTER.durabilityPenalty.get();
+							int penalty = Registries.HARVESTER.durabilityPenalty.get();
 							int newAge = Mth.clamp( blockState.getValue( NetherWartBlock.AGE ) + 1, 0, 3 );
 							world.setBlockAndUpdate( neighbourPosition, netherWartBlock.defaultBlockState()
 								.setValue( NetherWartBlock.AGE, newAge ) );
@@ -142,7 +142,7 @@ public class Replant extends LootModifier {
 						spawnParticles( world, neighbourPosition, 1 );
 					}
 				}
-			}
+			}*/
 	}
 
 	/** Spawning particles on nearby crops. */
