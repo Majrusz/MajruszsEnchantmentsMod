@@ -1,4 +1,4 @@
-package com.wonderfulenchantments.loot_modifiers;
+package com.wonderfulenchantments.lootmodifiers;
 
 import com.google.gson.JsonObject;
 import com.mlib.loot_modifiers.LootHelper;
