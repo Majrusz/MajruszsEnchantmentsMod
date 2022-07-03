@@ -4,6 +4,7 @@ import com.mlib.gamemodifiers.GameModifier;
 import com.mlib.items.ItemHelper;
 import com.mlib.registries.DeferredRegisterHelper;
 import com.wonderfulenchantments.curses.*;
+import com.wonderfulenchantments.enchantments.DeathWishEnchantment;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
@@ -44,6 +45,7 @@ public class Registries {
 	public static final EnchantmentCategory MELEE_WEAPON = EnchantmentCategory.create( "melee_weapon", item->item instanceof SwordItem || item instanceof AxeItem || item instanceof TridentItem );
 
 	// Enchantments
+	public static final RegistryObject< DeathWishEnchantment > DEATH_WISH = ENCHANTMENTS.register( "death_wish", DeathWishEnchantment.create() );
 
 	// Curses
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse.create() );
