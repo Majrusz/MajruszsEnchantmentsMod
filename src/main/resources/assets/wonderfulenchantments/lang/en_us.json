@@ -103,13 +103,9 @@
 	"enchantment.wonderfulenchantments.guardian_angel.desc": "Redirects part of the damage from tamed animals and villagers to the player and applies damage reduction to them.",
 	"enchantment.wonderfulenchantments.guardian_angel.description": "Redirects part of the damage from tamed animals and villagers to the player and applies damage reduction to them.",
 
-	"enchantment.wonderfulenchantments.slowness_curse": "Curse of Slowness",
-	"enchantment.wonderfulenchantments.slowness_curse.desc": "Decreases the player's movement speed.",
-	"enchantment.wonderfulenchantments.slowness_curse.description": "Decreases the player's movement speed.",
-
 	"enchantment.wonderfulenchantments.fatigue_curse": "Curse of Fatigue",
-	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Decreases the player's mining speed.",
-	"enchantment.wonderfulenchantments.fatigue_curse.description": "Decreases the player's mining speed.",
+	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Effectively reduces the player's speed of everything.",
+	"enchantment.wonderfulenchantments.fatigue_curse.description": "Effectively reduces the player's speed of everything.",
 
 	"enchantment.wonderfulenchantments.incompatibility_curse": "Curse of Incompatibility",
 	"enchantment.wonderfulenchantments.incompatibility_curse.desc": "Causes item to be unenchantable.",

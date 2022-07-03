@@ -53,7 +53,7 @@ public class FatigueCurse extends CustomEnchantment {
 		final DoubleConfig drawingMultiplier = new DoubleConfig( "drawing_multiplier", "Bowstring speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
 
 		public Modifier( FatigueCurse enchantment ) {
-			super( enchantment, "Fatigue", "Reduces mining speed." );
+			super( enchantment, "Fatigue", "Effectively reduces the speed of everything." );
 
 			OnBreakSpeedContext onBreakSpeed = new OnBreakSpeedContext( this::reduceMiningSpeed );
 			onBreakSpeed.addCondition( data -> enchantment.hasEnchantment( data.player ) );

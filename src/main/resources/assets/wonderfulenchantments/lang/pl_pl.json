@@ -103,13 +103,9 @@
 	"enchantment.wonderfulenchantments.guardian_angel.desc": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
 	"enchantment.wonderfulenchantments.guardian_angel.description": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
 
-	"enchantment.wonderfulenchantments.slowness_curse": "Klątwa spowolnienia",
-	"enchantment.wonderfulenchantments.slowness_curse.desc": "Zmniejsza prędkość poruszania się gracza.",
-	"enchantment.wonderfulenchantments.slowness_curse.description": "Zmniejsza prędkość poruszania się gracza.",
-
 	"enchantment.wonderfulenchantments.fatigue_curse": "Klątwa zmęczenia",
-	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Zmniejsza prędkość wydobywania bloków.",
-	"enchantment.wonderfulenchantments.fatigue_curse.description": "Zmniejsza prędkość wydobywania bloków.",
+	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Zmniejsza prędkość wszystkiego.",
+	"enchantment.wonderfulenchantments.fatigue_curse.description": "Zmniejsza prędkość wszystkiego.",
 
 	"enchantment.wonderfulenchantments.incompatibility_curse": "Klątwa niekompatybilności",
 	"enchantment.wonderfulenchantments.incompatibility_curse.desc": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
