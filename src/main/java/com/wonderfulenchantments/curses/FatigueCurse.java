@@ -11,19 +11,19 @@ import com.mlib.gamemodifiers.contexts.OnUseItemTickContext;
 import com.mlib.gamemodifiers.data.OnBreakSpeedData;
 import com.mlib.gamemodifiers.data.OnEquipmentChangedData;
 import com.mlib.gamemodifiers.data.OnUseItemTickData;
-import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 import java.util.function.Supplier;
 
 public class FatigueCurse extends CustomEnchantment {
 	public static Supplier< FatigueCurse > create() {
-		CustomEnchantment.Parameters params = new CustomEnchantment.Parameters( Rarity.RARE, Registries.TOOLS_AND_WEAPONS, EquipmentSlots.MAINHAND, true, 3, level->10, level->50 );
+		CustomEnchantment.Parameters params = new CustomEnchantment.Parameters( Rarity.RARE, EnchantmentCategory.BREAKABLE, EquipmentSlots.MAINHAND, true, 3, level->10, level->50 );
 		FatigueCurse enchantment = new FatigueCurse( params );
 		FatigueCurse.Modifier modifier = new FatigueCurse.Modifier( enchantment );
 
@@ -64,30 +64,30 @@ public class FatigueCurse extends CustomEnchantment {
 
 			OnUseItemTickContext onBowstring = new OnUseItemTickContext( this::reduceBowstringSpeed );
 			onBowstring.addCondition( data -> enchantment.hasEnchantment( data.entity ) )
-				.addCondition( data -> Random.tryChance( 1.0 - this.getMultiplier( this.drawingMultiplier, data.entity ) ) );
+				.addCondition( data -> Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) );
 
 			this.addConfigs( this.miningMultiplier, this.attackMultiplier, this.drawingMultiplier, this.movementMultiplier );
 			this.addContexts( onBreakSpeed, onEquipmentChange, onEquipmentChange2, onBowstring );
 		}
 
 		private void reduceMiningSpeed( OnBreakSpeedData data ) {
-			data.event.setNewSpeed( data.event.getNewSpeed() * getMultiplier( this.miningMultiplier, data.player ) );
+			data.event.setNewSpeed( data.event.getNewSpeed() * getItemMultiplier( this.miningMultiplier, data.player ) );
 		}
 
 		private void reduceAttackSpeed( OnEquipmentChangedData data ) {
-			ATTACK_SPEED_ATTRIBUTE.setValueAndApply( data.entity, getMultiplier( this.attackMultiplier, data.entity ) );
+			ATTACK_SPEED_ATTRIBUTE.setValueAndApply( data.entity, getItemMultiplier( this.attackMultiplier, data.entity ) - 1.0f );
 		}
 
 		private void reduceMovementSpeed( OnEquipmentChangedData data ) {
-			MOVEMENT_SPEED_ATTRIBUTE.setValueAndApply( data.entity, getArmorMultiplier( this.movementMultiplier, data.entity ) );
+			MOVEMENT_SPEED_ATTRIBUTE.setValueAndApply( data.entity, getArmorMultiplier( this.movementMultiplier, data.entity ) - 1.0f );
 		}
 
 		private void reduceBowstringSpeed( OnUseItemTickData data ) {
 			data.event.setDuration( data.duration - 1 );
 		}
 
-		private float getMultiplier( DoubleConfig config, LivingEntity entity ) {
-			return ( float )Math.pow( config.get(), this.enchantment.getEnchantmentLevel( entity ) );
+		private float getItemMultiplier( DoubleConfig config, LivingEntity entity ) {
+			return ( float )Math.pow( config.get(), this.enchantment.getEnchantmentSum( entity, EquipmentSlots.BOTH_HANDS ) );
 		}
 
 		private float getArmorMultiplier( DoubleConfig config, LivingEntity entity ) {

@@ -47,7 +47,6 @@ public class Registries {
 	public static final EnchantmentCategory HORSE_ARMOR = EnchantmentCategory.create( "horse_armor", item->item instanceof HorseArmorItem );
 	public static final EnchantmentCategory BOW_AND_CROSSBOW = EnchantmentCategory.create( "bow_and_crossbow", item->item instanceof BowItem || item instanceof CrossbowItem );
 	public static final EnchantmentCategory MELEE_WEAPON = EnchantmentCategory.create( "melee_weapon", item->item instanceof SwordItem || item instanceof AxeItem || item instanceof TridentItem );
-	public static final EnchantmentCategory TOOLS_AND_WEAPONS = EnchantmentCategory.create( "tools_and_weapons", item->EnchantmentCategory.DIGGER.canEnchant( item ) || MELEE_WEAPON.canEnchant( item ) );
 
 	// Enchantments
 
@@ -94,8 +93,8 @@ public class Registries {
 	}
 
 	private static void addEnchantmentTypesToItemGroups() {
-		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW );
-		ItemHelper.addEnchantmentTypeToItemGroup( HORSE_ARMOR, CreativeModeTab.TAB_MISC );
+		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_WEAPON );
+		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
 	}
 
 	private static void doClientSetup( final FMLClientSetupEvent event ) {
