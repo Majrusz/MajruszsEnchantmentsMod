@@ -83,7 +83,7 @@ public class FatigueCurse extends CustomEnchantment {
 		}
 
 		private void reduceBowstringSpeed( OnUseItemTickData data ) {
-			data.event.setDuration( data.duration - 1 );
+			data.event.setDuration( data.duration + 1 );
 		}
 
 		private float getItemMultiplier( DoubleConfig config, LivingEntity entity ) {
