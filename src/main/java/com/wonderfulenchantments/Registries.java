@@ -5,11 +5,14 @@ import com.mlib.items.ItemHelper;
 import com.mlib.registries.DeferredRegisterHelper;
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.DeathWishEnchantment;
+import com.wonderfulenchantments.enchantments.DodgeEnchantment;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
 import com.wonderfulenchantments.lootmodifiers.AddItemsDirectlyToInventory;
 import com.wonderfulenchantments.lootmodifiers.Replant;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -37,6 +40,7 @@ public class Registries {
 	static final DeferredRegister< Enchantment > ENCHANTMENTS = HELPER.create( ForgeRegistries.Keys.ENCHANTMENTS );
 	static final DeferredRegister< Item > ITEMS_TO_REPLACE = MINECRAFT_HELPER.create( ForgeRegistries.Keys.ITEMS );
 	static final DeferredRegister< GlobalLootModifierSerializer< ? > > LOOT_MODIFIERS = HELPER.create( ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS );
+	static final DeferredRegister< ParticleType< ? > > PARTICLE_TYPES = HELPER.create( ForgeRegistries.Keys.PARTICLE_TYPES );
 
 	// Enchantment Categories
 	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create( "shield", item->item instanceof ShieldItem );
@@ -45,6 +49,7 @@ public class Registries {
 	public static final EnchantmentCategory MELEE_WEAPON = EnchantmentCategory.create( "melee_weapon", item->item instanceof SwordItem || item instanceof AxeItem || item instanceof TridentItem );
 
 	// Enchantments
+	public static final RegistryObject< DodgeEnchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment.create() );
 	public static final RegistryObject< DeathWishEnchantment > DEATH_WISH = ENCHANTMENTS.register( "death_wish", DeathWishEnchantment.create() );
 
 	// Curses
@@ -66,6 +71,9 @@ public class Registries {
 		LOOT_MODIFIERS.register( "telekinesis_enchantment", AddItemsDirectlyToInventory.Serializer::new );
 		LOOT_MODIFIERS.register( "harvester_enchantment", Replant.Serializer::new );
 	}
+
+	// Particles
+	public static final RegistryObject< SimpleParticleType > DODGE_PARTICLE = PARTICLE_TYPES.register( "dodge_particle", ()->new SimpleParticleType( true ) );
 
 	public static ResourceLocation getLocation( String register ) {
 		return HELPER.getLocation( register );
