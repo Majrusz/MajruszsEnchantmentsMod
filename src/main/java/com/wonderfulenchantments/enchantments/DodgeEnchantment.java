@@ -45,7 +45,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 
 	private static class Modifier extends EnchantmentModifier< DodgeEnchantment > {
 		final DoubleConfig chance = new DoubleConfig( "chance", "Chance to completely ignore the damage per enchantment level.", false, 0.125, 0.01, 0.4 );
-		final DoubleConfig pantsDamageMultiplier = new DoubleConfig( "pants_damage_multiplier", "Percent of damage converted to pants.", false, 0.5, 0.0, 10.0 );
+		final DoubleConfig pantsDamageMultiplier = new DoubleConfig( "pants_damage_multiplier", "Percent of damage transferred to pants.", false, 0.5, 0.0, 10.0 );
 
 		public Modifier( DodgeEnchantment enchantment ) {
 			super( enchantment, "Dodge", "Gives a chance to completely avoid any kind of damage." );
