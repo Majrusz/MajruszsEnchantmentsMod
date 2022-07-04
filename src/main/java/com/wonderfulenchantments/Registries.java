@@ -3,9 +3,11 @@ package com.wonderfulenchantments;
 import com.mlib.gamemodifiers.GameModifier;
 import com.mlib.items.ItemHelper;
 import com.mlib.registries.DeferredRegisterHelper;
+import com.mlib.triggers.BasicTrigger;
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.DeathWishEnchantment;
 import com.wonderfulenchantments.enchantments.DodgeEnchantment;
+import com.wonderfulenchantments.enchantments.EnlightenmentEnchantment;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
@@ -51,6 +53,7 @@ public class Registries {
 	// Enchantments
 	public static final RegistryObject< DodgeEnchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment.create() );
 	public static final RegistryObject< DeathWishEnchantment > DEATH_WISH = ENCHANTMENTS.register( "death_wish", DeathWishEnchantment.create() );
+	public static final RegistryObject< EnlightenmentEnchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment.create() );
 
 	// Curses
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse.create() );
@@ -74,6 +77,9 @@ public class Registries {
 
 	// Particles
 	public static final RegistryObject< SimpleParticleType > DODGE_PARTICLE = PARTICLE_TYPES.register( "dodge_particle", ()->new SimpleParticleType( true ) );
+
+	// Triggers
+	public static final BasicTrigger BASIC_TRIGGER = BasicTrigger.createRegisteredInstance( WonderfulEnchantments.MOD_ID );
 
 	public static ResourceLocation getLocation( String register ) {
 		return HELPER.getLocation( register );
