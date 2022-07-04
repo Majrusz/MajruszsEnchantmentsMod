@@ -8,6 +8,7 @@ import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.DeathWishEnchantment;
 import com.wonderfulenchantments.enchantments.DodgeEnchantment;
 import com.wonderfulenchantments.enchantments.EnlightenmentEnchantment;
+import com.wonderfulenchantments.enchantments.FishingFanaticEnchantment;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
@@ -54,6 +55,7 @@ public class Registries {
 	public static final RegistryObject< DodgeEnchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment.create() );
 	public static final RegistryObject< DeathWishEnchantment > DEATH_WISH = ENCHANTMENTS.register( "death_wish", DeathWishEnchantment.create() );
 	public static final RegistryObject< EnlightenmentEnchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment.create() );
+	public static final RegistryObject< FishingFanaticEnchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", FishingFanaticEnchantment.create() );
 
 	// Curses
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse.create() );
