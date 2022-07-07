@@ -5,10 +5,7 @@ import com.mlib.items.ItemHelper;
 import com.mlib.registries.DeferredRegisterHelper;
 import com.mlib.triggers.BasicTrigger;
 import com.wonderfulenchantments.curses.*;
-import com.wonderfulenchantments.enchantments.DeathWishEnchantment;
-import com.wonderfulenchantments.enchantments.DodgeEnchantment;
-import com.wonderfulenchantments.enchantments.EnlightenmentEnchantment;
-import com.wonderfulenchantments.enchantments.FishingFanaticEnchantment;
+import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.items.ShieldItemReplacement;
@@ -56,6 +53,7 @@ public class Registries {
 	public static final RegistryObject< DeathWishEnchantment > DEATH_WISH = ENCHANTMENTS.register( "death_wish", DeathWishEnchantment.create() );
 	public static final RegistryObject< EnlightenmentEnchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment.create() );
 	public static final RegistryObject< FishingFanaticEnchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", FishingFanaticEnchantment.create() );
+	public static final RegistryObject< FuseCutterEnchantment > FUSE_CUTTER = ENCHANTMENTS.register( "fuse_cutter", FuseCutterEnchantment.create() );
 
 	// Curses
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse.create() );
