@@ -47,6 +47,7 @@ public class Registries {
 	public static final EnchantmentCategory HORSE_ARMOR = EnchantmentCategory.create( "horse_armor", item->item instanceof HorseArmorItem );
 	public static final EnchantmentCategory BOW_AND_CROSSBOW = EnchantmentCategory.create( "bow_and_crossbow", item->item instanceof BowItem || item instanceof CrossbowItem );
 	public static final EnchantmentCategory MELEE_WEAPON = EnchantmentCategory.create( "melee_weapon", item->item instanceof SwordItem || item instanceof AxeItem || item instanceof TridentItem );
+	public static final EnchantmentCategory HOE = EnchantmentCategory.create( "hoe", item->item instanceof HoeItem );
 
 	// Enchantments
 	public static final RegistryObject< DodgeEnchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment.create() );
@@ -55,6 +56,7 @@ public class Registries {
 	public static final RegistryObject< FishingFanaticEnchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", FishingFanaticEnchantment.create() );
 	public static final RegistryObject< FuseCutterEnchantment > FUSE_CUTTER = ENCHANTMENTS.register( "fuse_cutter", FuseCutterEnchantment.create() );
 	public static final RegistryObject< HunterEnchantment > HUNTER = ENCHANTMENTS.register( "hunter", HunterEnchantment.create() );
+	public static final RegistryObject< HarvesterEnchantment > HARVESTER = ENCHANTMENTS.register( "harvester", HarvesterEnchantment.create() );
 
 	// Curses
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse.create() );
@@ -107,7 +109,7 @@ public class Registries {
 
 	private static void addEnchantmentTypesToItemGroups() {
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_WEAPON );
-		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
+		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR, HOE );
 	}
 
 	private static void doClientSetup( final FMLClientSetupEvent event ) {
