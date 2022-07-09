@@ -4,7 +4,9 @@ import com.mlib.gamemodifiers.GameModifier;
 import com.mlib.items.ItemHelper;
 import com.mlib.registries.DeferredRegisterHelper;
 import com.mlib.triggers.BasicTrigger;
-import com.wonderfulenchantments.curses.*;
+import com.wonderfulenchantments.curses.CorrosionCurse;
+import com.wonderfulenchantments.curses.FatigueCurse;
+import com.wonderfulenchantments.curses.IncompatibilityCurse;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
@@ -103,7 +105,7 @@ public class Registries {
 		MINECRAFT_HELPER.registerAll();
 		modEventBus.addListener( Registries::doClientSetup );
 		modEventBus.addListener( PacketHandler::registerPacket );
-		DistExecutor.safeRunWhenOn( Dist.CLIENT, () -> RegistriesClient::createConfig );
+		DistExecutor.safeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::createConfig );
 
 		WonderfulEnchantments.CONFIG_HANDLER.register( ModLoadingContext.get() );
 		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );
