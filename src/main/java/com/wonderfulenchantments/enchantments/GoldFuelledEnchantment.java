@@ -38,7 +38,7 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 			OnItemHurtContext onItemHurt = new OnItemHurtContext( this::restoreItem, new ContextParameters( Priority.LOWEST, null, null ) );
 			onItemHurt.addCondition( data->data.player != null )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
-				.addCondition( data->data.event.hasBeenBroken() );
+				.addCondition( data->data.event.isAboutToBroke() );
 
 			this.addContext( onItemHurt );
 		}
@@ -48,7 +48,7 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 			if( consumeGoldIngot( data.player ) ) {
 				Vec3 position = data.player.position();
 				data.player.level.playSound( null, position.x, position.y, position.z, SoundEvents.ITEM_BREAK, SoundSource.AMBIENT, 0.7f, 1.0f );
-				data.event.damage -= data.itemStack.getMaxDamage();
+				data.event.extraDamage = -data.itemStack.getMaxDamage(); // restores initial durability
 			}
 		}
 
