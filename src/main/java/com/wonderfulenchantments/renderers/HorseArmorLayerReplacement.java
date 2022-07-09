@@ -28,14 +28,13 @@ public class HorseArmorLayerReplacement extends RenderLayer< Horse, HorseModel< 
 		this.model = new HorseModel<>( entityModelSet.bakeLayer( ModelLayers.HORSE_ARMOR ) );
 	}
 
-	public void render( PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, Horse horse, float limbSwing,
-		float limbSwingAmount, float partialTicks, float age, float headYaw, float headPitch
+	public void render( PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, Horse horse, float limbSwing, float limbSwingAmount,
+		float partialTicks, float age, float headYaw, float headPitch
 	) {
 		ItemStack itemstack = horse.getArmor();
 		if( itemstack.getItem() instanceof HorseArmorItem ) {
 			HorseArmorItem horsearmoritem = ( HorseArmorItem )itemstack.getItem();
-			this.getParentModel()
-				.copyPropertiesTo( this.model );
+			this.getParentModel().copyPropertiesTo( this.model );
 			this.model.prepareMobModel( horse, limbSwing, limbSwingAmount, partialTicks );
 			this.model.setupAnim( horse, limbSwing, limbSwingAmount, age, headYaw, headPitch );
 			float f;
@@ -52,9 +51,7 @@ public class HorseArmorLayerReplacement extends RenderLayer< Horse, HorseModel< 
 				f2 = 1.0F;
 			}
 
-			VertexConsumer vertexconsumer = ItemRenderer.getFoilBuffer( multiBufferSource,
-				RenderType.entityCutoutNoCull( horsearmoritem.getTexture() ), false, itemstack.isEnchanted()
-			);
+			VertexConsumer vertexconsumer = ItemRenderer.getFoilBuffer( multiBufferSource, RenderType.entityCutoutNoCull( horsearmoritem.getTexture() ), false, itemstack.isEnchanted() );
 			this.model.renderToBuffer( poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, f, f1, f2, 1.0F );
 		}
 	}

@@ -4,19 +4,10 @@ import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.contexts.OnDamagedContext;
 import com.mlib.gamemodifiers.contexts.OnPreDamagedContext;
-import com.mlib.gamemodifiers.data.OnDamagedData;
 import com.mlib.gamemodifiers.data.OnPreDamagedData;
 import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.CampfireSmokeParticle;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,8 +16,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
@@ -72,7 +61,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 			for( double d = 0.0; d < 3.0; d++ ) {
 				Vec3 position = new Vec3( 0.0, entity.getBbHeight() * 0.25 * ( d + 1.0 ), 0.0 ).add( entity.position() );
 				for( int i = 0; i < 2; i++ ) {
-					level.sendParticles( Registries.DODGE_PARTICLE.get(), position.x, position.y, position.z, 5 * ( 2 * i + 1 ), ( i + 1 ) * 0.25, 0.375, ( i + 1 ) * 0.25,0.0075 );
+					level.sendParticles( Registries.DODGE_PARTICLE.get(), position.x, position.y, position.z, 5 * ( 2 * i + 1 ), ( i + 1 ) * 0.25, 0.375, ( i + 1 ) * 0.25, 0.0075 );
 				}
 			}
 			level.playSound( null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.AMBIENT, 0.7f, 1.0f );

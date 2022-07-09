@@ -73,7 +73,7 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 		private boolean canCancelExplosion( ServerPlayer player, int damage, EquipmentSlot equipmentSlot ) {
 			ItemStack itemStack = player.getItemBySlot( equipmentSlot );
 			if( this.enchantment.hasEnchantment( itemStack ) ) {
-				itemStack.hurtAndBreak( damage, player, owner -> owner.broadcastBreakEvent( equipmentSlot ) );
+				itemStack.hurtAndBreak( damage, player, owner->owner.broadcastBreakEvent( equipmentSlot ) );
 				player.disableShield( true );
 				return true;
 			}

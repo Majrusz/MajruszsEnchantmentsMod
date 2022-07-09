@@ -41,12 +41,8 @@ public class FatigueCurse extends CustomEnchantment {
 
 	private static class Modifier extends EnchantmentModifier< FatigueCurse > {
 		static final double MIN_MULTIPLIER = 0.1, MAX_MULTIPLIER = 0.99;
-		static final AttributeHandler ATTACK_SPEED_ATTRIBUTE = new AttributeHandler( "3f350b5c-4b00-4fbb-8381-c1af0749f779", "FatigueAttackSpeed",
-			Attributes.ATTACK_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL
-		);
-		static final AttributeHandler MOVEMENT_SPEED_ATTRIBUTE = new AttributeHandler( "760f7b82-76c7-4875-821e-ef0579b881e0", "FatigueMovementSpeed",
-			Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL
-		);
+		static final AttributeHandler ATTACK_SPEED_ATTRIBUTE = new AttributeHandler( "3f350b5c-4b00-4fbb-8381-c1af0749f779", "FatigueAttackSpeed", Attributes.ATTACK_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
+		static final AttributeHandler MOVEMENT_SPEED_ATTRIBUTE = new AttributeHandler( "760f7b82-76c7-4875-821e-ef0579b881e0", "FatigueMovementSpeed", Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
 		final DoubleConfig miningMultiplier = new DoubleConfig( "mining_multiplier", "Mining speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
 		final DoubleConfig attackMultiplier = new DoubleConfig( "attack_multiplier", "Attack speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
 		final DoubleConfig movementMultiplier = new DoubleConfig( "movement_multiplier", "Movement speed multiplier per each level on armor.", false, 0.95, MIN_MULTIPLIER, MAX_MULTIPLIER );
@@ -56,15 +52,15 @@ public class FatigueCurse extends CustomEnchantment {
 			super( enchantment, "Fatigue", "Effectively reduces the speed of everything." );
 
 			OnBreakSpeedContext onBreakSpeed = new OnBreakSpeedContext( this::reduceMiningSpeed );
-			onBreakSpeed.addCondition( data -> enchantment.hasEnchantment( data.player ) );
+			onBreakSpeed.addCondition( data->enchantment.hasEnchantment( data.player ) );
 
 			OnEquipmentChangedContext onEquipmentChange = new OnEquipmentChangedContext( this::reduceAttackSpeed );
 
 			OnEquipmentChangedContext onEquipmentChange2 = new OnEquipmentChangedContext( this::reduceMovementSpeed );
 
 			OnUseItemTickContext onBowstring = new OnUseItemTickContext( this::reduceBowstringSpeed );
-			onBowstring.addCondition( data -> enchantment.hasEnchantment( data.entity ) )
-				.addCondition( data -> Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) );
+			onBowstring.addCondition( data->enchantment.hasEnchantment( data.entity ) )
+				.addCondition( data->Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) );
 
 			this.addConfigs( this.miningMultiplier, this.attackMultiplier, this.drawingMultiplier, this.movementMultiplier );
 			this.addContexts( onBreakSpeed, onEquipmentChange, onEquipmentChange2, onBowstring );

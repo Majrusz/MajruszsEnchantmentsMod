@@ -12,7 +12,6 @@ import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.contexts.OnItemFishedContext;
 import com.mlib.gamemodifiers.data.OnItemFishedData;
-import com.mlib.levels.LevelHelper;
 import com.mlib.math.VectorHelper;
 import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
