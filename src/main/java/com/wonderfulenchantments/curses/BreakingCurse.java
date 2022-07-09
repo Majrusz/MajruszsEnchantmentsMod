@@ -2,6 +2,7 @@ package com.wonderfulenchantments.curses;
 
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
+import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.contexts.OnItemHurtContext;
 import com.mlib.gamemodifiers.data.OnItemHurtData;
@@ -32,6 +33,8 @@ public class BreakingCurse extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< BreakingCurse > {
+		final DoubleConfig damageMultiplier = new DoubleConfig( "damage_multiplier", "Damage multiplier per enchantment level.", false, 1.0, 0.0, 10.0 );
+
 		public Modifier( BreakingCurse enchantment ) {
 			super( enchantment, "Breaking", "Makes all items break faster." );
 
@@ -39,12 +42,13 @@ public class BreakingCurse extends CustomEnchantment {
 			onItemHurt.addCondition( data->data.player != null )
 				.addCondition( data->enchantment.hasEnchantment( data.player ) );
 
+			this.addConfig( this.damageMultiplier );
 			this.addContext( onItemHurt );
 		}
 
 		private void dealExtraDamage( OnItemHurtData data ) {
 			assert data.player != null;
-			double damageMultiplier = this.enchantment.getEnchantmentLevel( data.itemStack ) * 6;
+			double damageMultiplier = this.enchantment.getEnchantmentLevel( data.itemStack ) * this.damageMultiplier.get();
 			data.event.extraDamage += Random.roundRandomly( data.event.damage * damageMultiplier );
 		}
 	}
