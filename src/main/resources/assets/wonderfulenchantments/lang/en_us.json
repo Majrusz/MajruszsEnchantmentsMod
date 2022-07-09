@@ -103,30 +103,21 @@
 	"enchantment.wonderfulenchantments.guardian_angel.desc": "Redirects part of the damage from tamed animals and villagers to the player and applies damage reduction to them.",
 	"enchantment.wonderfulenchantments.guardian_angel.description": "Redirects part of the damage from tamed animals and villagers to the player and applies damage reduction to them.",
 
-	"enchantment.wonderfulenchantments.fatigue_curse": "Curse of Fatigue",
-	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Effectively reduces the player's speed of everything.",
-	"enchantment.wonderfulenchantments.fatigue_curse.description": "Effectively reduces the player's speed of everything.",
-
-	"enchantment.wonderfulenchantments.incompatibility_curse": "Curse of Incompatibility",
-	"enchantment.wonderfulenchantments.incompatibility_curse.desc": "Causes item to be unenchantable.",
-	"enchantment.wonderfulenchantments.incompatibility_curse.description": "Causes item to be unenchantable.",
-
-	"enchantment.wonderfulenchantments.vampirism_curse": "Curse of Vampirism",
-	"enchantment.wonderfulenchantments.vampirism_curse.desc": "Weakens and sets the player on fire when in daylight. Strengthens Leech enchantment.",
-	"enchantment.wonderfulenchantments.vampirism_curse.description": "Weakens and sets the player on fire when in daylight. Strengthens Leech enchantment.",
+	"enchantment.wonderfulenchantments.breaking_curse": "Curse of Breaking",
+	"enchantment.wonderfulenchantments.breaking_curse.desc": "Makes the item break down faster.",
+	"enchantment.wonderfulenchantments.breaking_curse.description": "Makes the item break down faster.",
 
 	"enchantment.wonderfulenchantments.corrosion_curse": "Curse of Corrosion",
 	"enchantment.wonderfulenchantments.corrosion_curse.desc": "Gradually destroys armor and inflicts damage to the user when in water.",
 	"enchantment.wonderfulenchantments.corrosion_curse.description": "Gradually destroys armor and inflicts damage to the user when in water.",
 
-	"item.wonderfulenchantments.wonderful_book": "Wonderful Book",
-	"item.wonderfulenchantments.wonderful_book.enchanting_energy": "Enchanting energy:",
-	"item.wonderfulenchantments.wonderful_book.enchanting_energy_max": "Maximum enchanting energy!",
-	"item.wonderfulenchantments.wonderful_book.enchanting_cost": "Level cost:",
-	"item.wonderfulenchantments.wonderful_book.level": "level",
-	"item.wonderfulenchantments.wonderful_book.levels": "levels",
-	"item.wonderfulenchantments.wonderful_book.hint": "You can increase enchanting energy with Lapis Lazuli in Crafting Table.",
-	"item.wonderfulenchantments.wonderful_book.transmute": "Press the right mouse button to transmute into a enchanted book while holding it...",
+	"enchantment.wonderfulenchantments.fatigue_curse": "Curse of Fatigue",
+	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Effectively reduces the player's movement speed and use time of items.",
+	"enchantment.wonderfulenchantments.fatigue_curse.description": "Effectively reduces the player's movement speed and use time of items.",
+
+	"enchantment.wonderfulenchantments.incompatibility_curse": "Curse of Incompatibility",
+	"enchantment.wonderfulenchantments.incompatibility_curse.desc": "Makes the item unenchantable.",
+	"enchantment.wonderfulenchantments.incompatibility_curse.description": "Makes the item unenchantable.",
 
 	"advancements.wonderfulenchantments.scholar.title": "Scholar",
 	"advancements.wonderfulenchantments.scholar.description": "Acquire the Enlightenment II on all armor pieces",
