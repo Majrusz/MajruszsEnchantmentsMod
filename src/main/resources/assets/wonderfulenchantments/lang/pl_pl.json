@@ -103,28 +103,28 @@
 	"enchantment.wonderfulenchantments.guardian_angel.desc": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
 	"enchantment.wonderfulenchantments.guardian_angel.description": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
 
-	"enchantment.wonderfulenchantments.fatigue_curse": "Klątwa zmęczenia",
-	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Zmniejsza prędkość wszystkiego.",
-	"enchantment.wonderfulenchantments.fatigue_curse.description": "Zmniejsza prędkość wszystkiego.",
-
-	"enchantment.wonderfulenchantments.incompatibility_curse": "Klątwa niekompatybilności",
-	"enchantment.wonderfulenchantments.incompatibility_curse.desc": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
-	"enchantment.wonderfulenchantments.incompatibility_curse.description": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
-
-	"enchantment.wonderfulenchantments.vampirism_curse": "Klątwa wampiryzmu",
-	"enchantment.wonderfulenchantments.vampirism_curse.desc": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia. Wzmacnia zaklęcie Pijawka.",
-	"enchantment.wonderfulenchantments.vampirism_curse.description": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia. Wzmacnia zaklęcie Pijawka.",
+	"enchantment.wonderfulenchantments.breaking_curse": "Klątwa kruchości",
+	"enchantment.wonderfulenchantments.breaking_curse.desc": "Sprawia, że przedmiot niszczy się szybciej.",
+	"enchantment.wonderfulenchantments.breaking_curse.description": "Sprawia, że przedmiot niszczy się szybciej.",
 
 	"enchantment.wonderfulenchantments.corrosion_curse": "Klątwa korozji",
 	"enchantment.wonderfulenchantments.corrosion_curse.desc": "Stopniowo niszczy pancerz i rani użytkownika gdy ten ma kontakt z wodą.",
 	"enchantment.wonderfulenchantments.corrosion_curse.description": "Stopniowo niszczy pancerz i rani użytkownika gdy ten ma kontakt z wodą.",
 
-	"item.wonderfulenchantments.wonderful_book": "Wspaniała książka",
-	"item.wonderfulenchantments.wonderful_book.enchanting_energy": "Energia zaklinania:",
-	"item.wonderfulenchantments.wonderful_book.enchanting_energy_max": "Osiągnięto maksymalną energię!",
-	"item.wonderfulenchantments.wonderful_book.enchanting_cost": "Koszt poziomów:",
-	"item.wonderfulenchantments.wonderful_book.level": "poziom",
-	"item.wonderfulenchantments.wonderful_book.levels": "poziomów",
-	"item.wonderfulenchantments.wonderful_book.hint": "Możesz zwiększyć energię zaklinania przy użyciu lazurytu przy stole rzemieślniczym.",
-	"item.wonderfulenchantments.wonderful_book.transmute": "Wciśnij prawy przycisk myszy, aby transmutować do zaklętej książki podczas trzymania tego w dłoni..."
+	"enchantment.wonderfulenchantments.fatigue_curse": "Klątwa zmęczenia",
+	"enchantment.wonderfulenchantments.fatigue_curse.desc": "Zmniejsza prędkość poruszania się i używania przedmiotów.",
+	"enchantment.wonderfulenchantments.fatigue_curse.description": "Zmniejsza prędkość poruszania się i używania przedmiotów.",
+
+	"enchantment.wonderfulenchantments.incompatibility_curse": "Klątwa niekompatybilności",
+	"enchantment.wonderfulenchantments.incompatibility_curse.desc": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
+	"enchantment.wonderfulenchantments.incompatibility_curse.description": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
+
+	"advancements.wonderfulenchantments.scholar.title": "Uczony",
+	"advancements.wonderfulenchantments.scholar.description": "Zdobądź oświecenie II na wszystkich elementach pancerza",
+	"advancements.wonderfulenchantments.nothing_can_stop_me.title": "Nic mnie nie zatrzyma",
+	"advancements.wonderfulenchantments.nothing_can_stop_me.description": "Zdobąć nowy poziom fanatyka wędkarstwa podczas deszczu",
+	"advancements.wonderfulenchantments.fishing_fanatic.title": "Całkiem to fajne",
+	"advancements.wonderfulenchantments.fishing_fanatic.description": "Zdobądź pierwszy poziom fanatyka wędkarstwa",
+	"advancements.wonderfulenchantments.fishing_fanatic_true.title": "Cóż... jestem uzależniony",
+	"advancements.wonderfulenchantments.fishing_fanatic_true.description": "Zdobądź ósmy poziom fanatyka wędkarstwa"
 }
