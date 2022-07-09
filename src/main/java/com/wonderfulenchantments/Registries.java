@@ -4,6 +4,7 @@ import com.mlib.gamemodifiers.GameModifier;
 import com.mlib.items.ItemHelper;
 import com.mlib.registries.DeferredRegisterHelper;
 import com.mlib.triggers.BasicTrigger;
+import com.wonderfulenchantments.curses.BreakingCurse;
 import com.wonderfulenchantments.curses.CorrosionCurse;
 import com.wonderfulenchantments.curses.FatigueCurse;
 import com.wonderfulenchantments.curses.IncompatibilityCurse;
@@ -63,6 +64,7 @@ public class Registries {
 	public static final RegistryObject< HarvesterEnchantment > HARVESTER = ENCHANTMENTS.register( "harvester", HarvesterEnchantment.create() );
 
 	// Curses
+	public static final RegistryObject< BreakingCurse > BREAKING = ENCHANTMENTS.register( "breaking_curse", BreakingCurse.create() );
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse.create() );
 	public static final RegistryObject< FatigueCurse > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse.create() );
 	public static final RegistryObject< IncompatibilityCurse > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse.create() );
@@ -113,7 +115,8 @@ public class Registries {
 
 	private static void addEnchantmentTypesToItemGroups() {
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_WEAPON );
-		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR, HOE );
+		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN );
+		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
 	}
 
 	private static void doClientSetup( final FMLClientSetupEvent event ) {
