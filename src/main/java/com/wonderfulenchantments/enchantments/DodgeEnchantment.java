@@ -75,7 +75,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 					level.sendParticles( Registries.DODGE_PARTICLE.get(), position.x, position.y, position.z, 5 * ( 2 * i + 1 ), ( i + 1 ) * 0.25, 0.375, ( i + 1 ) * 0.25,0.0075 );
 				}
 			}
-			level.playSound( null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.AMBIENT, 1.0f, 1.0f );
+			level.playSound( null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.AMBIENT, 0.7f, 1.0f );
 		}
 
 		private void damagePants( LivingEntity entity, float damage ) {
