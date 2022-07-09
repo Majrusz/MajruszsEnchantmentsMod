@@ -1,13 +1,7 @@
 {
-	"enchantment.wonderfulenchantments.fishing_fanatic": "Fanatyk wędkarstwa",
-	"enchantment.wonderfulenchantments.fishing_fanatic.desc": "Daje szansę na wyłowienie dodatkowych przedmiotów z łowienia.",
-	"enchantment.wonderfulenchantments.fishing_fanatic.description": "Daje szansę na wyłowienie dodatkowych przedmiotów z łowienia.",
-	"wonderfulenchantments.fanatic_level_up": "Stałeś się większym fanatykiem wędkarstwa!",
-	"wonderfulenchantments.true_level": "Prawdziwy",
-
-	"enchantment.wonderfulenchantments.human_slayer": "Zaklęcie przeciwko ludzkości",
-	"enchantment.wonderfulenchantments.human_slayer.desc": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
-	"enchantment.wonderfulenchantments.human_slayer.description": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
+	"enchantment.wonderfulenchantments.death_wish": "Życzenie śmierci",
+	"enchantment.wonderfulenchantments.death_wish.desc": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
+	"enchantment.wonderfulenchantments.death_wish.description": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
 
 	"enchantment.wonderfulenchantments.dodge": "Unik",
 	"enchantment.wonderfulenchantments.dodge.desc": "Daje szansę na uniknięcie otrzymania obrażeń.",
@@ -17,17 +11,35 @@
 	"enchantment.wonderfulenchantments.enlightenment.desc": "Zwiększa doświadczenie zdobywane ze wszystkich źródeł.",
 	"enchantment.wonderfulenchantments.enlightenment.description": "Zwiększa doświadczenie zdobywane ze wszystkich źródeł.",
 
+	"enchantment.wonderfulenchantments.fishing_fanatic": "Fanatyk wędkarstwa",
+	"enchantment.wonderfulenchantments.fishing_fanatic.desc": "Daje szansę na wyłowienie dodatkowych przedmiotów z łowienia.",
+	"enchantment.wonderfulenchantments.fishing_fanatic.description": "Daje szansę na wyłowienie dodatkowych przedmiotów z łowienia.",
+	"wonderfulenchantments.fanatic_level_up": "Stałeś się większym fanatykiem wędkarstwa!",
+	"wonderfulenchantments.true_level": "Prawdziwy",
+
+	"enchantment.wonderfulenchantments.fuse_cutter": "Przecinak przewodów",
+	"enchantment.wonderfulenchantments.fuse_cutter.desc": "Powoduje, że pobliskie eksplozje nie niszczą bloków oraz nie zadają obrażeń.",
+	"enchantment.wonderfulenchantments.fuse_cutter.description": "Powoduje, że pobliskie eksplozje nie niszczą bloków oraz nie zadają obrażeń.",
+
+	"enchantment.wonderfulenchantments.gold_fuelled": "Zasilane złotem",
+	"enchantment.wonderfulenchantments.gold_fuelled.desc": "Całkowicie naprawia narzędzia i pancerz kosztem jednej sztabki złota gdy przedmiot powininen zostać zniszczony.",
+	"enchantment.wonderfulenchantments.gold_fuelled.description": "Całkowicie naprawia narzędzia i pancerz kosztem jednej sztabki złota gdy przedmiot powininen zostać zniszczony.",
+
+	"enchantment.wonderfulenchantments.harvester": "Żniwiarz",
+	"enchantment.wonderfulenchantments.harvester.desc": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
+	"enchantment.wonderfulenchantments.harvester.description": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
+
+	"enchantment.wonderfulenchantments.hunter": "Łowca",
+	"enchantment.wonderfulenchantments.hunter.desc": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
+	"enchantment.wonderfulenchantments.hunter.description": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
+
+	"enchantment.wonderfulenchantments.human_slayer": "Zaklęcie przeciwko ludzkości",
+	"enchantment.wonderfulenchantments.human_slayer.desc": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
+	"enchantment.wonderfulenchantments.human_slayer.description": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
+
 	"enchantment.wonderfulenchantments.vitality": "Witalność",
 	"enchantment.wonderfulenchantments.vitality.desc": "Zwiększa zdrowie gracza.",
 	"enchantment.wonderfulenchantments.vitality.description": "Zwiększa zdrowie gracza.",
-
-	"enchantment.wonderfulenchantments.phoenix_dive": "Skok feniksa",
-	"enchantment.wonderfulenchantments.phoenix_dive.desc": "Upadek z wysokości wypuszcza falę ognia podpalającą i raniącą wszystkich w pobliżu. Również z przytrzymanym klawiszem skradania się (dom. SHIFT) skacze się wyżej!",
-	"enchantment.wonderfulenchantments.phoenix_dive.description": "Upadek z wysokości wypuszcza falę ognia podpalającą i raniącą wszystkich w pobliżu. Również z przytrzymanym klawiszem skradania się (dom. SHIFT) skacze się wyżej!",
-
-	"enchantment.wonderfulenchantments.pufferfish_vengeance": "Zemsta rozdymki",
-	"enchantment.wonderfulenchantments.pufferfish_vengeance.desc": "Każdy atak nakłada na przeciwnika kilka efektów.",
-	"enchantment.wonderfulenchantments.pufferfish_vengeance.description": "Każdy atak nakłada na przeciwnika kilka efektów.",
 
 	"enchantment.wonderfulenchantments.immortality": "Nieśmiertelność",
 	"enchantment.wonderfulenchantments.immortality.desc": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
@@ -36,10 +48,6 @@
 	"enchantment.wonderfulenchantments.smelter": "Hutnik",
 	"enchantment.wonderfulenchantments.smelter.desc": "Automatycznie przetapia zniszczony blok.",
 	"enchantment.wonderfulenchantments.smelter.description": "Automatycznie przetapia zniszczony blok.",
-
-	"enchantment.wonderfulenchantments.gotta_mine_fast": "Muszę kopać szybko",
-	"enchantment.wonderfulenchantments.gotta_mine_fast.desc": "Zwiększa prędkość kopania w zależności od tego jak długo trzymasz lewy przycisk myszy.",
-	"enchantment.wonderfulenchantments.gotta_mine_fast.description": "Zwiększa prędkość kopania w zależności od tego jak długo trzymasz lewy przycisk myszy.",
 
 	"enchantment.wonderfulenchantments.leech": "Pijawka",
 	"enchantment.wonderfulenchantments.leech.desc": "Daje szansę na kradzież pozytywnych efektów lub zdrowia z przeciwników.",
@@ -69,35 +77,13 @@
 	"enchantment.wonderfulenchantments.absorber.desc": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
 	"enchantment.wonderfulenchantments.absorber.description": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
 
-	"enchantment.wonderfulenchantments.hunter": "Łowca",
-	"enchantment.wonderfulenchantments.hunter.desc": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
-	"enchantment.wonderfulenchantments.hunter.description": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
-
 	"enchantment.wonderfulenchantments.elder_guardian_favor": "Przychylność prastrażnika",
 	"enchantment.wonderfulenchantments.elder_guardian_favor.desc": "Po zaatakowaniu przeciwnika atakuje go dodatkowe wiązką laserową, której nie można uniknąć.",
 	"enchantment.wonderfulenchantments.elder_guardian_favor.description": "Po zaatakowaniu przeciwnika atakuje go dodatkowe wiązką laserową, której nie można uniknąć.",
 
-	"enchantment.wonderfulenchantments.harvester": "Żniwiarz",
-	"enchantment.wonderfulenchantments.harvester.desc": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
-	"enchantment.wonderfulenchantments.harvester.description": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
-
-	"enchantment.wonderfulenchantments.mithridatism": "Mitrydatyzm",
-	"enchantment.wonderfulenchantments.mithridatism.desc": "Redukuje obrażenia od negatywnych efektów oraz nakłada absorpcję, gdy negatywny efekt jest nakładany.",
-	"enchantment.wonderfulenchantments.mithridatism.description": "Redukuje obrażenia od negatywnych efektów oraz nakłada absorpcję, gdy negatywny efekt jest nakładany.",
-	"effect.wonderfulenchantments.mithridatism_protection": "Mitrydatyzm",
-	"wonderfulenchantments.mithridatism_level_up": "Osiągnięto większą odporność na negatywne efekty!",
-
-	"enchantment.wonderfulenchantments.fuse_cutter": "Przecinak przewodów",
-	"enchantment.wonderfulenchantments.fuse_cutter.desc": "Powoduje, że pobliskie eksplozje nie niszczą bloków oraz nie zadają obrażeń.",
-	"enchantment.wonderfulenchantments.fuse_cutter.description": "Powoduje, że pobliskie eksplozje nie niszczą bloków oraz nie zadają obrażeń.",
-
 	"enchantment.wonderfulenchantments.sixth_sense": "Szósty zmysł",
 	"enchantment.wonderfulenchantments.sixth_sense.desc": "Podświetla pobliskie potwory po pewnym czasie stania w miejscu.",
 	"enchantment.wonderfulenchantments.sixth_sense.description": "Podświetla pobliskie potwory po pewnym czasie stania w miejscu.",
-
-	"enchantment.wonderfulenchantments.death_wish": "Życzenie śmierci",
-	"enchantment.wonderfulenchantments.death_wish.desc": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
-	"enchantment.wonderfulenchantments.death_wish.description": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
 
 	"enchantment.wonderfulenchantments.guardian_angel": "Anioł stróż",
 	"enchantment.wonderfulenchantments.guardian_angel.desc": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
