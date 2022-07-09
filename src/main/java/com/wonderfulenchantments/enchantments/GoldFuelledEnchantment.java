@@ -4,6 +4,8 @@ import com.mlib.EquipmentSlots;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.contexts.OnItemHurtContext;
 import com.mlib.gamemodifiers.data.OnItemHurtData;
+import com.mlib.gamemodifiers.parameters.ContextParameters;
+import com.mlib.gamemodifiers.parameters.Priority;
 import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,7 +35,7 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 		public Modifier( GoldFuelledEnchantment enchantment ) {
 			super( enchantment, "GoldFuelled", "Completely repairs gold tools and armour for one gold ingot when the item is about to be destroyed." );
 
-			OnItemHurtContext onItemHurt = new OnItemHurtContext( this::restoreItem );
+			OnItemHurtContext onItemHurt = new OnItemHurtContext( this::restoreItem, new ContextParameters( Priority.LOWEST, null, null ) );
 			onItemHurt.addCondition( data->data.player != null )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event.hasBeenBroken() );
