@@ -1,11 +1,12 @@
 package com.wonderfulenchantments.lootmodifiers;
 
-import com.google.gson.JsonObject;
+import com.google.common.base.Suppliers;
 import com.mlib.blocks.BlockHelper;
 import com.mlib.loot_modifiers.LootHelper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,13 +18,16 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Replant extends LootModifier {
+	public static final Supplier< Codec< Replant > > CODEC = Suppliers.memoize( ()->RecordCodecBuilder.create( inst->codecStart( inst ).apply( inst, Replant::new ) ) );
+
 	public Replant( LootItemCondition[] conditionsIn ) {
 		super( conditionsIn );
 	}
@@ -42,6 +46,11 @@ public class Replant extends LootModifier {
 		return generatedLoot;
 	}
 
+	@Override
+	public Codec< ? extends IGlobalLootModifier > codec() {
+		return CODEC.get();
+	}
+
 	private static void removeSeedsFromLoot( List< ItemStack > generatedLoot, Level world, BlockState blockState, BlockPos position ) {
 		Block block = blockState.getBlock();
 		Item seedItem = getSeedItem( world, blockState, position );
@@ -58,18 +67,6 @@ public class Replant extends LootModifier {
 
 	private static Item getSeedItem( Level level, BlockState blockState, BlockPos position ) {
 		return blockState.getBlock().getCloneItemStack( level, position, blockState ).getItem();
-	}
-
-	public static class Serializer extends GlobalLootModifierSerializer< Replant > {
-		@Override
-		public Replant read( ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn ) {
-			return new Replant( conditionsIn );
-		}
-
-		@Override
-		public JsonObject write( Replant instance ) {
-			return null;
-		}
 	}
 }
 

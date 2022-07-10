@@ -1,11 +1,12 @@
 package com.wonderfulenchantments.lootmodifiers;
 
-import com.google.gson.JsonObject;
+import com.google.common.base.Suppliers;
 import com.mlib.loot_modifiers.LootHelper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -17,14 +18,17 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 /** Functionality of Telekinesis enchantment. */
 public class AddItemsDirectlyToInventory extends LootModifier {
+	public static final Supplier< Codec< AddItemsDirectlyToInventory > > CODEC = Suppliers.memoize( ()->RecordCodecBuilder.create( inst->codecStart( inst ).apply( inst, AddItemsDirectlyToInventory::new ) ) );
+
 	private final String TELEKINESIS_TIME_TAG = "TelekinesisLastTimeTag";
 	private final String TELEKINESIS_POSITION_TAG = "TelekinesisLastPositionTag";
 
@@ -66,6 +70,11 @@ public class AddItemsDirectlyToInventory extends LootModifier {
 		return output;
 	}
 
+	@Override
+	public Codec< ? extends IGlobalLootModifier > codec() {
+		return CODEC.get();
+	}
+
 	@Nullable
 	private Item getSeedItem( Level world, Vec3 position, BlockState blockState ) {
 		if( blockState == null || position == null )
@@ -101,17 +110,5 @@ public class AddItemsDirectlyToInventory extends LootModifier {
 		CompoundTag data = player.getPersistentData();
 
 		return data.getString( TELEKINESIS_POSITION_TAG ).equals( position.toString() );
-	}
-
-	public static class Serializer extends GlobalLootModifierSerializer< AddItemsDirectlyToInventory > {
-		@Override
-		public AddItemsDirectlyToInventory read( ResourceLocation name, JsonObject object, LootItemCondition[] conditions ) {
-			return new AddItemsDirectlyToInventory( conditions );
-		}
-
-		@Override
-		public JsonObject write( AddItemsDirectlyToInventory instance ) {
-			return null;
-		}
 	}
 }

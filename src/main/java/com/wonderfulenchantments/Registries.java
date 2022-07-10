@@ -4,6 +4,7 @@ import com.mlib.gamemodifiers.GameModifier;
 import com.mlib.items.ItemHelper;
 import com.mlib.registries.DeferredRegisterHelper;
 import com.mlib.triggers.BasicTrigger;
+import com.mojang.serialization.Codec;
 import com.wonderfulenchantments.curses.BreakingCurse;
 import com.wonderfulenchantments.curses.CorrosionCurse;
 import com.wonderfulenchantments.curses.FatigueCurse;
@@ -21,7 +22,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -42,7 +43,7 @@ public class Registries {
 	// Groups
 	static final DeferredRegister< Enchantment > ENCHANTMENTS = HELPER.create( ForgeRegistries.Keys.ENCHANTMENTS );
 	static final DeferredRegister< Item > ITEMS_TO_REPLACE = MINECRAFT_HELPER.create( ForgeRegistries.Keys.ITEMS );
-	static final DeferredRegister< GlobalLootModifierSerializer< ? > > LOOT_MODIFIERS = HELPER.create( ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS );
+	static final DeferredRegister< Codec< ? extends IGlobalLootModifier > > LOOT_MODIFIERS = HELPER.create( ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS );
 	static final DeferredRegister< ParticleType< ? > > PARTICLE_TYPES = HELPER.create( ForgeRegistries.Keys.PARTICLE_TYPES );
 
 	// Enchantment Categories
@@ -82,8 +83,8 @@ public class Registries {
 
 	// Loot Modifiers
 	static {
-		LOOT_MODIFIERS.register( "telekinesis_enchantment", AddItemsDirectlyToInventory.Serializer::new );
-		LOOT_MODIFIERS.register( "harvester_enchantment", Replant.Serializer::new );
+		LOOT_MODIFIERS.register( "telekinesis_enchantment", AddItemsDirectlyToInventory.CODEC );
+		LOOT_MODIFIERS.register( "harvester_enchantment", Replant.CODEC );
 	}
 
 	// Particles
