@@ -33,6 +33,10 @@
 	"enchantment.wonderfulenchantments.hunter.desc": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
 	"enchantment.wonderfulenchantments.hunter.description": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
 
+	"enchantment.wonderfulenchantments.leech": "Pijawka",
+	"enchantment.wonderfulenchantments.leech.desc": "Daje szansę na kradzież pozytywnych efektów, zdrowia i punktów głodu z przeciwników.",
+	"enchantment.wonderfulenchantments.leech.description": "Daje szansę na kradzież pozytywnych efektów, zdrowia i punktów głodu z przeciwników.",
+
 	"enchantment.wonderfulenchantments.misanthropy": "Mizantropia",
 	"enchantment.wonderfulenchantments.misanthropy.desc": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 	"enchantment.wonderfulenchantments.misanthropy.description": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
@@ -48,10 +52,6 @@
 	"enchantment.wonderfulenchantments.smelter": "Hutnik",
 	"enchantment.wonderfulenchantments.smelter.desc": "Automatycznie przetapia zniszczony blok.",
 	"enchantment.wonderfulenchantments.smelter.description": "Automatycznie przetapia zniszczony blok.",
-
-	"enchantment.wonderfulenchantments.leech": "Pijawka",
-	"enchantment.wonderfulenchantments.leech.desc": "Daje szansę na kradzież pozytywnych efektów lub zdrowia z przeciwników.",
-	"enchantment.wonderfulenchantments.leech.description": "Daje szansę na kradzież pozytywnych efektów lub zdrowia z przeciwników.",
 
 	"enchantment.wonderfulenchantments.magic_protection": "Ochrona przed magią",
 	"enchantment.wonderfulenchantments.magic_protection.desc": "Broni użytkownika przed obrażeniami magicznymi takimi jak laser prastrażnika czy mikstura natychmiastowych obrażeń.",
