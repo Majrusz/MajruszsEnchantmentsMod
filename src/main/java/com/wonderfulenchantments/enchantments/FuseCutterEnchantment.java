@@ -5,6 +5,7 @@ import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.contexts.OnExplosionContext;
 import com.mlib.gamemodifiers.data.OnExplosionData;
+import com.mlib.items.ItemHelper;
 import com.mlib.math.AABBHelper;
 import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
@@ -14,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -62,22 +64,13 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 				if( !( livingEntity instanceof ServerPlayer player ) || !livingEntity.isBlocking() )
 					continue;
 
-				int shieldDamage = data.radius.intValue();
-				if( canCancelExplosion( player, shieldDamage, EquipmentSlot.MAINHAND ) || canCancelExplosion( player, shieldDamage, EquipmentSlot.OFFHAND ) ) {
+				ItemStack itemStack = ItemHelper.getCurrentlyUsedItem( livingEntity );
+				if( this.enchantment.hasEnchantment( itemStack ) ) {
+					itemStack.hurtAndBreak( data.radius.intValue(), player, owner->owner.broadcastBreakEvent( livingEntity.getUsedItemHand() ) );
+					player.disableShield( true );
 					return true;
 				}
 			}
-			return false;
-		}
-
-		private boolean canCancelExplosion( ServerPlayer player, int damage, EquipmentSlot equipmentSlot ) {
-			ItemStack itemStack = player.getItemBySlot( equipmentSlot );
-			if( this.enchantment.hasEnchantment( itemStack ) ) {
-				itemStack.hurtAndBreak( damage, player, owner->owner.broadcastBreakEvent( equipmentSlot ) );
-				player.disableShield( true );
-				return true;
-			}
-
 			return false;
 		}
 	}

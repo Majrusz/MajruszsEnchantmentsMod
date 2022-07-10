@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 
 public class FatigueCurse extends CustomEnchantment {
 	public static Supplier< FatigueCurse > create() {
-		CustomEnchantment.Parameters params = new CustomEnchantment.Parameters( Rarity.RARE, EnchantmentCategory.BREAKABLE, EquipmentSlots.MAINHAND, true, 3, level->10, level->50 );
+		CustomEnchantment.Parameters params = new CustomEnchantment.Parameters( Rarity.RARE, EnchantmentCategory.BREAKABLE, EquipmentSlots.ARMOR_AND_HANDS, true, 3, level->10, level->50 );
 		FatigueCurse enchantment = new FatigueCurse( params );
 		FatigueCurse.Modifier modifier = new FatigueCurse.Modifier( enchantment );
 

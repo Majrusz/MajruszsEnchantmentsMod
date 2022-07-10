@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class MisanthropyEnchantment extends CustomEnchantment {
 	public static Supplier< MisanthropyEnchantment > create() {
-		Parameters params = new Parameters( Rarity.UNCOMMON, Registries.MELEE_MINECRAFT, EquipmentSlots.BOTH_HANDS, false, 5, level->-3 + 8 * level, level->17 + 8 * level );
+		Parameters params = new Parameters( Rarity.UNCOMMON, Registries.MELEE_MINECRAFT, EquipmentSlots.MAINHAND, false, 5, level->-3 + 8 * level, level->17 + 8 * level );
 		MisanthropyEnchantment enchantment = new MisanthropyEnchantment( params );
 		Modifier modifier = new MisanthropyEnchantment.Modifier( enchantment );
 
