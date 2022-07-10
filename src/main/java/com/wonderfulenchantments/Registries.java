@@ -49,7 +49,8 @@ public class Registries {
 	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create( "shield", item->item instanceof ShieldItem );
 	public static final EnchantmentCategory HORSE_ARMOR = EnchantmentCategory.create( "horse_armor", item->item instanceof HorseArmorItem );
 	public static final EnchantmentCategory BOW_AND_CROSSBOW = EnchantmentCategory.create( "bow_and_crossbow", item->item instanceof BowItem || item instanceof CrossbowItem );
-	public static final EnchantmentCategory MELEE_WEAPON = EnchantmentCategory.create( "melee_weapon", item->item instanceof SwordItem || item instanceof AxeItem || item instanceof TridentItem );
+	public static final EnchantmentCategory MELEE_MINECRAFT = EnchantmentCategory.create( "melee_minecraft", item->item instanceof SwordItem || item instanceof AxeItem ); // for some reason all minecraft sword enchantments are applicable to axes
+	public static final EnchantmentCategory MELEE_WEAPON = EnchantmentCategory.create( "melee_weapon", item->MELEE_MINECRAFT.canEnchant( item ) || item instanceof TridentItem );
 	public static final EnchantmentCategory HOE = EnchantmentCategory.create( "hoe", item->item instanceof HoeItem );
 	public static final EnchantmentCategory GOLDEN = EnchantmentCategory.create( "golden", item->item instanceof DiggerItem diggerItem && diggerItem.getTier() == Tiers.GOLD || item instanceof ArmorItem armorItem && armorItem.getMaterial() == ArmorMaterials.GOLD );
 
@@ -62,6 +63,7 @@ public class Registries {
 	public static final RegistryObject< GoldFuelledEnchantment > GOLD_FUELLED = ENCHANTMENTS.register( "gold_fuelled", GoldFuelledEnchantment.create() );
 	public static final RegistryObject< HunterEnchantment > HUNTER = ENCHANTMENTS.register( "hunter", HunterEnchantment.create() );
 	public static final RegistryObject< HarvesterEnchantment > HARVESTER = ENCHANTMENTS.register( "harvester", HarvesterEnchantment.create() );
+	public static final RegistryObject< MisanthropyEnchantment > MISANTHROPY = ENCHANTMENTS.register( "misanthropy", MisanthropyEnchantment.create() );
 
 	// Curses
 	public static final RegistryObject< BreakingCurse > BREAKING = ENCHANTMENTS.register( "breaking_curse", BreakingCurse.create() );
@@ -114,7 +116,7 @@ public class Registries {
 	}
 
 	private static void addEnchantmentTypesToItemGroups() {
-		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_WEAPON );
+		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_MINECRAFT, MELEE_WEAPON );
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN );
 		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
 	}
