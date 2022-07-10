@@ -8,7 +8,6 @@ import com.mlib.gamemodifiers.contexts.OnItemHurtContext;
 import com.mlib.gamemodifiers.data.OnItemHurtData;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
-import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
@@ -39,8 +38,7 @@ public class BreakingCurse extends CustomEnchantment {
 			super( enchantment, "Breaking", "Makes all items break faster." );
 
 			OnItemHurtContext onItemHurt = new OnItemHurtContext( this::dealExtraDamage );
-			onItemHurt.addCondition( data->data.player != null )
-				.addCondition( data->enchantment.hasEnchantment( data.player ) );
+			onItemHurt.addCondition( data->data.player != null ).addCondition( data->enchantment.hasEnchantment( data.player ) );
 
 			this.addConfig( this.damageMultiplier );
 			this.addContext( onItemHurt );

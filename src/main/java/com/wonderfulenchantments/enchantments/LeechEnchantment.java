@@ -13,7 +13,6 @@ import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,10 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class LeechEnchantment extends CustomEnchantment {
@@ -52,8 +48,7 @@ public class LeechEnchantment extends CustomEnchantment {
 			super( enchantment, "Leech", "Gives a chance to steal positive effects, health and hunger points from enemies." );
 
 			OnDamagedContext onDamaged = new OnDamagedContext( this::tryToLeechAnything );
-			onDamaged.addCondition( data->data.level != null )
-				.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) );
+			onDamaged.addCondition( data->data.level != null ).addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) );
 
 			this.addConfigs( this.healthChance, this.hungerChance, this.effectChance );
 			this.addContext( onDamaged );
