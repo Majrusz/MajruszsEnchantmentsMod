@@ -3,13 +3,13 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.Utility;
-import com.mlib.config.DoubleConfig;
 import com.mlib.effects.EffectHelper;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.contexts.OnDamagedContext;
 import com.mlib.gamemodifiers.data.OnDamagedData;
 import com.mlib.math.VectorHelper;
 import com.wonderfulenchantments.Registries;
+import com.wonderfulenchantments.configs.VampirismDoubleConfig;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -40,9 +40,9 @@ public class LeechEnchantment extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< LeechEnchantment > {
-		final DoubleConfig healthChance = new DoubleConfig( "health_chance", "Chance to steal 1 health point from the target.", false, 0.2, 0.0, 1.0 );
-		final DoubleConfig hungerChance = new DoubleConfig( "hunger_chance", "Chance to steal 1 hunger point from the target.", false, 0.2, 0.0, 1.0 );
-		final DoubleConfig effectChance = new DoubleConfig( "effect_chance", "Chance to steal 1 random positive effect from the target.", false, 0.2, 0.0, 1.0 );
+		final VampirismDoubleConfig healthChance = new VampirismDoubleConfig( "HealthChance", "Chance to steal 1 health point from the target.", 0.1, 0.1 );
+		final VampirismDoubleConfig hungerChance = new VampirismDoubleConfig( "HungerChance", "Chance to steal 1 hunger point from the target.", 0.1, 0.1 );
+		final VampirismDoubleConfig effectChance = new VampirismDoubleConfig( "EffectChance", "Chance to steal 1 random positive effect from the target.", 0.1, 0.1 );
 
 		public Modifier( LeechEnchantment enchantment ) {
 			super( enchantment, "Leech", "Gives a chance to steal positive effects, health and hunger points from enemies." );
@@ -66,8 +66,8 @@ public class LeechEnchantment extends CustomEnchantment {
 			}
 		}
 
-		private boolean tryToLeech( DoubleConfig chanceConfig, BiFunction< LivingEntity, LivingEntity, Boolean > function, OnDamagedData data ) {
-			return Random.tryChance( chanceConfig ) ? function.apply( data.attacker, data.target ) : false;
+		private boolean tryToLeech( VampirismDoubleConfig chanceConfig, BiFunction< LivingEntity, LivingEntity, Boolean > function, OnDamagedData data ) {
+			return Random.tryChance( chanceConfig.getTotalChance( data.attacker ) ) ? function.apply( data.attacker, data.target ) : false;
 		}
 
 		private boolean leechHealth( LivingEntity attacker, LivingEntity target ) {
