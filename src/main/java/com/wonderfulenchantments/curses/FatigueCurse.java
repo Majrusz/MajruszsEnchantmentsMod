@@ -49,7 +49,7 @@ public class FatigueCurse extends CustomEnchantment {
 		final DoubleConfig attackMultiplier = new DoubleConfig( "attack_multiplier", "Attack speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
 		final DoubleConfig movementMultiplier = new DoubleConfig( "movement_multiplier", "Movement speed multiplier per each level on armor.", false, 0.95, MIN_MULTIPLIER, MAX_MULTIPLIER );
 		final DoubleConfig drawingMultiplier = new DoubleConfig( "drawing_multiplier", "Bowstring speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
-		final DoubleConfig swingMultiplier = new DoubleConfig( "swing_multiplier", "Swing speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
+		final DoubleConfig swingMultiplier = new DoubleConfig( "swing_multiplier", "Swing speed multiplier per each level.", false, 0.9, MIN_MULTIPLIER, MAX_MULTIPLIER );
 
 		public Modifier( FatigueCurse enchantment ) {
 			super( enchantment, "Fatigue", "Effectively reduces the speed of everything." );
