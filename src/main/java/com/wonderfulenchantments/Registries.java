@@ -69,6 +69,7 @@ public class Registries {
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse.create() );
 	public static final RegistryObject< FatigueCurse > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse.create() );
 	public static final RegistryObject< IncompatibilityCurse > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse.create() );
+	public static final RegistryObject< VampirismCurse > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse.create() );
 
 	// Item Replacements
 	static {

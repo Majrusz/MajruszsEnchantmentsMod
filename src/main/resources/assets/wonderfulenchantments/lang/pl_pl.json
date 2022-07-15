@@ -105,6 +105,10 @@
 	"enchantment.wonderfulenchantments.incompatibility_curse.desc": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
 	"enchantment.wonderfulenchantments.incompatibility_curse.description": "Powoduje, że żadne inne zaklęcie nie może zostać nałożone na przedmiot.",
 
+	"enchantment.wonderfulenchantments.vampirism_curse": "Klątwa wampiryzmu",
+	"enchantment.wonderfulenchantments.vampirism_curse.desc": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia, za to wzmacnia zaklęcie Pijawka.",
+	"enchantment.wonderfulenchantments.vampirism_curse.description": "Osłabia i podpala gracza gdy ten znajduje się na zewnątrz podczas dnia, za to wzmacnia zaklęcie Pijawka.",
+
 	"advancements.wonderfulenchantments.scholar.title": "Uczony",
 	"advancements.wonderfulenchantments.scholar.description": "Zdobądź oświecenie II na wszystkich elementach pancerza",
 	"advancements.wonderfulenchantments.nothing_can_stop_me.title": "Nic mnie nie zatrzyma",
