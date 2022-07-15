@@ -32,7 +32,7 @@ public class BreakingCurse extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< BreakingCurse > {
-		final DoubleConfig damageMultiplier = new DoubleConfig( "damage_multiplier", "Damage multiplier per enchantment level.", false, 1.0, 0.0, 10.0 );
+		final DoubleConfig damageMultiplier = new DoubleConfig( "damage_multiplier", "Extra damage multiplier per enchantment level.", false, 1.0, 0.0, 10.0 );
 
 		public Modifier( BreakingCurse enchantment ) {
 			super( enchantment, "Breaking", "Makes all items break faster." );
