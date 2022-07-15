@@ -17,6 +17,7 @@ import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -63,6 +64,7 @@ public class FatigueCurse extends CustomEnchantment {
 
 			OnUseItemTickContext onBowstring = new OnUseItemTickContext( this::reduceBowstringSpeed );
 			onBowstring.addCondition( data->enchantment.hasEnchantment( data.entity ) )
+				.addCondition( data->BowItem.getPowerForTime( data.itemStack.getUseDuration() - data.duration ) > 0.3f ) // first frame takes longer than other frames, and we skip slowing this frame
 				.addCondition( data->Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) );
 
 			OnItemSwingDurationContext onItemSwing = new OnItemSwingDurationContext( this::increaseSwingDuration );
