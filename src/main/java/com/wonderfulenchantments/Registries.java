@@ -7,8 +7,6 @@ import com.mlib.triggers.BasicTrigger;
 import com.mojang.serialization.Codec;
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
-import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
-import com.wonderfulenchantments.items.HorseArmorItemReplacement;
 import com.wonderfulenchantments.lootmodifiers.AddItemsDirectlyToInventory;
 import com.wonderfulenchantments.lootmodifiers.Replant;
 import net.minecraft.core.particles.ParticleType;
@@ -33,12 +31,10 @@ import java.util.List;
 
 public class Registries {
 	private static final DeferredRegisterHelper HELPER = new DeferredRegisterHelper( WonderfulEnchantments.MOD_ID );
-	private static final DeferredRegisterHelper MINECRAFT_HELPER = new DeferredRegisterHelper( "minecraft" );
 	public static final List< GameModifier > GAME_MODIFIERS = new ArrayList<>();
 
 	// Groups
 	static final DeferredRegister< Enchantment > ENCHANTMENTS = HELPER.create( ForgeRegistries.Keys.ENCHANTMENTS );
-	static final DeferredRegister< Item > ITEMS_TO_REPLACE = MINECRAFT_HELPER.create( ForgeRegistries.Keys.ITEMS );
 	static final DeferredRegister< Codec< ? extends IGlobalLootModifier > > LOOT_MODIFIERS = HELPER.create( ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS );
 	static final DeferredRegister< ParticleType< ? > > PARTICLE_TYPES = HELPER.create( ForgeRegistries.Keys.PARTICLE_TYPES );
 
@@ -70,14 +66,6 @@ public class Registries {
 	public static final RegistryObject< IncompatibilityCurse > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse.create() );
 	public static final RegistryObject< VampirismCurse > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse.create() );
 
-	// Item Replacements
-	static {
-		ITEMS_TO_REPLACE.register( "leather_horse_armor", ()->new DyeableHorseArmorItemReplacement( 3, "leather" ) );
-		ITEMS_TO_REPLACE.register( "iron_horse_armor", ()->new HorseArmorItemReplacement( 5, "iron" ) );
-		ITEMS_TO_REPLACE.register( "golden_horse_armor", ()->new HorseArmorItemReplacement( 7, "gold" ) );
-		ITEMS_TO_REPLACE.register( "diamond_horse_armor", ()->new HorseArmorItemReplacement( 11, "diamond" ) );
-	}
-
 	// Loot Modifiers
 	static {
 		LOOT_MODIFIERS.register( "telekinesis_enchantment", AddItemsDirectlyToInventory.CODEC );
@@ -104,7 +92,6 @@ public class Registries {
 
 		addEnchantmentTypesToItemGroups();
 		HELPER.registerAll();
-		MINECRAFT_HELPER.registerAll();
 		modEventBus.addListener( Registries::doClientSetup );
 		modEventBus.addListener( PacketHandler::registerPacket );
 		DistExecutor.safeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::createConfig );
