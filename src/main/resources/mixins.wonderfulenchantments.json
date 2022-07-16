@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.wonderfulenchantments.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinItem",
+    "MixinShieldItem"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "mixins.wonderfulenchantments.refmap.json",
+  "minVersion": "0.8"
+}

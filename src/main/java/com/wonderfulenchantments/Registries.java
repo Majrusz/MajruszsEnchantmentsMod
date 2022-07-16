@@ -9,7 +9,6 @@ import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
 import com.wonderfulenchantments.items.DyeableHorseArmorItemReplacement;
 import com.wonderfulenchantments.items.HorseArmorItemReplacement;
-import com.wonderfulenchantments.items.ShieldItemReplacement;
 import com.wonderfulenchantments.lootmodifiers.AddItemsDirectlyToInventory;
 import com.wonderfulenchantments.lootmodifiers.Replant;
 import net.minecraft.core.particles.ParticleType;
@@ -73,7 +72,6 @@ public class Registries {
 
 	// Item Replacements
 	static {
-		ITEMS_TO_REPLACE.register( "shield", ShieldItemReplacement::new );
 		ITEMS_TO_REPLACE.register( "leather_horse_armor", ()->new DyeableHorseArmorItemReplacement( 3, "leather" ) );
 		ITEMS_TO_REPLACE.register( "iron_horse_armor", ()->new HorseArmorItemReplacement( 5, "iron" ) );
 		ITEMS_TO_REPLACE.register( "golden_horse_armor", ()->new HorseArmorItemReplacement( 7, "gold" ) );
