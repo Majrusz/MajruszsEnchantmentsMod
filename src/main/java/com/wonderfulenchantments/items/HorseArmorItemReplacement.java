@@ -17,6 +17,6 @@ public class HorseArmorItemReplacement extends HorseArmorItem {
 
 	@Override
 	public boolean isEnchantable( ItemStack stack ) {
-		return this.getItemStackLimit( stack ) == 1;
+		return this.getMaxStackSize( stack ) == 1;
 	}
 }

@@ -23,6 +23,6 @@ public class DyeableHorseArmorItemReplacement extends DyeableHorseArmorItem impl
 
 	@Override
 	public boolean isEnchantable( ItemStack stack ) {
-		return this.getItemStackLimit( stack ) == 1;
+		return this.getMaxStackSize( stack ) == 1;
 	}
 }
