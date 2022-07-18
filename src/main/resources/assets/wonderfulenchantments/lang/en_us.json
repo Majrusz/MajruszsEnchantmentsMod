@@ -108,6 +108,7 @@
 	"enchantment.wonderfulenchantments.vampirism_curse": "Curse of Vampirism",
 	"enchantment.wonderfulenchantments.vampirism_curse.desc": "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger.",
 	"enchantment.wonderfulenchantments.vampirism_curse.description": "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger.",
+	"enchantment.wonderfulenchantments.vampirism_curse.block_sleep": "You do not feel the need to sleep...",
 
 	"advancements.wonderfulenchantments.scholar.title": "Scholar",
 	"advancements.wonderfulenchantments.scholar.description": "Acquire the Enlightenment II on all armor pieces",
