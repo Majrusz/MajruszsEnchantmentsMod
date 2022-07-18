@@ -4,6 +4,7 @@ import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnItemHurtContext;
 import com.mlib.gamemodifiers.data.OnItemHurtData;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
@@ -38,7 +39,7 @@ public class BreakingCurse extends CustomEnchantment {
 			super( enchantment, "Breaking", "Makes all items break faster." );
 
 			OnItemHurtContext onItemHurt = new OnItemHurtContext( this::dealExtraDamage );
-			onItemHurt.addCondition( data->data.player != null ).addCondition( data->enchantment.hasEnchantment( data.player ) );
+			onItemHurt.addCondition( data->data.player != null ).addCondition( new Condition.HasEnchantment( enchantment ) );
 
 			this.addConfig( this.damageMultiplier );
 			this.addContext( onItemHurt );

@@ -42,7 +42,7 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 
 			OnExplosionContext onExplosion = new OnExplosionContext( this::cancelExplosion );
 			onExplosion.addCondition( new Condition.IsServer() )
-				.addCondition( data->this.isAnyoneBlockingWithFuseCutterNearby( data.level, data ) );
+				.addCondition( this::isAnyoneBlockingWithFuseCutterNearby );
 
 			this.addConfig( this.maxDistance );
 			this.addContexts( onExplosion );
@@ -58,9 +58,10 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 			data.event.setCanceled( true );
 		}
 
-		private boolean isAnyoneBlockingWithFuseCutterNearby( Level level, OnExplosionData data ) {
+		private boolean isAnyoneBlockingWithFuseCutterNearby( OnExplosionData data ) {
+			assert data.level != null;
 			Vec3 position = data.explosion.getPosition();
-			for( LivingEntity livingEntity : level.getEntitiesOfClass( LivingEntity.class, AABBHelper.createInflatedAABB( position, this.maxDistance.get() ) ) ) {
+			for( LivingEntity livingEntity : data.level.getEntitiesOfClass( LivingEntity.class, AABBHelper.createInflatedAABB( position, this.maxDistance.get() ) ) ) {
 				if( !( livingEntity instanceof ServerPlayer player ) || !livingEntity.isBlocking() )
 					continue;
 

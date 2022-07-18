@@ -5,6 +5,7 @@ import com.mlib.Random;
 import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnBreakSpeedContext;
 import com.mlib.gamemodifiers.contexts.OnEquipmentChangedContext;
 import com.mlib.gamemodifiers.contexts.OnItemSwingDurationContext;
@@ -56,19 +57,19 @@ public class FatigueCurse extends CustomEnchantment {
 			super( enchantment, "Fatigue", "Effectively reduces the speed of everything." );
 
 			OnBreakSpeedContext onBreakSpeed = new OnBreakSpeedContext( this::reduceMiningSpeed );
-			onBreakSpeed.addCondition( data->enchantment.hasEnchantment( data.player ) );
+			onBreakSpeed.addCondition( new Condition.HasEnchantment( enchantment ) );
 
 			OnEquipmentChangedContext onEquipmentChange = new OnEquipmentChangedContext( this::reduceAttackSpeed );
 
 			OnEquipmentChangedContext onEquipmentChange2 = new OnEquipmentChangedContext( this::reduceMovementSpeed );
 
 			OnUseItemTickContext onBowstring = new OnUseItemTickContext( this::reduceBowstringSpeed );
-			onBowstring.addCondition( data->enchantment.hasEnchantment( data.entity ) )
+			onBowstring.addCondition( new Condition.HasEnchantment( enchantment ) )
 				.addCondition( data->BowItem.getPowerForTime( data.itemStack.getUseDuration() - data.duration ) > 0.3f ) // first frame takes longer than other frames, and we skip slowing this frame
 				.addCondition( data->Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) );
 
 			OnItemSwingDurationContext onItemSwing = new OnItemSwingDurationContext( this::increaseSwingDuration );
-			onItemSwing.addCondition( data->enchantment.hasEnchantment( data.entity ) );
+			onItemSwing.addCondition( new Condition.HasEnchantment( enchantment ) );
 
 			this.addConfigs( this.miningMultiplier, this.attackMultiplier, this.drawingMultiplier, this.movementMultiplier, this.swingMultiplier );
 			this.addContexts( onBreakSpeed, onEquipmentChange, onEquipmentChange2, onBowstring, onItemSwing );

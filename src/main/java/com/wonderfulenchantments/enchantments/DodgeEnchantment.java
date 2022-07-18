@@ -4,6 +4,7 @@ import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnPreDamagedContext;
 import com.mlib.gamemodifiers.data.OnPreDamagedData;
 import com.wonderfulenchantments.Registries;
@@ -40,7 +41,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 			super( enchantment, "Dodge", "Gives a chance to completely avoid any kind of damage." );
 
 			OnPreDamagedContext onDamaged = new OnPreDamagedContext( this::dodgeDamage );
-			onDamaged.addCondition( data->enchantment.hasEnchantment( data.target ) )
+			onDamaged.addCondition( new Condition.HasEnchantment( enchantment) )
 				.addCondition( data->Random.tryChance( enchantment.getEnchantmentLevel( data.target ) * this.chance.asFloat() ) );
 
 			this.addConfigs( this.chance, this.pantsDamageMultiplier );

@@ -4,6 +4,7 @@ import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnEquipmentChangedContext;
 import com.mlib.gamemodifiers.contexts.OnPickupXpContext;
 import com.mlib.gamemodifiers.data.OnEquipmentChangedData;
@@ -35,7 +36,7 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 			super( enchantment, "Enlightenment", "Increases the experience gained from any source." );
 
 			OnPickupXpContext onXpPickup = new OnPickupXpContext( this::increaseExperience );
-			onXpPickup.addCondition( data->enchantment.hasEnchantment( data.player ) );
+			onXpPickup.addCondition( new Condition.HasEnchantment( enchantment ) );
 
 			OnEquipmentChangedContext onEquipmentChanged = new OnEquipmentChangedContext( this::giveAdvancement );
 			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer )

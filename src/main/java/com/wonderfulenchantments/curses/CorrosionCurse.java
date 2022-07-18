@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraftforge.api.distmarker.Dist;
 
 import java.util.function.Supplier;
 
@@ -31,7 +32,6 @@ public class CorrosionCurse extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< CorrosionCurse > {
-		final DoubleConfig damageCooldown = new DoubleConfig( "damage_cooldown", "Duration in seconds between 'damaging' ticks.", false, 3.0, 1.0, 60.0 );
 		final DoubleConfig damageAmount = new DoubleConfig( "damage_amount", "Damage dealt to the player every tick per each enchantment level.", false, 0.25, 0.0, 10.0 );
 
 		public Modifier( CorrosionCurse enchantment ) {
@@ -39,11 +39,11 @@ public class CorrosionCurse extends CustomEnchantment {
 
 			OnEntityTickContext onTick = new OnEntityTickContext( this::damageOnContactWithWater );
 			onTick.addCondition( new Condition.IsServer() )
-				.addCondition( data->enchantment.hasEnchantment( data.entity ) )
-				.addCondition( data->TimeHelper.hasServerSecondsPassed( this.damageCooldown.get() ) )
+				.addCondition( new Condition.HasEnchantment( enchantment ) )
+				.addCondition( new Condition.Cooldown( 3.0, Dist.DEDICATED_SERVER ) )
 				.addCondition( data->LevelHelper.isEntityOutsideWhenItIsRaining( data.entity ) || data.entity.isInWater() );
 
-			this.addConfigs( this.damageCooldown, this.damageAmount );
+			this.addConfigs( this.damageAmount );
 			this.addContext( onTick );
 		}
 
