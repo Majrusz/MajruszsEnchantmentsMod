@@ -4,6 +4,7 @@ import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnDamagedContext;
 import com.mlib.gamemodifiers.data.OnDamagedData;
 import com.wonderfulenchantments.Registries;
@@ -33,7 +34,7 @@ public class MisanthropyEnchantment extends CustomEnchantment {
 			super( enchantment, "Misanthropy", "Increases the damage against villagers, pillagers, witches and other players." );
 
 			OnDamagedContext onDamaged = new OnDamagedContext( this::modifyDamage );
-			onDamaged.addCondition( data->data.level != null )
+			onDamaged.addCondition( new Condition.IsServer() )
 				.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) )
 				.addCondition( data->EntityHelper.isHuman( data.target ) );
 

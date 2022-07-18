@@ -5,6 +5,7 @@ import com.mlib.Random;
 import com.mlib.Utility;
 import com.mlib.effects.EffectHelper;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnDamagedContext;
 import com.mlib.gamemodifiers.data.OnDamagedData;
 import com.mlib.math.VectorHelper;
@@ -48,7 +49,7 @@ public class LeechEnchantment extends CustomEnchantment {
 			super( enchantment, "Leech", "Gives a chance to steal positive effects, health and hunger points from enemies." );
 
 			OnDamagedContext onDamaged = new OnDamagedContext( this::tryToLeechAnything );
-			onDamaged.addCondition( data->data.level != null ).addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) );
+			onDamaged.addCondition( new Condition.IsServer() ).addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) );
 
 			this.addConfigs( this.healthChance, this.hungerChance, this.effectChance );
 			this.addContext( onDamaged );

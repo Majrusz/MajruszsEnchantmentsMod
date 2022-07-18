@@ -10,6 +10,7 @@ import com.mlib.Random;
 import com.mlib.config.DoubleArrayConfig;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnItemFishedContext;
 import com.mlib.gamemodifiers.data.OnItemFishedData;
 import com.mlib.math.VectorHelper;
@@ -91,7 +92,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			enchantment.damageBonus = this.damageBonus;
 
 			OnItemFishedContext onItemFished = new OnItemFishedContext( this::increaseLoot );
-			onItemFished.addCondition( data->data.level != null );
+			onItemFished.addCondition( new Condition.IsServer() );
 
 			this.addContext( onItemFished );
 			this.addConfigs( this.levelUpChances, this.specialDropChance, this.extraLootChance, this.rainMultiplier, this.damageBonus );

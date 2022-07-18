@@ -3,6 +3,7 @@ package com.wonderfulenchantments.curses;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnEntityTickContext;
 import com.mlib.gamemodifiers.data.OnEntityTickData;
 import com.mlib.levels.LevelHelper;
@@ -37,7 +38,7 @@ public class CorrosionCurse extends CustomEnchantment {
 			super( enchantment, "Corrosion", "Gradually destroys the item and inflicts damage to the owner when in water." );
 
 			OnEntityTickContext onTick = new OnEntityTickContext( this::damageOnContactWithWater );
-			onTick.addCondition( data->data.level != null )
+			onTick.addCondition( new Condition.IsServer() )
 				.addCondition( data->enchantment.hasEnchantment( data.entity ) )
 				.addCondition( data->TimeHelper.hasServerSecondsPassed( this.damageCooldown.get() ) )
 				.addCondition( data->LevelHelper.isEntityOutsideWhenItIsRaining( data.entity ) || data.entity.isInWater() );

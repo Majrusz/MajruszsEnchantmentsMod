@@ -6,6 +6,7 @@ import com.mlib.blocks.BlockHelper;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.features.FarmlandTiller;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnPlayerInteractContext;
 import com.mlib.gamemodifiers.data.OnPlayerInteractData;
 import com.wonderfulenchantments.Registries;
@@ -48,7 +49,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			super( enchantment, "Harvester", "Gives the option of right-click harvesting and the chance to grow nearby crops." );
 
 			OnPlayerInteractContext onInteract = new OnPlayerInteractContext( this::handle );
-			onInteract.addCondition( data->data.level != null )
+			onInteract.addCondition( new Condition.IsServer() )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event instanceof PlayerInteractEvent.RightClickBlock );
 

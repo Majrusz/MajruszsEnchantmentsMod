@@ -3,6 +3,7 @@ package com.wonderfulenchantments.enchantments;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnExplosionContext;
 import com.mlib.gamemodifiers.data.OnExplosionData;
 import com.mlib.items.ItemHelper;
@@ -40,7 +41,8 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 			super( enchantment, "FuseCutter", "Cancels all nearby explosions whenever the player is blocking with a shield." );
 
 			OnExplosionContext onExplosion = new OnExplosionContext( this::cancelExplosion );
-			onExplosion.addCondition( data->data.level != null && this.isAnyoneBlockingWithFuseCutterNearby( data.level, data ) );
+			onExplosion.addCondition( new Condition.IsServer() )
+				.addCondition( data->this.isAnyoneBlockingWithFuseCutterNearby( data.level, data ) );
 
 			this.addConfig( this.maxDistance );
 			this.addContexts( onExplosion );
