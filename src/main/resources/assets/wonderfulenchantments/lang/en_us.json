@@ -37,6 +37,10 @@
 	"enchantment.wonderfulenchantments.leech.desc": "Gives a chance to steal positive effects, health and hunger points from enemies.",
 	"enchantment.wonderfulenchantments.leech.description": "Gives a chance to steal positive effects, health and hunger points from enemies.",
 
+	"enchantment.wonderfulenchantments.magic_protection": "Magic Protection",
+	"enchantment.wonderfulenchantments.magic_protection.desc": "Protects against magical damage including Evoker Fangs, Guardians and Instant Damage potions.",
+	"enchantment.wonderfulenchantments.magic_protection.description": "Protects against magical damage including Evoker Fangs, Guardians and Instant Damage potions.",
+
 	"enchantment.wonderfulenchantments.misanthropy": "Misanthropy",
 	"enchantment.wonderfulenchantments.misanthropy.desc": "Increases the damage against villagers, pillagers, witches and other players.",
 	"enchantment.wonderfulenchantments.misanthropy.description": "Increases the damage against villagers, pillagers, witches and other players.",
@@ -52,10 +56,6 @@
 	"enchantment.wonderfulenchantments.smelter": "Smelter",
 	"enchantment.wonderfulenchantments.smelter.desc": "Blocks destroyed are automatically smelted.",
 	"enchantment.wonderfulenchantments.smelter.description": "Blocks destroyed are automatically smelted.",
-
-	"enchantment.wonderfulenchantments.magic_protection": "Magic Protection",
-	"enchantment.wonderfulenchantments.magic_protection.desc": "Protects against magical damage including Evoker Fangs, Guardians and Instant Damage potions.",
-	"enchantment.wonderfulenchantments.magic_protection.description": "Protects against magical damage including Evoker Fangs, Guardians and Instant Damage potions.",
 
 	"enchantment.wonderfulenchantments.swiftness": "Swiftness",
 	"enchantment.wonderfulenchantments.swiftness.desc": "Increases the horse's movement speed.",
