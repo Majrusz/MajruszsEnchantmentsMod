@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 public class DeathWishEnchantment extends CustomEnchantment {
 	public static Supplier< DeathWishEnchantment > create() {
-		Parameters params = new Parameters( Rarity.RARE, Registries.MELEE_WEAPON, EquipmentSlots.MAINHAND, false, 1, level->12, level->50 );
+		Parameters params = new Parameters( Rarity.RARE, Registries.MELEE, EquipmentSlots.MAINHAND, false, 1, level->12, level->50 );
 		DeathWishEnchantment enchantment = new DeathWishEnchantment( params );
 		Modifier modifier = new DeathWishEnchantment.Modifier( enchantment );
 
