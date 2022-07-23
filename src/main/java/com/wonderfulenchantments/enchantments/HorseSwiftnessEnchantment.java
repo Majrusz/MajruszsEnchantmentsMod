@@ -29,7 +29,7 @@ public class HorseSwiftnessEnchantment extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< HorseSwiftnessEnchantment > {
-		static final AttributeHandler SPEED_ATTRIBUTE = new AttributeHandler( "76c3bea2-7ef1-4c4b-b062-a12355120ee7", "SwiftnessBonus", Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_BASE );
+		static final AttributeHandler SPEED_ATTRIBUTE = new AttributeHandler( "76c3bea2-7ef1-4c4b-b062-a12355120ee7", "HorseSwiftnessBonus", Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_BASE );
 		final DoubleConfig speedBonus = new DoubleConfig( "speed_bonus", "Speed bonus multiplier per enchantment level.", false, 0.125, 0.01, 1.0 );
 
 		public Modifier( HorseSwiftnessEnchantment enchantment ) {
@@ -44,8 +44,8 @@ public class HorseSwiftnessEnchantment extends CustomEnchantment {
 		}
 
 		private void updateSpeed( OnEquipmentChangedData data ) {
-			float extraHealth = this.speedBonus.asFloat() * this.enchantment.getEnchantmentSum( data.entity, EquipmentSlots.ARMOR );
-			SPEED_ATTRIBUTE.setValueAndApply( data.entity, extraHealth );
+			float extraSpeed = this.speedBonus.asFloat() * this.enchantment.getEnchantmentSum( data.entity, EquipmentSlots.ARMOR );
+			SPEED_ATTRIBUTE.setValueAndApply( data.entity, extraSpeed );
 		}
 	}
 }
