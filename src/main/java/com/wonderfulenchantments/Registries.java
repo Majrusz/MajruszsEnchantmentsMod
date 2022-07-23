@@ -60,6 +60,7 @@ public class Registries {
 	public static final RegistryObject< MisanthropyEnchantment > MISANTHROPY = ENCHANTMENTS.register( "misanthropy", MisanthropyEnchantment.create() );
 	public static final RegistryObject< SmelterEnchantment > SMELTER = ENCHANTMENTS.register( "smelter", SmelterEnchantment.create() );
 	public static final RegistryObject< TelekinesisEnchantment > TELEKINESIS = ENCHANTMENTS.register( "telekinesis", TelekinesisEnchantment.create() );
+	public static final RegistryObject< VitalityEnchantment > VITALITY = ENCHANTMENTS.register( "vitality", VitalityEnchantment.create() );
 
 	// Curses
 	public static final RegistryObject< BreakingCurse > BREAKING = ENCHANTMENTS.register( "breaking_curse", BreakingCurse.create() );
