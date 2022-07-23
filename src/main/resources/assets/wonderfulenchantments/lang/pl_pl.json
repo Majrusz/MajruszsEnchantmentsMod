@@ -45,6 +45,10 @@
 	"enchantment.wonderfulenchantments.misanthropy.desc": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 	"enchantment.wonderfulenchantments.misanthropy.description": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 
+	"enchantment.wonderfulenchantments.smelter": "Hutnik",
+	"enchantment.wonderfulenchantments.smelter.desc": "Automatycznie przetapia zniszczony blok.",
+	"enchantment.wonderfulenchantments.smelter.description": "Automatycznie przetapia zniszczony blok.",
+
 	"enchantment.wonderfulenchantments.telekinesis": "Telekineza",
 	"enchantment.wonderfulenchantments.telekinesis.desc": "Automatycznie podnosi przedmioty bezpośrednio do ekwipunku.",
 	"enchantment.wonderfulenchantments.telekinesis.description": "Automatycznie podnosi przedmioty bezpośrednio do ekwipunku.",
@@ -56,10 +60,6 @@
 	"enchantment.wonderfulenchantments.immortality": "Nieśmiertelność",
 	"enchantment.wonderfulenchantments.immortality.desc": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
 	"enchantment.wonderfulenchantments.immortality.description": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
-
-	"enchantment.wonderfulenchantments.smelter": "Hutnik",
-	"enchantment.wonderfulenchantments.smelter.desc": "Automatycznie przetapia zniszczony blok.",
-	"enchantment.wonderfulenchantments.smelter.description": "Automatycznie przetapia zniszczony blok.",
 
 	"enchantment.wonderfulenchantments.swiftness": "Prędkość",
 	"enchantment.wonderfulenchantments.swiftness.desc": "Zwiększa szybkość poruszania się konia.",

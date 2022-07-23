@@ -45,9 +45,13 @@
 	"enchantment.wonderfulenchantments.misanthropy.desc": "Increases the damage against villagers, pillagers, witches and other players.",
 	"enchantment.wonderfulenchantments.misanthropy.description": "Increases the damage against villagers, pillagers, witches and other players.",
 
+	"enchantment.wonderfulenchantments.smelter": "Smelter",
+	"enchantment.wonderfulenchantments.smelter.desc": "Destroyed blocks are automatically smelted.",
+	"enchantment.wonderfulenchantments.smelter.description": "Destroyed blocks are automatically smelted.",
+
 	"enchantment.wonderfulenchantments.telekinesis": "Telekinesis",
-	"enchantment.wonderfulenchantments.telekinesis.desc": "Automatically picks up items directly into player's inventory.",
-	"enchantment.wonderfulenchantments.telekinesis.description": "Automatically picks up items directly into player's inventory.",
+	"enchantment.wonderfulenchantments.telekinesis.desc": "Adds acquired items directly to player's inventory.",
+	"enchantment.wonderfulenchantments.telekinesis.description": "Adds acquired items directly to player's inventory.",
 
 	"enchantment.wonderfulenchantments.vitality": "Vitality",
 	"enchantment.wonderfulenchantments.vitality.desc": "Increases the player's health.",
@@ -56,10 +60,6 @@
 	"enchantment.wonderfulenchantments.immortality": "Immortality",
 	"enchantment.wonderfulenchantments.immortality.desc": "You will cheat death on fatal hit.",
 	"enchantment.wonderfulenchantments.immortality.description": "You will cheat death on fatal hit.",
-
-	"enchantment.wonderfulenchantments.smelter": "Smelter",
-	"enchantment.wonderfulenchantments.smelter.desc": "Blocks destroyed are automatically smelted.",
-	"enchantment.wonderfulenchantments.smelter.description": "Blocks destroyed are automatically smelted.",
 
 	"enchantment.wonderfulenchantments.swiftness": "Swiftness",
 	"enchantment.wonderfulenchantments.swiftness.desc": "Increases the horse's movement speed.",
