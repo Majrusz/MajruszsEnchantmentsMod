@@ -7,8 +7,10 @@ import com.mlib.gamemodifiers.contexts.OnDamagedContext;
 import com.mlib.gamemodifiers.contexts.OnLootLevelContext;
 import com.mlib.gamemodifiers.data.OnDamagedData;
 import com.mlib.gamemodifiers.data.OnLootLevelData;
+import com.mlib.mixininterfaces.IMixinProjectile;
 import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
+import net.minecraft.world.damagesource.DamageSource;
 
 import java.util.function.Supplier;
 
@@ -33,28 +35,32 @@ public class HunterEnchantment extends CustomEnchantment {
 			super( enchantment, "Hunter", "Increases mob drops and makes the damage to scale with a distance." );
 
 			OnLootLevelContext onLootLevel = new OnLootLevelContext( this::increaseLootingLevel );
-			onLootLevel.addCondition( data->data.entity != null && enchantment.hasEnchantment( data.entity ) )
-				.addCondition( data->data.source.isProjectile() );
+			onLootLevel.addCondition( data->data.source.isProjectile() ).addCondition( data->this.getEnchantmentLevel( data.source ) > 0 );
 
 			OnDamagedContext onDamaged = new OnDamagedContext( this::modifyDamage );
-			onDamaged.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) )
-				.addCondition( data->data.source.isProjectile() );
+			onDamaged.addCondition( data->data.attacker != null )
+				.addCondition( data->data.source.isProjectile() )
+				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 );
 
 			this.addConfigs( this.penaltyMultiplier, this.distanceMultiplier );
 			this.addContext( onLootLevel );
 		}
 
 		private void increaseLootingLevel( OnLootLevelData data ) {
-			data.event.setLootingLevel( data.event.getLootingLevel() + this.enchantment.getEnchantmentLevel( data.entity ) );
+			data.event.setLootingLevel( data.event.getLootingLevel() + this.getEnchantmentLevel( data.source ) );
 		}
 
 		private void modifyDamage( OnDamagedData data ) {
 			assert data.attacker != null;
 			float distance = Math.max( 0.0f, data.target.distanceTo( data.attacker ) - 1.0f );
-			float level = this.enchantment.getEnchantmentLevel( data.attacker );
+			float level = this.getEnchantmentLevel( data.source );
 			float damageMultiplier = 1.0f + level * ( this.penaltyMultiplier.asFloat() + distance * this.distanceMultiplier.asFloat() );
 
 			data.event.setAmount( data.event.getAmount() * damageMultiplier );
+		}
+
+		private int getEnchantmentLevel( DamageSource source ) {
+			return this.enchantment.getEnchantmentLevel( IMixinProjectile.getWeaponFromDirectEntity( source ) );
 		}
 	}
 }
