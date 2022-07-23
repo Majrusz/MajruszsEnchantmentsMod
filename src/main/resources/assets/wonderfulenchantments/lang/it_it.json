@@ -49,9 +49,9 @@
 	"enchantment.wonderfulenchantments.magic_protection.desc": "Protegge da danni magici come Zanne dei evocatori, raggio dei guardiani e dalle pozione di danno istantaneo.",
 	"enchantment.wonderfulenchantments.magic_protection.description": "Protegge da danni magici come Zanne dei evocatori, raggio dei guardiani e dalle pozione di danno istantaneo.",
 
-	"enchantment.wonderfulenchantments.swiftness": "Rapidità",
-	"enchantment.wonderfulenchantments.swiftness.desc": "Aumenta la velocità del cavallo.",
-	"enchantment.wonderfulenchantments.swiftness.description": "Aumenta la velocità del cavallo.",
+	"enchantment.wonderfulenchantments.horse_swiftness": "Rapidità",
+	"enchantment.wonderfulenchantments.horse_swiftness.desc": "Aumenta la velocità del cavallo.",
+	"enchantment.wonderfulenchantments.horse_swiftness.description": "Aumenta la velocità del cavallo.",
 
 	"enchantment.wonderfulenchantments.horse_protection": "Protezione Equina",
 	"enchantment.wonderfulenchantments.horse_protection.desc": "Riduce la quantità di danni ricevuti dal cavallo.",

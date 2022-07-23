@@ -49,9 +49,9 @@
   "enchantment.wonderfulenchantments.magic_protection.desc": "Protège contre les dégats magiques des crocs des Évocateurs, des lasers des Guardiens et des potions de dégat instantané.",
   "enchantment.wonderfulenchantments.magic_protection.description": "Protège contre les dégats magiques des crocs des Évocateurs, des lasers des Guardiens et des potions de dégat instantané.",
 
-  "enchantment.wonderfulenchantments.swiftness": "Vélocité",
-  "enchantment.wonderfulenchantments.swiftness.desc": "Augmente la vitesse de mouvement du cheval.",
-  "enchantment.wonderfulenchantments.swiftness.description": "Augmente la vitesse de mouvement du cheval.",
+  "enchantment.wonderfulenchantments.horse_swiftness": "Vélocité",
+  "enchantment.wonderfulenchantments.horse_swiftness.desc": "Augmente la vitesse de mouvement du cheval.",
+  "enchantment.wonderfulenchantments.horse_swiftness.description": "Augmente la vitesse de mouvement du cheval.",
 
   "enchantment.wonderfulenchantments.horse_protection": "Protection du cheval",
   "enchantment.wonderfulenchantments.horse_protection.desc": "Réduit le taux de dégat reçu par le cheval.",

@@ -49,9 +49,9 @@
 	"enchantment.wonderfulenchantments.magic_protection.desc": "고통의 물약이나 가디언의 광선 공격, 소환사의 송곳니 같은 마법 피해량이 감소합니다.",
 	"enchantment.wonderfulenchantments.magic_protection.description": "고통의 물약이나 가디언의 광선 공격, 소환사의 송곳니 같은 마법 피해량이 감소합니다.",
 
-	"enchantment.wonderfulenchantments.swiftness": "신속",
-	"enchantment.wonderfulenchantments.swiftness.desc": "말의 이동속도가 증가합니다.",
-	"enchantment.wonderfulenchantments.swiftness.description": "말의 이동속도가 증가합니다.",
+	"enchantment.wonderfulenchantments.horse_swiftness": "신속",
+	"enchantment.wonderfulenchantments.horse_swiftness.desc": "말의 이동속도가 증가합니다.",
+	"enchantment.wonderfulenchantments.horse_swiftness.description": "말의 이동속도가 증가합니다.",
 
 	"enchantment.wonderfulenchantments.horse_protection": "수호",
 	"enchantment.wonderfulenchantments.horse_protection.desc": "말이 받는 모든 피해를 감소시킵니다.",

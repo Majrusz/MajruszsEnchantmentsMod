@@ -49,9 +49,9 @@
   "enchantment.wonderfulenchantments.magic_protection.desc": "Proteje contra daño magico como los Colmillos del Evocador, laseres de Guardianes y pociones de Daño Instantaneo.",
   "enchantment.wonderfulenchantments.magic_protection.description": "Proteje contra daño magico como los Colmillos del Evocador, laseres de Guardianes y pociones de Daño Instantaneo.",
 
-  "enchantment.wonderfulenchantments.swiftness": "Rapidez",
-  "enchantment.wonderfulenchantments.swiftness.desc": "Incrementa la velocidad del caballo.",
-  "enchantment.wonderfulenchantments.swiftness.description": "Incrementa la velocidad del caballo.",
+  "enchantment.wonderfulenchantments.horse_swiftness": "Rapidez",
+  "enchantment.wonderfulenchantments.horse_swiftness.desc": "Incrementa la velocidad del caballo.",
+  "enchantment.wonderfulenchantments.horse_swiftness.description": "Incrementa la velocidad del caballo.",
 
   "enchantment.wonderfulenchantments.horse_protection": "Bronco",
   "enchantment.wonderfulenchantments.horse_protection.desc": "Reduce el daño recibido al caballo",

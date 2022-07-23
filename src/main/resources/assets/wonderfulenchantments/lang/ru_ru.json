@@ -49,9 +49,9 @@
   "enchantment.wonderfulenchantments.magic_protection.desc": "Защищает от таких магических атак, как челюсти вызывателя, луч стража и зелье мгновенного урона.",
   "enchantment.wonderfulenchantments.magic_protection.description": "Защищает от таких магических атак, как челюсти вызывателя, луч стража и зелье мгновенного урона.",
 
-  "enchantment.wonderfulenchantments.swiftness": "Стремительность",
-  "enchantment.wonderfulenchantments.swiftness.desc": "Увеличивает скорость передвижения лошади.",
-  "enchantment.wonderfulenchantments.swiftness.description": "Увеличивает скорость передвижения лошади.",
+  "enchantment.wonderfulenchantments.horse_swiftness": "Стремительность",
+  "enchantment.wonderfulenchantments.horse_swiftness.desc": "Увеличивает скорость передвижения лошади.",
+  "enchantment.wonderfulenchantments.horse_swiftness.description": "Увеличивает скорость передвижения лошади.",
 
   "enchantment.wonderfulenchantments.horse_protection": "Защита лошади",
   "enchantment.wonderfulenchantments.horse_protection.desc": "Уменьшает количество повреждений, получаемых лошадью.",

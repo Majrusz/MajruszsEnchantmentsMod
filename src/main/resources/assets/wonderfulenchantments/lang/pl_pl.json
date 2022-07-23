@@ -29,6 +29,10 @@
 	"enchantment.wonderfulenchantments.harvester.desc": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
 	"enchantment.wonderfulenchantments.harvester.description": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
 
+	"enchantment.wonderfulenchantments.horse_swiftness": "Prędkość",
+	"enchantment.wonderfulenchantments.horse_swiftness.desc": "Zwiększa szybkość poruszania się konia.",
+	"enchantment.wonderfulenchantments.horse_swiftness.description": "Zwiększa szybkość poruszania się konia.",
+
 	"enchantment.wonderfulenchantments.hunter": "Łowca",
 	"enchantment.wonderfulenchantments.hunter.desc": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
 	"enchantment.wonderfulenchantments.hunter.description": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
@@ -60,10 +64,6 @@
 	"enchantment.wonderfulenchantments.immortality": "Nieśmiertelność",
 	"enchantment.wonderfulenchantments.immortality.desc": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
 	"enchantment.wonderfulenchantments.immortality.description": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
-
-	"enchantment.wonderfulenchantments.swiftness": "Prędkość",
-	"enchantment.wonderfulenchantments.swiftness.desc": "Zwiększa szybkość poruszania się konia.",
-	"enchantment.wonderfulenchantments.swiftness.description": "Zwiększa szybkość poruszania się konia.",
 
 	"enchantment.wonderfulenchantments.horse_protection": "Ochrona konia",
 	"enchantment.wonderfulenchantments.horse_protection.desc": "Zmniejsza obrażenia otrzymywane przez konia.",

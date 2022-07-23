@@ -29,6 +29,10 @@
 	"enchantment.wonderfulenchantments.harvester.desc": "Gives the option of right-click harvesting and the chance to grow nearby crops.",
 	"enchantment.wonderfulenchantments.harvester.description": "Gives the option of right-click harvesting and the chance to grow nearby crops.",
 
+	"enchantment.wonderfulenchantments.horse_swiftness": "Swiftness",
+	"enchantment.wonderfulenchantments.horse_swiftness.desc": "Increases the horse's movement speed.",
+	"enchantment.wonderfulenchantments.horse_swiftness.description": "Increases the horse's movement speed.",
+
 	"enchantment.wonderfulenchantments.hunter": "Hunter",
 	"enchantment.wonderfulenchantments.hunter.desc": "Increases mob drops and causes damage to scale with distance.",
 	"enchantment.wonderfulenchantments.hunter.description": "Increases mob drops and causes damage to scale with distance.",
@@ -60,10 +64,6 @@
 	"enchantment.wonderfulenchantments.immortality": "Immortality",
 	"enchantment.wonderfulenchantments.immortality.desc": "You will cheat death on fatal hit.",
 	"enchantment.wonderfulenchantments.immortality.description": "You will cheat death on fatal hit.",
-
-	"enchantment.wonderfulenchantments.swiftness": "Swiftness",
-	"enchantment.wonderfulenchantments.swiftness.desc": "Increases the horse's movement speed.",
-	"enchantment.wonderfulenchantments.swiftness.description": "Increases the horse's movement speed.",
 
 	"enchantment.wonderfulenchantments.horse_protection": "Horse Protection",
 	"enchantment.wonderfulenchantments.horse_protection.desc": "Reduces the amount of damage the horse receives.",
