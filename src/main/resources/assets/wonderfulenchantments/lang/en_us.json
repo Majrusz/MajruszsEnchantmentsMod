@@ -45,6 +45,10 @@
 	"enchantment.wonderfulenchantments.misanthropy.desc": "Increases the damage against villagers, pillagers, witches and other players.",
 	"enchantment.wonderfulenchantments.misanthropy.description": "Increases the damage against villagers, pillagers, witches and other players.",
 
+	"enchantment.wonderfulenchantments.telekinesis": "Telekinesis",
+	"enchantment.wonderfulenchantments.telekinesis.desc": "Automatically picks up items directly into player's inventory.",
+	"enchantment.wonderfulenchantments.telekinesis.description": "Automatically picks up items directly into player's inventory.",
+
 	"enchantment.wonderfulenchantments.vitality": "Vitality",
 	"enchantment.wonderfulenchantments.vitality.desc": "Increases the player's health.",
 	"enchantment.wonderfulenchantments.vitality.description": "Increases the player's health.",
@@ -68,10 +72,6 @@
 	"enchantment.wonderfulenchantments.horse_frost_walker": "Frost Rider",
 	"enchantment.wonderfulenchantments.horse_frost_walker.desc": "Creates a path of ice when walking over water with a horse.",
 	"enchantment.wonderfulenchantments.horse_frost_walker.description": "Creates a path of ice when walking over water with a horse.",
-
-	"enchantment.wonderfulenchantments.telekinesis": "Telekinesis",
-	"enchantment.wonderfulenchantments.telekinesis.desc": "Adds the drops of destroyed blocks directly to the player's inventory.",
-	"enchantment.wonderfulenchantments.telekinesis.description": "Adds the drops of destroyed blocks directly to the player's inventory.",
 
 	"enchantment.wonderfulenchantments.absorber": "Absorber",
 	"enchantment.wonderfulenchantments.absorber.desc": "Shields absorb all negative effects at the expense of durability.",

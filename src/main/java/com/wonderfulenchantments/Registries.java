@@ -7,7 +7,6 @@ import com.mlib.triggers.BasicTrigger;
 import com.mojang.serialization.Codec;
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
-import com.wonderfulenchantments.lootmodifiers.AddItemsDirectlyToInventory;
 import com.wonderfulenchantments.lootmodifiers.Replant;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -46,7 +45,7 @@ public class Registries {
 	public static final EnchantmentCategory MELEE_MINECRAFT = EnchantmentCategory.create( "melee_minecraft", item->item instanceof SwordItem || item instanceof AxeItem ); // for some reason all minecraft sword enchantments are applicable to axes
 	public static final EnchantmentCategory MELEE = EnchantmentCategory.create( "melee_weapon", item->MELEE_MINECRAFT.canEnchant( item ) || item instanceof TridentItem );
 	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create( "shield", item->item instanceof ShieldItem );
-	public static final EnchantmentCategory TOOLS = EnchantmentCategory.create( "tools", item->MELEE.canEnchant( item ) || EnchantmentCategory.DIGGER.canEnchant( item ) );
+	public static final EnchantmentCategory TOOLS = EnchantmentCategory.create( "tools", item->MELEE.canEnchant( item ) || EnchantmentCategory.DIGGER.canEnchant( item ) || BOW_AND_CROSSBOW.canEnchant( item ) );
 
 	// Enchantments
 	public static final RegistryObject< DodgeEnchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment.create() );

@@ -45,6 +45,10 @@
 	"enchantment.wonderfulenchantments.misanthropy.desc": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 	"enchantment.wonderfulenchantments.misanthropy.description": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 
+	"enchantment.wonderfulenchantments.telekinesis": "Telekineza",
+	"enchantment.wonderfulenchantments.telekinesis.desc": "Automatycznie podnosi przedmioty bezpośrednio do ekwipunku.",
+	"enchantment.wonderfulenchantments.telekinesis.description": "Automatycznie podnosi przedmioty bezpośrednio do ekwipunku.",
+
 	"enchantment.wonderfulenchantments.vitality": "Witalność",
 	"enchantment.wonderfulenchantments.vitality.desc": "Zwiększa zdrowie gracza.",
 	"enchantment.wonderfulenchantments.vitality.description": "Zwiększa zdrowie gracza.",
@@ -68,10 +72,6 @@
 	"enchantment.wonderfulenchantments.horse_frost_walker": "Koński mroźny piechur",
 	"enchantment.wonderfulenchantments.horse_frost_walker.desc": "Tworzy zamrożone bloki lodu gdy koń chodzi po wodzie.",
 	"enchantment.wonderfulenchantments.horse_frost_walker.description": "Tworzy zamrożone bloki lodu gdy koń chodzi po wodzie.",
-
-	"enchantment.wonderfulenchantments.telekinesis": "Telekineza",
-	"enchantment.wonderfulenchantments.telekinesis.desc": "Automatycznie dodaje przedmiotu do ekwipunku gdy niszczy się bloki.",
-	"enchantment.wonderfulenchantments.telekinesis.description": "Automatycznie dodaje przedmiotu do ekwipunku gdy niszczy się bloki.",
 
 	"enchantment.wonderfulenchantments.absorber": "Absorber",
 	"enchantment.wonderfulenchantments.absorber.desc": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
