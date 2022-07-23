@@ -2,7 +2,7 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlots;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.Context;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnLootContext;
 import com.mlib.gamemodifiers.data.OnLootData;
 import com.mlib.gamemodifiers.parameters.ContextParameters;
@@ -10,8 +10,11 @@ import com.mlib.gamemodifiers.parameters.Priority;
 import com.mlib.mixininterfaces.IMixinProjectile;
 import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Supplier;
 
@@ -35,14 +38,18 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			super( enchantment, "Telekinesis", "Adds acquired items directly to player's inventory." );
 
 			OnLootContext onLoot = new OnLootContext( data->this.addToInventory( data, data.entity ), LOWEST_PRIORITY );
-			onLoot.addCondition( data->data.entity instanceof Player ).addCondition( data->data.tool != null && enchantment.hasEnchantment( data.tool ) );
+			onLoot.addCondition( new Condition.IsServer() )
+				.addCondition( data->data.entity instanceof Player )
+				.addCondition( data->data.tool != null && enchantment.hasEnchantment( data.tool ) );
 
 			OnLootContext onLoot2 = new OnLootContext( data->this.addToInventory( data, data.killer ), LOWEST_PRIORITY );
-			onLoot2.addCondition( data->data.killer instanceof Player )
+			onLoot2.addCondition( new Condition.IsServer() )
+				.addCondition( data->data.killer instanceof Player )
 				.addCondition( data->enchantment.hasEnchantment( ( Player )data.killer ) );
 
 			OnLootContext onLoot3 = new OnLootContext( data->this.addToInventory( data, data.killer ), LOWEST_PRIORITY );
-			onLoot3.addCondition( data->data.killer instanceof Player )
+			onLoot3.addCondition( new Condition.IsServer() )
+				.addCondition( data->data.killer instanceof Player )
 				.addCondition( data->data.damageSource != null && enchantment.hasEnchantment( IMixinProjectile.getWeaponFromDirectEntity( data.damageSource ) ) );
 
 			this.addContexts( onLoot, onLoot2, onLoot3 );
@@ -50,8 +57,11 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 
 		private void addToInventory( OnLootData data, Entity entity ) {
 			Player player = ( Player )entity;
-			assert player != null;
-			data.generatedLoot.removeIf( player::addItem );
+			assert player != null && data.level != null;
+			if( data.generatedLoot.removeIf( player::addItem ) ) {
+				Vec3 position = player.position();
+				data.level.playSound( null, position.x, position.y, position.z, SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.5f, 0.8f );
+			}
 		}
 	}
 }
