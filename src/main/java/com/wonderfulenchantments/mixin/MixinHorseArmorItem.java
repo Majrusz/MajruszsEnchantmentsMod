@@ -1,11 +1,11 @@
 package com.wonderfulenchantments.mixin;
 
+import net.minecraft.world.item.HorseArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShieldItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin( ShieldItem.class )
+@Mixin( HorseArmorItem.class )
 public abstract class MixinHorseArmorItem extends MixinItem {
 	@Override
 	protected void getEnchantmentValue( CallbackInfoReturnable< Integer > callback ) {
