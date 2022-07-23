@@ -29,6 +29,10 @@
 	"enchantment.wonderfulenchantments.harvester.desc": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
 	"enchantment.wonderfulenchantments.harvester.description": "Daje możliwość zbierania plonów prawym przyciskiem myszy i szansę na wzrost pobliskich upraw.",
 
+	"enchantment.wonderfulenchantments.horse_protection": "Ochrona konia",
+	"enchantment.wonderfulenchantments.horse_protection.desc": "Zmniejsza obrażenia otrzymywane przez konia.",
+	"enchantment.wonderfulenchantments.horse_protection.description": "Zmniejsza obrażenia otrzymywane przez konia.",
+
 	"enchantment.wonderfulenchantments.horse_swiftness": "Prędkość",
 	"enchantment.wonderfulenchantments.horse_swiftness.desc": "Zwiększa szybkość poruszania się konia.",
 	"enchantment.wonderfulenchantments.horse_swiftness.description": "Zwiększa szybkość poruszania się konia.",
@@ -64,10 +68,6 @@
 	"enchantment.wonderfulenchantments.immortality": "Nieśmiertelność",
 	"enchantment.wonderfulenchantments.immortality.desc": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
 	"enchantment.wonderfulenchantments.immortality.description": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
-
-	"enchantment.wonderfulenchantments.horse_protection": "Ochrona konia",
-	"enchantment.wonderfulenchantments.horse_protection.desc": "Zmniejsza obrażenia otrzymywane przez konia.",
-	"enchantment.wonderfulenchantments.horse_protection.description": "Zmniejsza obrażenia otrzymywane przez konia.",
 
 	"enchantment.wonderfulenchantments.horse_frost_walker": "Koński mroźny piechur",
 	"enchantment.wonderfulenchantments.horse_frost_walker.desc": "Tworzy zamrożone bloki lodu gdy koń chodzi po wodzie.",
