@@ -7,7 +7,6 @@ import com.mlib.triggers.BasicTrigger;
 import com.mojang.serialization.Codec;
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
-import com.wonderfulenchantments.lootmodifiers.Replant;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
@@ -68,11 +67,6 @@ public class Registries {
 	public static final RegistryObject< FatigueCurse > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse.create() );
 	public static final RegistryObject< IncompatibilityCurse > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse.create() );
 	public static final RegistryObject< VampirismCurse > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse.create() );
-
-	// Loot Modifiers
-	static {
-		LOOT_MODIFIERS.register( "harvester_enchantment", Replant.CODEC );
-	}
 
 	// Particles
 	public static final RegistryObject< SimpleParticleType > DODGE_PARTICLE = PARTICLE_TYPES.register( "dodge_particle", ()->new SimpleParticleType( true ) );

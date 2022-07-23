@@ -4,25 +4,31 @@ import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.blocks.BlockHelper;
 import com.mlib.config.DoubleConfig;
+import com.mlib.effects.ParticleHandler;
+import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.features.FarmlandTiller;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.contexts.OnLootContext;
 import com.mlib.gamemodifiers.contexts.OnPlayerInteractContext;
+import com.mlib.gamemodifiers.data.OnLootData;
 import com.mlib.gamemodifiers.data.OnPlayerInteractData;
+import com.mlib.math.VectorHelper;
 import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.function.Supplier;
@@ -51,20 +57,27 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			OnPlayerInteractContext onInteract = new OnPlayerInteractContext( this::handle );
 			onInteract.addCondition( new Condition.IsServer() )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
-				.addCondition( data->data.event instanceof PlayerInteractEvent.RightClickBlock );
+				.addCondition( data->data.event instanceof PlayerInteractEvent.RightClickBlock )
+				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.event.getPos() ) ) );
+
+			OnLootContext onLoot = new OnLootContext( this::replant );
+			onLoot.addCondition( new Condition.IsServer() )
+				.addCondition( data->data.blockState != null )
+				.addCondition( data->data.entity != null )
+				.addCondition( data->data.tool != null )
+				.addCondition( data->data.origin != null )
+				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.origin ) ) );
 
 			this.addConfigs( this.durabilityPenalty, this.growChance );
-			this.addContext( onInteract );
+			this.addContexts( onInteract, onLoot );
 		}
 
 		private void handle( OnPlayerInteractData data ) {
 			assert data.level != null;
-			BlockPos position = data.event.getPos();
-			if( BlockHelper.isCropAtMaxAge( data.level, position ) ) {
-				collectCrop( data.level, data.player, position, data.itemStack );
-				tickNearbyCrops( data.level, data.player, position, data.itemStack, data.event.getHand() );
-				playSound( data.level, position );
-			}
+			Vec3 position = VectorHelper.convertToVec3( data.event.getPos() );
+			collectCrop( data.level, data.player, new BlockPos( position ), data.itemStack );
+			tickNearbyCrops( data.level, data.player, new BlockPos( position ), data.itemStack, data.event.getHand() );
+			SoundHandler.CROP.play( data.level, position );
 		}
 
 		private void collectCrop( ServerLevel level, Player player, BlockPos position, ItemStack itemStack ) {
@@ -87,13 +100,14 @@ public class HarvesterEnchantment extends CustomEnchantment {
 					if( !( block instanceof CropBlock ) && !( block instanceof NetherWartBlock ) )
 						continue;
 
+					int particlesCount = 1;
 					if( Random.tryChance( this.growChance.get() ) ) {
 						BlockHelper.growCrop( level, neighbourPosition );
 						totalDamage += this.durabilityPenalty.get();
-						spawnParticles( level, neighbourPosition, 3 );
-					} else {
-						spawnParticles( level, neighbourPosition, 1 );
+						particlesCount = 3;
 					}
+
+					ParticleHandler.AWARD.spawn( level, VectorHelper.convertToVec3( position ), particlesCount );
 				}
 			}
 			int finalDamage = Random.roundRandomly( totalDamage );
@@ -102,12 +116,24 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			}
 		}
 
-		private void playSound( ServerLevel level, BlockPos position ) {
-			level.playSound( null, position, SoundEvents.ITEM_PICKUP, SoundSource.AMBIENT, 0.25f, 0.5f );
+		private void replant( OnLootData data ) {
+			assert data.origin != null && data.blockState != null && data.level != null;
+			BlockPos position = new BlockPos( data.origin );
+			Block block = data.blockState.getBlock();
+			Item seedItem = getSeedItem( data.level, data.blockState, position );
+			for( ItemStack itemStack : data.generatedLoot ) {
+				if( itemStack.getItem() == seedItem ) {
+					itemStack.setCount( itemStack.getCount() - 1 );
+					data.level.setBlockAndUpdate( position, block.defaultBlockState() );
+					return;
+				}
+			}
+
+			data.level.setBlockAndUpdate( position, Blocks.AIR.defaultBlockState() );
 		}
 
-		private void spawnParticles( ServerLevel level, BlockPos position, int count ) {
-			level.sendParticles( ParticleTypes.HAPPY_VILLAGER, position.getX() + 0.5, position.getY() + 0.5, position.getZ() + 0.5, count, 0.25, 0.25, 0.25, 0.1 );
+		private static Item getSeedItem( Level level, BlockState blockState, BlockPos position ) {
+			return blockState.getBlock().getCloneItemStack( level, position, blockState ).getItem();
 		}
 	}
 }
