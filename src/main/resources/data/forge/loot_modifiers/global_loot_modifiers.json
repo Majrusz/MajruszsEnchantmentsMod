@@ -1,7 +1,6 @@
 {
 	"replace": false,
 	"entries": [
-		"wonderfulenchantments:telekinesis_enchantment",
-		"wonderfulenchantments:harvester_enchantment"
+		"wonderfulenchantments:telekinesis_enchantment"
 	]
 }
