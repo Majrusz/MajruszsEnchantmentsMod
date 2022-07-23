@@ -77,7 +77,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			Vec3 position = VectorHelper.convertToVec3( data.event.getPos() );
 			collectCrop( data.level, data.player, new BlockPos( position ), data.itemStack );
 			tickNearbyCrops( data.level, data.player, new BlockPos( position ), data.itemStack, data.event.getHand() );
-			SoundHandler.CROP.play( data.level, position );
+			SoundHandler.BONE_MEAL.play( data.level, position );
 		}
 
 		private void collectCrop( ServerLevel level, Player player, BlockPos position, ItemStack itemStack ) {
