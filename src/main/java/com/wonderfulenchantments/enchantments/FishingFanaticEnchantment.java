@@ -103,7 +103,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			Multiset< String > rewards = HashMultiset.create();
 			rewards.add( data.event.getDrops().get( 0 ).getHoverName().getString() );
 
-			ItemStack fishingRod = getFishingRod( data.player );
+			ItemStack fishingRod = this.enchantment.deduceUsedHandItem( data.player );
 			int fanaticLevel = this.enchantment.getEnchantmentLevel( fishingRod );
 			int rewardsCounter = spawnExtraLoot( data, fanaticLevel, fishingRod, rewards );
 			if( tryIncreaseEnchantmentLevel( data, fanaticLevel, fishingRod ) ) {
@@ -141,10 +141,6 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 				}
 
 			return counter;
-		}
-
-		private ItemStack getFishingRod( Player player ) {
-			return player.getMainHandItem().getItem() instanceof FishingRodItem ? player.getMainHandItem() : player.getOffhandItem();
 		}
 
 		private static LootContext generateLootContext( Player player, ItemStack fishingRod ) {

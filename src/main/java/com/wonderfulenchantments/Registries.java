@@ -39,13 +39,14 @@ public class Registries {
 	static final DeferredRegister< ParticleType< ? > > PARTICLE_TYPES = HELPER.create( ForgeRegistries.Keys.PARTICLE_TYPES );
 
 	// Enchantment Categories
-	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create( "shield", item->item instanceof ShieldItem );
-	public static final EnchantmentCategory HORSE_ARMOR = EnchantmentCategory.create( "horse_armor", item->item instanceof HorseArmorItem );
 	public static final EnchantmentCategory BOW_AND_CROSSBOW = EnchantmentCategory.create( "bow_and_crossbow", item->item instanceof BowItem || item instanceof CrossbowItem );
+	public static final EnchantmentCategory GOLDEN = EnchantmentCategory.create( "golden", item->item instanceof DiggerItem diggerItem && diggerItem.getTier() == Tiers.GOLD || item instanceof ArmorItem armorItem && armorItem.getMaterial() == ArmorMaterials.GOLD );
+	public static final EnchantmentCategory HORSE_ARMOR = EnchantmentCategory.create( "horse_armor", item->item instanceof HorseArmorItem );
+	public static final EnchantmentCategory HOE = EnchantmentCategory.create( "hoe", item->item instanceof HoeItem );
 	public static final EnchantmentCategory MELEE_MINECRAFT = EnchantmentCategory.create( "melee_minecraft", item->item instanceof SwordItem || item instanceof AxeItem ); // for some reason all minecraft sword enchantments are applicable to axes
 	public static final EnchantmentCategory MELEE = EnchantmentCategory.create( "melee_weapon", item->MELEE_MINECRAFT.canEnchant( item ) || item instanceof TridentItem );
-	public static final EnchantmentCategory HOE = EnchantmentCategory.create( "hoe", item->item instanceof HoeItem );
-	public static final EnchantmentCategory GOLDEN = EnchantmentCategory.create( "golden", item->item instanceof DiggerItem diggerItem && diggerItem.getTier() == Tiers.GOLD || item instanceof ArmorItem armorItem && armorItem.getMaterial() == ArmorMaterials.GOLD );
+	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create( "shield", item->item instanceof ShieldItem );
+	public static final EnchantmentCategory TOOLS = EnchantmentCategory.create( "tools", item->MELEE.canEnchant( item ) || EnchantmentCategory.DIGGER.canEnchant( item ) );
 
 	// Enchantments
 	public static final RegistryObject< DodgeEnchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment.create() );
@@ -59,6 +60,7 @@ public class Registries {
 	public static final RegistryObject< LeechEnchantment > LEECH = ENCHANTMENTS.register( "leech", LeechEnchantment.create() );
 	public static final RegistryObject< MagicProtectionEnchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", MagicProtectionEnchantment.create() );
 	public static final RegistryObject< MisanthropyEnchantment > MISANTHROPY = ENCHANTMENTS.register( "misanthropy", MisanthropyEnchantment.create() );
+	public static final RegistryObject< TelekinesisEnchantment > TELEKINESIS = ENCHANTMENTS.register( "telekinesis", TelekinesisEnchantment.create() );
 
 	// Curses
 	public static final RegistryObject< BreakingCurse > BREAKING = ENCHANTMENTS.register( "breaking_curse", BreakingCurse.create() );
@@ -69,7 +71,6 @@ public class Registries {
 
 	// Loot Modifiers
 	static {
-		LOOT_MODIFIERS.register( "telekinesis_enchantment", AddItemsDirectlyToInventory.CODEC );
 		LOOT_MODIFIERS.register( "harvester_enchantment", Replant.CODEC );
 	}
 
@@ -103,7 +104,7 @@ public class Registries {
 
 	private static void addEnchantmentTypesToItemGroups() {
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_MINECRAFT, MELEE );
-		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN );
+		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN, TOOLS );
 		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
 	}
 

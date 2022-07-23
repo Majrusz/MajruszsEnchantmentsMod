@@ -96,7 +96,7 @@ public class FatigueCurse extends CustomEnchantment {
 		}
 
 		private float getItemMultiplier( DoubleConfig config, LivingEntity entity ) {
-			return ( float )Math.pow( config.get(), this.enchantment.getEnchantmentSum( entity, EquipmentSlots.BOTH_HANDS ) );
+			return ( float )Math.pow( config.get(), this.enchantment.getEnchantmentLevel( entity.getMainHandItem() ) );
 		}
 
 		private float getArmorMultiplier( DoubleConfig config, LivingEntity entity ) {
