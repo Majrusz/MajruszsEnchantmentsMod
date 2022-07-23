@@ -1,6 +1,7 @@
 package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlots;
+import com.mlib.Random;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnLootContext;
@@ -60,7 +61,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			assert player != null && data.level != null;
 			if( data.generatedLoot.removeIf( player::addItem ) ) {
 				Vec3 position = player.position();
-				data.level.playSound( null, position.x, position.y, position.z, SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.5f, 0.8f );
+				data.level.playSound( null, position.x, position.y, position.z, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.25f, Random.nextFloat( 0.8f, 1.2f ) );
 			}
 		}
 	}
