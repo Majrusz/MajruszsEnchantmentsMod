@@ -11,6 +11,7 @@ import com.mlib.mixininterfaces.IMixinProjectile;
 import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Supplier;
 
@@ -60,7 +61,8 @@ public class HunterEnchantment extends CustomEnchantment {
 		}
 
 		private int getEnchantmentLevel( DamageSource source ) {
-			return this.enchantment.getEnchantmentLevel( IMixinProjectile.getWeaponFromDirectEntity( source ) );
+			ItemStack weapon = IMixinProjectile.getWeaponFromDirectEntity( source );
+			return weapon != null ? this.enchantment.getEnchantmentLevel( weapon ) : 0;
 		}
 	}
 }
