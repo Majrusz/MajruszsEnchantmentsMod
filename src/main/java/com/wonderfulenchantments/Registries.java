@@ -55,6 +55,7 @@ public class Registries {
 	public static final RegistryObject< GoldFuelledEnchantment > GOLD_FUELLED = ENCHANTMENTS.register( "gold_fuelled", GoldFuelledEnchantment.create() );
 	public static final RegistryObject< HunterEnchantment > HUNTER = ENCHANTMENTS.register( "hunter", HunterEnchantment.create() );
 	public static final RegistryObject< HarvesterEnchantment > HARVESTER = ENCHANTMENTS.register( "harvester", HarvesterEnchantment.create() );
+	public static final RegistryObject< HorseFrostWalkerEnchantment > HORSE_FROST_WALKER = ENCHANTMENTS.register( "horse_frost_walker", HorseFrostWalkerEnchantment.create() );
 	public static final RegistryObject< HorseProtectionEnchantment > HORSE_PROTECTION = ENCHANTMENTS.register( "horse_protection", HorseProtectionEnchantment.create() );
 	public static final RegistryObject< HorseSwiftnessEnchantment > HORSE_SWIFTNESS = ENCHANTMENTS.register( "horse_swiftness", HorseSwiftnessEnchantment.create() );
 	public static final RegistryObject< LeechEnchantment > LEECH = ENCHANTMENTS.register( "leech", LeechEnchantment.create() );
