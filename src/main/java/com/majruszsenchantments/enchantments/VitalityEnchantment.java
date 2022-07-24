@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class VitalityEnchantment extends CustomEnchantment {
 	public static Supplier< VitalityEnchantment > create() {
-		Parameters params = new Parameters( Rarity.UNCOMMON, Registries.SHIELD, EquipmentSlots.BOTH_HANDS, false, 3, level->5 + 8 * level, level->15 + 8 * level );
+		Parameters params = new Parameters( Rarity.UNCOMMON, Registries.SHIELD, EquipmentSlots.BOTH_HANDS, false, 3, level->-5 + 8 * level, level->15 + 8 * level );
 		VitalityEnchantment enchantment = new VitalityEnchantment( params );
 		Modifier modifier = new VitalityEnchantment.Modifier( enchantment );
 
