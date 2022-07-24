@@ -2,7 +2,10 @@ package com.wonderfulenchantments.enchantments;
 
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
+import com.mlib.effects.ParticleHandler;
+import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.entities.EntityHelper;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnExplosionContext;
 import com.mlib.gamemodifiers.data.OnExplosionData;
@@ -35,26 +38,28 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< FuseCutterEnchantment > {
+		static final ParticleHandler BIG_SMOKE = new ParticleHandler( ParticleTypes.LARGE_SMOKE, new Vec3( 0.25, 0.25, 0.25 ), ()->0.025f );
+		static final ParticleHandler SMOKE = new ParticleHandler( ParticleTypes.SMOKE, new Vec3( 0.25, 0.25, 0.25 ), ()->0.025f );
 		final DoubleConfig maxDistance = new DoubleConfig( "maximum_distance", "Maximum distance in blocks from the explosion.", false, 6.0, 1.0, 100.0 );
+		final DoubleConfig cooldownRatio = new DoubleConfig( "cooldown_ratio", "Ratio of explosion radius to disabled shield cooldown duration. (for instance 1.5 means that explosion with 2 blocks radius will disable the shield for 3 seconds)", false, 1.5, 0.0, 10.0 );
 
 		public Modifier( FuseCutterEnchantment enchantment ) {
 			super( enchantment, "FuseCutter", "Cancels all nearby explosions whenever the player is blocking with a shield." );
 
 			OnExplosionContext onExplosion = new OnExplosionContext( this::cancelExplosion );
 			onExplosion.addCondition( new Condition.IsServer() )
-				.addCondition( this::isAnyoneBlockingWithFuseCutterNearby );
+				.addCondition( this::isAnyoneBlockingWithFuseCutterNearby )
+				.addConfigs( this.maxDistance, this.cooldownRatio );
 
-			this.addConfig( this.maxDistance );
 			this.addContexts( onExplosion );
 		}
 
 		private void cancelExplosion( OnExplosionData data ) {
 			assert data.level != null;
-			Vec3 position = data.explosion.getPosition();
-			for( int i = 0; i < 2; ++i ) {
-				data.level.sendParticles( i == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE, position.x, position.y + 0.5, position.z, 32 * i, 0.25, 0.25, 0.25, 0.025 );
-			}
-			data.level.playSound( null, position.x, position.y, position.z, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.AMBIENT, 1.0f, 1.0f );
+			Vec3 position = data.explosion.getPosition().add( 0.0, 0.5, 0.0 );
+			BIG_SMOKE.spawn( data.level, position, 8 * data.radius.intValue() );
+			SMOKE.spawn( data.level, position, 12 * data.radius.intValue() );
+			SoundHandler.FIRE_EXTINGUISH.play( data.level, position );
 			data.event.setCanceled( true );
 		}
 
@@ -68,7 +73,7 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 				ItemStack itemStack = ItemHelper.getCurrentlyUsedItem( livingEntity );
 				if( this.enchantment.hasEnchantment( itemStack ) ) {
 					itemStack.hurtAndBreak( data.radius.intValue(), player, owner->owner.broadcastBreakEvent( livingEntity.getUsedItemHand() ) );
-					player.disableShield( true );
+					EntityHelper.disableCurrentItem( player, data.radius.doubleValue() * this.cooldownRatio.get() );
 					return true;
 				}
 			}
