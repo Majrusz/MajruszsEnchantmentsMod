@@ -1,0 +1,103 @@
+{
+	"enchantment.majruszsenchantments.fishing_fanatic": "釣魚狂熱",
+	"enchantment.majruszsenchantments.fishing_fanatic.desc": "有機會從釣魚中釣到其他物品.",
+	"enchantment.majruszsenchantments.fishing_fanatic.description": "有機會從釣魚中釣到其他物品.",
+	"majruszsenchantments.fanatic_level_up": "You have become greater Fishing Fanatic!",
+	"majruszsenchantments.true_level": "True",
+
+	"enchantment.majruszsenchantments.misanthropy": "人類剋星",
+	"enchantment.majruszsenchantments.misanthropy.desc": "增加對村民，掠奪者，女巫和其他玩家的傷害.",
+	"enchantment.majruszsenchantments.misanthropy.description": "增加對村民，掠奪者，女巫和其他玩家的傷害.",
+
+	"enchantment.majruszsenchantments.dodge": "規避",
+	"enchantment.majruszsenchantments.dodge.desc": "有機會完全避免任何形式的傷害.",
+	"enchantment.majruszsenchantments.dodge.description": "有機會完全避免任何形式的傷害.",
+
+	"enchantment.majruszsenchantments.enlightenment": "啟示",
+	"enchantment.majruszsenchantments.enlightenment.desc": "增加從任何來源獲得的經驗.",
+	"enchantment.majruszsenchantments.enlightenment.description": "增加從任何來源獲得的經驗.",
+
+	"enchantment.majruszsenchantments.vitality": "元氣",
+	"enchantment.majruszsenchantments.vitality.desc": "增加持有盾牌的玩家生命值.",
+	"enchantment.majruszsenchantments.vitality.description": "增加持有盾牌的玩家生命值.",
+
+	"enchantment.majruszsenchantments.phoenix_dive": "鳳凰之躍",
+	"enchantment.majruszsenchantments.phoenix_dive.desc": "從高處墜落會釋放一波火焰,從而傷害並使附近實體著火!",
+	"enchantment.majruszsenchantments.phoenix_dive.description": "從高處墜落會釋放一波火焰,從而傷害並使附近實體著火!",
+
+	"enchantment.majruszsenchantments.pufferfish_vengeance": "河豚反擊",
+	"enchantment.majruszsenchantments.pufferfish_vengeance.desc": "每次攻擊都會對目標造成負面效果.",
+	"enchantment.majruszsenchantments.pufferfish_vengeance.description": "每次攻擊都會對目標造成負面效果.",
+
+	"enchantment.majruszsenchantments.immortality": "不朽",
+	"enchantment.majruszsenchantments.immortality.desc": "當持有這種附魔的盾牌時死掉,你會欺騙死神.",
+	"enchantment.majruszsenchantments.immortality.description": "當持有這種附魔的盾牌時死掉,你會欺騙死神.",
+
+	"enchantment.majruszsenchantments.smelter": "冶煉之觸",
+	"enchantment.majruszsenchantments.smelter.desc": "自動融煉破壞的方塊.",
+	"enchantment.majruszsenchantments.smelter.description": "自動融煉破壞的方塊.",
+
+	"enchantment.majruszsenchantments.gotta_mine_fast": "挖掘狂熱",
+	"enchantment.majruszsenchantments.gotta_mine_fast.desc": "按住鼠標左鍵的時間越長,挖掘速度越快.",
+	"enchantment.majruszsenchantments.gotta_mine_fast.description": "按住鼠標左鍵的時間越長,挖掘速度越快.",
+
+	"enchantment.majruszsenchantments.leech": "寄生",
+	"enchantment.majruszsenchantments.leech.desc": "攻擊時有機會從敵人那裡竊取隨機的正面效果或半顆心.",
+	"enchantment.majruszsenchantments.leech.description": "攻擊時有機會從敵人那裡竊取隨機的正面效果或半顆心.",
+
+	"enchantment.majruszsenchantments.magic_protection": "魔法保護",
+	"enchantment.majruszsenchantments.magic_protection.desc": "防禦魔法傷害.",
+	"enchantment.majruszsenchantments.magic_protection.description": "防禦魔法傷害.",
+
+	"enchantment.majruszsenchantments.horse_swiftness": "座騎敏捷",
+	"enchantment.majruszsenchantments.horse_swiftness.desc": "提高座騎的速度.",
+	"enchantment.majruszsenchantments.horse_swiftness.description": "提高座騎的速度.",
+
+	"enchantment.majruszsenchantments.horse_protection": "座騎保護",
+	"enchantment.majruszsenchantments.horse_protection.desc": "減少座騎受到的傷害.",
+	"enchantment.majruszsenchantments.horse_protection.description": "減少座騎受到的傷害.",
+
+	"enchantment.majruszsenchantments.horse_frost_walker": "冰霜騎者",
+	"enchantment.majruszsenchantments.horse_frost_walker.desc": "當座騎在水面上行走時產生冰塊.",
+	"enchantment.majruszsenchantments.horse_frost_walker.description": "當座騎在水面上行走時產生冰塊.",
+
+	"enchantment.majruszsenchantments.telekinesis": "心靈連動",
+	"enchantment.majruszsenchantments.telekinesis.desc": "破壞方塊時將物品直接放到庫存中.",
+	"enchantment.majruszsenchantments.telekinesis.description": "破壞方塊時將物品直接放到庫存中.",
+
+	"enchantment.majruszsenchantments.absorber": "吸收",
+	"enchantment.majruszsenchantments.absorber.desc": "盾牌會吸收所有負面效果,但會犧牲耐久.",
+	"enchantment.majruszsenchantments.absorber.description": "盾牌會吸收所有負面效果,但會犧牲耐久.",
+
+	"enchantment.majruszsenchantments.hunter": "狙擊狩獵",
+	"enchantment.majruszsenchantments.hunter.desc": "增加得到的物品數量,敵人越遠,造成的傷害越大.",
+	"enchantment.majruszsenchantments.hunter.description": "增加得到的物品數量,敵人越遠,造成的傷害越大.",
+
+	"enchantment.majruszsenchantments.elder_guardian_favor": "遠古光束",
+	"enchantment.majruszsenchantments.elder_guardian_favor.desc": "成功命中後會以無法躲避或阻擋的水激光束攻擊敵人.",
+	"enchantment.majruszsenchantments.elder_guardian_favor.description": "成功命中後會以無法躲避或阻擋的水激光束攻擊敵人.",
+
+	"enchantment.majruszsenchantments.harvester": "收割",
+	"enchantment.majruszsenchantments.harvester.desc": "右鍵收穫並有機會種植作物.",
+	"enchantment.majruszsenchantments.harvester.description": "右鍵收穫並有機會種植作物.",
+
+	"enchantment.majruszsenchantments.slowness_curse": "減速詛咒",
+	"enchantment.majruszsenchantments.slowness_curse.desc": "降低玩家跑速.",
+	"enchantment.majruszsenchantments.slowness_curse.description": "降低玩家跑速.",
+
+	"enchantment.majruszsenchantments.fatigue_curse": "疲勞詛咒",
+	"enchantment.majruszsenchantments.fatigue_curse.desc": "降低玩家挖掘速度.",
+	"enchantment.majruszsenchantments.fatigue_curse.description": "降低玩家挖掘速度.",
+
+	"enchantment.majruszsenchantments.incompatibility_curse": "不兼容詛咒",
+	"enchantment.majruszsenchantments.incompatibility_curse.desc": "使物品無法附魔.",
+	"enchantment.majruszsenchantments.incompatibility_curse.description": "使物品無法附魔.",
+
+	"enchantment.majruszsenchantments.vampirism_curse": "吸血鬼詛咒",
+	"enchantment.majruszsenchantments.vampirism_curse.desc": "當玩家在陽光下時變虛弱其著火. 使寄生附魔更強.",
+	"enchantment.majruszsenchantments.vampirism_curse.description": "當玩家在陽光下時變虛弱其著火. 使寄生附魔更強.",
+
+	"enchantment.majruszsenchantments.corrosion_curse": "繡蝕詛咒",
+	"enchantment.majruszsenchantments.corrosion_curse.desc": "與水接觸時,會逐漸破壞裝甲並傷害所有者.",
+	"enchantment.majruszsenchantments.corrosion_curse.description": "與水接觸時,會逐漸破壞裝甲並傷害所有者."
+}

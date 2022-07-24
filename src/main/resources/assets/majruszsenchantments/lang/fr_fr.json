@@ -1,0 +1,126 @@
+{
+  "enchantment.majruszsenchantments.fishing_fanatic": "Maniaque de la pêche",
+  "enchantment.majruszsenchantments.fishing_fanatic.desc": "Donne une chance d'attrapper un objet supplémentaire en pêchant.",
+  "enchantment.majruszsenchantments.fishing_fanatic.description": "Donne une chance d'attrapper un objet supplémentaire en pêchant.",
+  "majruszsenchantments.fanatic_level_up": "Vous êtes devenu le grand Maniaque de la pêche !",
+  "majruszsenchantments.true_level": "Atteint",
+
+  "enchantment.majruszsenchantments.misanthropy": "Enchantement contre l'humanité",
+  "enchantment.majruszsenchantments.misanthropy.desc": "Augmente les dégats contre les villageois, les pillageois, sorcières et autres joueurs.",
+  "enchantment.majruszsenchantments.misanthropy.description": "Augmente les dégats contre les villageois, les pillageois, sorcières et autres joueurs.",
+
+  "enchantment.majruszsenchantments.dodge": "Esquive",
+  "enchantment.majruszsenchantments.dodge.desc": "Donne une chance de complètement éviter toute sorte de dégat.",
+  "enchantment.majruszsenchantments.dodge.description": "Donne une chance de complètement éviter toute sorte de dégat.",
+
+  "enchantment.majruszsenchantments.enlightenment": "Éclaircissement",
+  "enchantment.majruszsenchantments.enlightenment.desc": "Augmente l'expérience obtenue de n'importe quelle source.",
+  "enchantment.majruszsenchantments.enlightenment.description": "Augmente l'expérience obtenue de n'importe quelle source.",
+
+  "enchantment.majruszsenchantments.vitality": "Vitalité",
+  "enchantment.majruszsenchantments.vitality.desc": "Augmente la santé du joueur.",
+  "enchantment.majruszsenchantments.vitality.description": "Augmente la santé du joueur.",
+
+  "enchantment.majruszsenchantments.phoenix_dive": "Plongeon du Phoenix",
+  "enchantment.majruszsenchantments.phoenix_dive.desc": "Chuter d'un point haut provoque une vague de flammes qui fait des dégats et enflamme les ennemis proches. Égalemment, lorsque vous maintenez appuyer sur la touche pour s'accroupir (SHIFT par defaut), vous sautez plus haut !",
+  "enchantment.majruszsenchantments.phoenix_dive.description": "Chuter d'un point haut provoque une vague de flammes qui fait des dégats et enflamme les ennemis proches. Égalemment, lorsque vous maintenez appuyer sur la touche pour s'accroupir (SHIFT par defaut), vous sautez plus haut !",
+
+  "enchantment.majruszsenchantments.pufferfish_vengeance": "Vengeance du Poisson-globe",
+  "enchantment.majruszsenchantments.pufferfish_vengeance.desc": "Toute attaque inflige à la cible plusieurs désavantages.",
+  "enchantment.majruszsenchantments.pufferfish_vengeance.description": "Toute attaque inflige à la cible plusieurs désavantages.",
+
+  "enchantment.majruszsenchantments.immortality": "Immortalité",
+  "enchantment.majruszsenchantments.immortality.desc": "Vous échappez à la mort lorsque vous recevez des coups critiques.",
+  "enchantment.majruszsenchantments.immortality.description": "Vous échappez à la mort lorsque vous recevez des coups critiques.",
+
+  "enchantment.majruszsenchantments.smelter": "Fonderie",
+  "enchantment.majruszsenchantments.smelter.desc": "Lorsque le bloc est détruit, celui-ci est automatiquement fondu.",
+  "enchantment.majruszsenchantments.smelter.description": "Lorsque le bloc est détruit, celui-ci est automatiquement fondu.",
+
+  "enchantment.majruszsenchantments.gotta_mine_fast": "Autant miner vite !",
+  "enchantment.majruszsenchantments.gotta_mine_fast.desc": "Augmente la vitesse de minage tant que vous maintenez le bouton gauche de la souris.",
+  "enchantment.majruszsenchantments.gotta_mine_fast.description": "Augmente la vitesse de minage tant que vous maintenez le bouton gauche de la souris.",
+
+  "enchantment.majruszsenchantments.leech": "Sangsue",
+  "enchantment.majruszsenchantments.leech.desc": "Donne une chance de voler des avantages ou de la santé des ennemis.",
+  "enchantment.majruszsenchantments.leech.description": "Donne une chance de voler des avantages ou de la santé des ennemis.",
+
+  "enchantment.majruszsenchantments.magic_protection": "Protection magique",
+  "enchantment.majruszsenchantments.magic_protection.desc": "Protège contre les dégats magiques des crocs des Évocateurs, des lasers des Guardiens et des potions de dégat instantané.",
+  "enchantment.majruszsenchantments.magic_protection.description": "Protège contre les dégats magiques des crocs des Évocateurs, des lasers des Guardiens et des potions de dégat instantané.",
+
+  "enchantment.majruszsenchantments.horse_swiftness": "Vélocité",
+  "enchantment.majruszsenchantments.horse_swiftness.desc": "Augmente la vitesse de mouvement du cheval.",
+  "enchantment.majruszsenchantments.horse_swiftness.description": "Augmente la vitesse de mouvement du cheval.",
+
+  "enchantment.majruszsenchantments.horse_protection": "Protection du cheval",
+  "enchantment.majruszsenchantments.horse_protection.desc": "Réduit le taux de dégat reçu par le cheval.",
+  "enchantment.majruszsenchantments.horse_protection.description": "Réduit le taux de dégat reçu par le cheval.",
+
+  "enchantment.majruszsenchantments.horse_frost_walker": "Cavalier de glace",
+  "enchantment.majruszsenchantments.horse_frost_walker.desc": "Créer des blocs de glaces lorsque le cheval marche sur l'eau.",
+  "enchantment.majruszsenchantments.horse_frost_walker.description": "Créer des blocs de glaces lorsque le cheval marche sur l'eau.",
+
+  "enchantment.majruszsenchantments.telekinesis": "Télékinésie",
+  "enchantment.majruszsenchantments.telekinesis.desc": "Si possible, ajoute l'objet directement dans l'inventaire quand le bloc est détruit.",
+  "enchantment.majruszsenchantments.telekinesis.description": "Si possible, ajoute l'objet directement dans l'inventaire quand le bloc est détruit.",
+
+  "enchantment.majruszsenchantments.absorber": "Absorption",
+  "enchantment.majruszsenchantments.absorber.desc": "Le bouclier absorbe tous les effets négatifs au dépent de sa durabilité.",
+  "enchantment.majruszsenchantments.absorber.description": "Le bouclier absorbe tous les effets négatifs au dépent de sa durabilité.",
+
+  "enchantment.majruszsenchantments.hunter": "Chasseur",
+  "enchantment.majruszsenchantments.hunter.desc": "Augmente le nombre d'objets que vous collectez et plus loin se trouve l'ennemi, plus de dégats vous causez.",
+  "enchantment.majruszsenchantments.hunter.description": "Augmente le nombre d'objets que vous collectez et plus loin se trouve l'ennemi, plus de dégats vous causez.",
+
+  "enchantment.majruszsenchantments.elder_guardian_favor": "Faveur du Vieux Gardien",
+  "enchantment.majruszsenchantments.elder_guardian_favor.desc": "Après un coup réussi, les ennemis sont attaqués par un rayon laser qui ne peut être éviter ou bloquer.",
+  "enchantment.majruszsenchantments.elder_guardian_favor.description": "Après un coup réussi, les ennemis sont attaqués par un rayon laser qui ne peut être éviter ou bloquer.",
+
+  "enchantment.majruszsenchantments.harvester": "Cueilleur",
+  "enchantment.majruszsenchantments.harvester.desc": "Donne l'option de cueillir avec le clique droit et donne une chance de faire pousser les graines aux alentours.",
+  "enchantment.majruszsenchantments.harvester.description": "Donne l'option de cueillir avec le clique droit et donne une chance de faire pousser les graines aux alentours.",
+
+  "enchantment.majruszsenchantments.mithridatism": "Mithridatisation",
+  "enchantment.majruszsenchantments.mithridatism.desc": "Réduit les dégats de certains effets négatifs et donne l'effet Absorption peu importe quand l'effet négatif est reçu.",
+  "enchantment.majruszsenchantments.mithridatism.description": "Réduit les dégats de certains effets négatifs et donne l'effet Absorption peu importe quand l'effet négatif est reçu.",
+  "effect.majruszsenchantments.mithridatism_protection": "Mithridatisation",
+  "majruszsenchantments.mithridatism_level_up": "Vous avez développée une grande résilience face à la douleur !",
+
+  "enchantment.majruszsenchantments.fuse_cutter": "Coupeur de mèches",
+  "enchantment.majruszsenchantments.fuse_cutter.desc": "Fait que les explosions proches ne détruisent pas le blocs et ne font pas de dégats.",
+  "enchantment.majruszsenchantments.fuse_cutter.description": "Fait que les explosions proches ne détruisent pas le blocs et ne font pas de dégats.",
+
+  "enchantment.majruszsenchantments.sixth_sense": "Sixième sens",
+  "enchantment.majruszsenchantments.sixth_sense.desc": "Mets en évidence les monstres proches après être rester immobile pendant un certain temps.",
+  "enchantment.majruszsenchantments.sixth_sense.description": "Mets en évidence les monstres proches après être rester immobile pendant un certain temps.",
+
+  "enchantment.majruszsenchantments.slowness_curse": "Sort de lenteur",
+  "enchantment.majruszsenchantments.slowness_curse.desc": "Réduit la vitesse du joueur.",
+  "enchantment.majruszsenchantments.slowness_curse.description": "Réduit la vitesse du joueur.",
+
+  "enchantment.majruszsenchantments.fatigue_curse": "Sort de fatigue",
+  "enchantment.majruszsenchantments.fatigue_curse.desc": "Réduit la vitesse de minage du joueur.",
+  "enchantment.majruszsenchantments.fatigue_curse.description": "Réduit la vitesse de minage du joueur.",
+
+  "enchantment.majruszsenchantments.incompatibility_curse": "Sort d'incompatibilité",
+  "enchantment.majruszsenchantments.incompatibility_curse.desc": "Rend impossible pour n'importe quel enchantement d'être attribué à un objet.",
+  "enchantment.majruszsenchantments.incompatibility_curse.description": "Rend impossible pour n'importe quel enchantement d'être attribué à un objet.",
+
+  "enchantment.majruszsenchantments.vampirism_curse": "Sort de vampirisme",
+  "enchantment.majruszsenchantments.vampirism_curse.desc": "Affaiblit le joueur et l'enflamme lorsqu'il est dehors durant la journée. Renforce l'enchantement Sangsue.",
+  "enchantment.majruszsenchantments.vampirism_curse.description": "Affaiblit le joueur et l'enflamme lorsqu'il est dehors durant la journée. Renforce l'enchantement Sangsue.",
+
+  "enchantment.majruszsenchantments.corrosion_curse": "Sort de corrosion",
+  "enchantment.majruszsenchantments.corrosion_curse.desc": "Détruit progressivement l'armure et touche son possesseur lorsque celui-ci entre en contact avec l'eau.",
+  "enchantment.majruszsenchantments.corrosion_curse.description": "Détruit progressivement l'armure et touche son possesseur lorsque celui-ci entre en contact avec l'eau.",
+
+  "item.majruszsenchantments.wonderful_book": "Livre Merveilleux",
+  "item.majruszsenchantments.wonderful_book.enchanting_energy": "Mana:",
+  "item.majruszsenchantments.wonderful_book.enchanting_energy_max": "Mana au maximum!",
+  "item.majruszsenchantments.wonderful_book.enchanting_cost": "Coût de niveau:",
+  "item.majruszsenchantments.wonderful_book.level": "niveau",
+  "item.majruszsenchantments.wonderful_book.levels": "niveaux",
+  "item.majruszsenchantments.wonderful_book.hint": "Vous pouvez augmentez votre mana avec du Lapis-lazuli dans un Établi",
+  "item.majruszsenchantments.wonderful_book.transmute": "Appuyez sur le bouton droit de la souris pour transformer un livre d'enchantement en le gardant..."
+}

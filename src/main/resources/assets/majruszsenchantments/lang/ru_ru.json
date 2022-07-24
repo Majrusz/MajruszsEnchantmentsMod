@@ -1,0 +1,143 @@
+{
+  "enchantment.majruszsenchantments.fishing_fanatic": "Фанат рыбалки",
+  "enchantment.majruszsenchantments.fishing_fanatic.desc": "Дает шанс поймать дополнительные предметы с рыбалки. Каждый дополнительный предмет дает вам дополнительный опыт и быстрее ломает вашу удочку.",
+  "enchantment.majruszsenchantments.fishing_fanatic.description": "Дает шанс поймать дополнительные предметы с рыбалки.Каждый дополнительный предмет дает вам дополнительный опыт и быстрее ломает вашу удочку.",
+  "majruszsenchantments.fanatic_level_up": "Вы стали большим фанатом рыбалки!",
+  "majruszsenchantments.true_level": "Истинный",
+
+  "enchantment.majruszsenchantments.misanthropy": "Чары против людей",
+  "enchantment.majruszsenchantments.misanthropy.desc": "Увеличивает урон против жителей деревни, грабителей, ведьм и других игроков.",
+  "enchantment.majruszsenchantments.misanthropy.description": "Увеличивает урон против жителей деревни, грабителей, ведьм и других игроков.",
+
+  "enchantment.majruszsenchantments.dodge": "Уклонение",
+  "enchantment.majruszsenchantments.dodge.desc": "Дает шанс полностью избежать любого вида повреждений, но каждое успешное уклонение расходует запас прочности.",
+  "enchantment.majruszsenchantments.dodge.description": "Дает шанс полностью избежать любого вида повреждений, но каждое успешное уклонение расходует запас прочности.",
+
+  "enchantment.majruszsenchantments.enlightenment": "Озарение",
+  "enchantment.majruszsenchantments.enlightenment.desc": "Увеличивает опыт, получаемый из любого источника. Бонус увеличивается с каждым предметом брони, на котором есть эти чары! Также повышает уровень зачарования на столе зачарования",
+  "enchantment.majruszsenchantments.enlightenment.description": "Увеличивает опыт, получаемый из любого источника. Бонус увеличивается с каждым предметом брони, на котором есть эти чары! Также повышает уровень зачарования на столе зачарования",
+
+  "enchantment.majruszsenchantments.vitality": "Живучесть",
+  "enchantment.majruszsenchantments.vitality.desc": "Увеличивает здоровье игрока.",
+  "enchantment.majruszsenchantments.vitality.description": "Увеличивает здоровье игрока.",
+
+  "enchantment.majruszsenchantments.phoenix_dive": "Падение феникса",
+  "enchantment.majruszsenchantments.phoenix_dive.desc": "Падение с высоты вызывает выброс волны огня, которая наносит урон и поджигает ближайших врагов. Кроме того, пока вы кродетесь (def. SHIFT) вы прыгнете выше!",
+  "enchantment.majruszsenchantments.phoenix_dive.description": "Падение с высоты вызывает выброс волны огня, которая наносит урон и поджигает ближайших врагов. Кроме того, пока вы кродетесь (def. SHIFT) вы прыгнете выше!",
+
+  "enchantment.majruszsenchantments.pufferfish_vengeance": "Месть иглобрюха",
+  "enchantment.majruszsenchantments.pufferfish_vengeance.desc": "Каждая атака накладывает на цель следующие дебаффы: Яд IV , Голод III , Тошнота II .",
+  "enchantment.majruszsenchantments.pufferfish_vengeance.description": "Каждая атака накладывает на цель следующие дебаффы: Яд IV , Голод III , Тошнота II .",
+
+  "enchantment.majruszsenchantments.immortality": "Бессмертие",
+  "enchantment.majruszsenchantments.immortality.desc": "Удерживая щит с этим зачарованием, вы обманете смерть, но щит будет сломан",
+  "enchantment.majruszsenchantments.immortality.description": "Удерживая щит с этим зачарованием, вы обманете смерть, но щит будет сломан",
+
+  "enchantment.majruszsenchantments.smelter": "Плавильщик",
+  "enchantment.majruszsenchantments.smelter.desc": "Дает шанс расплавить блок при разрушении.(100% на уровне 3)",
+  "enchantment.majruszsenchantments.smelter.description": "Дает шанс расплавить блок при разрушении.(100% на уровне 3)",
+
+  "enchantment.majruszsenchantments.gotta_mine_fast": "Нужно копать быстрее!",
+  "enchantment.majruszsenchantments.gotta_mine_fast.desc": "Чем дольше вы удерживаете левую кнопку мыши, тем выше скорость копания. (до x4 через несколько минут!)",
+  "enchantment.majruszsenchantments.gotta_mine_fast.description": "Чем дольше вы удерживаете левую кнопку мыши, тем выше скорость копания. (до x4 через несколько минут!)",
+
+  "enchantment.majruszsenchantments.leech": "Пиявка",
+  "enchantment.majruszsenchantments.leech.desc": "У каждой атаки есть шанс украсть случайный положительный эффект или половину сердца у врага.",
+  "enchantment.majruszsenchantments.leech.description": "У каждой атаки есть шанс украсть случайный положительный эффект или половину сердца у врага.",
+
+  "enchantment.majruszsenchantments.magic_protection": "Защита от магии",
+  "enchantment.majruszsenchantments.magic_protection.desc": "Защищает от таких магических атак, как челюсти вызывателя, луч стража и зелье мгновенного урона.",
+  "enchantment.majruszsenchantments.magic_protection.description": "Защищает от таких магических атак, как челюсти вызывателя, луч стража и зелье мгновенного урона.",
+
+  "enchantment.majruszsenchantments.horse_swiftness": "Стремительность",
+  "enchantment.majruszsenchantments.horse_swiftness.desc": "Увеличивает скорость передвижения лошади.",
+  "enchantment.majruszsenchantments.horse_swiftness.description": "Увеличивает скорость передвижения лошади.",
+
+  "enchantment.majruszsenchantments.horse_protection": "Защита лошади",
+  "enchantment.majruszsenchantments.horse_protection.desc": "Уменьшает количество повреждений, получаемых лошадью.",
+  "enchantment.majruszsenchantments.horse_protection.description": "Уменьшает количество повреждений, получаемых лошадью.",
+
+  "enchantment.majruszsenchantments.horse_frost_walker": "Ледяные копыта",
+  "enchantment.majruszsenchantments.horse_frost_walker.desc": "Замораживает воду под лошадью.",
+  "enchantment.majruszsenchantments.horse_frost_walker.description": "Замораживает воду под лошадью.",
+
+  "enchantment.majruszsenchantments.telekinesis": "Телекинез",
+  "enchantment.majruszsenchantments.telekinesis.desc": "Добавляет выпадающие предметы непосредственно в инвентарь игрока, если это возможно.",
+  "enchantment.majruszsenchantments.telekinesis.description": "Добавляет выпадающие предметы непосредственно в инвентарь игрока, если это возможно.",
+
+  "enchantment.majruszsenchantments.absorber": "Абсорбент",
+  "enchantment.majruszsenchantments.absorber.desc": "Щит поглощает все негативные эффекты за счет прочности.",
+  "enchantment.majruszsenchantments.absorber.description": "Щит поглощает все негативные эффекты за счет прочности.",
+
+  "enchantment.majruszsenchantments.hunter": "Охотник",
+  "enchantment.majruszsenchantments.hunter.desc": "Увеличивает наносимый урон вместе с увеличением дистанции до цели. Также увеличивает количество добычи. Накладывает штраф к урону, если цель слишком близко",
+  "enchantment.majruszsenchantments.hunter.description": "Увеличивает наносимый урон вместе с увеличением дистанции до цели. Также увеличивает количество добычи. Накладывает штраф к урону, если цель слишком близко",
+
+  "enchantment.majruszsenchantments.elder_guardian_favor": "Благословение древнего стража",
+  "enchantment.majruszsenchantments.elder_guardian_favor.desc": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать. Наносит повышенный урон, когда игрок и цель находятся в воде.",
+  "enchantment.majruszsenchantments.elder_guardian_favor.description": "Успешное попадание в цель также поражает ее лучом стража, который нельзя отклонить или заблокировать. Наносит повышенный урон, когда игрок и цель находятся в воде.",
+
+  "enchantment.majruszsenchantments.harvester": "Жнец",
+  "enchantment.majruszsenchantments.harvester.desc": "Дает возможность правой кнопкой мыши собирать урожай и выращивать близлежащие культуры.",
+  "enchantment.majruszsenchantments.harvester.description": "Дает возможность правой кнопкой мыши собирать урожай и выращивать близлежащие культуры.",
+
+  "enchantment.majruszsenchantments.mithridatism": "Митридатизм",
+  "enchantment.majruszsenchantments.mithridatism.desc": "Уменьшает урон от некоторых негативных эффектов и дает Поглощение при наложении негативного эффекта.",
+  "enchantment.majruszsenchantments.mithridatism.description": "Уменьшает урон от некоторых негативных эффектов и дает Поглощение при наложении негативного эффекта.",
+  "effect.majruszsenchantments.mithridatism_protection": "Митридатизм",
+  "majruszsenchantments.mithridatism_level_up": "Вы развили большую устойчивость к негативным воздействиям!",
+
+  "enchantment.majruszsenchantments.fuse_cutter": "Сапер",
+  "enchantment.majruszsenchantments.fuse_cutter.desc": "Отменяет взрывы поблизости и не наносит урона, если игрок защищается щитом.",
+  "enchantment.majruszsenchantments.fuse_cutter.description": "Отменяет взрывы поблизости и не наносит урона, если игрок защищается щитом.",
+
+  "enchantment.majruszsenchantments.sixth_sense": "Шестое чувство",
+  "enchantment.majruszsenchantments.sixth_sense.desc": "Выделяет монстров в радиусе 15 блоков после того, как игрок постоит неподвижно несколько секунд.",
+  "enchantment.majruszsenchantments.sixth_sense.description": "Выделяет монстров в радиусе 15 блоков после того, как игрок постоит неподвижно несколько секунд.",
+
+  "enchantment.majruszsenchantments.death_wish": "Последняя воля",
+  "enchantment.majruszsenchantments.death_wish.desc": "Увеличивает наносимый урон, равный проценту потерянного здоровья.",
+  "enchantment.majruszsenchantments.death_wish.description": "Увеличивает наносимый урон, равный проценту потерянного здоровья.",
+
+  "enchantment.majruszsenchantments.guardian_angel": "Ангел-хранитель",
+  "enchantment.majruszsenchantments.guardian_angel.desc": "Перенаправляет игроку 25% урона от прирученных животных и жителей деревни и применяет к ним суммируемое снижение урона.",
+  "enchantment.majruszsenchantments.guardian_angel.description": "Перенаправляет игроку 25% урона от прирученных животных и жителей деревни и применяет к ним суммируемое снижение урона.",
+
+  "enchantment.majruszsenchantments.slowness_curse": "Проклятие медлительности",
+  "enchantment.majruszsenchantments.slowness_curse.desc": "Уменьшает скорость передвижения игрока.",
+  "enchantment.majruszsenchantments.slowness_curse.description": "Уменьшает скорость передвижения игрока.",
+
+  "enchantment.majruszsenchantments.fatigue_curse": "Проклятие усталости",
+  "enchantment.majruszsenchantments.fatigue_curse.desc": "Уменьшает скорость добычи блоков.",
+  "enchantment.majruszsenchantments.fatigue_curse.description": "Уменьшает скорость добычи блоков.",
+
+  "enchantment.majruszsenchantments.incompatibility_curse": "Проклятье несовместимости",
+  "enchantment.majruszsenchantments.incompatibility_curse.desc": "Делает невозможным наложение каких-либо чар на предмет.",
+  "enchantment.majruszsenchantments.incompatibility_curse.description": "Делает невозможным наложение каких-либо чар на предмет.",
+
+  "enchantment.majruszsenchantments.vampirism_curse": "Проклятье вампиризма",
+  "enchantment.majruszsenchantments.vampirism_curse.desc": "Ослабляет и поджигает игрока, когда он находится под солнечным светом, но усиливает зачарование - Пиявка.",
+  "enchantment.majruszsenchantments.vampirism_curse.description": "Ослабляет и поджигает игрока, когда он находится под солнечным светом, но усиливает зачарование - Пиявка.",
+
+  "enchantment.majruszsenchantments.corrosion_curse": "Проклятье коррозии",
+  "enchantment.majruszsenchantments.corrosion_curse.desc": "Постепенно разрушает броню и вредит владельцу при соприкосновении с водой.",
+  "enchantment.majruszsenchantments.corrosion_curse.description": "Постепенно разрушает броню и вредит владельцу при соприкосновении с водой.",
+
+  "item.majruszsenchantments.wonderful_book": "Восхитительная книга",
+  "item.majruszsenchantments.wonderful_book.enchanting_energy": "Сила зачарования:",
+  "item.majruszsenchantments.wonderful_book.enchanting_energy_max": "Максимальная сила зачарования!",
+  "item.majruszsenchantments.wonderful_book.enchanting_cost": "Цена:",
+  "item.majruszsenchantments.wonderful_book.level": "уровень",
+  "item.majruszsenchantments.wonderful_book.levels": "уровней",
+  "item.majruszsenchantments.wonderful_book.hint": "Вы можете увеличить силу зачарования с помощью лазурита в таблице крафта.",
+  "item.majruszsenchantments.wonderful_book.transmute": "Нажмите ПКМ, чтобы превратить в книгу зачарования со случайными эффектами",
+
+  "advancements.majruszsenchantments.scholar.title": "Ученый",
+  "advancements.majruszsenchantments.scholar.description": "Получите Озарение II на всех доспехах",
+  "advancements.majruszsenchantments.nothing_can_stop_me.title": "Ничто Не Может Остановить Меня",
+  "advancements.majruszsenchantments.nothing_can_stop_me.description": "Получите следующий уровень Фаната рыбалки, даже если идет дождь",
+  "advancements.majruszsenchantments.fishing_fanatic.title": "Мне Это Очень Нравится",
+  "advancements.majruszsenchantments.fishing_fanatic.description": "Приобретите первый уровень Фаната рыбалки",
+  "advancements.majruszsenchantments.fishing_fanatic_true.title": "Хорошо... Я Зависим От Этого",
+  "advancements.majruszsenchantments.fishing_fanatic_true.description": "Получите восьмой уровень Рыболовного Фаната"
+}

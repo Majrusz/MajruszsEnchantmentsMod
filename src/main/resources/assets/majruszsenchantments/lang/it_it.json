@@ -1,0 +1,103 @@
+{
+	"enchantment.majruszsenchantments.fishing_fanatic": "Fanatico della pesca",
+	"enchantment.majruszsenchantments.fishing_fanatic.desc": "Ti dà la possibilità di catturare oggetti aggiuntivi dalla pesca.",
+	"enchantment.majruszsenchantments.fishing_fanatic.description": "Ti dà la possibilità di catturare oggetti aggiuntivi dalla pesca.",
+	"majruszsenchantments.fanatic_level_up": "Sei diventato un grande fanatico della pesca!",
+	"majruszsenchantments.true_level": "Il vero",
+
+	"enchantment.majruszsenchantments.misanthropy": "Misantropia",
+	"enchantment.majruszsenchantments.misanthropy.desc": "Aumenta il danno su i villici, i predoni, le streghe e gli altri giocatori.",
+	"enchantment.majruszsenchantments.misanthropy.description": "Aumenta il danno su i villici, i predoni, le streghe e gli altri giocatori.",
+
+	"enchantment.majruszsenchantments.dodge": "Elusione",
+	"enchantment.majruszsenchantments.dodge.desc": "Ti dà la possibilità di evitare completamente qualsiasi tipo di danno.",
+	"enchantment.majruszsenchantments.dodge.description": "Ti dà la possibilità di evitare completamente qualsiasi tipo di danno.",
+
+	"enchantment.majruszsenchantments.enlightenment": "Illuminismo",
+	"enchantment.majruszsenchantments.enlightenment.desc": "Aumenta l'esperienza acquisita in qualsiasi modo.",
+	"enchantment.majruszsenchantments.enlightenment.description": "Aumenta l'esperienza acquisita in qualsiasi modo.",
+
+	"enchantment.majruszsenchantments.vitality": "Vitalità",
+	"enchantment.majruszsenchantments.vitality.desc": "Aumenta la vita dei giocatori.",
+	"enchantment.majruszsenchantments.vitality.description": "Aumenta la vita dei giocatori.",
+
+	"enchantment.majruszsenchantments.phoenix_dive": "Fiamme della fenice",
+	"enchantment.majruszsenchantments.phoenix_dive.desc": "La caduta dall'alto provoca il rilascio di un'onda di fuoco che danneggia e incendia i nemici vicini. Inoltre, se tieni premuto il tasto per accovacciarsi (di solito è SHIFT) salterai più in alto!",
+	"enchantment.majruszsenchantments.phoenix_dive.description": "La caduta dall'alto provoca il rilascio di un'onda di fuoco che danneggia e incendia i nemici vicini. Inoltre, se tieni premuto il tasto per accovacciarsi (di solito è SHIFT) salterai più in alto!",
+
+	"enchantment.majruszsenchantments.pufferfish_vengeance": "Vendetta del pesce palla",
+	"enchantment.majruszsenchantments.pufferfish_vengeance.desc": "A ogni attacco infliggerai diversi debuff.",
+	"enchantment.majruszsenchantments.pufferfish_vengeance.description": "A ogni attacco infliggerai diversi debuff.",
+
+	"enchantment.majruszsenchantments.immortality": "Immortalità",
+	"enchantment.majruszsenchantments.immortality.desc": "Ti salverai da un colpo fatale.",
+	"enchantment.majruszsenchantments.immortality.description": "ti salverai da un colpo fatale.",
+
+	"enchantment.majruszsenchantments.smelter": "Fonderia",
+	"enchantment.majruszsenchantments.smelter.desc": "Quando rompi un blocco viene automanticamente sciolto.",
+	"enchantment.majruszsenchantments.smelter.description": "Quando rompi un blocco viene automanticamente sciolto.",
+
+	"enchantment.majruszsenchantments.gotta_mine_fast": "Trivella Umana",
+	"enchantment.majruszsenchantments.gotta_mine_fast.desc": "Aumenta la tua velocità di scavo più a lungo tieni premuto il sinistro del mouse.",
+	"enchantment.majruszsenchantments.gotta_mine_fast.description": "Aumenta la tua velocità di scavo più a lungo tieni premuto il sinistro del mouse.",
+
+	"enchantment.majruszsenchantments.leech": "Sanguisuga",
+	"enchantment.majruszsenchantments.leech.desc": "ti dà la possibilità di rubare effetti positivi o salute ai nemici.",
+	"enchantment.majruszsenchantments.leech.description": "ti dà la possibilità di rubare effetti positivi o salute ai nemici.",
+
+	"enchantment.majruszsenchantments.magic_protection": "Protezione dalla magia",
+	"enchantment.majruszsenchantments.magic_protection.desc": "Protegge da danni magici come Zanne dei evocatori, raggio dei guardiani e dalle pozione di danno istantaneo.",
+	"enchantment.majruszsenchantments.magic_protection.description": "Protegge da danni magici come Zanne dei evocatori, raggio dei guardiani e dalle pozione di danno istantaneo.",
+
+	"enchantment.majruszsenchantments.horse_swiftness": "Rapidità",
+	"enchantment.majruszsenchantments.horse_swiftness.desc": "Aumenta la velocità del cavallo.",
+	"enchantment.majruszsenchantments.horse_swiftness.description": "Aumenta la velocità del cavallo.",
+
+	"enchantment.majruszsenchantments.horse_protection": "Protezione Equina",
+	"enchantment.majruszsenchantments.horse_protection.desc": "Riduce la quantità di danni ricevuti dal cavallo.",
+	"enchantment.majruszsenchantments.horse_protection.description": "Riduce la quantità di danni ricevuti dal cavallo.",
+
+	"enchantment.majruszsenchantments.horse_frost_walker": "Galoppo ghiacciato",
+	"enchantment.majruszsenchantments.horse_frost_walker.desc": "Ghiaccia l'acqua temporaneamente mentre il cavallo si muove sopra di essa.",
+	"enchantment.majruszsenchantments.horse_frost_walker.description": "Ghiaccia l'acqua temporaneamente mentre il cavallo si muove sopra di essa.",
+
+	"enchantment.majruszsenchantments.telekinesis": "Telecinesi",
+	"enchantment.majruszsenchantments.telekinesis.desc": "Aggiunge gli oggetti che rompi/scavi direttamente nell'inventario.",
+	"enchantment.majruszsenchantments.telekinesis.description": "Aggiunge gli oggetti che rompi/scavi direttamente nell'inventario.",
+
+	"enchantment.majruszsenchantments.absorber": "Assorbitore",
+	"enchantment.majruszsenchantments.absorber.desc": "Lo scudo assorbe al costo della sua durabilitá tutti gli effetti negativi.",
+	"enchantment.majruszsenchantments.absorber.description": "Lo scudo assorbe al costo della sua durabilitá tutti gli effetti negativi.",
+
+	"enchantment.majruszsenchantments.hunter": "Cacciatore",
+	"enchantment.majruszsenchantments.hunter.desc": "Aumenta bottino e i danni che fai più è lontano il tuo bersaglio.",
+	"enchantment.majruszsenchantments.hunter.description": "Aumenta bottino e i danni che fai più è lontano il tuo bersaglio.",
+
+	"enchantment.majruszsenchantments.elder_guardian_favor": "Il favore del guardiano antico",
+	"enchantment.majruszsenchantments.elder_guardian_favor.desc": "Dopo aver colpito con successo, il nemico viene attaccato da un raggio che non può essere schivato o bloccato.",
+	"enchantment.majruszsenchantments.elder_guardian_favor.description": "Dopo aver colpito con successo, il nemico viene attaccato da un raggio che non può essere schivato o bloccato.",
+
+	"enchantment.majruszsenchantments.harvester": "Mietitore",
+	"enchantment.majruszsenchantments.harvester.desc": "Puoi prendere il raccolto col tasto destro ripiantandolo e hai la possibilità di coltivare raccolti vicini.",
+	"enchantment.majruszsenchantments.harvester.description": "Puoi prendere il raccolto col tasto destro ripiantandolo e hai la possibilità di coltivare raccolti vicini.",
+
+	"enchantment.majruszsenchantments.slowness_curse": "Maledizione della lentezza",
+	"enchantment.majruszsenchantments.slowness_curse.desc": "Ti rende più lento.",
+	"enchantment.majruszsenchantments.slowness_curse.description": "Ti rende più lento.",
+
+	"enchantment.majruszsenchantments.fatigue_curse": "Maledizione della fatica",
+	"enchantment.majruszsenchantments.fatigue_curse.desc": "Ti rende più lento nel minare.",
+	"enchantment.majruszsenchantments.fatigue_curse.description": "Ti rende più lento nel minare.",
+
+	"enchantment.majruszsenchantments.incompatibility_curse": "Maledizione dell'incobatibilità",
+	"enchantment.majruszsenchantments.incompatibility_curse.desc": "Rende impossibile aggiungere un incantesimo sul oggetto.",
+	"enchantment.majruszsenchantments.incompatibility_curse.description": "Rende impossibile aggiungere un incantesimo sul oggetto.",
+
+	"enchantment.majruszsenchantments.vampirism_curse": "Maledizione vampirica",
+	"enchantment.majruszsenchantments.vampirism_curse.desc": "Indebolisce e dà fuoco al giocatore quando è fuori durante il giorno. Rende più forte l'incantesimo Sanguisuga.",
+	"enchantment.majruszsenchantments.vampirism_curse.description": "Indebolisce e dà fuoco al giocatore quando è fuori durante il giorno. Rende più forte l'incantesimo Sanguisuga.",
+
+	"enchantment.majruszsenchantments.corrosion_curse": "Maledizione della corrosione",
+	"enchantment.majruszsenchantments.corrosion_curse.desc": "Distrugge gradualmente l'armatura e ti ferisce quando vieni a contatto con l'acqua.",
+	"enchantment.majruszsenchantments.corrosion_curse.description": "Distrugge gradualmente l'armatura e ti ferisce quando vieni a contatto con l'acqua."
+}

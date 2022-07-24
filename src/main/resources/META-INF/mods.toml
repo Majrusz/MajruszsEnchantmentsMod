@@ -1,36 +1,36 @@
 modLoader="javafml"
 loaderVersion="[41,)"
 license="MIT License"
-issueTrackerURL="https://github.com/Majrusz/WonderfulEnchantmentsMod/issues"
+issueTrackerURL="https://github.com/Majrusz/MajruszsEnchantmentsMod/issues"
 
 [[mods]]
-    modId="wonderfulenchantments"
+    modId="majruszsenchantments"
     version="1.7.0"
-    displayName="Wonderful Enchantments"
-    updateJSONURL="https://raw.githubusercontent.com/Majrusz/WonderfulEnchantmentsMod/1.19/update.json"
+    displayName="Majrusz's Enchantments"
+    updateJSONURL="https://raw.githubusercontent.com/Majrusz/MajruszsEnchantmentsMod/1.19/update.json"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
     logoFile="logo.png"
-    credits="Thanks for all your support!"
+    credits="Thanks for all your support and downloads!"
     authors="Majrusz"
-    description='''Mod adding a lot of new unique enchantments to the game.'''
+    description='''adds plenty of unique and balanced enchantments to the game.'''
 
-[[dependencies.wonderfulenchantments]]
+[[dependencies.majruszsenchantments]]
     modId="forge"
     mandatory=true
     versionRange="[41,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.wonderfulenchantments]]
+[[dependencies.majruszsenchantments]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.19,1.20)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.wonderfulenchantments]]
+[[dependencies.majruszsenchantments]]
     modId="majruszlib"
     mandatory=true
-    versionRange="[2.10.0,3.0.0)"
+    versionRange="[2.12.0,3.0.0)"
     ordering="NONE"
     side="BOTH"

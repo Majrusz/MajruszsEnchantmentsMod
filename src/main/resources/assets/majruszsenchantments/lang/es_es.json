@@ -1,0 +1,103 @@
+{
+  "enchantment.majruszsenchantments.fishing_fanatic": "Fanático de la Pesca",
+  "enchantment.majruszsenchantments.fishing_fanatic.desc": "Posibilidad the pescar objetos extra.",
+  "enchantment.majruszsenchantments.fishing_fanatic.description": "Posibilidad the pescar objetos extra.",
+  "majruszsenchantments.fanatic_level_up": "Has mejorado en la pesca!",
+  "majruszsenchantments.true_level": "Cierto",
+
+  "enchantment.majruszsenchantments.misanthropy": "Encantamiento Contra La Humanidad",
+  "enchantment.majruszsenchantments.misanthropy.desc": "Incrementa el daño contra los Aldeanos, Saqueadores, Brujas y otros jugadores.",
+  "enchantment.majruszsenchantments.misanthropy.description": "Incrementa el daño contra los Aldeanos, Saqueadores, Brujas y otros jugadores.",
+
+  "enchantment.majruszsenchantments.dodge": "Esquiva",
+  "enchantment.majruszsenchantments.dodge.desc": "Posibilidad de prevenir cualquier typo de daño.",
+  "enchantment.majruszsenchantments.dodge.description": "Posibilidad de prevenir cualquier typo de daño.",
+
+  "enchantment.majruszsenchantments.enlightenment": "Iluminación",
+  "enchantment.majruszsenchantments.enlightenment.desc": "Incrementa la experiencia de qualquier fuente.",
+  "enchantment.majruszsenchantments.enlightenment.description": "Incrementa la experiencia de qualquier fuente.",
+
+  "enchantment.majruszsenchantments.vitality": "Vitalidad",
+  "enchantment.majruszsenchantments.vitality.desc": "Incrementa la vida del jugador.",
+  "enchantment.majruszsenchantments.vitality.description": "Incrementa la vida del jugador.",
+
+  "enchantment.majruszsenchantments.phoenix_dive": "Phoenix Dive",
+  "enchantment.majruszsenchantments.phoenix_dive.desc": "Al caer de cierta altura, causa una ola de fuego que daña enemigos cercanos y los prende en llamas. Tambien saltaras mas alto si presionas sneak antes de saltar! (def. SHIFT)",
+  "enchantment.majruszsenchantments.phoenix_dive.description": "Al caer de cierta altura, causa una ola de fuego que daña enemigos cercanos y los prende en llamas. Tambien saltaras mas alto si presionas sneak antes de saltar! (def. SHIFT)",
+
+  "enchantment.majruszsenchantments.pufferfish_vengeance": "Venganza del Pez Globo",
+  "enchantment.majruszsenchantments.pufferfish_vengeance.desc": "Cada attaque infligira varios debuffs al enemigo.",
+  "enchantment.majruszsenchantments.pufferfish_vengeance.description": "Cada attaque infligira varios debuffs al enemigo.",
+
+  "enchantment.majruszsenchantments.immortality": "Immortalidad",
+  "enchantment.majruszsenchantments.immortality.desc": "Engañaras a la muerte en un golpe fatal al costo del objeto.",
+  "enchantment.majruszsenchantments.immortality.description": "Engañaras a la muerte en un golpe fatal al costo del objeto.",
+
+  "enchantment.majruszsenchantments.smelter": "Fundir",
+  "enchantment.majruszsenchantments.smelter.desc": "Cuando el bloque se destruye, se fundira automaticamente.",
+  "enchantment.majruszsenchantments.smelter.description": "Cuando el bloque se destruye, se fundira automaticamente.",
+
+  "enchantment.majruszsenchantments.gotta_mine_fast": "Gotta Mine Fast",
+  "enchantment.majruszsenchantments.gotta_mine_fast.desc": "Incrementa la velocidad de excavación lo mas que sostengas el boton del mouse izquierdo.",
+  "enchantment.majruszsenchantments.gotta_mine_fast.description": "Incrementa la velocidad de excavación lo mas que sostengas el boton del mouse izquierdo.",
+
+  "enchantment.majruszsenchantments.leech": "Sanguijuela",
+  "enchantment.majruszsenchantments.leech.desc": "Posibilidad de robar un poco de vida o effectos positivos de los enemigos.",
+  "enchantment.majruszsenchantments.leech.description": "Posiblidad de robar un poco de vida o effectos positivos de los enemigos.",
+
+  "enchantment.majruszsenchantments.magic_protection": "Proteccion Magica",
+  "enchantment.majruszsenchantments.magic_protection.desc": "Proteje contra daño magico como los Colmillos del Evocador, laseres de Guardianes y pociones de Daño Instantaneo.",
+  "enchantment.majruszsenchantments.magic_protection.description": "Proteje contra daño magico como los Colmillos del Evocador, laseres de Guardianes y pociones de Daño Instantaneo.",
+
+  "enchantment.majruszsenchantments.horse_swiftness": "Rapidez",
+  "enchantment.majruszsenchantments.horse_swiftness.desc": "Incrementa la velocidad del caballo.",
+  "enchantment.majruszsenchantments.horse_swiftness.description": "Incrementa la velocidad del caballo.",
+
+  "enchantment.majruszsenchantments.horse_protection": "Bronco",
+  "enchantment.majruszsenchantments.horse_protection.desc": "Reduce el daño recibido al caballo",
+  "enchantment.majruszsenchantments.horse_protection.description": "Reduce el daño recibido al caballo.",
+
+  "enchantment.majruszsenchantments.horse_frost_walker": "Frost Rider",
+  "enchantment.majruszsenchantments.horse_frost_walker.desc": "Crea bloques de hielo cuando el caballo camine sobre agua.",
+  "enchantment.majruszsenchantments.horse_frost_walker.description": "Crea bloques de hielo cuando el caballo camine sobre agua.",
+
+  "enchantment.majruszsenchantments.telekinesis": "Telequinesia",
+  "enchantment.majruszsenchantments.telekinesis.desc": "Directamente añade objectos al inventario si es posible cuando se destruye bloques.",
+  "enchantment.majruszsenchantments.telekinesis.description": "Directamente añade objectos al inventario si es posible cuando se destruye bloques.",
+
+  "enchantment.majruszsenchantments.absorber": "Absorbiente",
+  "enchantment.majruszsenchantments.absorber.desc": "El escudo absorbe todo los efectos negativos al costo de la durabilidad.",
+  "enchantment.majruszsenchantments.absorber.description": "El escudo absorbe todo los efectos negativos al costo de la durabilidad.",
+
+  "enchantment.majruszsenchantments.hunter": "Cazador",
+  "enchantment.majruszsenchantments.hunter.desc": "Incrementa el numero de objectos recibidos y lo mas lejos que este el blanco, daras mas daño.",
+  "enchantment.majruszsenchantments.hunter.description": "Incrementa el numero de objetos recibidos y lo mas lejos que este el blanco, daras mas daño.",
+
+  "enchantment.majruszsenchantments.elder_guardian_favor": "Favor del Guardián Mayor",
+  "enchantment.majruszsenchantments.elder_guardian_favor.desc": "Cada golpe sucesivo, ataca al enemigo con un laser que no puede ser esquivado o bloqueado.",
+  "enchantment.majruszsenchantments.elder_guardian_favor.description": "Cada golpe sucesivo, ataca al enemigo con un laser que no puede ser esquivado o bloqueado.",
+
+  "enchantment.majruszsenchantments.harvester": "Cosecha",
+  "enchantment.majruszsenchantments.harvester.desc": "Da la opcion the cosechar al hacer click derecho y la posibilidad de crecer cultivos cercanos.",
+  "enchantment.majruszsenchantments.harvester.description": "Da la opcion the cosechar al hacer click derecho y la posibilidad de crecer cultivos cercanos.",
+
+  "enchantment.majruszsenchantments.slowness_curse": "Maldición de la Lentitud",
+  "enchantment.majruszsenchantments.slowness_curse.desc": "Disminuye la velocidad del jugador.",
+  "enchantment.majruszsenchantments.slowness_curse.description": "Disminuye la velocidad del jugador.",
+
+  "enchantment.majruszsenchantments.fatigue_curse": "Maldición de la Fatigua",
+  "enchantment.majruszsenchantments.fatigue_curse.desc": "Disminuye la velocidad al minar.",
+  "enchantment.majruszsenchantments.fatigue_curse.description": "Disminuye la velocidad al minar.",
+
+  "enchantment.majruszsenchantments.incompatibility_curse": "Maldición de Incompatibilidad",
+  "enchantment.majruszsenchantments.incompatibility_curse.desc": "Hace que el objeto rechaze cualquier encantamiento que se trate de añadir.",
+  "enchantment.majruszsenchantments.incompatibility_curse.description": "Hace que el objeto rechaze cualquier encantamiento que se trate de añadir.",
+
+  "enchantment.majruszsenchantments.vampirism_curse": "Maldición de Vampirismo",
+  "enchantment.majruszsenchantments.vampirism_curse.desc": "Debilita al jugador y lo enciende en llamas durante el dia. El encantamiento de Sanguijuela es mas potente.",
+  "enchantment.majruszsenchantments.vampirism_curse.description": "Debilita al jugador y lo enciende en llamas durante el dia. El encantamiento de Sanguijuela es mas potente.",
+
+  "enchantment.majruszsenchantments.corrosion_curse": "Maldición de Corrosión",
+  "enchantment.majruszsenchantments.corrosion_curse.desc": "Gradualmente daña la armadura y al dueño cuando hace contacto con el agua.",
+  "enchantment.majruszsenchantments.corrosion_curse.description": "Gradualmente daña la armadura y al dueño cuando hace contacto con el agua."
+}
