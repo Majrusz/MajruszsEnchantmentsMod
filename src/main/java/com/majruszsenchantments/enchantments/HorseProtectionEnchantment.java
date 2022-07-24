@@ -33,7 +33,7 @@ public class HorseProtectionEnchantment extends CustomEnchantment {
 		final DoubleConfig armorBonus = new DoubleConfig( "armor_bonus", "Armor bonus per enchantment level.", false, 2.0, 1.0, 10.0 );
 
 		public Modifier( HorseProtectionEnchantment enchantment ) {
-			super( enchantment, "HorseProtection", "Increases the horse's armor." );
+			super( enchantment, "ArmoredCaravan", "Increases the horse's armor." );
 
 			OnEquipmentChangedContext onChange = new OnEquipmentChangedContext( this::updateSpeed );
 			onChange.addCondition( new Condition.IsServer() )
