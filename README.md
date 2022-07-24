@@ -1,8 +1,7 @@
 ![Mod logo](https://github.com/Majrusz/MajruszsEnchantmentsMod/blob/1.19/logo.png?raw=true)
 
-## What is Wonderful Enchantments? [![](http://cf.way2muchnoise.eu/full_wonderful-enchantments_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments)
-**Majrusz's Enchantments** is a Minecraft Forge modification which adds to the
-game plenty of new and unique enchantments.
+## What is Majrusz's Enchantments? [![](http://cf.way2muchnoise.eu/full_wonderful-enchantments_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments)
+**Majrusz's Enchantments** is a Minecraft Forge modification which adds to the game plenty new and unique enchantments.
 
 ## Where is Majrusz's Enchantments available?
 - [Curse Forge](https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments)
