@@ -30,7 +30,7 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< EnlightenmentEnchantment > {
-		final DoubleConfig experienceMultiplier = new DoubleConfig( "experience_extra_multiplier", "Extra percent of experience acquired from all sources per enchantment level.", false, 0.2, 0.01, 10.0 );
+		final DoubleConfig experienceMultiplier = new DoubleConfig( "experience_extra_multiplier", "Extra percent of experience acquired from all sources per enchantment level.", false, 0.25, 0.01, 10.0 );
 
 		public Modifier( EnlightenmentEnchantment enchantment ) {
 			super( enchantment, "Enlightenment", "Increases the experience gained from any source." );
@@ -49,7 +49,11 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 		private void increaseExperience( OnPickupXpData data ) {
 			int enlightenmentSum = this.enchantment.getEnchantmentSum( data.player, EquipmentSlots.ARMOR );
 			int experiencePoints = Random.roundRandomly( enlightenmentSum * this.experienceMultiplier.get() * data.event.getOrb().getValue() );
-			data.player.giveExperiencePoints( experiencePoints );
+			if( experiencePoints > 1 ) {
+				data.player.giveExperiencePoints( Random.nextInt( 1, experiencePoints ) );
+			} else if( experiencePoints > 0 ) {
+				data.player.giveExperiencePoints( 1 );
+			}
 		}
 
 		private void giveAdvancement( OnEquipmentChangedData data ) {
