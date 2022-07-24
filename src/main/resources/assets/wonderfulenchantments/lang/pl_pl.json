@@ -45,6 +45,10 @@
 	"enchantment.wonderfulenchantments.hunter.desc": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
 	"enchantment.wonderfulenchantments.hunter.description": "Zwiększa liczbę otrzymywanych przedmiotów i zadaje większe obrażenia im dalej jest przeciwnik.",
 
+	"enchantment.wonderfulenchantments.immortality": "Nieśmiertelność",
+	"enchantment.wonderfulenchantments.immortality.desc": "Ratuje przed śmiercią w przypadku otrzymania śmiertelnych obrażeń kosztem tarczy.",
+	"enchantment.wonderfulenchantments.immortality.description": "Ratuje przed śmiercią w przypadku otrzymania śmiertelnych obrażeń kosztem tarczy.",
+
 	"enchantment.wonderfulenchantments.leech": "Pijawka",
 	"enchantment.wonderfulenchantments.leech.desc": "Daje szansę na kradzież pozytywnych efektów, zdrowia i punktów głodu z przeciwników.",
 	"enchantment.wonderfulenchantments.leech.description": "Daje szansę na kradzież pozytywnych efektów, zdrowia i punktów głodu z przeciwników.",
@@ -68,10 +72,6 @@
 	"enchantment.wonderfulenchantments.vitality": "Witalność",
 	"enchantment.wonderfulenchantments.vitality.desc": "Zwiększa zdrowie gracza.",
 	"enchantment.wonderfulenchantments.vitality.description": "Zwiększa zdrowie gracza.",
-
-	"enchantment.wonderfulenchantments.immortality": "Nieśmiertelność",
-	"enchantment.wonderfulenchantments.immortality.desc": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
-	"enchantment.wonderfulenchantments.immortality.description": "Ratuje gracza przed śmiercią w przypadku otrzymania śmiertelnych obrażeń.",
 
 	"enchantment.wonderfulenchantments.absorber": "Absorber",
 	"enchantment.wonderfulenchantments.absorber.desc": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
