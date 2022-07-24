@@ -2,7 +2,6 @@ package com.wonderfulenchantments;
 
 import com.mlib.Utility;
 import com.mlib.config.BooleanConfig;
-import com.wonderfulenchantments.renderers.HorseRendererReplacement;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -28,8 +27,6 @@ public class RegistriesClient {
 	}
 
 	public static void setup() {
-		EntityRenderers.register( EntityType.HORSE, HorseRendererReplacement::new );
-
 		if( UNIQUE_BOOK_TEXTURE.isEnabled() ) {
 			ItemProperties.register( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ), RegistriesClient::enchantmentBookPredicate );
 		}
