@@ -12,6 +12,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.Map;
 
@@ -19,12 +21,13 @@ import java.util.Map;
 public class RegistriesClient {
 	static BooleanConfig UNIQUE_BOOK_TEXTURE;
 
-	public static void createConfig() {
+	public static void initialize() {
 		UNIQUE_BOOK_TEXTURE = new BooleanConfig( "unique_book_texture", "Should the Enchanted Book has a different texture when it has any of the new enchantments on it (disabling it may fix some bugs with other mods)?", true, true );
 		MajruszsEnchantments.CONFIG_HANDLER_CLIENT.addConfig( UNIQUE_BOOK_TEXTURE );
+		FMLJavaModLoadingContext.get().getModEventBus().addListener( RegistriesClient::register );
 	}
 
-	public static void setup() {
+	private static void register( final FMLClientSetupEvent event ) {
 		if( UNIQUE_BOOK_TEXTURE.isEnabled() ) {
 			ItemProperties.register( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ), RegistriesClient::enchantmentBookPredicate );
 		}

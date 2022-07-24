@@ -102,9 +102,8 @@ public class Registries {
 
 		addEnchantmentTypesToItemGroups();
 		HELPER.registerAll();
-		modEventBus.addListener( ( final FMLClientSetupEvent event )->RegistriesClient.setup() );
 		modEventBus.addListener( PacketHandler::registerPacket );
-		DistExecutor.safeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::createConfig );
+		DistExecutor.unsafeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::initialize );
 
 		CONFIG_HANDLER.register( ModLoadingContext.get() );
 		CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );
