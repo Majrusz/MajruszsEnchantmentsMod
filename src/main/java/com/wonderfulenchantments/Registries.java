@@ -7,6 +7,7 @@ import com.mlib.triggers.BasicTrigger;
 import com.mojang.serialization.Codec;
 import com.wonderfulenchantments.curses.*;
 import com.wonderfulenchantments.enchantments.*;
+import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
@@ -27,9 +28,16 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wonderfulenchantments.WonderfulEnchantments.CONFIG_HANDLER;
+
 public class Registries {
 	private static final DeferredRegisterHelper HELPER = new DeferredRegisterHelper( WonderfulEnchantments.MOD_ID );
 	public static final List< GameModifier > GAME_MODIFIERS = new ArrayList<>();
+
+	static {
+		CONFIG_HANDLER.addGroup( GameModifier.addNewGroup( EnchantmentModifier.ENCHANTMENT, "Enchantments", "" ) );
+		CONFIG_HANDLER.addGroup( GameModifier.addNewGroup( EnchantmentModifier.CURSE, "Curses", "" ) );
+	}
 
 	// Groups
 	static final DeferredRegister< Enchantment > ENCHANTMENTS = HELPER.create( ForgeRegistries.Keys.ENCHANTMENTS );
@@ -96,7 +104,7 @@ public class Registries {
 		modEventBus.addListener( PacketHandler::registerPacket );
 		DistExecutor.safeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::createConfig );
 
-		WonderfulEnchantments.CONFIG_HANDLER.register( ModLoadingContext.get() );
+		CONFIG_HANDLER.register( ModLoadingContext.get() );
 		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );
 	}
 

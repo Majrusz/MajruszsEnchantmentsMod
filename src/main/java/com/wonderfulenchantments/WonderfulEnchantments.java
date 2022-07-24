@@ -1,7 +1,6 @@
 package com.wonderfulenchantments;
 
 import com.mlib.config.ConfigHandler;
-import com.wonderfulenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -19,8 +18,6 @@ public class WonderfulEnchantments {
 	public static final ConfigHandler CONFIG_HANDLER_CLIENT = new ConfigHandler( ModConfig.Type.CLIENT, "client.toml", MOD_ID );
 
 	public WonderfulEnchantments() {
-		CONFIG_HANDLER.addNewGameModifierGroup( EnchantmentModifier.ENCHANTMENT, "Enchantments", "" );
-		CONFIG_HANDLER.addNewGameModifierGroup( EnchantmentModifier.CURSE, "Curses", "" );
 		Registries.initialize();
 		MinecraftForge.EVENT_BUS.register( this );
 	}

@@ -7,8 +7,8 @@ import com.wonderfulenchantments.Registries;
 import com.wonderfulenchantments.WonderfulEnchantments;
 
 public class EnchantmentModifier< EnchantmentType extends CustomEnchantment > extends GameModifier {
-	public static final String ENCHANTMENT = WonderfulEnchantments.MOD_ID + "Enchantment";
-	public static final String CURSE = WonderfulEnchantments.MOD_ID + "Curse";
+	public static final String ENCHANTMENT = Registries.getLocationString( "enchantment" );
+	public static final String CURSE = Registries.getLocationString( "curse" );
 	protected final EnchantmentType enchantment;
 	final EnchantmentConfig enchantmentConfig;
 
