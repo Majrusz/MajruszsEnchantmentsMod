@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wonderfulenchantments.WonderfulEnchantments.CONFIG_HANDLER;
+import static com.wonderfulenchantments.WonderfulEnchantments.CONFIG_HANDLER_CLIENT;
 
 public class Registries {
 	private static final DeferredRegisterHelper HELPER = new DeferredRegisterHelper( WonderfulEnchantments.MOD_ID );
@@ -100,21 +101,17 @@ public class Registries {
 
 		addEnchantmentTypesToItemGroups();
 		HELPER.registerAll();
-		modEventBus.addListener( Registries::doClientSetup );
+		modEventBus.addListener( ( final FMLClientSetupEvent event )->RegistriesClient.setup() );
 		modEventBus.addListener( PacketHandler::registerPacket );
 		DistExecutor.safeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::createConfig );
 
 		CONFIG_HANDLER.register( ModLoadingContext.get() );
-		WonderfulEnchantments.CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );
+		CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );
 	}
 
 	private static void addEnchantmentTypesToItemGroups() {
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_MINECRAFT, MELEE );
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN, TOOLS );
 		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
-	}
-
-	private static void doClientSetup( final FMLClientSetupEvent event ) {
-		RegistriesClient.setup();
 	}
 }
