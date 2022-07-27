@@ -18,7 +18,7 @@ public class MajruszsEnchantments {
 	public static final ConfigHandler CONFIG_HANDLER_CLIENT = new ConfigHandler( ModConfig.Type.CLIENT, "client.toml", MOD_ID );
 
 	public MajruszsEnchantments() {
-		Registries.initialize();
+		com.majruszsenchantments.Registries.initialize();
 		MinecraftForge.EVENT_BUS.register( this );
 	}
 }
