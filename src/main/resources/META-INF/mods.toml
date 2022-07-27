@@ -17,7 +17,7 @@ issueTrackerURL="https://github.com/Majrusz/MajruszsEnchantmentsMod/issues"
 [[dependencies.majruszsenchantments]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[41.1.0,)"
     ordering="NONE"
     side="BOTH"
 
