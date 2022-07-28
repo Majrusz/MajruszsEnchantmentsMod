@@ -12,7 +12,7 @@ issueTrackerURL="https://github.com/Majrusz/MajruszsEnchantmentsMod/issues"
     logoFile="logo.png"
     credits="Thanks for all your support and downloads!"
     authors="Majrusz"
-    description='''adds plenty of unique and balanced enchantments to the game.'''
+    description='''Mod that adds plenty of unique and balanced enchantments to the game.'''
 
 [[dependencies.majruszsenchantments]]
     modId="forge"
