@@ -15,8 +15,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class TelekinesisEnchantment extends CustomEnchantment {
@@ -51,7 +53,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			OnLootContext onLoot3 = new OnLootContext( data->this.addToInventory( data, data.killer ), LOWEST_PRIORITY );
 			onLoot3.addCondition( new Condition.IsServer() )
 				.addCondition( data->data.killer instanceof Player )
-				.addCondition( data->data.damageSource != null && enchantment.hasEnchantment( IMixinProjectile.getWeaponFromDirectEntity( data.damageSource ) ) );
+				.addCondition( this.doesProjectileHasEnchantmentPredicate() );
 
 			this.addContexts( onLoot, onLoot2, onLoot3 );
 		}
@@ -63,6 +65,17 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 				Vec3 position = player.position();
 				data.level.playSound( null, position.x, position.y, position.z, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.25f, Random.nextFloat( 0.8f, 1.2f ) );
 			}
+		}
+
+		private Predicate< OnLootData > doesProjectileHasEnchantmentPredicate() {
+			return data->{
+				if( data.damageSource != null ) {
+					ItemStack weapon = IMixinProjectile.getWeaponFromDirectEntity( data.damageSource );
+					return weapon != null && this.enchantment.hasEnchantment( weapon );
+				}
+
+				return false;
+			};
 		}
 	}
 }
