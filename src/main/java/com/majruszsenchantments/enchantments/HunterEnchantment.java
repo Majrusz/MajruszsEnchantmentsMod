@@ -36,7 +36,8 @@ public class HunterEnchantment extends CustomEnchantment {
 			super( enchantment, "Hunter", "Increases mob drops and makes the damage to scale with a distance." );
 
 			OnLootLevelContext onLootLevel = new OnLootLevelContext( this::increaseLootingLevel );
-			onLootLevel.addCondition( data->data.source.isProjectile() ).addCondition( data->this.getEnchantmentLevel( data.source ) > 0 );
+			onLootLevel.addCondition( data->data.source != null && data.source.isProjectile() )
+				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 );
 
 			OnDamagedContext onDamaged = new OnDamagedContext( this::modifyDamage );
 			onDamaged.addCondition( data->data.attacker != null )
