@@ -19,6 +19,8 @@ import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -63,9 +65,9 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 	@Override
 	public Component getFullname( int level ) {
 		if( level == this.getMaxLevel() ) {
-			return Component.translatable( "majruszsenchantments.true_level" )
+			return new TranslatableComponent( "majruszsenchantments.true_level" )
 				.append( " " )
-				.append( Component.translatable( getDescriptionId() ) )
+				.append( new TranslatableComponent( getDescriptionId() ) )
 				.withStyle( ChatFormatting.GRAY );
 		}
 
@@ -180,20 +182,20 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 		}
 
 		private void sendLevelUpMessage( Player player ) {
-			player.displayClientMessage( Component.translatable( "majruszsenchantments.fanatic_level_up" ).withStyle( ChatFormatting.BOLD ), true );
+			player.displayClientMessage( new TranslatableComponent( "majruszsenchantments.fanatic_level_up" ).withStyle( ChatFormatting.BOLD ), true );
 		}
 
 		private void sendRewardsMessage( Player player, Multiset< String > rewards ) {
-			MutableComponent message = Component.literal( ChatFormatting.WHITE + "(" );
+			MutableComponent message = new TextComponent( ChatFormatting.WHITE + "(" );
 			ImmutableList< String > rewardList = Multisets.copyHighestCountFirst( rewards ).elementSet().asList();
 			for( int i = 0; i < rewardList.size(); i++ ) {
-				message.append( Component.literal( ( ( i == 0 ) ? ChatFormatting.WHITE : ChatFormatting.GOLD ) + rewardList.get( i ) ) );
+				message.append( new TextComponent( ( ( i == 0 ) ? ChatFormatting.WHITE : ChatFormatting.GOLD ) + rewardList.get( i ) ) );
 				if( rewards.count( rewardList.get( i ) ) > 1 )
-					message.append( Component.literal( ChatFormatting.GOLD + " x" + rewards.count( rewardList.get( i ) ) ) );
+					message.append( new TextComponent( ChatFormatting.GOLD + " x" + rewards.count( rewardList.get( i ) ) ) );
 				if( i != rewardList.size() - 1 )
-					message.append( Component.literal( ChatFormatting.WHITE + ", " ) );
+					message.append( new TextComponent( ChatFormatting.WHITE + ", " ) );
 			}
-			message.append( Component.literal( ChatFormatting.WHITE + ")" ) );
+			message.append( new TextComponent( ChatFormatting.WHITE + ")" ) );
 
 			player.displayClientMessage( message, true );
 		}

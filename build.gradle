@@ -14,9 +14,9 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.7.3'
+version = '1.6.3'
 group = 'com.majruszsenchantments'
-archivesBaseName = 'majruszs-enchantments-1.19.1'
+archivesBaseName = 'majruszs-enchantments-1.18.2'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 compileJava {
@@ -24,7 +24,7 @@ compileJava {
 }
 
 minecraft {
-    mappings channel: 'official', version: '1.19.1'
+    mappings channel: 'official', version: '1.18.2'
 
     accessTransformer = file( 'src/main/resources/META-INF/accesstransformer.cfg' ) // Currently, this location cannot be changed from the default.
 
@@ -97,8 +97,8 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.1-42.0.0'
-    implementation fg.deobf( 'com.mlib:majrusz-library-1.19.1:2.14.0' )
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.69'
+    implementation fg.deobf( 'com.mlib:majrusz-library-1.18.2:2.7.3' )
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
