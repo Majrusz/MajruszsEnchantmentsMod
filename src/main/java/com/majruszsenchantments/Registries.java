@@ -19,7 +19,6 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -28,16 +27,16 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.majruszsenchantments.MajruszsEnchantments.CONFIG_HANDLER;
-import static com.majruszsenchantments.MajruszsEnchantments.CONFIG_HANDLER_CLIENT;
+import static com.majruszsenchantments.MajruszsEnchantments.SERVER_CONFIG;
+import static com.majruszsenchantments.MajruszsEnchantments.CLIENT_CONFIG;
 
 public class Registries {
 	private static final DeferredRegisterHelper HELPER = new DeferredRegisterHelper( MajruszsEnchantments.MOD_ID );
 	public static final List< GameModifier > GAME_MODIFIERS = new ArrayList<>();
 
 	static {
-		CONFIG_HANDLER.addGroup( GameModifier.addNewGroup( EnchantmentModifier.ENCHANTMENT, "Enchantments", "" ) );
-		CONFIG_HANDLER.addGroup( GameModifier.addNewGroup( EnchantmentModifier.CURSE, "Curses", "" ) );
+		SERVER_CONFIG.addGroup( GameModifier.addNewGroup( EnchantmentModifier.ENCHANTMENT, "Enchantments", "" ) );
+		SERVER_CONFIG.addGroup( GameModifier.addNewGroup( EnchantmentModifier.CURSE, "Curses", "" ) );
 	}
 
 	// Groups
@@ -105,8 +104,8 @@ public class Registries {
 		modEventBus.addListener( PacketHandler::registerPacket );
 		DistExecutor.unsafeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::initialize );
 
-		CONFIG_HANDLER.register( ModLoadingContext.get() );
-		CONFIG_HANDLER_CLIENT.register( ModLoadingContext.get() );
+		SERVER_CONFIG.register( ModLoadingContext.get() );
+		CLIENT_CONFIG.register( ModLoadingContext.get() );
 	}
 
 	private static void addEnchantmentTypesToItemGroups() {
