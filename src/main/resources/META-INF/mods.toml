@@ -1,11 +1,11 @@
 modLoader="javafml"
-loaderVersion="[42,)"
+loaderVersion="[43,)"
 license="MIT License"
 issueTrackerURL="https://github.com/Majrusz/MajruszsEnchantmentsMod/issues"
 
 [[mods]]
     modId="majruszsenchantments"
-    version="1.7.4-unfinished"
+    version="1.7.4"
     displayName="Majrusz's Enchantments"
     updateJSONURL="https://raw.githubusercontent.com/Majrusz/MajruszsEnchantmentsMod/1.19.X/update.json"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
@@ -17,14 +17,14 @@ issueTrackerURL="https://github.com/Majrusz/MajruszsEnchantmentsMod/issues"
 [[dependencies.majruszsenchantments]]
     modId="forge"
     mandatory=true
-    versionRange="[42.0.0,)"
+    versionRange="[43.1.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.majruszsenchantments]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.1,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 
