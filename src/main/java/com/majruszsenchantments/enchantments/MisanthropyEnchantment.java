@@ -5,6 +5,7 @@ import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.contexts.OnDamaged;
 import com.mlib.gamemodifiers.contexts.OnDamagedContext;
 import com.mlib.gamemodifiers.data.OnDamagedData;
 import com.majruszsenchantments.Registries;
@@ -33,16 +34,17 @@ public class MisanthropyEnchantment extends CustomEnchantment {
 		public Modifier( MisanthropyEnchantment enchantment ) {
 			super( enchantment, "Misanthropy", "Increases the damage against villagers, pillagers, witches and other players." );
 
-			OnDamagedContext onDamaged = new OnDamagedContext( this::modifyDamage );
+			OnDamaged.Context onDamaged = new OnDamaged.Context( this::modifyDamage );
 			onDamaged.addCondition( new Condition.IsServer() )
 				.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) )
-				.addCondition( data->EntityHelper.isHuman( data.target ) );
+				.addCondition( data->EntityHelper.isHuman( data.target ) )
+				.addCondition( OnDamaged.DEALT_ANY_DAMAGE );
 
 			this.addConfig( this.damageBonus );
 			this.addContext( onDamaged );
 		}
 
-		private void modifyDamage( OnDamagedData data ) {
+		private void modifyDamage( OnDamaged.Data data ) {
 			assert data.attacker != null && data.level != null;
 			float extraDamage = this.enchantment.getEnchantmentLevel( data.attacker ) * this.damageBonus.asFloat();
 			Vec3 position = data.target.position();

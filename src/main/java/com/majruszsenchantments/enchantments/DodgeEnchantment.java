@@ -42,6 +42,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 
 			OnPreDamagedContext onDamaged = new OnPreDamagedContext( this::dodgeDamage );
 			onDamaged.addCondition( new Condition.HasEnchantment( enchantment) )
+				.addCondition( data->data.event.getAmount() > 0.0f )
 				.addCondition( data->Random.tryChance( enchantment.getEnchantmentLevel( data.target ) * this.chance.asFloat() ) );
 
 			this.addConfigs( this.chance, this.pantsDamageMultiplier );

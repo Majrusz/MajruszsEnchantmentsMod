@@ -1,17 +1,16 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.configs.VampirismDoubleConfig;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.Utility;
 import com.mlib.effects.EffectHelper;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnDamagedContext;
-import com.mlib.gamemodifiers.data.OnDamagedData;
+import com.mlib.gamemodifiers.contexts.OnDamaged;
 import com.mlib.math.VectorHelper;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.configs.VampirismDoubleConfig;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -48,14 +47,16 @@ public class LeechEnchantment extends CustomEnchantment {
 		public Modifier( LeechEnchantment enchantment ) {
 			super( enchantment, "Leech", "Gives a chance to steal positive effects, health and hunger points from enemies." );
 
-			OnDamagedContext onDamaged = new OnDamagedContext( this::tryToLeechAnything );
-			onDamaged.addCondition( new Condition.IsServer() ).addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) );
+			OnDamaged.Context onDamaged = new OnDamaged.Context( this::tryToLeechAnything );
+			onDamaged.addCondition( new Condition.IsServer() )
+				.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) )
+				.addCondition( OnDamaged.DEALT_ANY_DAMAGE );
 
 			this.addConfigs( this.healthChance, this.hungerChance, this.effectChance );
 			this.addContext( onDamaged );
 		}
 
-		private void tryToLeechAnything( OnDamagedData data ) {
+		private void tryToLeechAnything( OnDamaged.Data data ) {
 			assert data.attacker != null && data.level != null;
 			boolean leechedAnything;
 			leechedAnything = tryToLeech( this.healthChance, this::leechHealth, data );
@@ -67,7 +68,7 @@ public class LeechEnchantment extends CustomEnchantment {
 			}
 		}
 
-		private boolean tryToLeech( VampirismDoubleConfig chanceConfig, BiFunction< LivingEntity, LivingEntity, Boolean > function, OnDamagedData data ) {
+		private boolean tryToLeech( VampirismDoubleConfig chanceConfig, BiFunction< LivingEntity, LivingEntity, Boolean > function, OnDamaged.Data data ) {
 			return Random.tryChance( chanceConfig.getTotalChance( data.attacker ) ) ? function.apply( data.attacker, data.target ) : false;
 		}
 
