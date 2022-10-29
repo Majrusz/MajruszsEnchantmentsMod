@@ -1,14 +1,13 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnPreDamagedContext;
-import com.mlib.gamemodifiers.data.OnPreDamagedData;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -40,16 +39,16 @@ public class DodgeEnchantment extends CustomEnchantment {
 		public Modifier( DodgeEnchantment enchantment ) {
 			super( enchantment, "Dodge", "Gives a chance to completely avoid any kind of damage." );
 
-			OnPreDamagedContext onDamaged = new OnPreDamagedContext( this::dodgeDamage );
-			onDamaged.addCondition( new Condition.HasEnchantment( enchantment) )
-				.addCondition( data->data.event.getAmount() > 0.0f )
+			OnPreDamaged.Context onDamaged = new OnPreDamaged.Context( this::dodgeDamage );
+			onDamaged.addCondition( new Condition.HasEnchantment( enchantment ) )
+				.addCondition( OnPreDamaged.DEALT_ANY_DAMAGE )
 				.addCondition( data->Random.tryChance( enchantment.getEnchantmentLevel( data.target ) * this.chance.asFloat() ) );
 
 			this.addConfigs( this.chance, this.pantsDamageMultiplier );
 			this.addContext( onDamaged );
 		}
 
-		private void dodgeDamage( OnPreDamagedData data ) {
+		private void dodgeDamage( OnPreDamaged.Data data ) {
 			spawnEffects( data.target, data.level );
 			damagePants( data.target, data.event.getAmount() );
 			data.event.setCanceled( true );
