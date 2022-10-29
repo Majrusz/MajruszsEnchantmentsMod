@@ -4,6 +4,7 @@ import com.mlib.EquipmentSlots;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnEntityTickContext;
+import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import com.mlib.gamemodifiers.contexts.OnPreDamagedContext;
 import com.mlib.gamemodifiers.data.OnEntityTickData;
 import com.mlib.gamemodifiers.data.OnPreDamagedData;
@@ -42,7 +43,7 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 				.addCondition( new Condition.HasEnchantment( enchantment ) )
 				.addCondition( data->data.entity instanceof Animal );
 
-			OnPreDamagedContext onPreDamaged = new OnPreDamagedContext( this::disableDamage );
+			OnPreDamaged.Context onPreDamaged = new OnPreDamaged.Context( this::disableDamage );
 			onPreDamaged.addCondition( new Condition.IsServer() )
 				.addCondition( new Condition.HasEnchantment( enchantment ) )
 				.addCondition( data->DamageSource.HOT_FLOOR.equals( data.source ) )
@@ -57,7 +58,7 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 			LevelHelper.freezeWater( data.entity, radius, 60, 120, false );
 		}
 
-		private void disableDamage( OnPreDamagedData data ) {
+		private void disableDamage( OnPreDamaged.Data data ) {
 			data.event.setCanceled( true );
 		}
 	}
