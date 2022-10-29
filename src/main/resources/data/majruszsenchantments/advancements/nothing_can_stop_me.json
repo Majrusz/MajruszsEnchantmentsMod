@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:husbandry/fishy_business",
+  "parent": "majruszsenchantments:fishing_fanatic",
   "display": {
     "icon": {
       "item": "minecraft:fishing_rod",
