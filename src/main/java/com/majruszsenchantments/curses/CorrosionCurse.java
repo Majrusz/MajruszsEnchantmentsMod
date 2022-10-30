@@ -54,7 +54,7 @@ public class CorrosionCurse extends CustomEnchantment {
 		private void attackOwner( LivingEntity entity ) {
 			float damage = this.damageAmount.asFloat();
 			if( damage > 0.0f ) {
-				entity.hurt( DamageSource.DROWN, damage * this.enchantment.getEnchantmentSum( entity, EquipmentSlots.ARMOR ) );
+				entity.hurt( DamageSource.MAGIC, damage * this.enchantment.getEnchantmentSum( entity, EquipmentSlots.ARMOR ) );
 			}
 		}
 
