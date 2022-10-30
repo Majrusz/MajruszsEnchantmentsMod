@@ -106,7 +106,7 @@ public class LeechEnchantment extends CustomEnchantment {
 		private void spawnEffects( ServerLevel level, LivingEntity attacker, LivingEntity target ) {
 			Vec3 from = VectorHelper.add( attacker.position(), new Vec3( 0.0, attacker.getBbHeight() * 0.75, 0.0 ) );
 			Vec3 to = VectorHelper.add( target.position(), new Vec3( 0.0, target.getBbHeight() * 0.75, 0.0 ) );
-			ParticleHandler.ENCHANTED_HIT.spawnLine( level, from, to, ( int )Math.ceil( from.distanceTo( to ) * 5.0 ) );
+			ParticleHandler.ENCHANTED_HIT.spawnLine( level, from, to, 5 );
 
 			SoundHandler.DRINK.play( level, from, SoundHandler.randomized( 0.25f ) );
 		}
