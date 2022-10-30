@@ -32,7 +32,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -84,6 +83,11 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 	}
 
 	@Override
+	public boolean canApplyAtEnchantingTable( ItemStack itemStack ) {
+		return false;
+	}
+
+	@Override
 	public boolean isTreasureOnly() {
 		return true;
 	}
@@ -105,8 +109,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			onItemFished.addCondition( new Condition.IsServer() );
 
 			OnEquipmentChanged.Context onEquipmentChanged = new OnEquipmentChanged.Context( this::giveExtremeAdvancement );
-			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer )
-				.addCondition( new HasBestFishingEnchantments() );
+			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer ).addCondition( new HasBestFishingEnchantments() );
 
 			this.addContext( onItemFished );
 			this.addConfigs( this.levelUpChances, this.specialDropChance, this.extraLootChance, this.rainMultiplier, this.damageBonus );
@@ -224,7 +227,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 					return false;
 
 				final boolean[] hasBestEnchantments = { true };
-				Registry.ENCHANTMENT.forEach( enchantment -> {
+				Registry.ENCHANTMENT.forEach( enchantment->{
 					if( enchantment.isCurse() || !enchantment.canApplyAtEnchantingTable( new ItemStack( Items.FISHING_ROD ) ) ) {
 						return;
 					}
