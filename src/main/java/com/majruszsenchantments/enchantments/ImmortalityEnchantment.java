@@ -6,7 +6,7 @@ import com.mlib.EquipmentSlots;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnDamaged;
+import com.mlib.gamemodifiers.contexts.OnDeath;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -27,17 +27,15 @@ public class ImmortalityEnchantment extends CustomEnchantment {
 
 	private static class Modifier extends EnchantmentModifier< ImmortalityEnchantment > {
 		public Modifier( ImmortalityEnchantment enchantment ) {
-			super( enchantment, "Immortality", "Cheats death on a fatal hit at the cost of a shield." );
+			super( enchantment, "Immortality", "Cheats death on a fatal hit at the cost of this enchantment." );
 
-			OnDamaged.Context onDamage = new OnDamaged.Context( this::cancelDeath );
-			onDamage.addCondition( new Condition.IsServer() )
-				.addCondition( new Condition.HasEnchantment( enchantment ) )
-				.addCondition( data->( data.target.getHealth() - data.event.getAmount() ) < 1.0f );
+			OnDeath.Context onDeath = new OnDeath.Context( this::cancelDeath );
+			onDeath.addCondition( new Condition.IsServer() ).addCondition( new Condition.HasEnchantment( enchantment ) );
 
-			this.addContexts( onDamage );
+			this.addContexts( onDeath );
 		}
 
-		private void cancelDeath( OnDamaged.Data data ) {
+		private void cancelDeath( OnDeath.Data data ) {
 			LivingEntity target = data.target;
 			InteractionHand hand = this.enchantment.hasEnchantment( target.getMainHandItem() ) ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
 			target.getItemInHand( hand ).hurtAndBreak( 9001, target, entity->entity.broadcastBreakEvent( hand ) );
