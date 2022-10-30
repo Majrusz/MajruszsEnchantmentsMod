@@ -3,16 +3,15 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
-import com.mlib.Random;
+import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnLoot;
 import com.mlib.gamemodifiers.parameters.ContextParameters;
 import com.mlib.gamemodifiers.parameters.Priority;
+import com.mlib.math.VectorHelper;
 import com.mlib.mixininterfaces.IMixinProjectile;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -42,16 +41,19 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 
 			OnLoot.Context onLoot = new OnLoot.Context( data->this.addToInventory( data, data.entity ), LOWEST_PRIORITY );
 			onLoot.addCondition( new Condition.IsServer() )
+				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.entity instanceof Player )
 				.addCondition( data->data.tool != null && enchantment.hasEnchantment( data.tool ) );
 
 			OnLoot.Context onLoot2 = new OnLoot.Context( data->this.addToInventory( data, data.killer ), LOWEST_PRIORITY );
 			onLoot2.addCondition( new Condition.IsServer() )
+				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.killer instanceof Player )
 				.addCondition( data->enchantment.hasEnchantment( ( Player )data.killer ) );
 
 			OnLoot.Context onLoot3 = new OnLoot.Context( data->this.addToInventory( data, data.killer ), LOWEST_PRIORITY );
 			onLoot3.addCondition( new Condition.IsServer() )
+				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.killer instanceof Player )
 				.addCondition( this.doesProjectileHasEnchantmentPredicate() );
 
@@ -63,6 +65,9 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			assert player != null && data.level != null;
 			if( data.generatedLoot.removeIf( player::addItem ) ) {
 				SoundHandler.ITEM_PICKUP.play( data.level, player.position(), SoundHandler.randomized( 0.25f ) );
+				Vec3 from = data.origin;
+				Vec3 to = VectorHelper.add( player.position(), new Vec3( 0.0, player.getBbHeight() * 0.5, 0.0 ) );
+				ParticleHandler.WITCH.spawnLine( data.level, from, to, 1, ParticleHandler.offset( 0.05f ) );
 			}
 		}
 
