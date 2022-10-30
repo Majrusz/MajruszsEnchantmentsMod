@@ -6,17 +6,14 @@ import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.Utility;
-import com.mlib.effects.EffectHelper;
 import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnDamaged;
 import com.mlib.math.VectorHelper;
-import net.minecraft.core.particles.ParticleTypes;
+import com.mlib.mobeffects.MobEffectHelper;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -98,7 +95,7 @@ public class LeechEnchantment extends CustomEnchantment {
 				MobEffect effect = effectInstance.getEffect();
 				if( effect.isBeneficial() ) {
 					int maximumDuration = Math.min( Utility.secondsToTicks( 30.0 ), effectInstance.getDuration() );
-					EffectHelper.applyEffectIfPossible( attacker, effect, maximumDuration, effectInstance.getAmplifier() );
+					MobEffectHelper.tryToApply( attacker, effect, maximumDuration, effectInstance.getAmplifier() );
 					target.removeEffect( effect );
 					return true;
 				}
