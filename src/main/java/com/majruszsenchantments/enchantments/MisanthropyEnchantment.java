@@ -2,6 +2,7 @@ package com.majruszsenchantments.enchantments;
 
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
+import com.mlib.effects.ParticleHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
 import com.mlib.gamemodifiers.Condition;
@@ -10,6 +11,7 @@ import com.mlib.gamemodifiers.contexts.OnDamagedContext;
 import com.mlib.gamemodifiers.data.OnDamagedData;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.math.VectorHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.Vec3;
 
@@ -47,10 +49,16 @@ public class MisanthropyEnchantment extends CustomEnchantment {
 		private void modifyDamage( OnDamaged.Data data ) {
 			assert data.attacker != null && data.level != null;
 			float extraDamage = this.enchantment.getEnchantmentLevel( data.attacker ) * this.damageBonus.asFloat();
-			Vec3 position = data.target.position();
 
-			data.level.sendParticles( ParticleTypes.ENCHANTED_HIT, position.x, data.target.getY( 0.625 ), position.z, 24, 0.125, 0.25, 0.125, 0.5 );
 			data.event.setAmount( data.event.getAmount() + extraDamage );
+			this.spawnParticles( data );
+		}
+
+		private void spawnParticles( OnDamaged.Data data ) {
+			Vec3 position = VectorHelper.add( data.target.position(), new Vec3( 0.0, data.target.getBbHeight() * 0.625, 0.0 ) );
+			Supplier< Vec3 > offset = ()->new Vec3( 0.125, 0.25, 0.125 );
+			Supplier< Float > speed = ParticleHandler.speed( 0.5f );
+			ParticleHandler.ENCHANTED_HIT.spawn( data.level, position, 24, offset, speed );
 		}
 	}
 }
