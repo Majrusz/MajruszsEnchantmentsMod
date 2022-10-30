@@ -60,10 +60,10 @@ public class HarvesterEnchantment extends CustomEnchantment {
 
 			OnLoot.Context onLoot = new OnLoot.Context( this::replant );
 			onLoot.addCondition( new Condition.IsServer() )
-				.addCondition( data->data.blockState != null )
-				.addCondition( data->data.entity != null )
-				.addCondition( data->data.tool != null )
-				.addCondition( data->data.origin != null )
+				.addCondition( OnLoot.HAS_BLOCK_STATE )
+				.addCondition( OnLoot.HAS_ENTITY )
+				.addCondition( OnLoot.HAS_TOOL )
+				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.origin ) ) );
 
 			this.addConfigs( this.durabilityPenalty, this.growChance );
