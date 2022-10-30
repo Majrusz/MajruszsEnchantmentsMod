@@ -1,13 +1,12 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnItemHurtContext;
-import com.mlib.gamemodifiers.data.OnItemHurtData;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.gamemodifiers.contexts.OnItemHurt;
 import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -38,14 +37,14 @@ public class BreakingCurse extends CustomEnchantment {
 		public Modifier( BreakingCurse enchantment ) {
 			super( enchantment, "Breaking", "Makes all items break faster." );
 
-			OnItemHurtContext onItemHurt = new OnItemHurtContext( this::dealExtraDamage );
+			OnItemHurt.Context onItemHurt = new OnItemHurt.Context( this::dealExtraDamage );
 			onItemHurt.addCondition( data->data.player != null ).addCondition( new Condition.HasEnchantment( enchantment ) );
 
 			this.addConfig( this.damageMultiplier );
 			this.addContext( onItemHurt );
 		}
 
-		private void dealExtraDamage( OnItemHurtData data ) {
+		private void dealExtraDamage( OnItemHurt.Data data ) {
 			assert data.player != null;
 			double damageMultiplier = this.enchantment.getEnchantmentLevel( data.itemStack ) * this.damageMultiplier.get();
 			data.event.extraDamage += Random.roundRandomly( data.event.damage * damageMultiplier );

@@ -1,10 +1,10 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnBlockSmeltCheckContext;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.gamemodifiers.contexts.OnBlockSmeltCheck;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.UntouchingEnchantment;
@@ -33,7 +33,7 @@ public class SmelterEnchantment extends CustomEnchantment {
 		public Modifier( SmelterEnchantment enchantment ) {
 			super( enchantment, "Smelter", "Destroyed blocks are automatically smelted." );
 
-			OnBlockSmeltCheckContext onCheck = new OnBlockSmeltCheckContext( OnBlockSmeltCheckContext.ENABLE_SMELT );
+			OnBlockSmeltCheck.Context onCheck = new OnBlockSmeltCheck.Context( OnBlockSmeltCheck.ENABLE_SMELT );
 			onCheck.addCondition( new Condition.HasEnchantment( enchantment ) );
 
 			this.addContexts( onCheck );

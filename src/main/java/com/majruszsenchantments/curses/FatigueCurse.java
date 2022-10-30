@@ -1,20 +1,16 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnBreakSpeedContext;
-import com.mlib.gamemodifiers.contexts.OnEquipmentChangedContext;
-import com.mlib.gamemodifiers.contexts.OnItemSwingDurationContext;
-import com.mlib.gamemodifiers.contexts.OnUseItemTickContext;
-import com.mlib.gamemodifiers.data.OnBreakSpeedData;
-import com.mlib.gamemodifiers.data.OnEquipmentChangedData;
-import com.mlib.gamemodifiers.data.OnItemSwingDurationData;
-import com.mlib.gamemodifiers.data.OnUseItemTickData;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.gamemodifiers.contexts.OnBreakSpeed;
+import com.mlib.gamemodifiers.contexts.OnEquipmentChanged;
+import com.mlib.gamemodifiers.contexts.OnItemSwingDuration;
+import com.mlib.gamemodifiers.contexts.OnUseItemTick;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -56,42 +52,42 @@ public class FatigueCurse extends CustomEnchantment {
 		public Modifier( FatigueCurse enchantment ) {
 			super( enchantment, "Fatigue", "Effectively reduces the speed of everything." );
 
-			OnBreakSpeedContext onBreakSpeed = new OnBreakSpeedContext( this::reduceMiningSpeed );
+			OnBreakSpeed.Context onBreakSpeed = new OnBreakSpeed.Context( this::reduceMiningSpeed );
 			onBreakSpeed.addCondition( new Condition.HasEnchantment( enchantment ) );
 
-			OnEquipmentChangedContext onEquipmentChange = new OnEquipmentChangedContext( this::reduceAttackSpeed );
+			OnEquipmentChanged.Context onEquipmentChange = new OnEquipmentChanged.Context( this::reduceAttackSpeed );
 
-			OnEquipmentChangedContext onEquipmentChange2 = new OnEquipmentChangedContext( this::reduceMovementSpeed );
+			OnEquipmentChanged.Context onEquipmentChange2 = new OnEquipmentChanged.Context( this::reduceMovementSpeed );
 
-			OnUseItemTickContext onBowstring = new OnUseItemTickContext( this::reduceBowstringSpeed );
+			OnUseItemTick.Context onBowstring = new OnUseItemTick.Context( this::reduceBowstringSpeed );
 			onBowstring.addCondition( new Condition.HasEnchantment( enchantment ) )
 				.addCondition( data->BowItem.getPowerForTime( data.itemStack.getUseDuration() - data.duration ) > 0.3f ) // first frame takes longer than other frames, and we skip slowing this frame
 				.addCondition( data->Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) );
 
-			OnItemSwingDurationContext onItemSwing = new OnItemSwingDurationContext( this::increaseSwingDuration );
+			OnItemSwingDuration.Context onItemSwing = new OnItemSwingDuration.Context( this::increaseSwingDuration );
 			onItemSwing.addCondition( new Condition.HasEnchantment( enchantment ) );
 
 			this.addConfigs( this.miningMultiplier, this.attackMultiplier, this.drawingMultiplier, this.movementMultiplier, this.swingMultiplier );
 			this.addContexts( onBreakSpeed, onEquipmentChange, onEquipmentChange2, onBowstring, onItemSwing );
 		}
 
-		private void reduceMiningSpeed( OnBreakSpeedData data ) {
+		private void reduceMiningSpeed( OnBreakSpeed.Data data ) {
 			data.event.setNewSpeed( data.event.getNewSpeed() * getItemMultiplier( this.miningMultiplier, data.player ) );
 		}
 
-		private void reduceAttackSpeed( OnEquipmentChangedData data ) {
+		private void reduceAttackSpeed( OnEquipmentChanged.Data data ) {
 			ATTACK_SPEED_ATTRIBUTE.setValueAndApply( data.entity, getItemMultiplier( this.attackMultiplier, data.entity ) - 1.0f );
 		}
 
-		private void reduceMovementSpeed( OnEquipmentChangedData data ) {
+		private void reduceMovementSpeed( OnEquipmentChanged.Data data ) {
 			MOVEMENT_SPEED_ATTRIBUTE.setValueAndApply( data.entity, getArmorMultiplier( this.movementMultiplier, data.entity ) - 1.0f );
 		}
 
-		private void reduceBowstringSpeed( OnUseItemTickData data ) {
+		private void reduceBowstringSpeed( OnUseItemTick.Data data ) {
 			data.event.setDuration( data.duration + 1 );
 		}
 
-		private void increaseSwingDuration( OnItemSwingDurationData data ) {
+		private void increaseSwingDuration( OnItemSwingDuration.Data data ) {
 			data.event.extraDuration += data.event.swingDuration / Math.min( 1.0f, getItemMultiplier( this.swingMultiplier, data.entity ) ) - data.event.swingDuration;
 		}
 

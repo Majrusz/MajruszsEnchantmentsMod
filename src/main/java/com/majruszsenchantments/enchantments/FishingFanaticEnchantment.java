@@ -4,6 +4,8 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.MajruszLibrary;
 import com.mlib.Random;
@@ -11,11 +13,8 @@ import com.mlib.config.DoubleArrayConfig;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnItemFishedContext;
-import com.mlib.gamemodifiers.data.OnItemFishedData;
+import com.mlib.gamemodifiers.contexts.OnItemFished;
 import com.mlib.math.VectorHelper;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -90,14 +89,14 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			super( enchantment, "FishingFanatic", "Gives a chance to catch additional items from fishing." );
 			enchantment.damageBonus = this.damageBonus;
 
-			OnItemFishedContext onItemFished = new OnItemFishedContext( this::increaseLoot );
+			OnItemFished.Context onItemFished = new OnItemFished.Context( this::increaseLoot );
 			onItemFished.addCondition( new Condition.IsServer() );
 
 			this.addContext( onItemFished );
 			this.addConfigs( this.levelUpChances, this.specialDropChance, this.extraLootChance, this.rainMultiplier, this.damageBonus );
 		}
 
-		private void increaseLoot( OnItemFishedData data ) {
+		private void increaseLoot( OnItemFished.Data data ) {
 			assert data.level != null;
 			Multiset< String > rewards = HashMultiset.create();
 			rewards.add( data.event.getDrops().get( 0 ).getHoverName().getString() );
@@ -116,7 +115,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			}
 		}
 
-		private int spawnExtraLoot( OnItemFishedData data, int fanaticLevel, ItemStack fishingRod, Multiset< String > rewards ) {
+		private int spawnExtraLoot( OnItemFished.Data data, int fanaticLevel, ItemStack fishingRod, Multiset< String > rewards ) {
 			assert data.level != null;
 			LootContext lootContext = generateLootContext( data.player, fishingRod );
 			LootTable standardLootTable = getLootTable( BuiltInLootTables.FISHING );
@@ -156,7 +155,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			return ServerLifecycleHooks.getCurrentServer().getLootTables().get( location );
 		}
 
-		private boolean tryIncreaseEnchantmentLevel( OnItemFishedData data, int fanaticLevel, ItemStack fishingRod ) {
+		private boolean tryIncreaseEnchantmentLevel( OnItemFished.Data data, int fanaticLevel, ItemStack fishingRod ) {
 			assert data.level != null;
 			boolean isRaining = data.level.isRaining();
 			double rainMultiplier = isRaining ? this.rainMultiplier.get() : 1.0;

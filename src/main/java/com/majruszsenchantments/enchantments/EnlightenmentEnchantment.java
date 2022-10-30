@@ -1,16 +1,14 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnEquipmentChangedContext;
-import com.mlib.gamemodifiers.contexts.OnPickupXpContext;
-import com.mlib.gamemodifiers.data.OnEquipmentChangedData;
-import com.mlib.gamemodifiers.data.OnPickupXpData;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.gamemodifiers.contexts.OnEquipmentChanged;
+import com.mlib.gamemodifiers.contexts.OnPickupXp;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
@@ -35,10 +33,10 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 		public Modifier( EnlightenmentEnchantment enchantment ) {
 			super( enchantment, "Enlightenment", "Increases the experience gained from any source." );
 
-			OnPickupXpContext onXpPickup = new OnPickupXpContext( this::increaseExperience );
+			OnPickupXp.Context onXpPickup = new OnPickupXp.Context( this::increaseExperience );
 			onXpPickup.addCondition( new Condition.HasEnchantment( enchantment ) );
 
-			OnEquipmentChangedContext onEquipmentChanged = new OnEquipmentChangedContext( this::giveAdvancement );
+			OnEquipmentChanged.Context onEquipmentChanged = new OnEquipmentChanged.Context( this::giveAdvancement );
 			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer )
 				.addCondition( data->enchantment.getEnchantmentSum( data.entity, EquipmentSlots.ARMOR ) == 8 );
 
@@ -46,7 +44,7 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 			this.addContexts( onXpPickup, onEquipmentChanged );
 		}
 
-		private void increaseExperience( OnPickupXpData data ) {
+		private void increaseExperience( OnPickupXp.Data data ) {
 			int enlightenmentSum = this.enchantment.getEnchantmentSum( data.player, EquipmentSlots.ARMOR );
 			int experiencePoints = Random.roundRandomly( enlightenmentSum * this.experienceMultiplier.get() * data.event.getOrb().getValue() );
 			if( experiencePoints > 1 ) {
@@ -56,7 +54,7 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 			}
 		}
 
-		private void giveAdvancement( OnEquipmentChangedData data ) {
+		private void giveAdvancement( OnEquipmentChanged.Data data ) {
 			Registries.BASIC_TRIGGER.trigger( ( ServerPlayer )data.entity, "enlightenment_8" );
 		}
 	}

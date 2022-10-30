@@ -1,16 +1,13 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnEntityTickContext;
+import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
-import com.mlib.gamemodifiers.contexts.OnPreDamagedContext;
-import com.mlib.gamemodifiers.data.OnEntityTickData;
-import com.mlib.gamemodifiers.data.OnPreDamagedData;
 import com.mlib.levels.LevelHelper;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.animal.Animal;
 
@@ -38,7 +35,7 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 		public Modifier( HorseFrostWalkerEnchantment enchantment ) {
 			super( enchantment, "HorseFrostWalker", "Creates a path of ice when walking over water on a horse." );
 
-			OnEntityTickContext onTick = new OnEntityTickContext( this::freezeNearbyWater );
+			OnEntityTick.Context onTick = new OnEntityTick.Context( this::freezeNearbyWater );
 			onTick.addCondition( new Condition.IsServer() )
 				.addCondition( new Condition.HasEnchantment( enchantment ) )
 				.addCondition( data->data.entity instanceof Animal );
@@ -52,7 +49,7 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 			this.addContexts( onTick, onPreDamaged );
 		}
 
-		private void freezeNearbyWater( OnEntityTickData data ) {
+		private void freezeNearbyWater( OnEntityTick.Data data ) {
 			assert data.entity != null;
 			int radius = this.enchantment.getEnchantmentSum( data.entity, EquipmentSlots.ARMOR ) + 2;
 			LevelHelper.freezeWater( data.entity, radius, 60, 120, false );

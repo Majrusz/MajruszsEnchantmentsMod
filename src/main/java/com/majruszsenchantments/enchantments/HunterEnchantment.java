@@ -1,15 +1,13 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.contexts.OnDamagedContext;
-import com.mlib.gamemodifiers.contexts.OnLootLevelContext;
-import com.mlib.gamemodifiers.data.OnDamagedData;
-import com.mlib.gamemodifiers.data.OnLootLevelData;
+import com.mlib.gamemodifiers.contexts.OnDamaged;
+import com.mlib.gamemodifiers.contexts.OnLootLevel;
 import com.mlib.mixininterfaces.IMixinProjectile;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
 
@@ -35,11 +33,11 @@ public class HunterEnchantment extends CustomEnchantment {
 		public Modifier( HunterEnchantment enchantment ) {
 			super( enchantment, "Hunter", "Increases mob drops and makes the damage to scale with a distance." );
 
-			OnLootLevelContext onLootLevel = new OnLootLevelContext( this::increaseLootingLevel );
+			OnLootLevel.Context onLootLevel = new OnLootLevel.Context( this::increaseLootingLevel );
 			onLootLevel.addCondition( data->data.source != null && data.source.isProjectile() )
 				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 );
 
-			OnDamagedContext onDamaged = new OnDamagedContext( this::modifyDamage );
+			OnDamaged.Context onDamaged = new OnDamaged.Context( this::modifyDamage );
 			onDamaged.addCondition( data->data.attacker != null )
 				.addCondition( data->data.source.isProjectile() )
 				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 );
@@ -48,11 +46,11 @@ public class HunterEnchantment extends CustomEnchantment {
 			this.addContext( onLootLevel );
 		}
 
-		private void increaseLootingLevel( OnLootLevelData data ) {
+		private void increaseLootingLevel( OnLootLevel.Data data ) {
 			data.event.setLootingLevel( data.event.getLootingLevel() + this.getEnchantmentLevel( data.source ) );
 		}
 
-		private void modifyDamage( OnDamagedData data ) {
+		private void modifyDamage( OnDamaged.Data data ) {
 			assert data.attacker != null;
 			float distance = Math.max( 0.0f, data.target.distanceTo( data.attacker ) - 1.0f );
 			float level = this.getEnchantmentLevel( data.source );

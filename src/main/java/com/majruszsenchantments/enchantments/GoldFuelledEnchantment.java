@@ -1,13 +1,12 @@
 package com.majruszsenchantments.enchantments;
 
-import com.mlib.EquipmentSlots;
-import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.contexts.OnItemHurtContext;
-import com.mlib.gamemodifiers.data.OnItemHurtData;
-import com.mlib.gamemodifiers.parameters.ContextParameters;
-import com.mlib.gamemodifiers.parameters.Priority;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.EquipmentSlots;
+import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.contexts.OnItemHurt;
+import com.mlib.gamemodifiers.parameters.ContextParameters;
+import com.mlib.gamemodifiers.parameters.Priority;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -35,7 +34,7 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 		public Modifier( GoldFuelledEnchantment enchantment ) {
 			super( enchantment, "GoldFuelled", "Completely repairs gold tools and armour for one gold ingot when the item is about to be destroyed." );
 
-			OnItemHurtContext onItemHurt = new OnItemHurtContext( this::restoreItem, new ContextParameters( Priority.LOWEST, null, null ) );
+			OnItemHurt.Context onItemHurt = new OnItemHurt.Context( this::restoreItem, new ContextParameters( Priority.LOWEST, null, null ) );
 			onItemHurt.addCondition( data->data.player != null )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event.isAboutToBroke() );
@@ -43,7 +42,7 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 			this.addContext( onItemHurt );
 		}
 
-		private void restoreItem( OnItemHurtData data ) {
+		private void restoreItem( OnItemHurt.Data data ) {
 			assert data.player != null;
 			if( consumeGoldIngot( data.player ) ) {
 				Vec3 position = data.player.position();

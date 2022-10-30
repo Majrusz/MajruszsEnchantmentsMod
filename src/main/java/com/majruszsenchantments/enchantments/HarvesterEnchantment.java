@@ -1,5 +1,7 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.blocks.BlockHelper;
@@ -9,13 +11,9 @@ import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.features.FarmlandTiller;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnLootContext;
-import com.mlib.gamemodifiers.contexts.OnPlayerInteractContext;
-import com.mlib.gamemodifiers.data.OnLootData;
-import com.mlib.gamemodifiers.data.OnPlayerInteractData;
+import com.mlib.gamemodifiers.contexts.OnLoot;
+import com.mlib.gamemodifiers.contexts.OnPlayerInteract;
 import com.mlib.math.VectorHelper;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -54,13 +52,13 @@ public class HarvesterEnchantment extends CustomEnchantment {
 		public Modifier( HarvesterEnchantment enchantment ) {
 			super( enchantment, "Harvester", "Gives the option of right-click harvesting and the chance to grow nearby crops." );
 
-			OnPlayerInteractContext onInteract = new OnPlayerInteractContext( this::handle );
+			OnPlayerInteract.Context onInteract = new OnPlayerInteract.Context( this::handle );
 			onInteract.addCondition( new Condition.IsServer() )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event instanceof PlayerInteractEvent.RightClickBlock )
 				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.event.getPos() ) ) );
 
-			OnLootContext onLoot = new OnLootContext( this::replant );
+			OnLoot.Context onLoot = new OnLoot.Context( this::replant );
 			onLoot.addCondition( new Condition.IsServer() )
 				.addCondition( data->data.blockState != null )
 				.addCondition( data->data.entity != null )
@@ -72,7 +70,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			this.addContexts( onInteract, onLoot );
 		}
 
-		private void handle( OnPlayerInteractData data ) {
+		private void handle( OnPlayerInteract.Data data ) {
 			assert data.level != null;
 			Vec3 position = VectorHelper.convertToVec3( data.event.getPos() );
 			collectCrop( data.level, data.player, new BlockPos( position ), data.itemStack );
@@ -116,7 +114,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			}
 		}
 
-		private void replant( OnLootData data ) {
+		private void replant( OnLoot.Data data ) {
 			assert data.origin != null && data.blockState != null && data.level != null;
 			BlockPos position = new BlockPos( data.origin );
 			Block block = data.blockState.getBlock();

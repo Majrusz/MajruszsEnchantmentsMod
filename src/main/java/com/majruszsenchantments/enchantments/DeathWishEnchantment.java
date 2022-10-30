@@ -1,13 +1,12 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
-import com.mlib.gamemodifiers.contexts.OnDamagedContext;
-import com.mlib.gamemodifiers.data.OnDamagedData;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.gamemodifiers.contexts.OnDamaged;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.function.Supplier;
@@ -32,22 +31,22 @@ public class DeathWishEnchantment extends CustomEnchantment {
 		public Modifier( DeathWishEnchantment enchantment ) {
 			super( enchantment, "DeathWish", "Increases damage dealt equal to the percentage of health lost." );
 
-			OnDamagedContext onDamaged = new OnDamagedContext( this::increaseDamageDealt );
+			OnDamaged.Context onDamaged = new OnDamaged.Context( this::increaseDamageDealt );
 			onDamaged.addCondition( data->data.attacker != null );
 			onDamaged.addCondition( data->enchantment.hasEnchantment( data.attacker ) );
 
-			OnDamagedContext onDamaged2 = new OnDamagedContext( this::increaseDamageReceived );
+			OnDamaged.Context onDamaged2 = new OnDamaged.Context( this::increaseDamageReceived );
 			onDamaged2.addCondition( data->enchantment.hasEnchantment( data.target ) );
 
 			this.addConfigs( this.damageMultiplier, this.vulnerabilityMultiplier );
 			this.addContexts( onDamaged, onDamaged2 );
 		}
 
-		private void increaseDamageDealt( OnDamagedData data ) {
+		private void increaseDamageDealt( OnDamaged.Data data ) {
 			data.event.setAmount( data.event.getAmount() * this.getDamageMultiplier( data.attacker ) );
 		}
 
-		private void increaseDamageReceived( OnDamagedData data ) {
+		private void increaseDamageReceived( OnDamaged.Data data ) {
 			data.event.setAmount( data.event.getAmount() * this.vulnerabilityMultiplier.asFloat() );
 		}
 

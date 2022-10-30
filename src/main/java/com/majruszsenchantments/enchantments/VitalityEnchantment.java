@@ -1,14 +1,13 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnEquipmentChangedContext;
-import com.mlib.gamemodifiers.data.OnEquipmentChangedData;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.gamemodifiers.contexts.OnEquipmentChanged;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
@@ -34,13 +33,13 @@ public class VitalityEnchantment extends CustomEnchantment {
 		public Modifier( VitalityEnchantment enchantment ) {
 			super( enchantment, "Vitality", "Increases the player's health." );
 
-			OnEquipmentChangedContext onChange = new OnEquipmentChangedContext( this::updateHealth );
+			OnEquipmentChanged.Context onChange = new OnEquipmentChanged.Context( this::updateHealth );
 			onChange.addCondition( new Condition.IsServer() ).addConfig( this.healthBonus );
 
 			this.addContext( onChange );
 		}
 
-		private void updateHealth( OnEquipmentChangedData data ) {
+		private void updateHealth( OnEquipmentChanged.Data data ) {
 			float extraHealth = this.healthBonus.asFloat() * this.enchantment.getEnchantmentSum( data.entity, EquipmentSlots.BOTH_HANDS );
 			HEALTH_ATTRIBUTE.setValueAndApply( data.entity, extraHealth );
 		}

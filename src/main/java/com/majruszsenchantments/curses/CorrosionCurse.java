@@ -1,13 +1,12 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnEntityTickContext;
-import com.mlib.gamemodifiers.data.OnEntityTickData;
+import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.levels.LevelHelper;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,7 +35,7 @@ public class CorrosionCurse extends CustomEnchantment {
 		public Modifier( CorrosionCurse enchantment ) {
 			super( enchantment, "Corrosion", "Gradually destroys the item and inflicts damage to the owner when in water." );
 
-			OnEntityTickContext onTick = new OnEntityTickContext( this::damageOnContactWithWater );
+			OnEntityTick.Context onTick = new OnEntityTick.Context( this::damageOnContactWithWater );
 			onTick.addCondition( new Condition.IsServer() )
 				.addCondition( new Condition.HasEnchantment( enchantment ) )
 				.addCondition( new Condition.Cooldown( 3.0, Dist.DEDICATED_SERVER ) )
@@ -46,7 +45,7 @@ public class CorrosionCurse extends CustomEnchantment {
 			this.addContext( onTick );
 		}
 
-		private void damageOnContactWithWater( OnEntityTickData data ) {
+		private void damageOnContactWithWater( OnEntityTick.Data data ) {
 			assert data.entity != null;
 			attackOwner( data.entity );
 			damageArmor( data.entity );
