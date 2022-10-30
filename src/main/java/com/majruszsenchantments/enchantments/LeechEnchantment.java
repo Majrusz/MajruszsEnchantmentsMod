@@ -7,6 +7,7 @@ import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.Utility;
 import com.mlib.effects.EffectHelper;
+import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
@@ -106,16 +107,11 @@ public class LeechEnchantment extends CustomEnchantment {
 		}
 
 		private void spawnEffects( ServerLevel level, LivingEntity attacker, LivingEntity target ) {
-			Vec3 startPosition = VectorHelper.add( attacker.position(), new Vec3( 0.0, attacker.getBbHeight() * 0.75, 0.0 ) );
-			Vec3 endPosition = VectorHelper.add( target.position(), new Vec3( 0.0, target.getBbHeight() * 0.75, 0.0 ) );
-			Vec3 difference = VectorHelper.subtract( endPosition, startPosition );
-			int amountOfParticles = ( int )( Math.ceil( startPosition.distanceTo( endPosition ) * 5.0 ) );
-			for( int i = 0; i <= amountOfParticles; i++ ) {
-				Vec3 stepPosition = VectorHelper.add( startPosition, VectorHelper.multiply( difference, ( float )( i ) / amountOfParticles ) );
-				level.sendParticles( ParticleTypes.ENCHANTED_HIT, stepPosition.x, stepPosition.y, stepPosition.z, 1, 0.0, 0.0, 0.0, 0.0 );
-			}
+			Vec3 from = VectorHelper.add( attacker.position(), new Vec3( 0.0, attacker.getBbHeight() * 0.75, 0.0 ) );
+			Vec3 to = VectorHelper.add( target.position(), new Vec3( 0.0, target.getBbHeight() * 0.75, 0.0 ) );
+			ParticleHandler.ENCHANTED_HIT.spawnLine( level, from, to, ( int )Math.ceil( from.distanceTo( to ) * 5.0 ) );
 
-			SoundHandler.DRINK.play( level, startPosition, SoundHandler.randomized( 0.25f ) );
+			SoundHandler.DRINK.play( level, from, SoundHandler.randomized( 0.25f ) );
 		}
 	}
 }
