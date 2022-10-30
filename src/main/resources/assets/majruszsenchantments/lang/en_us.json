@@ -117,5 +117,7 @@
 	"advancements.majruszsenchantments.fishing_fanatic.title": "Hey, That's Pretty Good!",
 	"advancements.majruszsenchantments.fishing_fanatic.description": "Acquire the first level of Fishing Fanatic",
 	"advancements.majruszsenchantments.fishing_fanatic_true.title": "Well... I Am Addicted",
-	"advancements.majruszsenchantments.fishing_fanatic_true.description": "Acquire the eighth level of Fishing Fanatic"
+	"advancements.majruszsenchantments.fishing_fanatic_true.description": "Acquire the eighth level of Fishing Fanatic",
+	"advancements.majruszsenchantments.fishing_fanatic_extreme.title": "Extreme Fishing",
+	"advancements.majruszsenchantments.fishing_fanatic_extreme.description": "Acquire all the best fishing enchantments on one fishing rod"
 }

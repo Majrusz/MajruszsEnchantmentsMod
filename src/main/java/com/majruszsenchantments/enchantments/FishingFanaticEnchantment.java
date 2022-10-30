@@ -13,9 +13,13 @@ import com.mlib.config.DoubleArrayConfig;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.ContextData;
+import com.mlib.gamemodifiers.GameModifier;
+import com.mlib.gamemodifiers.contexts.OnEquipmentChanged;
 import com.mlib.gamemodifiers.contexts.OnItemFished;
 import com.mlib.math.VectorHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +31,10 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -96,6 +103,10 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 
 			OnItemFished.Context onItemFished = new OnItemFished.Context( this::increaseLoot );
 			onItemFished.addCondition( new Condition.IsServer() );
+
+			OnEquipmentChanged.Context onEquipmentChanged = new OnEquipmentChanged.Context( this::giveExtremeAdvancement );
+			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer )
+				.addCondition( new HasBestFishingEnchantments() );
 
 			this.addContext( onItemFished );
 			this.addConfigs( this.levelUpChances, this.specialDropChance, this.extraLootChance, this.rainMultiplier, this.damageBonus );
@@ -183,6 +194,10 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			}
 		}
 
+		private void giveExtremeAdvancement( OnEquipmentChanged.Data data ) {
+			this.giveAdvancement( ( ServerPlayer )data.entity, "fishing_fanatic_extreme", ()->true );
+		}
+
 		private void sendLevelUpMessage( Player player ) {
 			player.displayClientMessage( Component.translatable( "majruszsenchantments.fanatic_level_up" ).withStyle( ChatFormatting.BOLD ), true );
 		}
@@ -200,6 +215,23 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			message.append( Component.literal( ChatFormatting.WHITE + ")" ) );
 
 			player.displayClientMessage( message, true );
+		}
+
+		public static class HasBestFishingEnchantments extends Condition {
+			@Override
+			public boolean check( GameModifier feature, ContextData data ) {
+				if( !( data instanceof OnEquipmentChanged.Data equipmentData ) )
+					return false;
+
+				final boolean[] hasBestEnchantments = { true };
+				Registry.ENCHANTMENT.forEach( enchantment -> {
+					if( enchantment.isCurse() || !enchantment.canApplyAtEnchantingTable( new ItemStack( Items.FISHING_ROD ) ) ) {
+						return;
+					}
+					hasBestEnchantments[ 0 ] = hasBestEnchantments[ 0 ] && EnchantmentHelper.getTagEnchantmentLevel( enchantment, equipmentData.event.getTo() ) == enchantment.getMaxLevel();
+				} );
+				return hasBestEnchantments[ 0 ];
+			}
 		}
 	}
 }
