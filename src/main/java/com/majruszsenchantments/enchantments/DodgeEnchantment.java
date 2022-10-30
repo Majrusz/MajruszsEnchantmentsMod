@@ -5,6 +5,7 @@ import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.config.DoubleConfig;
+import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
@@ -66,7 +67,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 					level.sendParticles( Registries.DODGE_PARTICLE.get(), position.x, position.y, position.z, 5 * ( 2 * i + 1 ), ( i + 1 ) * 0.25, 0.375, ( i + 1 ) * 0.25, 0.0075 );
 				}
 			}
-			level.playSound( null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.AMBIENT, 0.7f, 1.0f );
+			SoundHandler.FIRE_EXTINGUISH.play( level, entity.position() );
 		}
 
 		private void damagePants( LivingEntity entity, float damage ) {

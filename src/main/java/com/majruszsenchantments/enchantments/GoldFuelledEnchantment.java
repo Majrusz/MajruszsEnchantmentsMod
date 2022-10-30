@@ -3,7 +3,9 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
+import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnItemHurt;
 import com.mlib.gamemodifiers.parameters.ContextParameters;
 import com.mlib.gamemodifiers.parameters.Priority;
@@ -35,7 +37,8 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 			super( enchantment, "GoldFuelled", "Completely repairs gold tools and armour for one gold ingot when the item is about to be destroyed." );
 
 			OnItemHurt.Context onItemHurt = new OnItemHurt.Context( this::restoreItem, new ContextParameters( Priority.LOWEST, null, null ) );
-			onItemHurt.addCondition( data->data.player != null )
+			onItemHurt.addCondition( new Condition.IsServer() )
+				.addCondition( data->data.player != null )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event.isAboutToBroke() );
 
@@ -46,7 +49,7 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 			assert data.player != null;
 			if( consumeGoldIngot( data.player ) ) {
 				Vec3 position = data.player.position();
-				data.player.level.playSound( null, position.x, position.y, position.z, SoundEvents.ITEM_BREAK, SoundSource.AMBIENT, 0.7f, 1.0f );
+				SoundHandler.ITEM_BREAK.play( data.level, position );
 				data.event.extraDamage = -data.itemStack.getMaxDamage(); // restores initial durability
 			}
 		}

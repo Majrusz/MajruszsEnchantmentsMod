@@ -4,6 +4,7 @@ import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
+import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnLoot;
@@ -61,8 +62,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			Player player = ( Player )entity;
 			assert player != null && data.level != null;
 			if( data.generatedLoot.removeIf( player::addItem ) ) {
-				Vec3 position = player.position();
-				data.level.playSound( null, position.x, position.y, position.z, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.25f, Random.nextFloat( 0.8f, 1.2f ) );
+				SoundHandler.ITEM_PICKUP.play( data.level, player.position(), SoundHandler.randomized( 0.25f ) );
 			}
 		}
 

@@ -7,6 +7,7 @@ import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.Utility;
 import com.mlib.effects.EffectHelper;
+import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnDamaged;
@@ -114,7 +115,7 @@ public class LeechEnchantment extends CustomEnchantment {
 				level.sendParticles( ParticleTypes.ENCHANTED_HIT, stepPosition.x, stepPosition.y, stepPosition.z, 1, 0.0, 0.0, 0.0, 0.0 );
 			}
 
-			level.playSound( null, startPosition.x, startPosition.y, startPosition.z, SoundEvents.GENERIC_DRINK, SoundSource.AMBIENT, 0.25F, 1.0F );
+			SoundHandler.DRINK.play( level, startPosition, SoundHandler.randomized( 0.25f ) );
 		}
 	}
 }
