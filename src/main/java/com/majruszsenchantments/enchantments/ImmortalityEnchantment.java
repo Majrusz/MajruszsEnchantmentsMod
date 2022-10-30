@@ -38,7 +38,7 @@ public class ImmortalityEnchantment extends CustomEnchantment {
 		private void cancelDeath( OnDeath.Data data ) {
 			LivingEntity target = data.target;
 			InteractionHand hand = this.enchantment.hasEnchantment( target.getMainHandItem() ) ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
-			target.getItemInHand( hand ).hurtAndBreak( 9001, target, entity->entity.broadcastBreakEvent( hand ) );
+			this.enchantment.removeEnchantment( target.getItemInHand( hand ) );
 			EntityHelper.cheatDeath( target, 1.0f, true );
 
 			data.event.setCanceled( true );
