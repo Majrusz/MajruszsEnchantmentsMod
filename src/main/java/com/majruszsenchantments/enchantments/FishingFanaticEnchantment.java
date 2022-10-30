@@ -72,6 +72,11 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 	}
 
 	@Override
+	public boolean isTradeable() {
+		return false;
+	}
+
+	@Override
 	public boolean isTreasureOnly() {
 		return true;
 	}
