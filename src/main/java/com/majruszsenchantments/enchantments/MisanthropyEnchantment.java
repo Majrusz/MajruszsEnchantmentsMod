@@ -1,5 +1,7 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
+import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.DoubleConfig;
 import com.mlib.effects.ParticleHandler;
@@ -7,12 +9,9 @@ import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnDamaged;
-import com.mlib.gamemodifiers.contexts.OnDamagedContext;
-import com.mlib.gamemodifiers.data.OnDamagedData;
-import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.math.VectorHelper;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Supplier;
@@ -28,6 +27,11 @@ public class MisanthropyEnchantment extends CustomEnchantment {
 
 	public MisanthropyEnchantment( Parameters params ) {
 		super( params );
+	}
+
+	@Override
+	public boolean checkCompatibility( Enchantment enchantment ) {
+		return !( enchantment instanceof DamageEnchantment ) && super.checkCompatibility( enchantment );
 	}
 
 	private static class Modifier extends EnchantmentModifier< MisanthropyEnchantment > {
