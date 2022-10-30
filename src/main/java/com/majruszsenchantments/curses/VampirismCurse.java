@@ -4,6 +4,7 @@ import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.BooleanConfig;
 import com.mlib.config.DoubleConfig;
+import com.mlib.effects.ParticleHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.configs.EffectConfig;
@@ -12,6 +13,7 @@ import com.mlib.gamemodifiers.contexts.OnPlayerInteract;
 import com.mlib.gamemodifiers.parameters.ContextParameters;
 import com.mlib.gamemodifiers.parameters.Priority;
 import com.mlib.levels.LevelHelper;
+import com.mlib.math.VectorHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -87,8 +89,8 @@ public class VampirismCurse extends CustomEnchantment {
 
 		private void spawnParticles( OnEntityTick.Data data ) {
 			assert data.entity != null && data.level != null;
-			Vec3 position = data.entity.position();
-			data.level.sendParticles( ParticleTypes.SMOKE, position.x(), data.entity.getY( 0.5 ), position.z(), 10, 0.25, 0.5, 0.25, 0.01 );
+			Vec3 position = VectorHelper.add( data.entity.position(), new Vec3( 0.0, data.entity.getBbHeight() * 0.5, 0.0 ) );
+			ParticleHandler.SMOKE.spawn( data.level, position, 10, ()->new Vec3( 0.25, 0.5, 0.25 ) );
 		}
 
 		private void blockSleep( OnPlayerInteract.Data data ) {
