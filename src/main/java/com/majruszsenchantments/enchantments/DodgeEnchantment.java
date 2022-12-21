@@ -41,7 +41,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 			super( enchantment, "Dodge", "Gives a chance to completely avoid any kind of damage." );
 
 			OnPreDamaged.Context onDamaged = new OnPreDamaged.Context( this::dodgeDamage );
-			onDamaged.addCondition( new Condition.HasEnchantment( enchantment ) )
+			onDamaged.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( OnPreDamaged.DEALT_ANY_DAMAGE )
 				.addCondition( OnPreDamaged.WILL_TAKE_FULL_DAMAGE )
 				.addCondition( data->Random.tryChance( enchantment.getEnchantmentLevel( data.target ) * this.chance.asFloat() ) );

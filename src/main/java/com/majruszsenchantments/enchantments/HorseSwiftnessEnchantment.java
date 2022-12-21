@@ -35,7 +35,7 @@ public class HorseSwiftnessEnchantment extends CustomEnchantment {
 			super( enchantment, "HorseSwiftness", "Increases the horse's movement speed." );
 
 			OnEquipmentChanged.Context onChange = new OnEquipmentChanged.Context( this::updateSpeed );
-			onChange.addCondition( new Condition.IsServer() )
+			onChange.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->data.entity instanceof Animal ) // checks for the animal class instead of horse to have a compatibility with other mods
 				.addConfig( this.speedBonus );
 

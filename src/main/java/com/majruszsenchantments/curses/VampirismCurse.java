@@ -10,12 +10,9 @@ import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.configs.EffectConfig;
 import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.gamemodifiers.contexts.OnPlayerInteract;
-import com.mlib.gamemodifiers.parameters.ContextParameters;
-import com.mlib.gamemodifiers.parameters.Priority;
 import com.mlib.levels.LevelHelper;
 import com.mlib.math.VectorHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffects;
@@ -49,22 +46,22 @@ public class VampirismCurse extends CustomEnchantment {
 		public Modifier( VampirismCurse enchantment ) {
 			super( enchantment, "Vampirism", "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger." );
 
-			OnEntityTick.Context onTick = new OnEntityTick.Context( this::applyDebuffs, new ContextParameters( Priority.NORMAL, "Debuffs", "" ) );
-			onTick.addCondition( new Condition.Cooldown( 2.0, Dist.DEDICATED_SERVER ) )
-				.addCondition( new Condition.HasEnchantment( enchantment ) )
-				.addCondition( new Condition.IsServer() )
+			OnEntityTick.Context onTick = new OnEntityTick.Context( this::applyDebuffs, "Debuffs", "" );
+			onTick.addCondition( new Condition.Cooldown<>( 2.0, Dist.DEDICATED_SERVER ) )
+				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) )
 				.addConfigs( this.weakness, this.hunger, this.fireDuration, this.scalesWithLevel );
 
-			OnEntityTick.Context onTick2 = new OnEntityTick.Context( this::spawnParticles, new ContextParameters( Priority.NORMAL, "Particles", "" ) );
-			onTick2.addCondition( new Condition.Cooldown( 0.2, Dist.DEDICATED_SERVER ) )
-				.addCondition( new Condition.HasEnchantment( enchantment ) )
-				.addCondition( new Condition.IsServer() )
+			OnEntityTick.Context onTick2 = new OnEntityTick.Context( this::spawnParticles, "Particles", "" );
+			onTick2.addCondition( new Condition.Cooldown<>( 0.2, Dist.DEDICATED_SERVER ) )
+				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) );
 
 			OnPlayerInteract.Context onInteraction = new OnPlayerInteract.Context( this::blockSleep );
-			onInteraction.addCondition( new Condition.HasEnchantment( enchantment ) )
-				.addCondition( new Condition.IsServer() )
+			onInteraction.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( Modifier::isBedCondition );
 
 			this.addContexts( onTick, onTick2, onInteraction );

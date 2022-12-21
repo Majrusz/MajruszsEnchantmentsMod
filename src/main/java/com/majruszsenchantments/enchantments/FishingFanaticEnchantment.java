@@ -40,6 +40,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.function.Function;
@@ -106,7 +107,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			enchantment.damageBonus = this.damageBonus;
 
 			OnItemFished.Context onItemFished = new OnItemFished.Context( this::increaseLoot );
-			onItemFished.addCondition( new Condition.IsServer() );
+			onItemFished.addCondition( new Condition.IsServer<>() );
 
 			OnEquipmentChanged.Context onEquipmentChanged = new OnEquipmentChanged.Context( this::giveExtremeAdvancement );
 			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer ).addCondition( new HasBestFishingEnchantments() );
@@ -163,7 +164,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 		private static LootContext generateLootContext( Player player, ItemStack fishingRod ) {
 			LootContext.Builder lootContextBuilder = new LootContext.Builder( ( ServerLevel )player.level );
 			lootContextBuilder.withParameter( LootContextParams.TOOL, fishingRod )
-				.withRandom( MajruszLibrary.RANDOM )
+				.withRandom( Random.getThreadSafe() )
 				.withLuck( player.getLuck() )
 				.withParameter( LootContextParams.ORIGIN, player.position() );
 
@@ -227,7 +228,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 					return false;
 
 				final boolean[] hasBestEnchantments = { true };
-				Registry.ENCHANTMENT.forEach( enchantment->{
+				ForgeRegistries.ENCHANTMENTS.forEach( enchantment->{
 					if( enchantment.isCurse() || !enchantment.canApplyAtEnchantingTable( new ItemStack( Items.FISHING_ROD ) ) ) {
 						return;
 					}

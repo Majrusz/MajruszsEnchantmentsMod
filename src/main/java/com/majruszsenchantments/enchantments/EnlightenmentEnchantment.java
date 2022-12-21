@@ -34,7 +34,7 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 			super( enchantment, "Enlightenment", "Increases the experience gained from any source." );
 
 			OnPickupXp.Context onXpPickup = new OnPickupXp.Context( this::increaseExperience );
-			onXpPickup.addCondition( new Condition.HasEnchantment( enchantment ) );
+			onXpPickup.addCondition( new Condition.HasEnchantment<>( enchantment ) );
 
 			OnEquipmentChanged.Context onEquipmentChanged = new OnEquipmentChanged.Context( this::giveAdvancement );
 			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer )

@@ -8,7 +8,6 @@ import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnLoot;
-import com.mlib.gamemodifiers.parameters.ContextParameters;
 import com.mlib.gamemodifiers.parameters.Priority;
 import com.mlib.math.VectorHelper;
 import com.mlib.mixininterfaces.IMixinProjectile;
@@ -34,25 +33,26 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< TelekinesisEnchantment > {
-		static final ContextParameters LOWEST_PRIORITY = new ContextParameters( Priority.LOWEST, "", "" );
-
 		public Modifier( TelekinesisEnchantment enchantment ) {
 			super( enchantment, "Telekinesis", "Adds acquired items directly to player's inventory." );
 
-			OnLoot.Context onLoot = new OnLoot.Context( data->this.addToInventory( data, data.entity ), LOWEST_PRIORITY );
-			onLoot.addCondition( new Condition.IsServer() )
+			OnLoot.Context onLoot = new OnLoot.Context( data->this.addToInventory( data, data.entity ) );
+			onLoot.priority( Priority.LOWEST )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.entity instanceof Player )
 				.addCondition( data->data.tool != null && enchantment.hasEnchantment( data.tool ) );
 
-			OnLoot.Context onLoot2 = new OnLoot.Context( data->this.addToInventory( data, data.killer ), LOWEST_PRIORITY );
-			onLoot2.addCondition( new Condition.IsServer() )
+			OnLoot.Context onLoot2 = new OnLoot.Context( data->this.addToInventory( data, data.killer ) );
+			onLoot2.priority( Priority.LOWEST )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.killer instanceof Player )
 				.addCondition( data->enchantment.hasEnchantment( ( Player )data.killer ) );
 
-			OnLoot.Context onLoot3 = new OnLoot.Context( data->this.addToInventory( data, data.killer ), LOWEST_PRIORITY );
-			onLoot3.addCondition( new Condition.IsServer() )
+			OnLoot.Context onLoot3 = new OnLoot.Context( data->this.addToInventory( data, data.killer ) );
+			onLoot3.priority( Priority.LOWEST )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.killer instanceof Player )
 				.addCondition( this.doesProjectileHasEnchantmentPredicate() );

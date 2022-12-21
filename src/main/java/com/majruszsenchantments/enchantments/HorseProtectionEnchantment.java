@@ -35,7 +35,7 @@ public class HorseProtectionEnchantment extends CustomEnchantment {
 			super( enchantment, "ArmoredCaravan", "Increases the horse's armor." );
 
 			OnEquipmentChanged.Context onChange = new OnEquipmentChanged.Context( this::updateSpeed );
-			onChange.addCondition( new Condition.IsServer() )
+			onChange.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->data.entity instanceof Animal ) // checks for the animal class instead of horse to have a compatibility with other mods
 				.addConfig( this.armorBonus );
 

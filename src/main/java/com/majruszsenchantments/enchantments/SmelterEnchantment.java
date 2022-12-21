@@ -34,7 +34,7 @@ public class SmelterEnchantment extends CustomEnchantment {
 			super( enchantment, "Smelter", "Destroyed blocks are automatically smelted." );
 
 			OnBlockSmeltCheck.Context onCheck = new OnBlockSmeltCheck.Context( OnBlockSmeltCheck.ENABLE_SMELT );
-			onCheck.addCondition( new Condition.HasEnchantment( enchantment ) );
+			onCheck.addCondition( new Condition.HasEnchantment<>( enchantment ) );
 
 			this.addContexts( onCheck );
 		}

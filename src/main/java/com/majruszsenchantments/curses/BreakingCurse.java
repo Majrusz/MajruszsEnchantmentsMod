@@ -38,7 +38,7 @@ public class BreakingCurse extends CustomEnchantment {
 			super( enchantment, "Breaking", "Makes all items break faster." );
 
 			OnItemHurt.Context onItemHurt = new OnItemHurt.Context( this::dealExtraDamage );
-			onItemHurt.addCondition( data->data.player != null ).addCondition( new Condition.HasEnchantment( enchantment ) );
+			onItemHurt.addCondition( data->data.player != null ).addCondition( new Condition.HasEnchantment<>( enchantment ) );
 
 			this.addConfig( this.damageMultiplier );
 			this.addContext( onItemHurt );

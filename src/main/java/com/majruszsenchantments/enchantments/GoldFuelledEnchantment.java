@@ -7,11 +7,8 @@ import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnItemHurt;
-import com.mlib.gamemodifiers.parameters.ContextParameters;
 import com.mlib.gamemodifiers.parameters.Priority;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,8 +33,9 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 		public Modifier( GoldFuelledEnchantment enchantment ) {
 			super( enchantment, "GoldFuelled", "Completely repairs gold tools and armour for one gold ingot when the item is about to be destroyed." );
 
-			OnItemHurt.Context onItemHurt = new OnItemHurt.Context( this::restoreItem, new ContextParameters( Priority.LOWEST, null, null ) );
-			onItemHurt.addCondition( new Condition.IsServer() )
+			OnItemHurt.Context onItemHurt = new OnItemHurt.Context( this::restoreItem );
+			onItemHurt.priority( Priority.LOWEST )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->data.player != null )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event.isAboutToBroke() );

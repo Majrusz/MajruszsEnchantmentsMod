@@ -30,7 +30,7 @@ public class ImmortalityEnchantment extends CustomEnchantment {
 			super( enchantment, "Immortality", "Cheats death on a fatal hit at the cost of this enchantment." );
 
 			OnDeath.Context onDeath = new OnDeath.Context( this::cancelDeath );
-			onDeath.addCondition( new Condition.IsServer() ).addCondition( new Condition.HasEnchantment( enchantment ) );
+			onDeath.addCondition( new Condition.IsServer<>() ).addCondition( new Condition.HasEnchantment<>( enchantment ) );
 
 			this.addContexts( onDeath );
 		}

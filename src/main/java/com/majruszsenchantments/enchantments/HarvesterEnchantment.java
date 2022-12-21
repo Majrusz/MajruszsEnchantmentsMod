@@ -9,8 +9,8 @@ import com.mlib.config.DoubleConfig;
 import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.features.FarmlandTiller;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.contexts.OnFarmlandTillCheck;
 import com.mlib.gamemodifiers.contexts.OnLoot;
 import com.mlib.gamemodifiers.contexts.OnPlayerInteract;
 import com.mlib.math.VectorHelper;
@@ -36,7 +36,6 @@ public class HarvesterEnchantment extends CustomEnchantment {
 		Parameters params = new Parameters( Rarity.UNCOMMON, Registries.HOE, EquipmentSlots.BOTH_HANDS, false, 3, level->10 * level, level->15 + 10 * level );
 		HarvesterEnchantment enchantment = new HarvesterEnchantment( params );
 		Modifier modifier = new HarvesterEnchantment.Modifier( enchantment );
-		FarmlandTiller.addRegister( ( level, player, itemStack )->enchantment.hasEnchantment( itemStack ) );
 
 		return ()->enchantment;
 	}
@@ -53,18 +52,21 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			super( enchantment, "Harvester", "Gives the option of right-click harvesting and the chance to grow nearby crops." );
 
 			OnPlayerInteract.Context onInteract = new OnPlayerInteract.Context( this::handle );
-			onInteract.addCondition( new Condition.IsServer() )
+			onInteract.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event instanceof PlayerInteractEvent.RightClickBlock )
 				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.event.getPos() ) ) );
 
 			OnLoot.Context onLoot = new OnLoot.Context( this::replant );
-			onLoot.addCondition( new Condition.IsServer() )
+			onLoot.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_BLOCK_STATE )
 				.addCondition( OnLoot.HAS_ENTITY )
 				.addCondition( OnLoot.HAS_TOOL )
 				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.origin ) ) );
+
+			OnFarmlandTillCheck.Context onCheck = new OnFarmlandTillCheck.Context( OnFarmlandTillCheck.INCREASE_AREA );
+			onCheck.addCondition( data->enchantment.hasEnchantment( data.itemStack ) );
 
 			this.addConfigs( this.durabilityPenalty, this.growChance );
 			this.addContexts( onInteract, onLoot );
@@ -72,7 +74,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 
 		private void handle( OnPlayerInteract.Data data ) {
 			assert data.level != null;
-			Vec3 position = VectorHelper.convertToVec3( data.event.getPos() );
+			Vec3 position = VectorHelper.vec3( data.event.getPos() );
 			collectCrop( data.level, data.player, new BlockPos( position ), data.itemStack );
 			tickNearbyCrops( data.level, data.player, new BlockPos( position ), data.itemStack, data.event.getHand() );
 			SoundHandler.BONE_MEAL.play( data.level, position );
@@ -84,7 +86,9 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			block.playerDestroy( level, player, position, blockState, null, itemStack );
 		}
 
-		private void tickNearbyCrops( ServerLevel level, Player player, BlockPos position, ItemStack itemStack, InteractionHand hand ) {
+		private void tickNearbyCrops( ServerLevel level, Player player, BlockPos position, ItemStack itemStack,
+			InteractionHand hand
+		) {
 			int range = this.enchantment.getEnchantmentLevel( itemStack );
 			double totalDamage = 0;
 			for( int z = -range; z <= range; ++z ) {
@@ -105,7 +109,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 						particlesCount = 3;
 					}
 
-					ParticleHandler.AWARD.spawn( level, VectorHelper.convertToVec3( position ), particlesCount );
+					ParticleHandler.AWARD.spawn( level, VectorHelper.vec3( position ), particlesCount );
 				}
 			}
 			int finalDamage = Random.roundRandomly( totalDamage );

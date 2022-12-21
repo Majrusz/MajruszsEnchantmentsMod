@@ -34,8 +34,8 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 	}
 
 	private static class Modifier extends EnchantmentModifier< FuseCutterEnchantment > {
-		static final ParticleHandler BIG_SMOKE = new ParticleHandler( ParticleTypes.LARGE_SMOKE, new Vec3( 0.25, 0.25, 0.25 ), ()->0.025f );
-		static final ParticleHandler SMOKE = new ParticleHandler( ParticleTypes.SMOKE, new Vec3( 0.25, 0.25, 0.25 ), ()->0.025f );
+		static final ParticleHandler BIG_SMOKE = new ParticleHandler( ParticleTypes.LARGE_SMOKE, ParticleHandler.offset( 0.25f ), ()->0.025f );
+		static final ParticleHandler SMOKE = new ParticleHandler( ParticleTypes.SMOKE, ParticleHandler.offset( 0.25f ), ()->0.025f );
 		final DoubleConfig maxDistance = new DoubleConfig( "maximum_distance", "Maximum distance in blocks from the explosion.", false, 6.0, 1.0, 100.0 );
 		final DoubleConfig cooldownRatio = new DoubleConfig( "cooldown_ratio", "Ratio of explosion radius to disabled shield cooldown duration. (for instance 1.5 means that explosion with 2 blocks radius will disable the shield for 3 seconds)", false, 1.5, 0.0, 10.0 );
 
@@ -43,7 +43,7 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 			super( enchantment, "FuseCutter", "Cancels all nearby explosions whenever the player is blocking with a shield." );
 
 			OnExplosion.Context onExplosion = new OnExplosion.Context( this::cancelExplosion );
-			onExplosion.addCondition( new Condition.IsServer() )
+			onExplosion.addCondition( new Condition.IsServer<>() )
 				.addCondition( this::isAnyoneBlockingWithFuseCutterNearby )
 				.addConfigs( this.maxDistance, this.cooldownRatio );
 

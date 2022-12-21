@@ -53,19 +53,19 @@ public class FatigueCurse extends CustomEnchantment {
 			super( enchantment, "Fatigue", "Effectively reduces the speed of everything." );
 
 			OnBreakSpeed.Context onBreakSpeed = new OnBreakSpeed.Context( this::reduceMiningSpeed );
-			onBreakSpeed.addCondition( new Condition.HasEnchantment( enchantment ) );
+			onBreakSpeed.addCondition( new Condition.HasEnchantment<>( enchantment ) );
 
 			OnEquipmentChanged.Context onEquipmentChange = new OnEquipmentChanged.Context( this::reduceAttackSpeed );
 
 			OnEquipmentChanged.Context onEquipmentChange2 = new OnEquipmentChanged.Context( this::reduceMovementSpeed );
 
 			OnUseItemTick.Context onBowstring = new OnUseItemTick.Context( this::reduceBowstringSpeed );
-			onBowstring.addCondition( new Condition.HasEnchantment( enchantment ) )
+			onBowstring.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( data->BowItem.getPowerForTime( data.itemStack.getUseDuration() - data.duration ) > 0.3f ) // first frame takes longer than other frames, and we skip slowing this frame
 				.addCondition( data->Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) );
 
 			OnItemSwingDuration.Context onItemSwing = new OnItemSwingDuration.Context( this::increaseSwingDuration );
-			onItemSwing.addCondition( new Condition.HasEnchantment( enchantment ) );
+			onItemSwing.addCondition( new Condition.HasEnchantment<>( enchantment ) );
 
 			this.addConfigs( this.miningMultiplier, this.attackMultiplier, this.drawingMultiplier, this.movementMultiplier, this.swingMultiplier );
 			this.addContexts( onBreakSpeed, onEquipmentChange, onEquipmentChange2, onBowstring, onItemSwing );

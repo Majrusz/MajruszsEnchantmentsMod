@@ -47,7 +47,7 @@ public class LeechEnchantment extends CustomEnchantment {
 			super( enchantment, "Leech", "Gives a chance to steal positive effects, health and hunger points from enemies." );
 
 			OnDamaged.Context onDamaged = new OnDamaged.Context( this::tryToLeechAnything );
-			onDamaged.addCondition( new Condition.IsServer() )
+			onDamaged.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) )
 				.addCondition( OnDamaged.DEALT_ANY_DAMAGE );
 

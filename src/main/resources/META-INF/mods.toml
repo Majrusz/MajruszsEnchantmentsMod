@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[43,)"
+loaderVersion="[44,)"
 license="MIT License"
 issueTrackerURL="https://github.com/Majrusz/MajruszsEnchantmentsMod/issues"
 
@@ -17,20 +17,20 @@ issueTrackerURL="https://github.com/Majrusz/MajruszsEnchantmentsMod/issues"
 [[dependencies.majruszsenchantments]]
     modId="forge"
     mandatory=true
-    versionRange="[43.1.0,)"
+    versionRange="[44.0.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.majruszsenchantments]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="[1.19.3,1.20)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.majruszsenchantments]]
-    modId="majruszlib"
+    modId="mlib"
     mandatory=true
-    versionRange="[2.17.0,3.0.0)"
+    versionRange="[3.0.0,4.0.0)"
     ordering="NONE"
     side="BOTH"

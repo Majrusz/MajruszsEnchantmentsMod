@@ -36,13 +36,13 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 			super( enchantment, "HorseFrostWalker", "Creates a path of ice when walking over water on a horse." );
 
 			OnEntityTick.Context onTick = new OnEntityTick.Context( this::freezeNearbyWater );
-			onTick.addCondition( new Condition.IsServer() )
-				.addCondition( new Condition.HasEnchantment( enchantment ) )
+			onTick.addCondition( new Condition.IsServer<>() )
+				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( data->data.entity instanceof Animal );
 
 			OnPreDamaged.Context onPreDamaged = new OnPreDamaged.Context( this::disableDamage );
-			onPreDamaged.addCondition( new Condition.IsServer() )
-				.addCondition( new Condition.HasEnchantment( enchantment ) )
+			onPreDamaged.addCondition( new Condition.IsServer<>() )
+				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( data->DamageSource.HOT_FLOOR.equals( data.source ) )
 				.addCondition( data->data.entity instanceof Animal );
 

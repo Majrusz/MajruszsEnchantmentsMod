@@ -34,7 +34,7 @@ public class VitalityEnchantment extends CustomEnchantment {
 			super( enchantment, "Vitality", "Increases the player's health." );
 
 			OnEquipmentChanged.Context onChange = new OnEquipmentChanged.Context( this::updateHealth );
-			onChange.addCondition( new Condition.IsServer() ).addConfig( this.healthBonus );
+			onChange.addCondition( new Condition.IsServer<>() ).addConfig( this.healthBonus );
 
 			this.addContext( onChange );
 		}

@@ -1,13 +1,11 @@
 package com.majruszsenchantments;
 
-import com.mlib.gamemodifiers.GameModifier;
-import com.mlib.items.ItemHelper;
-import com.mlib.registries.DeferredRegisterHelper;
-import com.mlib.triggers.BasicTrigger;
-import com.mojang.serialization.Codec;
 import com.majruszsenchantments.curses.*;
 import com.majruszsenchantments.enchantments.*;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.gamemodifiers.GameModifier;
+import com.mlib.registries.RegistryHelper;
+import com.mlib.triggers.BasicTrigger;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +13,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -27,11 +24,11 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.majruszsenchantments.MajruszsEnchantments.SERVER_CONFIG;
 import static com.majruszsenchantments.MajruszsEnchantments.CLIENT_CONFIG;
+import static com.majruszsenchantments.MajruszsEnchantments.SERVER_CONFIG;
 
 public class Registries {
-	private static final DeferredRegisterHelper HELPER = new DeferredRegisterHelper( MajruszsEnchantments.MOD_ID );
+	private static final RegistryHelper HELPER = new RegistryHelper( MajruszsEnchantments.MOD_ID );
 	public static final List< GameModifier > GAME_MODIFIERS = new ArrayList<>();
 
 	static {
@@ -41,7 +38,6 @@ public class Registries {
 
 	// Groups
 	static final DeferredRegister< Enchantment > ENCHANTMENTS = HELPER.create( ForgeRegistries.Keys.ENCHANTMENTS );
-	static final DeferredRegister< Codec< ? extends IGlobalLootModifier > > LOOT_MODIFIERS = HELPER.create( ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS );
 	static final DeferredRegister< ParticleType< ? > > PARTICLE_TYPES = HELPER.create( ForgeRegistries.Keys.PARTICLE_TYPES );
 
 	// Enchantment Categories
@@ -85,7 +81,7 @@ public class Registries {
 	public static final RegistryObject< SimpleParticleType > DODGE_PARTICLE = PARTICLE_TYPES.register( "dodge_particle", ()->new SimpleParticleType( true ) );
 
 	// Triggers
-	public static final BasicTrigger BASIC_TRIGGER = BasicTrigger.createRegisteredInstance( MajruszsEnchantments.MOD_ID );
+	public static final BasicTrigger BASIC_TRIGGER = BasicTrigger.createRegisteredInstance( HELPER );
 
 	public static ResourceLocation getLocation( String register ) {
 		return HELPER.getLocation( register );
@@ -99,18 +95,11 @@ public class Registries {
 		FMLJavaModLoadingContext modLoadingContext = FMLJavaModLoadingContext.get();
 		final IEventBus modEventBus = modLoadingContext.getModEventBus();
 
-		addEnchantmentTypesToItemGroups();
 		HELPER.registerAll();
 		modEventBus.addListener( PacketHandler::registerPacket );
 		DistExecutor.unsafeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::initialize );
 
 		SERVER_CONFIG.register( ModLoadingContext.get() );
 		CLIENT_CONFIG.register( ModLoadingContext.get() );
-	}
-
-	private static void addEnchantmentTypesToItemGroups() {
-		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_MINECRAFT, MELEE );
-		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN, TOOLS );
-		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
 	}
 }

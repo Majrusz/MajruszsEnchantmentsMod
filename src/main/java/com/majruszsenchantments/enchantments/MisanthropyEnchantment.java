@@ -41,7 +41,7 @@ public class MisanthropyEnchantment extends CustomEnchantment {
 			super( enchantment, "Misanthropy", "Increases the damage against villagers, pillagers, witches and other players." );
 
 			OnDamaged.Context onDamaged = new OnDamaged.Context( this::modifyDamage );
-			onDamaged.addCondition( new Condition.IsServer() )
+			onDamaged.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) )
 				.addCondition( data->EntityHelper.isHuman( data.target ) )
 				.addCondition( OnDamaged.DEALT_ANY_DAMAGE );

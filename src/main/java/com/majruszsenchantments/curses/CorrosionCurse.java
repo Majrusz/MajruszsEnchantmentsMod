@@ -36,9 +36,9 @@ public class CorrosionCurse extends CustomEnchantment {
 			super( enchantment, "Corrosion", "Gradually destroys the item and inflicts damage to the owner when in water." );
 
 			OnEntityTick.Context onTick = new OnEntityTick.Context( this::damageOnContactWithWater );
-			onTick.addCondition( new Condition.IsServer() )
-				.addCondition( new Condition.HasEnchantment( enchantment ) )
-				.addCondition( new Condition.Cooldown( 3.0, Dist.DEDICATED_SERVER ) )
+			onTick.addCondition( new Condition.IsServer<>() )
+				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.Cooldown<>( 3.0, Dist.DEDICATED_SERVER ) )
 				.addCondition( data->LevelHelper.isEntityOutsideWhenItIsRaining( data.entity ) || data.entity.isInWater() );
 
 			this.addConfigs( this.damageAmount );
