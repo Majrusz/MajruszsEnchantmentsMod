@@ -4,50 +4,45 @@ import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.config.DoubleConfig;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.function.Supplier;
-
 public class DodgeEnchantment extends CustomEnchantment {
-	public static Supplier< DodgeEnchantment > create() {
-		Parameters params = new Parameters( Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlots.LEGS, false, 2, level->level * 14, level->level * 14 + 20 );
-		DodgeEnchantment enchantment = new DodgeEnchantment( params );
-		Modifier modifier = new DodgeEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
+	public DodgeEnchantment() {
+		this.rarity( Rarity.RARE )
+			.category( EnchantmentCategory.ARMOR_LEGS )
+			.slots( EquipmentSlots.LEGS )
+			.maxLevel( 2 )
+			.minLevelCost( level->level * 14 )
+			.maxLevelCost( level->level * 14 + 20 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	public DodgeEnchantment( Parameters params ) {
-		super( params );
-	}
-
-	private static class Modifier extends EnchantmentModifier< DodgeEnchantment > {
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< DodgeEnchantment > {
 		final DoubleConfig chance = new DoubleConfig( "chance", "Chance to completely ignore the damage per enchantment level.", false, 0.125, 0.01, 0.4 );
 		final DoubleConfig pantsDamageMultiplier = new DoubleConfig( "pants_damage_multiplier", "Percent of damage transferred to pants.", false, 0.5, 0.0, 10.0 );
 
-		public Modifier( DodgeEnchantment enchantment ) {
-			super( enchantment, "Dodge", "Gives a chance to completely avoid any kind of damage." );
+		public Modifier() {
+			super( Registries.DODGE, Registries.Modifiers.ENCHANTMENT, "Dodge", "Gives a chance to completely avoid any kind of damage." );
 
-			OnPreDamaged.Context onDamaged = new OnPreDamaged.Context( this::dodgeDamage );
-			onDamaged.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+			new OnPreDamaged.Context( this::dodgeDamage )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( OnPreDamaged.DEALT_ANY_DAMAGE )
 				.addCondition( OnPreDamaged.WILL_TAKE_FULL_DAMAGE )
-				.addCondition( data->Random.tryChance( enchantment.getEnchantmentLevel( data.target ) * this.chance.asFloat() ) );
-
-			this.addConfigs( this.chance, this.pantsDamageMultiplier );
-			this.addContext( onDamaged );
+				.addCondition( this::tryToDodge )
+				.addConfigs( this.chance, this.pantsDamageMultiplier )
+				.insertTo( this );
 		}
 
 		private void dodgeDamage( OnPreDamaged.Data data ) {
@@ -77,6 +72,10 @@ public class DodgeEnchantment extends CustomEnchantment {
 				int totalDamage = Math.max( 1, ( int )( damage * multiplier ) );
 				pants.hurtAndBreak( totalDamage, entity, owner->owner.broadcastBreakEvent( EquipmentSlot.LEGS ) );
 			}
+		}
+
+		private boolean tryToDodge( OnPreDamaged.Data data ) {
+			return Random.tryChance( this.enchantment.get().getEnchantmentLevel( data.target ) * this.chance.get() );
 		}
 	}
 }
