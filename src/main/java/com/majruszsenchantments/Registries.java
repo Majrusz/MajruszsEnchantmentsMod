@@ -3,7 +3,11 @@ package com.majruszsenchantments;
 import com.majruszsenchantments.curses.*;
 import com.majruszsenchantments.enchantments.*;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.MajruszLibrary;
+import com.mlib.annotations.AnnotationHandler;
+import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.GameModifier;
+import com.mlib.gamemodifiers.GameModifiersHolder;
 import com.mlib.registries.RegistryHelper;
 import com.mlib.triggers.BasicTrigger;
 import net.minecraft.core.particles.ParticleType;
@@ -21,19 +25,22 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.majruszsenchantments.MajruszsEnchantments.CLIENT_CONFIG;
 import static com.majruszsenchantments.MajruszsEnchantments.SERVER_CONFIG;
 
 public class Registries {
 	private static final RegistryHelper HELPER = new RegistryHelper( MajruszsEnchantments.MOD_ID );
-	public static final List< GameModifier > GAME_MODIFIERS = new ArrayList<>();
+	public static final List< GameModifier > GAME_MODIFIERS;
 
 	static {
-		SERVER_CONFIG.addGroup( GameModifier.addNewGroup( EnchantmentModifier.ENCHANTMENT, "Enchantments", "" ) );
-		SERVER_CONFIG.addGroup( GameModifier.addNewGroup( EnchantmentModifier.CURSE, "Curses", "" ) );
+		GameModifier.addNewGroup( SERVER_CONFIG, Modifiers.ENCHANTMENT, "Enchantments", "" );
+		GameModifier.addNewGroup( SERVER_CONFIG, Modifiers.CURSE, "Curses", "" );
+
+		AnnotationHandler annotationHandler = new AnnotationHandler( MajruszLibrary.MOD_ID );
+		GAME_MODIFIERS = annotationHandler.getInstances( GameModifier.class );
 	}
 
 	// Groups
@@ -52,7 +59,7 @@ public class Registries {
 
 	// Enchantments
 	public static final RegistryObject< DodgeEnchantment > DODGE = ENCHANTMENTS.register( "dodge", DodgeEnchantment.create() );
-	public static final RegistryObject< DeathWishEnchantment > DEATH_WISH = ENCHANTMENTS.register( "death_wish", DeathWishEnchantment.create() );
+	public static final RegistryObject< DeathWishEnchantment > DEATH_WISH = ENCHANTMENTS.register( "death_wish", DeathWishEnchantment::new );
 	public static final RegistryObject< EnlightenmentEnchantment > ENLIGHTENMENT = ENCHANTMENTS.register( "enlightenment", EnlightenmentEnchantment.create() );
 	public static final RegistryObject< FishingFanaticEnchantment > FISHING_FANATIC = ENCHANTMENTS.register( "fishing_fanatic", FishingFanaticEnchantment.create() );
 	public static final RegistryObject< FuseCutterEnchantment > FUSE_CUTTER = ENCHANTMENTS.register( "fuse_cutter", FuseCutterEnchantment.create() );
@@ -101,5 +108,19 @@ public class Registries {
 
 		SERVER_CONFIG.register( ModLoadingContext.get() );
 		CLIENT_CONFIG.register( ModLoadingContext.get() );
+	}
+
+	public static < Type extends EnchantmentModifier< ? > > Supplier< Boolean > getEnabledSupplier( Class< Type > clazz ) {
+		var enchantmentModifier = GAME_MODIFIERS.stream()
+			.filter( modifier->clazz.equals( modifier.getClass() ) )
+			.findFirst()
+			.orElseThrow();
+
+		return clazz.cast( enchantmentModifier ).getEnabledSupplier();
+	}
+
+	public static class Modifiers {
+		public static final String ENCHANTMENT = Registries.getLocationString( "enchantment" );
+		public static final String CURSE = Registries.getLocationString( "curse" );
 	}
 }

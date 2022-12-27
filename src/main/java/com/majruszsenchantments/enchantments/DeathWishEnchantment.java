@@ -3,55 +3,53 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
-import com.mlib.config.DoubleConfig;
+import com.mlib.annotations.AutoInstance;
+import com.mlib.config.DoubleRangeConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
+import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnDamaged;
-import net.minecraft.world.entity.LivingEntity;
-
-import java.util.function.Supplier;
+import com.mlib.math.Range;
 
 public class DeathWishEnchantment extends CustomEnchantment {
-	public static Supplier< DeathWishEnchantment > create() {
-		Parameters params = new Parameters( Rarity.RARE, Registries.MELEE, EquipmentSlots.MAINHAND, false, 1, level->12, level->50 );
-		DeathWishEnchantment enchantment = new DeathWishEnchantment( params );
-		Modifier modifier = new DeathWishEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
+	public DeathWishEnchantment() {
+		this.rarity( Rarity.RARE )
+			.category( Registries.MELEE )
+			.slots( EquipmentSlots.MAINHAND )
+			.minLevelCost( level->12 )
+			.maxLevelCost( level->50 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	public DeathWishEnchantment( Parameters params ) {
-		super( params );
-	}
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< DeathWishEnchantment > {
+		final DoubleRangeConfig damageMultiplier = new DoubleRangeConfig( "DamageMultiplier", "Multiplies the damage dealt according to the missing health ratio.\nIn other words, the lower the health ratio, the more 'to' value is taken into account.", false, new Range<>( 1.0, 2.0 ), 1.0, 10.0 );
+		final DoubleRangeConfig vulnerabilityMultiplier = new DoubleRangeConfig( "VulnerabilityMultiplier", "Multiplies the damage taken according to the health ratio.\nIn other words, the higher the health ratio, the more 'to' value is taken into account.", false, new Range<>( 0.7, 1.2 ), 0.0, 10.0 );
 
-	private static class Modifier extends EnchantmentModifier< DeathWishEnchantment > {
-		final DoubleConfig damageMultiplier = new DoubleConfig( "damage_multiplier", "Maximum damage multiplier obtainable at low health.", false, 2.0, 1.0, 10.0 );
-		final DoubleConfig vulnerabilityMultiplier = new DoubleConfig( "vulnerability_multiplier", "Whenever the owner takes damage, the damage is multiplied by this value.", false, 1.25, 1.0, 10.0 );
+		public Modifier() {
+			super( Registries.DEATH_WISH, Registries.Modifiers.ENCHANTMENT, "DeathWish", "Increases damage dealt equal to the percentage of health lost." );
 
-		public Modifier( DeathWishEnchantment enchantment ) {
-			super( enchantment, "DeathWish", "Increases damage dealt equal to the percentage of health lost." );
+			new OnDamaged.Context( this::increaseDamageDealt )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.attacker ) )
+				.addConfig( this.damageMultiplier )
+				.insertTo( this );
 
-			OnDamaged.Context onDamaged = new OnDamaged.Context( this::increaseDamageDealt );
-			onDamaged.addCondition( data->data.attacker != null );
-			onDamaged.addCondition( data->enchantment.hasEnchantment( data.attacker ) );
-
-			OnDamaged.Context onDamaged2 = new OnDamaged.Context( this::increaseDamageReceived );
-			onDamaged2.addCondition( data->enchantment.hasEnchantment( data.target ) );
-
-			this.addConfigs( this.damageMultiplier, this.vulnerabilityMultiplier );
-			this.addContexts( onDamaged, onDamaged2 );
+			new OnDamaged.Context( this::increaseDamageReceived )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.target ) )
+				.addConfig( this.vulnerabilityMultiplier )
+				.insertTo( this );
 		}
 
 		private void increaseDamageDealt( OnDamaged.Data data ) {
-			data.event.setAmount( data.event.getAmount() * this.getDamageMultiplier( data.attacker ) );
+			float damageMultiplier = this.damageMultiplier.lerp( ( float )EntityHelper.getMissingHealthRatio( data.attacker ) );
+
+			data.event.setAmount( data.event.getAmount() * damageMultiplier );
 		}
 
 		private void increaseDamageReceived( OnDamaged.Data data ) {
-			data.event.setAmount( data.event.getAmount() * this.vulnerabilityMultiplier.asFloat() );
-		}
+			float damageMultiplier = this.vulnerabilityMultiplier.lerp( ( float )EntityHelper.getHealthRatio( data.target ) );
 
-		private float getDamageMultiplier( LivingEntity entity ) {
-			return ( float )EntityHelper.getMissingHealthRatio( entity ) * ( this.damageMultiplier.asFloat() - 1.0f ) + 1.0f;
+			data.event.setAmount( data.event.getAmount() * damageMultiplier );
 		}
 	}
 }

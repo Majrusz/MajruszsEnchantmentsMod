@@ -3,22 +3,23 @@ package com.majruszsenchantments.gamemodifiers;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.GameModifier;
 import com.mlib.gamemodifiers.configs.EnchantmentConfig;
-import com.majruszsenchantments.Registries;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class EnchantmentModifier< EnchantmentType extends CustomEnchantment > extends GameModifier {
-	public static final String ENCHANTMENT = Registries.getLocationString( "enchantment" );
-	public static final String CURSE = Registries.getLocationString( "curse" );
-	protected final EnchantmentType enchantment;
-	final EnchantmentConfig enchantmentConfig;
+	protected final RegistryObject< EnchantmentType > enchantment;
+	protected final EnchantmentConfig enchantmentConfig = new EnchantmentConfig( "" );
 
-	public EnchantmentModifier( EnchantmentType enchantment, String configName, String configComment ) {
-		super( enchantment.getParams().isCurse() ? CURSE : ENCHANTMENT, configName, configComment );
+	public EnchantmentModifier( RegistryObject< EnchantmentType > enchantment, String key, String name, String comment ) {
+		super( key, name, comment );
+
 		this.enchantment = enchantment;
-		this.enchantmentConfig = new EnchantmentConfig( "" );
 
 		this.addConfig( this.enchantmentConfig );
-		this.enchantment.setEnabledSupplier( this.enchantmentConfig::isEnabled );
+	}
 
-		Registries.GAME_MODIFIERS.add( this );
+	public Supplier< Boolean > getEnabledSupplier() {
+		return this.enchantmentConfig::isEnabled;
 	}
 }
