@@ -2,8 +2,8 @@
 	"enchantment.majruszsenchantments.fishing_fanatic": "Fanatico della pesca",
 	"enchantment.majruszsenchantments.fishing_fanatic.desc": "Ti dà la possibilità di catturare oggetti aggiuntivi dalla pesca.",
 	"enchantment.majruszsenchantments.fishing_fanatic.description": "Ti dà la possibilità di catturare oggetti aggiuntivi dalla pesca.",
-	"majruszsenchantments.fanatic_level_up": "Sei diventato un grande fanatico della pesca!",
-	"majruszsenchantments.true_level": "Il vero",
+	"enchantment.majruszsenchantments.fishing_fanatic.level_up": "Sei diventato un grande fanatico della pesca!",
+	"enchantment.majruszsenchantments.fishing_fanatic.true": "Il vero fanatico della pesca",
 
 	"enchantment.majruszsenchantments.misanthropy": "Misantropia",
 	"enchantment.majruszsenchantments.misanthropy.desc": "Aumenta il danno su i villici, i predoni, le streghe e gli altri giocatori.",

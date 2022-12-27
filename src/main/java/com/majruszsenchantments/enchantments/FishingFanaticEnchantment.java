@@ -7,7 +7,6 @@ import com.google.common.collect.Multisets;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
-import com.mlib.MajruszLibrary;
 import com.mlib.Random;
 import com.mlib.config.DoubleArrayConfig;
 import com.mlib.config.DoubleConfig;
@@ -19,7 +18,6 @@ import com.mlib.gamemodifiers.contexts.OnEquipmentChanged;
 import com.mlib.gamemodifiers.contexts.OnItemFished;
 import com.mlib.math.VectorHelper;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -69,9 +67,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 	@Override
 	public Component getFullname( int level ) {
 		if( level == this.getMaxLevel() ) {
-			return Component.translatable( "majruszsenchantments.true_level" )
-				.append( " " )
-				.append( Component.translatable( getDescriptionId() ) )
+			return Component.translatable( "enchantment.majruszsenchantments.fishing_fanatic.true" )
 				.withStyle( ChatFormatting.GRAY );
 		}
 
@@ -110,7 +106,8 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			onItemFished.addCondition( new Condition.IsServer<>() );
 
 			OnEquipmentChanged.Context onEquipmentChanged = new OnEquipmentChanged.Context( this::giveExtremeAdvancement );
-			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer ).addCondition( new HasBestFishingEnchantments() );
+			onEquipmentChanged.addCondition( data->data.entity instanceof ServerPlayer )
+				.addCondition( new HasBestFishingEnchantments() );
 
 			this.addContext( onItemFished );
 			this.addConfigs( this.levelUpChances, this.specialDropChance, this.extraLootChance, this.rainMultiplier, this.damageBonus );
@@ -147,7 +144,8 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 				if( Random.tryChance( this.extraLootChance.get() ) ) {
 					LootTable lootTable = Random.tryChance( this.specialDropChance.get( fanaticLevel - 1 ) ) ? specialLootTable : standardLootTable;
 					for( ItemStack extraReward : lootTable.getRandomItems( lootContext ) ) {
-						Vec3 spawnPosition = hook.position().add( Random.getRandomVector3d( -0.25, 0.25, 0.125, 0.5, -0.25, 0.25 ) );
+						Vec3 spawnPosition = hook.position()
+							.add( Random.getRandomVector3d( -0.25, 0.25, 0.125, 0.5, -0.25, 0.25 ) );
 						ItemEntity itemEntity = new ItemEntity( data.level, spawnPosition.x, spawnPosition.y, spawnPosition.z, extraReward );
 						Vec3 motion = data.player.position().subtract( itemEntity.position() ).multiply( 0.1, 0.1, 0.1 );
 						itemEntity.setDeltaMovement( motion.add( 0.0, Math.pow( VectorHelper.length( motion ), 0.5 ) * 0.25, 0.0 ) );
@@ -203,7 +201,8 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 		}
 
 		private void sendLevelUpMessage( Player player ) {
-			player.displayClientMessage( Component.translatable( "majruszsenchantments.fanatic_level_up" ).withStyle( ChatFormatting.BOLD ), true );
+			player.displayClientMessage( Component.translatable( "enchantment.majruszsenchantments.fishing_fanatic.level_up" )
+				.withStyle( ChatFormatting.BOLD ), true );
 		}
 
 		private void sendRewardsMessage( Player player, Multiset< String > rewards ) {

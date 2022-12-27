@@ -2,8 +2,8 @@
   "enchantment.majruszsenchantments.fishing_fanatic": "Fanático de la Pesca",
   "enchantment.majruszsenchantments.fishing_fanatic.desc": "Posibilidad the pescar objetos extra.",
   "enchantment.majruszsenchantments.fishing_fanatic.description": "Posibilidad the pescar objetos extra.",
-  "majruszsenchantments.fanatic_level_up": "Has mejorado en la pesca!",
-  "majruszsenchantments.true_level": "Cierto",
+  "enchantment.majruszsenchantments.fishing_fanatic.level_up": "Has mejorado en la pesca!",
+  "enchantment.majruszsenchantments.fishing_fanatic.true": "Cierto Fanático de la Pesca",
 
   "enchantment.majruszsenchantments.misanthropy": "Encantamiento Contra La Humanidad",
   "enchantment.majruszsenchantments.misanthropy.desc": "Incrementa el daño contra los Aldeanos, Saqueadores, Brujas y otros jugadores.",

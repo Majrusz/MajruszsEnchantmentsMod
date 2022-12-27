@@ -14,8 +14,8 @@
 	"enchantment.majruszsenchantments.fishing_fanatic": "Fishing Fanatic",
 	"enchantment.majruszsenchantments.fishing_fanatic.desc": "Gives a chance to catch additional items from fishing.",
 	"enchantment.majruszsenchantments.fishing_fanatic.description": "Gives a chance to catch additional items from fishing.",
-	"majruszsenchantments.fanatic_level_up": "You have become greater Fishing Fanatic!",
-	"majruszsenchantments.true_level": "True",
+	"enchantment.majruszsenchantments.fishing_fanatic.level_up": "You have become greater Fishing Fanatic!",
+	"enchantment.majruszsenchantments.fishing_fanatic.true": "True Fishing Fanatic",
 
 	"enchantment.majruszsenchantments.fuse_cutter": "Fuse Cutter",
 	"enchantment.majruszsenchantments.fuse_cutter.desc": "Nearby explosions will not destroy blocks or deal damage.",

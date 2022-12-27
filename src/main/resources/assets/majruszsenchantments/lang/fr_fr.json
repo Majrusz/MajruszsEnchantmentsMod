@@ -2,8 +2,8 @@
   "enchantment.majruszsenchantments.fishing_fanatic": "Maniaque de la pêche",
   "enchantment.majruszsenchantments.fishing_fanatic.desc": "Donne une chance d'attrapper un objet supplémentaire en pêchant.",
   "enchantment.majruszsenchantments.fishing_fanatic.description": "Donne une chance d'attrapper un objet supplémentaire en pêchant.",
-  "majruszsenchantments.fanatic_level_up": "Vous êtes devenu le grand Maniaque de la pêche !",
-  "majruszsenchantments.true_level": "Atteint",
+  "enchantment.majruszsenchantments.fishing_fanatic.level_up": "Vous êtes devenu le grand Maniaque de la pêche !",
+  "enchantment.majruszsenchantments.fishing_fanatic.true": "Atteint maniaque de la pêche",
 
   "enchantment.majruszsenchantments.misanthropy": "Enchantement contre l'humanité",
   "enchantment.majruszsenchantments.misanthropy.desc": "Augmente les dégats contre les villageois, les pillageois, sorcières et autres joueurs.",

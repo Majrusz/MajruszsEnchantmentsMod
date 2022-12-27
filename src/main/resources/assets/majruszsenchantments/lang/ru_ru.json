@@ -2,8 +2,8 @@
   "enchantment.majruszsenchantments.fishing_fanatic": "Фанат рыбалки",
   "enchantment.majruszsenchantments.fishing_fanatic.desc": "Дает шанс поймать дополнительные предметы с рыбалки. Каждый дополнительный предмет дает вам дополнительный опыт и быстрее ломает вашу удочку.",
   "enchantment.majruszsenchantments.fishing_fanatic.description": "Дает шанс поймать дополнительные предметы с рыбалки.Каждый дополнительный предмет дает вам дополнительный опыт и быстрее ломает вашу удочку.",
-  "majruszsenchantments.fanatic_level_up": "Вы стали большим фанатом рыбалки!",
-  "majruszsenchantments.true_level": "Истинный",
+  "enchantment.majruszsenchantments.fishing_fanatic.level_up": "Вы стали большим фанатом рыбалки!",
+  "enchantment.majruszsenchantments.fishing_fanatic.true": "Истинный Фанат рыбалки",
 
   "enchantment.majruszsenchantments.misanthropy": "Чары против людей",
   "enchantment.majruszsenchantments.misanthropy.desc": "Увеличивает урон против жителей деревни, грабителей, ведьм и других игроков.",

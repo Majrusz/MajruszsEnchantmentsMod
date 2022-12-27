@@ -2,8 +2,8 @@
 	"enchantment.majruszsenchantments.fishing_fanatic": "釣魚狂熱",
 	"enchantment.majruszsenchantments.fishing_fanatic.desc": "有機會從釣魚中釣到其他物品.",
 	"enchantment.majruszsenchantments.fishing_fanatic.description": "有機會從釣魚中釣到其他物品.",
-	"majruszsenchantments.fanatic_level_up": "You have become greater Fishing Fanatic!",
-	"majruszsenchantments.true_level": "True",
+	"enchantment.majruszsenchantments.fishing_fanatic.level_up": "You have become greater Fishing Fanatic!",
+	"enchantment.majruszsenchantments.fishing_fanatic.true": "True 釣魚狂熱",
 
 	"enchantment.majruszsenchantments.misanthropy": "人類剋星",
 	"enchantment.majruszsenchantments.misanthropy.desc": "增加對村民，掠奪者，女巫和其他玩家的傷害.",

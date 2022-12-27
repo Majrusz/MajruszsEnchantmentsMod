@@ -2,8 +2,8 @@
 	"enchantment.majruszsenchantments.fishing_fanatic": "낚시광",
 	"enchantment.majruszsenchantments.fishing_fanatic.desc": "아이템을 추가로 낚을 수 있는 확률이 부여됩니다.",
 	"enchantment.majruszsenchantments.fishing_fanatic.description": "아이템을 추가로 낚을 수 있는 확률이 부여됩니다.",
-	"majruszsenchantments.fanatic_level_up": "당신은 진정한 낚시왕!",
-	"majruszsenchantments.true_level": "진정한",
+	"enchantment.majruszsenchantments.fishing_fanatic.level_up": "당신은 진정한 낚시왕!",
+	"enchantment.majruszsenchantments.fishing_fanatic.true": "진정한낚시광",
 
 	"enchantment.majruszsenchantments.misanthropy": "대인공격",
 	"enchantment.majruszsenchantments.misanthropy.desc": "주민, 우민 계열 몹, 플레이어에 대해 추가 피해를 줍니다.",
