@@ -1,16 +1,20 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.config.BooleanConfig;
 import com.mlib.config.DoubleConfig;
 import com.mlib.effects.ParticleHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.configs.EffectConfig;
+import com.mlib.gamemodifiers.configs.StackableEffectConfig;
 import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.gamemodifiers.contexts.OnPlayerInteract;
 import com.mlib.levels.LevelHelper;
+import com.mlib.math.Range;
 import com.mlib.math.VectorHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,54 +26,60 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
-import java.util.function.Supplier;
-
 public class VampirismCurse extends CustomEnchantment {
-	public static Supplier< VampirismCurse > create() {
-		Parameters params = new Parameters( Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlots.ARMOR, true, 1, level->10, level->50 );
-		VampirismCurse enchantment = new VampirismCurse( params );
-		Modifier modifier = new VampirismCurse.Modifier( enchantment );
-
-		return ()->enchantment;
+	public VampirismCurse() {
+		this.rarity( Rarity.RARE )
+			.category( EnchantmentCategory.ARMOR )
+			.slots( EquipmentSlots.ARMOR )
+			.curse()
+			.minLevelCost( level->10 )
+			.maxLevelCost( level->50 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	public VampirismCurse( Parameters params ) {
-		super( params );
-	}
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< VampirismCurse > {
+		final EffectConfig weakness = new StackableEffectConfig( MobEffects.WEAKNESS, 0, 20.0, 120.0 );
+		final EffectConfig hunger = new StackableEffectConfig( MobEffects.HUNGER, 0, 20.0, 120.0 );
+		final DoubleConfig fireDuration = new DoubleConfig( 5.0, new Range<>( 1.0, 60.0 ) );
+		final BooleanConfig scalesWithLevel = new BooleanConfig( true );
 
-	private static class Modifier extends EnchantmentModifier< VampirismCurse > {
-		final EffectConfig weakness = new EffectConfig( "Weakness", ()->MobEffects.WEAKNESS, 0, 20.0, 120.0 );
-		final EffectConfig hunger = new EffectConfig( "Hunger", ()->MobEffects.HUNGER, 0, 20.0, 120.0 );
-		final DoubleConfig fireDuration = new DoubleConfig( "fire_duration", "Time the player will be set on fire in seconds per enchantment level.", false, 5.0, 1.0, 60.0 );
-		final BooleanConfig scalesWithLevel = new BooleanConfig( "scales_with_level", "Determines whether effects should be stronger with more cursed items equipped.", false, true );
+		public Modifier() {
+			super( Registries.VAMPIRISM, Registries.Modifiers.CURSE );
 
-		public Modifier( VampirismCurse enchantment ) {
-			super( enchantment, "Vampirism", "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger." );
-
-			OnEntityTick.Context onTick = new OnEntityTick.Context( this::applyDebuffs, "Debuffs", "" );
-			onTick.addCondition( new Condition.Cooldown<>( 2.0, Dist.DEDICATED_SERVER ) )
+			new OnEntityTick.Context( this::applyDebuffs )
+				.name( "Debuffs" )
+				.addCondition( new Condition.Cooldown<>( 2.0, Dist.DEDICATED_SERVER ) )
 				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) )
-				.addConfigs( this.weakness, this.hunger, this.fireDuration, this.scalesWithLevel );
+				.addConfig( this.weakness.name( "Weakness" ) )
+				.addConfig( this.hunger.name( "Hunger" ) )
+				.addConfig( this.fireDuration.name( "fire_duration" ).comment( "Time the player will be set on fire in seconds per enchantment level." ) )
+				.addConfig( this.scalesWithLevel.name( "scales_with_level" )
+					.comment( "Determines whether effects should be stronger with more cursed items equipped." )
+				).insertTo( this );
 
-			OnEntityTick.Context onTick2 = new OnEntityTick.Context( this::spawnParticles, "Particles", "" );
-			onTick2.addCondition( new Condition.Cooldown<>( 0.2, Dist.DEDICATED_SERVER ) )
+			new OnEntityTick.Context( this::spawnParticles )
+				.name( "Particles" )
+				.addCondition( new Condition.Cooldown<>( 0.2, Dist.DEDICATED_SERVER ) )
 				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
-				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) );
+				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) )
+				.insertTo( this );
 
-			OnPlayerInteract.Context onInteraction = new OnPlayerInteract.Context( this::blockSleep );
-			onInteraction.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+			new OnPlayerInteract.Context( this::blockSleep )
+				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
-				.addCondition( Modifier::isBedCondition );
+				.addCondition( Modifier::isBedCondition )
+				.insertTo( this );
 
-			this.addContexts( onTick, onTick2, onInteraction );
+			this.name( "Vampirism" ).comment( "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger." );
 		}
 
 		private void applyDebuffs( OnEntityTick.Data data ) {
 			assert data.entity != null;
-			int enchantmentSum = this.enchantment.getEnchantmentSum( data.entity, EquipmentSlots.ARMOR );
+			int enchantmentSum = this.enchantment.get().getEnchantmentSum( data.entity, EquipmentSlots.ARMOR );
 			setOnFire( enchantmentSum, data.entity );
 			applyEffects( enchantmentSum, data.entity );
 		}
