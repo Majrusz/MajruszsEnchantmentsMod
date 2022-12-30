@@ -1,7 +1,9 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnBlockSmeltCheck;
@@ -9,19 +11,14 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.UntouchingEnchantment;
 
-import java.util.function.Supplier;
-
 public class SmelterEnchantment extends CustomEnchantment {
-	public static Supplier< SmelterEnchantment > create() {
-		Parameters params = new Parameters( Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlots.MAINHAND, false, 1, level->15, level->45 );
-		SmelterEnchantment enchantment = new SmelterEnchantment( params );
-		Modifier modifier = new SmelterEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
-	}
-
-	public SmelterEnchantment( Parameters params ) {
-		super( params );
+	public SmelterEnchantment() {
+		this.rarity( Rarity.UNCOMMON )
+			.category( EnchantmentCategory.DIGGER )
+			.slots( EquipmentSlots.MAINHAND )
+			.minLevelCost( level->15 )
+			.maxLevelCost( level->45 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
 	@Override
@@ -29,14 +26,16 @@ public class SmelterEnchantment extends CustomEnchantment {
 		return !( enchantment instanceof UntouchingEnchantment ) && super.checkCompatibility( enchantment );
 	}
 
-	private static class Modifier extends EnchantmentModifier< SmelterEnchantment > {
-		public Modifier( SmelterEnchantment enchantment ) {
-			super( enchantment, "Smelter", "Destroyed blocks are automatically smelted." );
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< SmelterEnchantment > {
+		public Modifier() {
+			super( Registries.SMELTER, Registries.Modifiers.ENCHANTMENT );
 
-			OnBlockSmeltCheck.Context onCheck = new OnBlockSmeltCheck.Context( OnBlockSmeltCheck.ENABLE_SMELT );
-			onCheck.addCondition( new Condition.HasEnchantment<>( enchantment ) );
+			new OnBlockSmeltCheck.Context( OnBlockSmeltCheck.ENABLE_SMELT )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
+				.insertTo( this );
 
-			this.addContexts( onCheck );
+			this.name( "Smelter" ).comment( "Destroyed blocks are automatically smelted." );
 		}
 	}
 }
