@@ -4,6 +4,7 @@ import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.blocks.BlockHelper;
 import com.mlib.config.DoubleConfig;
 import com.mlib.effects.ParticleHandler;
@@ -13,6 +14,7 @@ import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnFarmlandTillCheck;
 import com.mlib.gamemodifiers.contexts.OnLoot;
 import com.mlib.gamemodifiers.contexts.OnPlayerInteract;
+import com.mlib.math.Range;
 import com.mlib.math.VectorHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -29,50 +31,51 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
-import java.util.function.Supplier;
-
 public class HarvesterEnchantment extends CustomEnchantment {
-	public static Supplier< HarvesterEnchantment > create() {
-		Parameters params = new Parameters( Rarity.UNCOMMON, Registries.HOE, EquipmentSlots.BOTH_HANDS, false, 3, level->10 * level, level->15 + 10 * level );
-		HarvesterEnchantment enchantment = new HarvesterEnchantment( params );
-		Modifier modifier = new HarvesterEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
+	public HarvesterEnchantment() {
+		this.rarity( Rarity.UNCOMMON )
+			.category( Registries.HOE )
+			.slots( EquipmentSlots.BOTH_HANDS )
+			.maxLevel( 3 )
+			.minLevelCost( level->level * 10 )
+			.maxLevelCost( level->level * 10 + 15 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	public HarvesterEnchantment( Parameters params ) {
-		super( params );
-	}
-
-	private static class Modifier extends EnchantmentModifier< HarvesterEnchantment > {
-		final DoubleConfig durabilityPenalty = new DoubleConfig( "durability_penalty", "Durability penalty per each successful increase of nearby crops.", false, 1.0, 0.0, 10.0 );
-		final DoubleConfig growChance = new DoubleConfig( "extra_grow_chance", "Chance to increase an age of nearby crops.", false, 0.04, 0.0, 1.0 );
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< HarvesterEnchantment > {
+		final DoubleConfig durabilityPenalty = new DoubleConfig( 1.0, new Range<>( 0.0, 10.0 ) );
+		final DoubleConfig growChance = new DoubleConfig( 0.04, Range.CHANCE );
 
 		public Modifier( HarvesterEnchantment enchantment ) {
-			super( enchantment, "Harvester", "Gives the option of right-click harvesting and the chance to grow nearby crops." );
+			super( Registries.HARVESTER, Registries.Modifiers.ENCHANTMENT );
 
-			OnPlayerInteract.Context onInteract = new OnPlayerInteract.Context( this::handle );
-			onInteract.addCondition( new Condition.IsServer<>() )
+			new OnPlayerInteract.Context( this::increaseAgeOfNearbyCrops )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event instanceof PlayerInteractEvent.RightClickBlock )
-				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.event.getPos() ) ) );
+				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.event.getPos() ) ) )
+				.addConfig( this.durabilityPenalty.name( "durability_penalty" ).comment( "Durability penalty per each successful increase of nearby crops." ) )
+				.addConfig( this.growChance.name( "extra_grow_chance" ).comment( "Chance to increase an age of nearby crops." ) )
+				.insertTo( this );
 
-			OnLoot.Context onLoot = new OnLoot.Context( this::replant );
-			onLoot.addCondition( new Condition.IsServer<>() )
+			new OnLoot.Context( this::replant )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_BLOCK_STATE )
 				.addCondition( OnLoot.HAS_ENTITY )
 				.addCondition( OnLoot.HAS_TOOL )
 				.addCondition( OnLoot.HAS_ORIGIN )
-				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.origin ) ) );
+				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.origin ) ) )
+				.insertTo( this );
 
-			OnFarmlandTillCheck.Context onCheck = new OnFarmlandTillCheck.Context( OnFarmlandTillCheck.INCREASE_AREA );
-			onCheck.addCondition( data->enchantment.hasEnchantment( data.itemStack ) );
+			new OnFarmlandTillCheck.Context( OnFarmlandTillCheck.INCREASE_AREA )
+				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
+				.insertTo( this );
 
-			this.addConfigs( this.durabilityPenalty, this.growChance );
-			this.addContexts( onInteract, onLoot );
+			this.name( "Harvester" ).comment( "Gives the option of right-click harvesting and the chance to grow nearby crops." );
 		}
 
-		private void handle( OnPlayerInteract.Data data ) {
+		private void increaseAgeOfNearbyCrops( OnPlayerInteract.Data data ) {
 			assert data.level != null;
 			Vec3 position = VectorHelper.vec3( data.event.getPos() );
 			collectCrop( data.level, data.player, new BlockPos( position ), data.itemStack );
@@ -89,7 +92,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 		private void tickNearbyCrops( ServerLevel level, Player player, BlockPos position, ItemStack itemStack,
 			InteractionHand hand
 		) {
-			int range = this.enchantment.getEnchantmentLevel( itemStack );
+			int range = this.enchantment.get().getEnchantmentLevel( itemStack );
 			double totalDamage = 0;
 			for( int z = -range; z <= range; ++z ) {
 				for( int x = -range; x <= range; ++x ) {
