@@ -23,21 +23,25 @@ public class DeathWishEnchantment extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< DeathWishEnchantment > {
-		final DoubleRangeConfig damageMultiplier = new DoubleRangeConfig( "DamageMultiplier", "Multiplies the damage dealt according to the missing health ratio.\nIn other words, the lower the health ratio, the more 'to' value is taken into account.", false, new Range<>( 1.0, 2.0 ), 1.0, 10.0 );
-		final DoubleRangeConfig vulnerabilityMultiplier = new DoubleRangeConfig( "VulnerabilityMultiplier", "Multiplies the damage taken according to the health ratio.\nIn other words, the higher the health ratio, the more 'to' value is taken into account.", false, new Range<>( 0.7, 1.2 ), 0.0, 10.0 );
+		final DoubleRangeConfig damageMultiplier = new DoubleRangeConfig( new Range<>( 1.0, 2.0 ), new Range<>( 1.0, 10.0 ) );
+		final DoubleRangeConfig vulnerabilityMultiplier = new DoubleRangeConfig( new Range<>( 0.7, 1.2 ), new Range<>( 0.0, 10.0 ) );
 
 		public Modifier() {
-			super( Registries.DEATH_WISH, Registries.Modifiers.ENCHANTMENT, "DeathWish", "Increases damage dealt equal to the percentage of health lost." );
+			super( Registries.DEATH_WISH, Registries.Modifiers.ENCHANTMENT );
 
 			new OnDamaged.Context( this::increaseDamageDealt )
 				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.attacker ) )
-				.addConfig( this.damageMultiplier )
-				.insertTo( this );
+				.addConfig( this.damageMultiplier.name( "DamageMultiplier" )
+					.comment( "Multiplies the damage dealt according to the missing health ratio.\nIn other words, the lower the health ratio, the more 'to' value is taken into account." )
+				).insertTo( this );
 
 			new OnDamaged.Context( this::increaseDamageReceived )
 				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.target ) )
-				.addConfig( this.vulnerabilityMultiplier )
-				.insertTo( this );
+				.addConfig( this.vulnerabilityMultiplier.name( "VulnerabilityMultiplier" )
+					.comment( "Multiplies the damage taken according to the health ratio.\nIn other words, the higher the health ratio, the more 'to' value is taken into account." )
+				).insertTo( this );
+
+			this.name( "DeathWish" ).comment( "Increases damage dealt equal to the percentage of health lost." );
 		}
 
 		private void increaseDamageDealt( OnDamaged.Data data ) {

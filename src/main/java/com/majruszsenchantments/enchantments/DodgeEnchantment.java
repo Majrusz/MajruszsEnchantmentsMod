@@ -10,6 +10,7 @@ import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
+import com.mlib.math.Range;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,19 +31,22 @@ public class DodgeEnchantment extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< DodgeEnchantment > {
-		final DoubleConfig chance = new DoubleConfig( "chance", "Chance to completely ignore the damage per enchantment level.", false, 0.125, 0.01, 0.4 );
-		final DoubleConfig pantsDamageMultiplier = new DoubleConfig( "pants_damage_multiplier", "Percent of damage transferred to pants.", false, 0.5, 0.0, 10.0 );
+		final DoubleConfig chance = new DoubleConfig( 0.125, new Range<>( 0.01, 0.4 ) );
+		final DoubleConfig pantsDamageMultiplier = new DoubleConfig( 0.5, new Range<>( 0.0, 10.0 ) );
 
 		public Modifier() {
-			super( Registries.DODGE, Registries.Modifiers.ENCHANTMENT, "Dodge", "Gives a chance to completely avoid any kind of damage." );
+			super( Registries.DODGE, Registries.Modifiers.ENCHANTMENT );
 
 			new OnPreDamaged.Context( this::dodgeDamage )
 				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( OnPreDamaged.DEALT_ANY_DAMAGE )
 				.addCondition( OnPreDamaged.WILL_TAKE_FULL_DAMAGE )
 				.addCondition( this::tryToDodge )
-				.addConfigs( this.chance, this.pantsDamageMultiplier )
+				.addConfig( this.chance.name( "chance" ).comment( "Chance to completely ignore the damage per enchantment level." ) )
+				.addConfig( this.pantsDamageMultiplier.name( "pants_damage_multiplier" ).comment( "Percent of damage transferred to pants." ) )
 				.insertTo( this );
+
+			this.name( "Dodge" ).comment( "Gives a chance to completely avoid any kind of damage." );
 		}
 
 		private void dodgeDamage( OnPreDamaged.Data data ) {
