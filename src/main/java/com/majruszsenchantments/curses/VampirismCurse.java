@@ -49,7 +49,7 @@ public class VampirismCurse extends CustomEnchantment {
 
 			new OnEntityTick.Context( this::applyDebuffs )
 				.name( "Debuffs" )
-				.addCondition( new Condition.Cooldown<>( 2.0, Dist.DEDICATED_SERVER ) )
+				.addCondition( new Condition.Cooldown< OnEntityTick.Data >( 2.0, Dist.DEDICATED_SERVER ).setConfigurable( false ) )
 				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) )
@@ -62,7 +62,7 @@ public class VampirismCurse extends CustomEnchantment {
 
 			new OnEntityTick.Context( this::spawnParticles )
 				.name( "Particles" )
-				.addCondition( new Condition.Cooldown<>( 0.2, Dist.DEDICATED_SERVER ) )
+				.addCondition( new Condition.Cooldown< OnEntityTick.Data >( 0.2, Dist.DEDICATED_SERVER ).setConfigurable( false ) )
 				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) )
