@@ -22,8 +22,12 @@ public class RegistriesClient {
 	static BooleanConfig UNIQUE_BOOK_TEXTURE;
 
 	public static void initialize() {
-		UNIQUE_BOOK_TEXTURE = new BooleanConfig( "unique_book_texture", "Should the Enchanted Book has a different texture when it has any of the new enchantments on it (disabling it may fix some bugs with other mods)?", true, true );
-		MajruszsEnchantments.CLIENT_CONFIG.addConfig( UNIQUE_BOOK_TEXTURE );
+		UNIQUE_BOOK_TEXTURE = new BooleanConfig( true );
+
+		MajruszsEnchantments.CLIENT_CONFIG.addConfig( UNIQUE_BOOK_TEXTURE.name( "unique_book_texture" )
+			.comment( "Should the Enchanted Book has a different texture when it has any of the new enchantments on it (disabling it may fix some bugs with other mods)?" )
+			.requiresWorldRestart( true )
+		);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener( RegistriesClient::register );
 	}
 
