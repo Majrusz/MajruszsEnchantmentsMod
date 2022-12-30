@@ -1,24 +1,22 @@
 package com.majruszsenchantments.curses;
 
-import com.mlib.EquipmentSlots;
-import com.mlib.enchantments.CustomEnchantment;
+import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
+import com.mlib.enchantments.CustomEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-import java.util.function.Supplier;
-
 public class IncompatibilityCurse extends CustomEnchantment {
-	public static Supplier< IncompatibilityCurse > create() {
-		CustomEnchantment.Parameters params = new Parameters( Rarity.RARE, EnchantmentCategory.BREAKABLE, EquipmentSlots.ARMOR_AND_HANDS, true, 1, level->10, level->50 );
-		IncompatibilityCurse enchantment = new IncompatibilityCurse( params );
-		Modifier modifier = new IncompatibilityCurse.Modifier( enchantment );
-
-		return ()->enchantment;
-	}
-
-	public IncompatibilityCurse( Parameters params ) {
-		super( params );
+	public IncompatibilityCurse() {
+		this.rarity( Rarity.RARE )
+			.category( EnchantmentCategory.BREAKABLE )
+			.slots( EquipmentSlots.ALL )
+			.curse()
+			.minLevelCost( level->10 )
+			.maxLevelCost( level->50 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
 	@Override
@@ -26,9 +24,12 @@ public class IncompatibilityCurse extends CustomEnchantment {
 		return false;
 	}
 
-	private static class Modifier extends EnchantmentModifier< IncompatibilityCurse > {
-		public Modifier( IncompatibilityCurse enchantment ) {
-			super( enchantment, "Incompatibility", "Makes all other enchantments incompatible with this one." );
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< IncompatibilityCurse > {
+		public Modifier() {
+			super( Registries.INCOMPATIBILITY, Registries.Modifiers.CURSE );
+
+			this.name( "Incompatibility" ).comment( "Makes all other enchantments incompatible with this one." );
 		}
 	}
 }
