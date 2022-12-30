@@ -3,6 +3,7 @@ package com.majruszsenchantments.curses;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
@@ -27,7 +28,8 @@ public class CorrosionCurse extends CustomEnchantment {
 			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	private static class Modifier extends EnchantmentModifier< CorrosionCurse > {
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< CorrosionCurse > {
 		final DoubleConfig damageAmount = new DoubleConfig( 0.25, new Range<>( 0.0, 10.0 ) );
 
 		public Modifier() {
