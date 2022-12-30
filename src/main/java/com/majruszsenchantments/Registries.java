@@ -3,7 +3,6 @@ package com.majruszsenchantments;
 import com.majruszsenchantments.curses.*;
 import com.majruszsenchantments.enchantments.*;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
-import com.mlib.MajruszLibrary;
 import com.mlib.annotations.AnnotationHandler;
 import com.mlib.gamemodifiers.GameModifier;
 import com.mlib.registries.RegistryHelper;
@@ -37,7 +36,7 @@ public class Registries {
 		GameModifier.addNewGroup( SERVER_CONFIG, Modifiers.ENCHANTMENT ).name( "Enchantments" );
 		GameModifier.addNewGroup( SERVER_CONFIG, Modifiers.CURSE ).name( "Curses" );
 
-		AnnotationHandler annotationHandler = new AnnotationHandler( MajruszLibrary.MOD_ID );
+		AnnotationHandler annotationHandler = new AnnotationHandler( MajruszsEnchantments.MOD_ID );
 		GAME_MODIFIERS = annotationHandler.getInstances( GameModifier.class );
 	}
 
