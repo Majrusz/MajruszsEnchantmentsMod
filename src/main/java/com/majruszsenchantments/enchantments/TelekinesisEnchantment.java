@@ -3,6 +3,7 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
@@ -17,47 +18,47 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class TelekinesisEnchantment extends CustomEnchantment {
-	public static Supplier< TelekinesisEnchantment > create() {
-		Parameters params = new Parameters( Rarity.UNCOMMON, Registries.TOOLS, EquipmentSlots.MAINHAND, false, 1, level->15, level->45 );
-		TelekinesisEnchantment enchantment = new TelekinesisEnchantment( params );
-		Modifier modifier = new TelekinesisEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
+	public TelekinesisEnchantment() {
+		this.rarity( Rarity.UNCOMMON )
+			.category( Registries.TOOLS )
+			.slots( EquipmentSlots.MAINHAND )
+			.minLevelCost( level->15 )
+			.maxLevelCost( level->45 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	public TelekinesisEnchantment( Parameters params ) {
-		super( params );
-	}
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< TelekinesisEnchantment > {
+		public Modifier() {
+			super( Registries.TELEKINESIS, Registries.Modifiers.ENCHANTMENT );
 
-	private static class Modifier extends EnchantmentModifier< TelekinesisEnchantment > {
-		public Modifier( TelekinesisEnchantment enchantment ) {
-			super( enchantment, "Telekinesis", "Adds acquired items directly to player's inventory." );
-
-			OnLoot.Context onLoot = new OnLoot.Context( data->this.addToInventory( data, data.entity ) );
-			onLoot.priority( Priority.LOWEST )
+			new OnLoot.Context( data->this.addToInventory( data, data.entity ) )
+				.priority( Priority.LOWEST )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.entity instanceof Player )
-				.addCondition( data->data.tool != null && enchantment.hasEnchantment( data.tool ) );
+				.addCondition( data->data.tool != null && this.enchantment.get().hasEnchantment( data.tool ) )
+				.insertTo( this );
 
-			OnLoot.Context onLoot2 = new OnLoot.Context( data->this.addToInventory( data, data.killer ) );
-			onLoot2.priority( Priority.LOWEST )
+			new OnLoot.Context( data->this.addToInventory( data, data.killer ) )
+				.priority( Priority.LOWEST )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.killer instanceof Player )
-				.addCondition( data->enchantment.hasEnchantment( ( Player )data.killer ) );
+				.addCondition( data->this.enchantment.get().hasEnchantment( ( Player )data.killer ) )
+				.insertTo( this );
 
-			OnLoot.Context onLoot3 = new OnLoot.Context( data->this.addToInventory( data, data.killer ) );
-			onLoot3.priority( Priority.LOWEST )
+			new OnLoot.Context( data->this.addToInventory( data, data.killer ) )
+				.priority( Priority.LOWEST )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.killer instanceof Player )
-				.addCondition( this.doesProjectileHasEnchantmentPredicate() );
+				.addCondition( this.doesProjectileHasEnchantmentPredicate() )
+				.insertTo( this );
 
-			this.addContexts( onLoot, onLoot2, onLoot3 );
+			this.name( "Telekinesis" ).comment( "Adds acquired items directly to player's inventory." );
 		}
 
 		private void addToInventory( OnLoot.Data data, Entity entity ) {
@@ -75,7 +76,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			return data->{
 				if( data.damageSource != null ) {
 					ItemStack weapon = IMixinProjectile.getWeaponFromDirectEntity( data.damageSource );
-					return weapon != null && this.enchantment.hasEnchantment( weapon );
+					return weapon != null && this.enchantment.get().hasEnchantment( weapon );
 				}
 
 				return false;
