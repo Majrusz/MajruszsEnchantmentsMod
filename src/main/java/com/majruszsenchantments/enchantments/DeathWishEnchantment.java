@@ -8,7 +8,7 @@ import com.mlib.config.DoubleRangeConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.contexts.OnDamaged;
+import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import com.mlib.math.Range;
 
 public class DeathWishEnchantment extends CustomEnchantment {
@@ -29,13 +29,13 @@ public class DeathWishEnchantment extends CustomEnchantment {
 		public Modifier() {
 			super( Registries.DEATH_WISH, Registries.Modifiers.ENCHANTMENT );
 
-			new OnDamaged.Context( this::increaseDamageDealt )
+			new OnPreDamaged.Context( this::increaseDamageDealt )
 				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.attacker ) )
 				.addConfig( this.damageMultiplier.name( "DamageMultiplier" )
 					.comment( "Multiplies the damage dealt according to the missing health ratio.\nIn other words, the lower the health ratio, the more 'to' value is taken into account." )
 				).insertTo( this );
 
-			new OnDamaged.Context( this::increaseDamageReceived )
+			new OnPreDamaged.Context( this::increaseDamageReceived )
 				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.target ) )
 				.addConfig( this.vulnerabilityMultiplier.name( "VulnerabilityMultiplier" )
 					.comment( "Multiplies the damage taken according to the health ratio.\nIn other words, the higher the health ratio, the more 'to' value is taken into account." )
@@ -44,16 +44,16 @@ public class DeathWishEnchantment extends CustomEnchantment {
 			this.name( "DeathWish" ).comment( "Increases damage dealt equal to the percentage of health lost." );
 		}
 
-		private void increaseDamageDealt( OnDamaged.Data data ) {
-			float damageMultiplier = this.damageMultiplier.lerp( ( float )EntityHelper.getMissingHealthRatio( data.attacker ) );
+		private void increaseDamageDealt( OnPreDamaged.Data data ) {
+			float damageMultiplier = this.damageMultiplier.lerp( ( float )EntityHelper.getMissingHealthRatio( data.attacker ) ) - 1.0f;
 
-			data.event.setAmount( data.event.getAmount() * damageMultiplier );
+			data.extraDamage += data.damage * damageMultiplier;
 		}
 
-		private void increaseDamageReceived( OnDamaged.Data data ) {
-			float damageMultiplier = this.vulnerabilityMultiplier.lerp( ( float )EntityHelper.getHealthRatio( data.target ) );
+		private void increaseDamageReceived( OnPreDamaged.Data data ) {
+			float damageMultiplier = this.vulnerabilityMultiplier.lerp( ( float )EntityHelper.getHealthRatio( data.target ) ) - 1.0f;
 
-			data.event.setAmount( data.event.getAmount() * damageMultiplier );
+			data.extraDamage += data.damage * damageMultiplier;
 		}
 	}
 }

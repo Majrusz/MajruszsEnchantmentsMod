@@ -6,8 +6,8 @@ import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.contexts.OnDamaged;
 import com.mlib.gamemodifiers.contexts.OnLootLevel;
+import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import com.mlib.math.Range;
 import com.mlib.mixininterfaces.IMixinProjectile;
 import net.minecraft.world.damagesource.DamageSource;
@@ -37,7 +37,7 @@ public class HunterEnchantment extends CustomEnchantment {
 				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 )
 				.insertTo( this );
 
-			new OnDamaged.Context( this::modifyDamage )
+			new OnPreDamaged.Context( this::modifyDamage )
 				.addCondition( data->data.attacker != null )
 				.addCondition( data->data.source.isProjectile() )
 				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 )
@@ -53,13 +53,13 @@ public class HunterEnchantment extends CustomEnchantment {
 			data.event.setLootingLevel( data.event.getLootingLevel() + this.getEnchantmentLevel( data.source ) );
 		}
 
-		private void modifyDamage( OnDamaged.Data data ) {
+		private void modifyDamage( OnPreDamaged.Data data ) {
 			assert data.attacker != null;
 			float distance = Math.max( 0.0f, data.target.distanceTo( data.attacker ) - 1.0f );
 			float level = this.getEnchantmentLevel( data.source );
-			float damageMultiplier = 1.0f + level * ( this.penaltyMultiplier.asFloat() + distance * this.distanceMultiplier.asFloat() );
+			float damageMultiplier = level * ( this.penaltyMultiplier.asFloat() + distance * this.distanceMultiplier.asFloat() );
 
-			data.event.setAmount( data.event.getAmount() * damageMultiplier );
+			data.extraDamage += data.damage * damageMultiplier;
 		}
 
 		private int getEnchantmentLevel( DamageSource source ) {
