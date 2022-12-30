@@ -52,7 +52,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 		private void dodgeDamage( OnPreDamaged.Data data ) {
 			spawnEffects( data.target, data.level );
 			damagePants( data.target, data.damage );
-			data.isCancelled = true;
+			OnPreDamaged.CANCEL.accept( data );
 		}
 
 		private void spawnEffects( LivingEntity entity, ServerLevel level ) {
