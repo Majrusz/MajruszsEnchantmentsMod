@@ -7,43 +7,44 @@ import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.contexts.OnDamaged;
 import com.mlib.gamemodifiers.contexts.OnLootLevel;
+import com.mlib.math.Range;
 import com.mlib.mixininterfaces.IMixinProjectile;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.function.Supplier;
-
 public class HunterEnchantment extends CustomEnchantment {
-	public static Supplier< HunterEnchantment > create() {
-		Parameters params = new Parameters( Rarity.RARE, Registries.BOW_AND_CROSSBOW, EquipmentSlots.BOTH_HANDS, false, 3, level->6 + 9 * level, level->26 + 9 * level );
-		HunterEnchantment enchantment = new HunterEnchantment( params );
-		Modifier modifier = new HunterEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
-	}
-
-	public HunterEnchantment( Parameters params ) {
-		super( params );
+	public HunterEnchantment() {
+		this.rarity( Rarity.RARE )
+			.category( Registries.BOW_AND_CROSSBOW )
+			.slots( EquipmentSlots.BOTH_HANDS )
+			.maxLevel( 3 )
+			.minLevelCost( level->level * 9 + 6 )
+			.maxLevelCost( level->level * 9 + 26 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
 	private static class Modifier extends EnchantmentModifier< HunterEnchantment > {
-		final DoubleConfig penaltyMultiplier = new DoubleConfig( "penalty_multiplier", "Damage multiplier penalty per enchantment level.", false, -0.10, -0.33, 0.0 );
-		final DoubleConfig distanceMultiplier = new DoubleConfig( "extra_multiplier", "Extra damage multiplier bonus per each block to a target and per enchantment level.", false, 0.01, 0.0, 1.0 );
+		final DoubleConfig penaltyMultiplier = new DoubleConfig( -0.10, new Range<>( -0.33, 0.0 ) );
+		final DoubleConfig distanceMultiplier = new DoubleConfig( 0.01, new Range<>( 0.0, 1.0 ) );
 
-		public Modifier( HunterEnchantment enchantment ) {
-			super( enchantment, "Hunter", "Increases mob drops and makes the damage to scale with a distance." );
+		public Modifier() {
+			super( Registries.HUNTER, Registries.Modifiers.ENCHANTMENT );
 
-			OnLootLevel.Context onLootLevel = new OnLootLevel.Context( this::increaseLootingLevel );
-			onLootLevel.addCondition( data->data.source != null && data.source.isProjectile() )
-				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 );
+			new OnLootLevel.Context( this::increaseLootingLevel )
+				.addCondition( data->data.source != null && data.source.isProjectile() )
+				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 )
+				.insertTo( this );
 
-			OnDamaged.Context onDamaged = new OnDamaged.Context( this::modifyDamage );
-			onDamaged.addCondition( data->data.attacker != null )
+			new OnDamaged.Context( this::modifyDamage )
+				.addCondition( data->data.attacker != null )
 				.addCondition( data->data.source.isProjectile() )
-				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 );
+				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 )
+				.addConfig( this.penaltyMultiplier.name( "penalty_multiplier" ).comment( "Damage multiplier penalty per enchantment level." ) )
+				.addConfig( this.distanceMultiplier.name( "extra_multiplier" )
+					.comment( "Extra damage multiplier bonus per each block to a target and per enchantment level." )
+				).insertTo( this );
 
-			this.addConfigs( this.penaltyMultiplier, this.distanceMultiplier );
-			this.addContext( onLootLevel );
+			this.name( "Hunter" ).comment( "Increases mob drops and makes the damage to scale with a distance." );
 		}
 
 		private void increaseLootingLevel( OnLootLevel.Data data ) {
@@ -61,7 +62,7 @@ public class HunterEnchantment extends CustomEnchantment {
 
 		private int getEnchantmentLevel( DamageSource source ) {
 			ItemStack weapon = IMixinProjectile.getWeaponFromDirectEntity( source );
-			return weapon != null ? this.enchantment.getEnchantmentLevel( weapon ) : 0;
+			return weapon != null ? this.enchantment.get().getEnchantmentLevel( weapon ) : 0;
 		}
 	}
 }
