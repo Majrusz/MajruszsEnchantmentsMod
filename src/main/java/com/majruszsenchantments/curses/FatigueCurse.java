@@ -1,8 +1,10 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.attributes.AttributeHandler;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
@@ -11,6 +13,7 @@ import com.mlib.gamemodifiers.contexts.OnBreakSpeed;
 import com.mlib.gamemodifiers.contexts.OnEquipmentChanged;
 import com.mlib.gamemodifiers.contexts.OnItemSwingDuration;
 import com.mlib.gamemodifiers.contexts.OnUseItemTick;
+import com.mlib.math.Range;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -19,19 +22,16 @@ import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-import java.util.function.Supplier;
-
 public class FatigueCurse extends CustomEnchantment {
-	public static Supplier< FatigueCurse > create() {
-		CustomEnchantment.Parameters params = new CustomEnchantment.Parameters( Rarity.RARE, EnchantmentCategory.BREAKABLE, EquipmentSlots.ARMOR_AND_HANDS, true, 3, level->10, level->50 );
-		FatigueCurse enchantment = new FatigueCurse( params );
-		FatigueCurse.Modifier modifier = new FatigueCurse.Modifier( enchantment );
-
-		return ()->enchantment;
-	}
-
-	public FatigueCurse( Parameters params ) {
-		super( params );
+	public FatigueCurse() {
+		this.rarity( Rarity.RARE )
+			.category( EnchantmentCategory.BREAKABLE )
+			.slots( EquipmentSlots.ALL )
+			.curse()
+			.maxLevel( 3 )
+			.minLevelCost( level->10 )
+			.maxLevelCost( level->50 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
 	@Override
@@ -39,36 +39,46 @@ public class FatigueCurse extends CustomEnchantment {
 		return !( enchantment instanceof DiggingEnchantment ) && super.checkCompatibility( enchantment );
 	}
 
-	private static class Modifier extends EnchantmentModifier< FatigueCurse > {
-		static final double MIN_MULTIPLIER = 0.1, MAX_MULTIPLIER = 0.99;
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< FatigueCurse > {
+		static final Range< Double > MULTIPLIER_RANGE = new Range<>( 0.1, 0.99 );
 		static final AttributeHandler ATTACK_SPEED_ATTRIBUTE = new AttributeHandler( "3f350b5c-4b00-4fbb-8381-c1af0749f779", "FatigueAttackSpeed", Attributes.ATTACK_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
 		static final AttributeHandler MOVEMENT_SPEED_ATTRIBUTE = new AttributeHandler( "760f7b82-76c7-4875-821e-ef0579b881e0", "FatigueMovementSpeed", Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
-		final DoubleConfig miningMultiplier = new DoubleConfig( "mining_multiplier", "Mining speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
-		final DoubleConfig attackMultiplier = new DoubleConfig( "attack_multiplier", "Attack speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
-		final DoubleConfig movementMultiplier = new DoubleConfig( "movement_multiplier", "Movement speed multiplier per each level on armor.", false, 0.95, MIN_MULTIPLIER, MAX_MULTIPLIER );
-		final DoubleConfig drawingMultiplier = new DoubleConfig( "drawing_multiplier", "Bowstring speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
-		final DoubleConfig swingMultiplier = new DoubleConfig( "swing_multiplier", "Swing speed multiplier per each level.", false, 0.8, MIN_MULTIPLIER, MAX_MULTIPLIER );
+		final DoubleConfig miningMultiplier = new DoubleConfig( 0.8, MULTIPLIER_RANGE );
+		final DoubleConfig attackMultiplier = new DoubleConfig( 0.8, MULTIPLIER_RANGE );
+		final DoubleConfig movementMultiplier = new DoubleConfig( 0.95, MULTIPLIER_RANGE );
+		final DoubleConfig drawingMultiplier = new DoubleConfig( 0.8, MULTIPLIER_RANGE );
+		final DoubleConfig swingMultiplier = new DoubleConfig( 0.8, MULTIPLIER_RANGE );
 
-		public Modifier( FatigueCurse enchantment ) {
-			super( enchantment, "Fatigue", "Effectively reduces the speed of everything." );
+		public Modifier() {
+			super( Registries.FATIGUE, Registries.Modifiers.CURSE );
 
-			OnBreakSpeed.Context onBreakSpeed = new OnBreakSpeed.Context( this::reduceMiningSpeed );
-			onBreakSpeed.addCondition( new Condition.HasEnchantment<>( enchantment ) );
+			new OnBreakSpeed.Context( this::reduceMiningSpeed )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
+				.addConfig( this.miningMultiplier.name( "mining_multiplier" ).comment( "Mining speed multiplier per each level." ) )
+				.insertTo( this );
 
-			OnEquipmentChanged.Context onEquipmentChange = new OnEquipmentChanged.Context( this::reduceAttackSpeed );
+			new OnEquipmentChanged.Context( this::reduceAttackSpeed )
+				.addConfig( this.attackMultiplier.name( "attack_multiplier" ).comment( "Attack speed multiplier per each level." ) )
+				.insertTo( this );
 
-			OnEquipmentChanged.Context onEquipmentChange2 = new OnEquipmentChanged.Context( this::reduceMovementSpeed );
+			new OnEquipmentChanged.Context( this::reduceMovementSpeed )
+				.addConfig( this.movementMultiplier.name( "movement_multiplier" ).comment( "Movement speed multiplier per each level on armor." ) )
+				.insertTo( this );
 
-			OnUseItemTick.Context onBowstring = new OnUseItemTick.Context( this::reduceBowstringSpeed );
-			onBowstring.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+			new OnUseItemTick.Context( this::reduceBowstringSpeed )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( data->BowItem.getPowerForTime( data.itemStack.getUseDuration() - data.duration ) > 0.3f ) // first frame takes longer than other frames, and we skip slowing this frame
-				.addCondition( data->Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) );
+				.addCondition( data->Random.tryChance( 1.0f - this.getItemMultiplier( this.drawingMultiplier, data.entity ) ) )
+				.addConfig( this.drawingMultiplier.name( "drawing_multiplier" ).comment( "Bowstring speed multiplier per each level." ) )
+				.insertTo( this );
 
-			OnItemSwingDuration.Context onItemSwing = new OnItemSwingDuration.Context( this::increaseSwingDuration );
-			onItemSwing.addCondition( new Condition.HasEnchantment<>( enchantment ) );
+			new OnItemSwingDuration.Context( this::increaseSwingDuration )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
+				.addConfig( this.swingMultiplier.name( "swing_multiplier" ).comment( "Swing speed multiplier per each level." ) )
+				.insertTo( this );
 
-			this.addConfigs( this.miningMultiplier, this.attackMultiplier, this.drawingMultiplier, this.movementMultiplier, this.swingMultiplier );
-			this.addContexts( onBreakSpeed, onEquipmentChange, onEquipmentChange2, onBowstring, onItemSwing );
+			this.name( "Fatigue" ).comment( "Effectively reduces the speed of everything." );
 		}
 
 		private void reduceMiningSpeed( OnBreakSpeed.Data data ) {
@@ -92,11 +102,11 @@ public class FatigueCurse extends CustomEnchantment {
 		}
 
 		private float getItemMultiplier( DoubleConfig config, LivingEntity entity ) {
-			return ( float )Math.pow( config.get(), this.enchantment.getEnchantmentLevel( entity.getMainHandItem() ) );
+			return ( float )Math.pow( config.get(), this.enchantment.get().getEnchantmentLevel( entity.getMainHandItem() ) );
 		}
 
 		private float getArmorMultiplier( DoubleConfig config, LivingEntity entity ) {
-			return ( float )Math.pow( config.get(), this.enchantment.getEnchantmentSum( entity, EquipmentSlots.ARMOR ) );
+			return ( float )Math.pow( config.get(), this.enchantment.get().getEnchantmentSum( entity, EquipmentSlots.ARMOR ) );
 		}
 	}
 }
