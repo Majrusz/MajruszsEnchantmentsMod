@@ -50,7 +50,7 @@ public class LeechEnchantment extends CustomEnchantment {
 				.addCondition( OnDamaged.DEALT_ANY_DAMAGE )
 				.addConfig( this.healthChance.name( "HealthChance" ).comment( "Chance to steal 1 health point from the target." ) )
 				.addConfig( this.hungerChance.name( "HungerChance" ).comment( "Chance to steal 1 hunger point from the target." ) )
-				.addConfig( this.healthChance.name( "EffectChance" ).comment( "Chance to steal 1 random positive effect from the target." ) )
+				.addConfig( this.effectChance.name( "EffectChance" ).comment( "Chance to steal 1 random positive effect from the target." ) )
 				.insertTo( this );
 
 			this.name( "Leech" ).comment( "Gives a chance to steal positive effects, health and hunger points from enemies." );
