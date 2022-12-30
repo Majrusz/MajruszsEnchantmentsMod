@@ -35,9 +35,6 @@ public class Registries {
 	static {
 		GameModifier.addNewGroup( SERVER_CONFIG, Modifiers.ENCHANTMENT ).name( "Enchantments" );
 		GameModifier.addNewGroup( SERVER_CONFIG, Modifiers.CURSE ).name( "Curses" );
-
-		AnnotationHandler annotationHandler = new AnnotationHandler( MajruszsEnchantments.MOD_ID );
-		GAME_MODIFIERS = annotationHandler.getInstances( GameModifier.class );
 	}
 
 	// Groups
@@ -85,6 +82,12 @@ public class Registries {
 
 	// Triggers
 	public static final BasicTrigger BASIC_TRIGGER = BasicTrigger.createRegisteredInstance( HELPER );
+
+	static {
+		// must stay below all instances because otherwise modifiers can access them too fast
+		AnnotationHandler annotationHandler = new AnnotationHandler( MajruszsEnchantments.MOD_ID );
+		GAME_MODIFIERS = annotationHandler.getInstances( GameModifier.class );
+	}
 
 	public static ResourceLocation getLocation( String register ) {
 		return HELPER.getLocation( register );
