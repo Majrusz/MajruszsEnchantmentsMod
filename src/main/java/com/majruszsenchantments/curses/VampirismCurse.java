@@ -48,7 +48,6 @@ public class VampirismCurse extends CustomEnchantment {
 			super( Registries.VAMPIRISM, Registries.Modifiers.CURSE );
 
 			new OnEntityTick.Context( this::applyDebuffs )
-				.name( "Debuffs" )
 				.addCondition( new Condition.Cooldown< OnEntityTick.Data >( 2.0, Dist.DEDICATED_SERVER ).setConfigurable( false ) )
 				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
