@@ -50,7 +50,7 @@ public class VampirismCurse extends CustomEnchantment {
 			new OnEntityTick.Context( this::applyDebuffs )
 				.name( "Debuffs" )
 				.addCondition( new Condition.Cooldown< OnEntityTick.Data >( 2.0, Dist.DEDICATED_SERVER ).setConfigurable( false ) )
-				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) )
 				.addConfig( this.weakness.name( "Weakness" ) )
@@ -63,13 +63,13 @@ public class VampirismCurse extends CustomEnchantment {
 			new OnEntityTick.Context( this::spawnParticles )
 				.name( "Particles" )
 				.addCondition( new Condition.Cooldown< OnEntityTick.Data >( 0.2, Dist.DEDICATED_SERVER ).setConfigurable( false ) )
-				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->LevelHelper.isEntityOutsideDuringTheDay( data.entity ) )
 				.insertTo( this );
 
 			new OnPlayerInteract.Context( this::blockSleep )
-				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( Modifier::isBedCondition )
 				.insertTo( this );
