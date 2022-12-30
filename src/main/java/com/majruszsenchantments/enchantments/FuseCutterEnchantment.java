@@ -3,6 +3,7 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.config.DoubleConfig;
 import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
@@ -12,42 +13,42 @@ import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnExplosion;
 import com.mlib.items.ItemHelper;
 import com.mlib.math.AABBHelper;
+import com.mlib.math.Range;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.function.Supplier;
-
 public class FuseCutterEnchantment extends CustomEnchantment {
-	public static Supplier< FuseCutterEnchantment > create() {
-		Parameters params = new Parameters( Rarity.UNCOMMON, Registries.SHIELD, EquipmentSlots.BOTH_HANDS, false, 1, level->8, level->40 );
-		FuseCutterEnchantment enchantment = new FuseCutterEnchantment( params );
-		Modifier modifier = new FuseCutterEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
+	public FuseCutterEnchantment() {
+		this.rarity( Rarity.UNCOMMON )
+			.category( Registries.SHIELD )
+			.slots( EquipmentSlots.BOTH_HANDS )
+			.minLevelCost( level->8 )
+			.maxLevelCost( level->40 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	public FuseCutterEnchantment( Parameters params ) {
-		super( params );
-	}
-
-	private static class Modifier extends EnchantmentModifier< FuseCutterEnchantment > {
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< FuseCutterEnchantment > {
 		static final ParticleHandler BIG_SMOKE = new ParticleHandler( ParticleTypes.LARGE_SMOKE, ParticleHandler.offset( 0.25f ), ()->0.025f );
 		static final ParticleHandler SMOKE = new ParticleHandler( ParticleTypes.SMOKE, ParticleHandler.offset( 0.25f ), ()->0.025f );
-		final DoubleConfig maxDistance = new DoubleConfig( "maximum_distance", "Maximum distance in blocks from the explosion.", false, 6.0, 1.0, 100.0 );
-		final DoubleConfig cooldownRatio = new DoubleConfig( "cooldown_ratio", "Ratio of explosion radius to disabled shield cooldown duration. (for instance 1.5 means that explosion with 2 blocks radius will disable the shield for 3 seconds)", false, 1.5, 0.0, 10.0 );
+		final DoubleConfig maxDistance = new DoubleConfig( 6.0, new Range<>( 1.0, 100.0 ) );
+		final DoubleConfig cooldownRatio = new DoubleConfig( 1.5, new Range<>( 0.0, 10.0 ) );
 
-		public Modifier( FuseCutterEnchantment enchantment ) {
-			super( enchantment, "FuseCutter", "Cancels all nearby explosions whenever the player is blocking with a shield." );
+		public Modifier() {
+			super( Registries.FUSE_CUTTER, Registries.Modifiers.ENCHANTMENT );
 
-			OnExplosion.Context onExplosion = new OnExplosion.Context( this::cancelExplosion );
-			onExplosion.addCondition( new Condition.IsServer<>() )
+			new OnExplosion.Context( this::cancelExplosion )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( this::isAnyoneBlockingWithFuseCutterNearby )
-				.addConfigs( this.maxDistance, this.cooldownRatio );
+				.addConfig( this.maxDistance.name( "maximum_distance" ).comment( "Maximum distance in blocks from the explosion." ) )
+				.addConfig( this.cooldownRatio.name( "cooldown_ratio" )
+					.comment( "Ratio of explosion radius to disabled shield cooldown duration. (for instance 1.5 means that explosion with 2 blocks radius will disable the shield for 3 seconds)" )
+				).insertTo( this );
 
-			this.addContexts( onExplosion );
+			this.name( "FuseCutter" ).comment( "Cancels all nearby explosions whenever the player is blocking with a shield." );
 		}
 
 		private void cancelExplosion( OnExplosion.Data data ) {
@@ -67,7 +68,7 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 					continue;
 
 				ItemStack itemStack = ItemHelper.getCurrentlyUsedItem( livingEntity );
-				if( this.enchantment.hasEnchantment( itemStack ) ) {
+				if( this.enchantment.get().hasEnchantment( itemStack ) ) {
 					itemStack.hurtAndBreak( data.radius.intValue(), player, owner->owner.broadcastBreakEvent( livingEntity.getUsedItemHand() ) );
 					EntityHelper.disableCurrentItem( player, data.radius.doubleValue() * this.cooldownRatio.get() );
 					return true;
