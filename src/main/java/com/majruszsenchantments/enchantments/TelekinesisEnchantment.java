@@ -31,6 +31,8 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< TelekinesisEnchantment > {
+		static final ParticleHandler PARTICLE = new ParticleHandler( Registries.TELEKINESIS_PARTICLE, ParticleHandler.offset( 0.25f ), ParticleHandler.speed( 0.015f ) );
+
 		public Modifier() {
 			super( Registries.TELEKINESIS, Registries.Modifiers.ENCHANTMENT );
 
@@ -68,7 +70,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 				SoundHandler.ITEM_PICKUP.play( data.level, player.position(), SoundHandler.randomized( 0.25f ) );
 				Vec3 from = data.origin;
 				Vec3 to = VectorHelper.add( player.position(), new Vec3( 0.0, player.getBbHeight() * 0.5, 0.0 ) );
-				ParticleHandler.WITCH.spawnLine( data.level, from, to, 1, ParticleHandler.offset( 0.05f ) );
+				PARTICLE.spawnLine( data.level, from, to, 1, ParticleHandler.offset( 0.05f ) );
 			}
 		}
 

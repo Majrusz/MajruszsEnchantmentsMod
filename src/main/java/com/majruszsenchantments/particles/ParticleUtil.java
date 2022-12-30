@@ -14,5 +14,6 @@ public class ParticleUtil {
 	@SubscribeEvent
 	public static void registerParticles( RegisterParticleProvidersEvent event ) {
 		event.register( Registries.DODGE_PARTICLE.get(), DodgeParticle.Factory::new );
+		event.register( Registries.TELEKINESIS_PARTICLE.get(), TelekinesisParticle.Factory::new );
 	}
 }

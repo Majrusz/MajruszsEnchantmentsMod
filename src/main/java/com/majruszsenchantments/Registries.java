@@ -79,6 +79,7 @@ public class Registries {
 
 	// Particles
 	public static final RegistryObject< SimpleParticleType > DODGE_PARTICLE = PARTICLE_TYPES.register( "dodge_particle", ()->new SimpleParticleType( true ) );
+	public static final RegistryObject< SimpleParticleType > TELEKINESIS_PARTICLE = PARTICLE_TYPES.register( "telekinesis_particle", ()->new SimpleParticleType( true ) );
 
 	// Triggers
 	public static final BasicTrigger BASIC_TRIGGER = BasicTrigger.createRegisteredInstance( HELPER );
