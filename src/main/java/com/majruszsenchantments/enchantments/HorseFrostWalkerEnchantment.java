@@ -3,6 +3,7 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnEntityTick;
@@ -11,19 +12,15 @@ import com.mlib.levels.LevelHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.animal.Animal;
 
-import java.util.function.Supplier;
-
 public class HorseFrostWalkerEnchantment extends CustomEnchantment {
-	public static Supplier< HorseFrostWalkerEnchantment > create() {
-		Parameters params = new Parameters( Rarity.RARE, Registries.HORSE_ARMOR, EquipmentSlots.ARMOR, false, 2, level->10 * level, level->15 + 10 * level );
-		HorseFrostWalkerEnchantment enchantment = new HorseFrostWalkerEnchantment( params );
-		Modifier modifier = new HorseFrostWalkerEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
-	}
-
-	public HorseFrostWalkerEnchantment( Parameters params ) {
-		super( params );
+	public HorseFrostWalkerEnchantment() {
+		this.rarity( Rarity.RARE )
+			.category( Registries.HORSE_ARMOR )
+			.slots( EquipmentSlots.ARMOR )
+			.maxLevel( 2 )
+			.minLevelCost( level->level * 10 )
+			.maxLevelCost( level->level * 10 + 15 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
 	@Override
@@ -31,32 +28,31 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 		return true;
 	}
 
-	private static class Modifier extends EnchantmentModifier< HorseFrostWalkerEnchantment > {
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< HorseFrostWalkerEnchantment > {
 		public Modifier( HorseFrostWalkerEnchantment enchantment ) {
-			super( enchantment, "HorseFrostWalker", "Creates a path of ice when walking over water on a horse." );
+			super( Registries.HORSE_FROST_WALKER, Registries.Modifiers.ENCHANTMENT );
 
-			OnEntityTick.Context onTick = new OnEntityTick.Context( this::freezeNearbyWater );
-			onTick.addCondition( new Condition.IsServer<>() )
+			new OnEntityTick.Context( this::freezeNearbyWater )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
-				.addCondition( data->data.entity instanceof Animal );
+				.addCondition( data->data.entity instanceof Animal )
+				.insertTo( this );
 
-			OnPreDamaged.Context onPreDamaged = new OnPreDamaged.Context( this::disableDamage );
-			onPreDamaged.addCondition( new Condition.IsServer<>() )
+			new OnPreDamaged.Context( OnPreDamaged.CANCEL )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
 				.addCondition( data->DamageSource.HOT_FLOOR.equals( data.source ) )
-				.addCondition( data->data.entity instanceof Animal );
+				.addCondition( data->data.entity instanceof Animal )
+				.insertTo( this );
 
-			this.addContexts( onTick, onPreDamaged );
+			this.name( "HorseFrostWalker" ).comment( "Creates a path of ice when walking over water on a horse." );
 		}
 
 		private void freezeNearbyWater( OnEntityTick.Data data ) {
 			assert data.entity != null;
-			int radius = this.enchantment.getEnchantmentSum( data.entity, EquipmentSlots.ARMOR ) + 2;
+			int radius = this.enchantment.get().getEnchantmentSum( data.entity, EquipmentSlots.ARMOR ) + 2;
 			LevelHelper.freezeWater( data.entity, radius, 60, 120, false );
-		}
-
-		private void disableDamage( OnPreDamaged.Data data ) {
-			data.event.setCanceled( true );
 		}
 	}
 }
