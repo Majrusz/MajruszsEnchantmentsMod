@@ -3,6 +3,7 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.contexts.OnDamaged;
@@ -23,7 +24,8 @@ public class HunterEnchantment extends CustomEnchantment {
 			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	private static class Modifier extends EnchantmentModifier< HunterEnchantment > {
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< HunterEnchantment > {
 		final DoubleConfig penaltyMultiplier = new DoubleConfig( -0.10, new Range<>( -0.33, 0.0 ) );
 		final DoubleConfig distanceMultiplier = new DoubleConfig( 0.01, new Range<>( 0.0, 1.0 ) );
 
