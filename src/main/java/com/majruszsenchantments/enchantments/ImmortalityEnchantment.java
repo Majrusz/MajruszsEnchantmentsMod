@@ -28,7 +28,7 @@ public class ImmortalityEnchantment extends CustomEnchantment {
 
 			new OnDeath.Context( this::cancelDeath )
 				.addCondition( new Condition.IsServer<>() )
-				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.insertTo( this );
 
 			this.name( "Immortality" ).comment( "Cheats death on a fatal hit at the cost of this enchantment." );

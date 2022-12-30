@@ -95,7 +95,6 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 				.addConfig( this.extraLootChance.name( "extra_loot_chance" ).comment( "Independent chance for extra loot per enchantment level." ) )
 				.insertTo( this );
 
-
 			new OnItemFished.Context( this::tryToLevelUp )
 				.priority( Priority.LOWEST )
 				.name( "LevelUp" )

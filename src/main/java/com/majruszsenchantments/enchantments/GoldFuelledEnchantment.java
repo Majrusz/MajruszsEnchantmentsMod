@@ -27,14 +27,14 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< GoldFuelledEnchantment > {
-		public Modifier( GoldFuelledEnchantment enchantment ) {
+		public Modifier() {
 			super( Registries.GOLD_FUELLED, Registries.Modifiers.ENCHANTMENT );
 
 			new OnItemHurt.Context( this::restoreItem )
 				.priority( Priority.LOWEST )
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->data.player != null )
-				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
+				.addCondition( data->this.enchantment.get().hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event.isAboutToBroke() )
 				.insertTo( this );
 

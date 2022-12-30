@@ -41,12 +41,12 @@ public class LeechEnchantment extends CustomEnchantment {
 		final VampirismDoubleConfig hungerChance = new VampirismDoubleConfig( 0.1, 0.1 );
 		final VampirismDoubleConfig effectChance = new VampirismDoubleConfig( 0.1, 0.1 );
 
-		public Modifier( LeechEnchantment enchantment ) {
+		public Modifier() {
 			super( Registries.LEECH, Registries.Modifiers.ENCHANTMENT );
 
 			new OnDamaged.Context( this::tryToLeechAnything )
 				.addCondition( new Condition.IsServer<>() )
-				.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.attacker ) )
 				.addCondition( OnDamaged.DEALT_ANY_DAMAGE )
 				.addConfig( this.healthChance.name( "HealthChance" ).comment( "Chance to steal 1 health point from the target." ) )
 				.addConfig( this.hungerChance.name( "HungerChance" ).comment( "Chance to steal 1 hunger point from the target." ) )

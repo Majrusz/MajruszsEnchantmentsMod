@@ -47,12 +47,12 @@ public class HarvesterEnchantment extends CustomEnchantment {
 		final DoubleConfig durabilityPenalty = new DoubleConfig( 1.0, new Range<>( 0.0, 10.0 ) );
 		final DoubleConfig growChance = new DoubleConfig( 0.04, Range.CHANCE );
 
-		public Modifier( HarvesterEnchantment enchantment ) {
+		public Modifier() {
 			super( Registries.HARVESTER, Registries.Modifiers.ENCHANTMENT );
 
 			new OnPlayerInteract.Context( this::increaseAgeOfNearbyCrops )
 				.addCondition( new Condition.IsServer<>() )
-				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
+				.addCondition( data->this.enchantment.get().hasEnchantment( data.itemStack ) )
 				.addCondition( data->data.event instanceof PlayerInteractEvent.RightClickBlock )
 				.addCondition( data->BlockHelper.isCropAtMaxAge( data.level, new BlockPos( data.event.getPos() ) ) )
 				.addConfig( this.durabilityPenalty.name( "durability_penalty" ).comment( "Durability penalty per each successful increase of nearby crops." ) )
@@ -69,7 +69,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 				.insertTo( this );
 
 			new OnFarmlandTillCheck.Context( OnFarmlandTillCheck.INCREASE_AREA )
-				.addCondition( data->enchantment.hasEnchantment( data.itemStack ) )
+				.addCondition( data->this.enchantment.get().hasEnchantment( data.itemStack ) )
 				.insertTo( this );
 
 			this.name( "Harvester" ).comment( "Gives the option of right-click harvesting and the chance to grow nearby crops." );

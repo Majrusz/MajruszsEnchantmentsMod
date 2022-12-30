@@ -30,18 +30,18 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< HorseFrostWalkerEnchantment > {
-		public Modifier( HorseFrostWalkerEnchantment enchantment ) {
+		public Modifier() {
 			super( Registries.HORSE_FROST_WALKER, Registries.Modifiers.ENCHANTMENT );
 
 			new OnEntityTick.Context( this::freezeNearbyWater )
 				.addCondition( new Condition.IsServer<>() )
-				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( data->data.entity instanceof Animal )
 				.insertTo( this );
 
 			new OnPreDamaged.Context( OnPreDamaged.CANCEL )
 				.addCondition( new Condition.IsServer<>() )
-				.addCondition( new Condition.HasEnchantment<>( enchantment ) )
+				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( data->DamageSource.HOT_FLOOR.equals( data.source ) )
 				.addCondition( data->data.entity instanceof Animal )
 				.insertTo( this );
