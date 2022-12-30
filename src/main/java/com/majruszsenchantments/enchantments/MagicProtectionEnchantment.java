@@ -1,26 +1,24 @@
 package com.majruszsenchantments.enchantments;
 
-import com.mlib.EquipmentSlots;
-import com.mlib.enchantments.CustomEnchantment;
+import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
+import com.mlib.EquipmentSlots;
+import com.mlib.annotations.AutoInstance;
+import com.mlib.enchantments.CustomEnchantment;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
-import java.util.function.Supplier;
-
 public class MagicProtectionEnchantment extends CustomEnchantment {
-	public static Supplier< MagicProtectionEnchantment > create() {
-		Parameters params = new Parameters( Rarity.UNCOMMON, EnchantmentCategory.ARMOR, EquipmentSlots.ARMOR, false, 4, level->-10 + level * 11, level->1 + level * 11 );
-		MagicProtectionEnchantment enchantment = new MagicProtectionEnchantment( params );
-		Modifier modifier = new MagicProtectionEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
-	}
-
-	public MagicProtectionEnchantment( Parameters params ) {
-		super( params );
+	public MagicProtectionEnchantment() {
+		this.rarity( Rarity.UNCOMMON )
+			.category( EnchantmentCategory.ARMOR )
+			.slots( EquipmentSlots.ARMOR )
+			.maxLevel( 4 )
+			.minLevelCost( level->level * 11 - 10 )
+			.maxLevelCost( level->level * 11 + 1 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
 	@Override
@@ -33,9 +31,12 @@ public class MagicProtectionEnchantment extends CustomEnchantment {
 		return !( enchantment instanceof ProtectionEnchantment ) && super.checkCompatibility( enchantment );
 	}
 
-	private static class Modifier extends EnchantmentModifier< MagicProtectionEnchantment > {
-		public Modifier( MagicProtectionEnchantment enchantment ) {
-			super( enchantment, "MagicProtection", "Protects against magical damage like Evoker Fangs, Guardians and Instant Damage potions." );
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< MagicProtectionEnchantment > {
+		public Modifier() {
+			super( Registries.MAGIC_PROTECTION, Registries.Modifiers.ENCHANTMENT );
+
+			this.name( "MagicProtection" ).comment( "Protects against magical damage like Evoker Fangs, Guardians and Instant Damage potions." );
 		}
 	}
 }
