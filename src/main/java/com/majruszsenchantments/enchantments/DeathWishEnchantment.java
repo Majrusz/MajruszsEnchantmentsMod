@@ -48,6 +48,9 @@ public class DeathWishEnchantment extends CustomEnchantment {
 			float damageMultiplier = this.damageMultiplier.lerp( ( float )EntityHelper.getMissingHealthRatio( data.attacker ) ) - 1.0f;
 
 			data.extraDamage += data.damage * damageMultiplier;
+			if( damageMultiplier > 0.01f ) {
+				data.spawnMagicParticles = true;
+			}
 		}
 
 		private void increaseDamageReceived( OnPreDamaged.Data data ) {
