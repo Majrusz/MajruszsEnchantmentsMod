@@ -1,21 +1,22 @@
 package com.majruszsenchantments.configs;
 
-
+import com.majruszsenchantments.Registries;
 import com.mlib.EquipmentSlots;
 import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
-import com.majruszsenchantments.Registries;
+import com.mlib.math.Range;
 import net.minecraft.world.entity.LivingEntity;
 
 public class VampirismDoubleConfig extends ConfigGroup {
 	final DoubleConfig baseChance;
 	final DoubleConfig bonusChance;
 
-	public VampirismDoubleConfig( String name, String comment, double baseChance, double vampirismBonusChance ) {
-		super( name, comment );
-		this.baseChance = new DoubleConfig( "base_chance", "Base chance of this to happen.", false, baseChance, 0.0, 1.0 );
-		this.bonusChance = new DoubleConfig( "bonus_chance", "Bonus chance of this to happen per Curse of Vampirism level.", false, vampirismBonusChance, 0.0, 1.0 );
-		this.addConfigs( this.baseChance, this.bonusChance );
+	public VampirismDoubleConfig( double baseChance, double vampirismBonusChance ) {
+		this.baseChance = new DoubleConfig( baseChance, Range.CHANCE );
+		this.bonusChance = new DoubleConfig( vampirismBonusChance, Range.CHANCE );
+
+		this.addConfig( this.baseChance.name( "base_chance" ).comment( "Base chance of this to happen." ) );
+		this.addConfig( this.bonusChance.name( "bonus_chance" ).comment( "Bonus chance of this to happen per Curse of Vampirism level." ) );
 	}
 
 	public double getTotalChance( LivingEntity entity ) {

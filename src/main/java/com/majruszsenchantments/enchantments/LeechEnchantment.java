@@ -6,6 +6,7 @@ import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.Utility;
+import com.mlib.annotations.AutoInstance;
 import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
@@ -23,36 +24,36 @@ import net.minecraft.world.food.FoodData;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.BiFunction;
-import java.util.function.Supplier;
 
 public class LeechEnchantment extends CustomEnchantment {
-	public static Supplier< LeechEnchantment > create() {
-		Parameters params = new Parameters( Rarity.RARE, Registries.MELEE_MINECRAFT, EquipmentSlots.MAINHAND, false, 1, level->20, level->40 );
-		LeechEnchantment enchantment = new LeechEnchantment( params );
-		Modifier modifier = new LeechEnchantment.Modifier( enchantment );
-
-		return ()->enchantment;
+	public LeechEnchantment() {
+		this.rarity( Rarity.RARE )
+			.category( Registries.MELEE_MINECRAFT )
+			.slots( EquipmentSlots.MAINHAND )
+			.minLevelCost( level->20 )
+			.maxLevelCost( level->40 )
+			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
-	public LeechEnchantment( Parameters params ) {
-		super( params );
-	}
-
-	private static class Modifier extends EnchantmentModifier< LeechEnchantment > {
-		final VampirismDoubleConfig healthChance = new VampirismDoubleConfig( "HealthChance", "Chance to steal 1 health point from the target.", 0.1, 0.1 );
-		final VampirismDoubleConfig hungerChance = new VampirismDoubleConfig( "HungerChance", "Chance to steal 1 hunger point from the target.", 0.1, 0.1 );
-		final VampirismDoubleConfig effectChance = new VampirismDoubleConfig( "EffectChance", "Chance to steal 1 random positive effect from the target.", 0.1, 0.1 );
+	@AutoInstance
+	public static class Modifier extends EnchantmentModifier< LeechEnchantment > {
+		final VampirismDoubleConfig healthChance = new VampirismDoubleConfig( 0.1, 0.1 );
+		final VampirismDoubleConfig hungerChance = new VampirismDoubleConfig( 0.1, 0.1 );
+		final VampirismDoubleConfig effectChance = new VampirismDoubleConfig( 0.1, 0.1 );
 
 		public Modifier( LeechEnchantment enchantment ) {
-			super( enchantment, "Leech", "Gives a chance to steal positive effects, health and hunger points from enemies." );
+			super( Registries.LEECH, Registries.Modifiers.ENCHANTMENT );
 
-			OnDamaged.Context onDamaged = new OnDamaged.Context( this::tryToLeechAnything );
-			onDamaged.addCondition( new Condition.IsServer<>() )
+			new OnDamaged.Context( this::tryToLeechAnything )
+				.addCondition( new Condition.IsServer<>() )
 				.addCondition( data->data.attacker != null && enchantment.hasEnchantment( data.attacker ) )
-				.addCondition( OnDamaged.DEALT_ANY_DAMAGE );
+				.addCondition( OnDamaged.DEALT_ANY_DAMAGE )
+				.addConfig( this.healthChance.name( "HealthChance" ).comment( "Chance to steal 1 health point from the target." ) )
+				.addConfig( this.hungerChance.name( "HungerChance" ).comment( "Chance to steal 1 hunger point from the target." ) )
+				.addConfig( this.healthChance.name( "EffectChance" ).comment( "Chance to steal 1 random positive effect from the target." ) )
+				.insertTo( this );
 
-			this.addConfigs( this.healthChance, this.hungerChance, this.effectChance );
-			this.addContext( onDamaged );
+			this.name( "Leech" ).comment( "Gives a chance to steal positive effects, health and hunger points from enemies." );
 		}
 
 		private void tryToLeechAnything( OnDamaged.Data data ) {
