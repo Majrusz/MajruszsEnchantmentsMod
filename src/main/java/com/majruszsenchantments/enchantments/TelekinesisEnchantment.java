@@ -13,6 +13,7 @@ import com.mlib.gamemodifiers.parameters.Priority;
 import com.mlib.math.VectorHelper;
 import com.mlib.mixininterfaces.IMixinProjectile;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -29,7 +30,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< TelekinesisEnchantment > {
-		static final ParticleHandler PARTICLE = new ParticleHandler( Registries.TELEKINESIS_PARTICLE, ParticleHandler.offset( 0.25f ), ParticleHandler.speed( 0.015f ) );
+		static final ParticleHandler PARTICLE = new ParticleHandler( Registries.TELEKINESIS_PARTICLE, ParticleHandler.offset( 0.5f ), ParticleHandler.speed( 0.015f ) );
 
 		public Modifier() {
 			super( Registries.TELEKINESIS, Registries.Modifiers.ENCHANTMENT );
@@ -66,9 +67,9 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			assert player != null && data.level != null;
 			if( data.generatedLoot.removeIf( player::addItem ) ) {
 				SoundHandler.ITEM_PICKUP.play( data.level, player.position(), SoundHandler.randomized( 0.25f ) );
-				Vec3 from = VectorHelper.add( data.origin, new Vec3( 0.0, data.entity != null ? data.entity.getBbHeight() * 0.5 : 0.0, 0.0 ) );
+				Vec3 from = VectorHelper.add( data.origin, new Vec3( 0.0, data.killer != null && data.entity != null ? data.entity.getBbHeight() * 0.75 : 0.0, 0.0 ) );
 				Vec3 to = VectorHelper.add( player.position(), new Vec3( 0.0, player.getBbHeight() * 0.5, 0.0 ) );
-				PARTICLE.spawnLine( data.level, from, to, 1, ParticleHandler.offset( 0.05f ) );
+				PARTICLE.spawnLine( data.level, from, to, 2 );
 			}
 		}
 
