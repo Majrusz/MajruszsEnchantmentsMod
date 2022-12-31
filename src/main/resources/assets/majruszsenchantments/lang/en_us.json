@@ -1,4 +1,8 @@
 {
+	"enchantment.majruszsenchantments.absorber": "Absorber",
+	"enchantment.majruszsenchantments.absorber.desc": "Shields absorb all negative effects at the expense of durability.",
+	"enchantment.majruszsenchantments.absorber.description": "Shields absorb all negative effects at the expense of durability.",
+
 	"enchantment.majruszsenchantments.death_wish": "Death Wish",
 	"enchantment.majruszsenchantments.death_wish.desc": "Increases damage dealt equal to the percentage of health lost.",
 	"enchantment.majruszsenchantments.death_wish.description": "Increases damage dealt equal to the percentage of health lost.",
@@ -61,6 +65,10 @@
 	"enchantment.majruszsenchantments.misanthropy.desc": "Increases the damage against villagers, pillagers, witches and other players.",
 	"enchantment.majruszsenchantments.misanthropy.description": "Increases the damage against villagers, pillagers, witches and other players.",
 
+	"enchantment.majruszsenchantments.sixth_sense": "Sixth Sense",
+	"enchantment.majruszsenchantments.sixth_sense.desc": "Highlights nearby mobs that emit any sound if the player is sneaking nearby.",
+	"enchantment.majruszsenchantments.sixth_sense.description": "Highlights nearby mobs that emit any sound if the player is sneaking nearby.",
+
 	"enchantment.majruszsenchantments.smelter": "Smelter",
 	"enchantment.majruszsenchantments.smelter.desc": "Destroyed blocks are automatically smelted.",
 	"enchantment.majruszsenchantments.smelter.description": "Destroyed blocks are automatically smelted.",
@@ -68,22 +76,6 @@
 	"enchantment.majruszsenchantments.telekinesis": "Telekinesis",
 	"enchantment.majruszsenchantments.telekinesis.desc": "Adds acquired items directly to player's inventory.",
 	"enchantment.majruszsenchantments.telekinesis.description": "Adds acquired items directly to player's inventory.",
-
-	"enchantment.majruszsenchantments.absorber": "Absorber",
-	"enchantment.majruszsenchantments.absorber.desc": "Shields absorb all negative effects at the expense of durability.",
-	"enchantment.majruszsenchantments.absorber.description": "Shields absorb all negative effects at the expense of durability.",
-
-	"enchantment.majruszsenchantments.elder_guardian_favor": "Favor of Elder Guardian",
-	"enchantment.majruszsenchantments.elder_guardian_favor.desc": "After a successful hit, enemies are inflicted with a laser beam that can't be dodged or blocked.",
-	"enchantment.majruszsenchantments.elder_guardian_favor.description": "After a successful hit, enemies are inflicted with a laser beam that can't be dodged or blocked.",
-
-	"enchantment.majruszsenchantments.sixth_sense": "Sixth Sense",
-	"enchantment.majruszsenchantments.sixth_sense.desc": "Highlights nearby monsters after standing still for a while.",
-	"enchantment.majruszsenchantments.sixth_sense.description": "Highlights nearby monsters after standing still for a while.",
-
-	"enchantment.majruszsenchantments.guardian_angel": "Guardian Angel",
-	"enchantment.majruszsenchantments.guardian_angel.desc": "Redirects part of the damage from tamed animals and villagers to the player and applies damage reduction to them.",
-	"enchantment.majruszsenchantments.guardian_angel.description": "Redirects part of the damage from tamed animals and villagers to the player and applies damage reduction to them.",
 
 	"enchantment.majruszsenchantments.breaking_curse": "Curse of Breaking",
 	"enchantment.majruszsenchantments.breaking_curse.desc": "Makes the item break down faster.",

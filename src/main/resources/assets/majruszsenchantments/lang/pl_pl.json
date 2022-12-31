@@ -1,4 +1,8 @@
 {
+	"enchantment.majruszsenchantments.absorber": "Absorber",
+	"enchantment.majruszsenchantments.absorber.desc": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
+	"enchantment.majruszsenchantments.absorber.description": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
+
 	"enchantment.majruszsenchantments.death_wish": "Życzenie śmierci",
 	"enchantment.majruszsenchantments.death_wish.desc": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
 	"enchantment.majruszsenchantments.death_wish.description": "Zwiększa zadawane obrażenia proporcjonalnie do utraconego zdrowia w procentach.",
@@ -61,6 +65,10 @@
 	"enchantment.majruszsenchantments.misanthropy.desc": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 	"enchantment.majruszsenchantments.misanthropy.description": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 
+	"enchantment.majruszsenchantments.sixth_sense": "Szósty zmysł",
+	"enchantment.majruszsenchantments.sixth_sense.desc": "Podświetla pobliskie moby, które wydają dźwięki, jeżeli gracz się skrada w pobliżu.",
+	"enchantment.majruszsenchantments.sixth_sense.description": "Podświetla pobliskie moby, które wydają dźwięki, jeżeli gracz się skrada w pobliżu.",
+
 	"enchantment.majruszsenchantments.smelter": "Hutnik",
 	"enchantment.majruszsenchantments.smelter.desc": "Automatycznie przetapia zniszczony blok.",
 	"enchantment.majruszsenchantments.smelter.description": "Automatycznie przetapia zniszczony blok.",
@@ -68,22 +76,6 @@
 	"enchantment.majruszsenchantments.telekinesis": "Telekineza",
 	"enchantment.majruszsenchantments.telekinesis.desc": "Automatycznie podnosi przedmioty bezpośrednio do ekwipunku.",
 	"enchantment.majruszsenchantments.telekinesis.description": "Automatycznie podnosi przedmioty bezpośrednio do ekwipunku.",
-
-	"enchantment.majruszsenchantments.absorber": "Absorber",
-	"enchantment.majruszsenchantments.absorber.desc": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
-	"enchantment.majruszsenchantments.absorber.description": "Tarcza absorbuje wszystkie negatywne efekty kosztem wytrzymałości.",
-
-	"enchantment.majruszsenchantments.elder_guardian_favor": "Przychylność prastrażnika",
-	"enchantment.majruszsenchantments.elder_guardian_favor.desc": "Po zaatakowaniu przeciwnika atakuje go dodatkowe wiązką laserową, której nie można uniknąć.",
-	"enchantment.majruszsenchantments.elder_guardian_favor.description": "Po zaatakowaniu przeciwnika atakuje go dodatkowe wiązką laserową, której nie można uniknąć.",
-
-	"enchantment.majruszsenchantments.sixth_sense": "Szósty zmysł",
-	"enchantment.majruszsenchantments.sixth_sense.desc": "Podświetla pobliskie potwory po pewnym czasie stania w miejscu.",
-	"enchantment.majruszsenchantments.sixth_sense.description": "Podświetla pobliskie potwory po pewnym czasie stania w miejscu.",
-
-	"enchantment.majruszsenchantments.guardian_angel": "Anioł stróż",
-	"enchantment.majruszsenchantments.guardian_angel.desc": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
-	"enchantment.majruszsenchantments.guardian_angel.description": "Przekierowuje część obrażeń z oswojonych zwierząt i osadników na gracza oraz nakłada na nich redukcję obrażeń.",
 
 	"enchantment.majruszsenchantments.breaking_curse": "Klątwa kruchości",
 	"enchantment.majruszsenchantments.breaking_curse.desc": "Sprawia, że przedmiot niszczy się szybciej.",
