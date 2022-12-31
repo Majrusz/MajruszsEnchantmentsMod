@@ -57,7 +57,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 				.addCondition( new Condition.IsServer<>() )
 				.addCondition( OnLoot.HAS_ORIGIN )
 				.addCondition( data->data.killer instanceof Player )
-				.addCondition( this.doesProjectileHasEnchantmentPredicate() )
+				.addCondition( this::doesProjectileHasEnchantment )
 				.insertTo( this );
 
 			this.name( "Telekinesis" ).comment( "Adds acquired items directly to player's inventory." );
@@ -74,15 +74,13 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			}
 		}
 
-		private Predicate< OnLoot.Data > doesProjectileHasEnchantmentPredicate() {
-			return data->{
-				if( data.damageSource != null ) {
-					ItemStack weapon = IMixinProjectile.getWeaponFromDirectEntity( data.damageSource );
-					return weapon != null && this.enchantment.get().hasEnchantment( weapon );
-				}
+		private boolean doesProjectileHasEnchantment( OnLoot.Data data ) {
+			if( data.damageSource != null ) {
+				ItemStack weapon = IMixinProjectile.getWeaponFromDirectEntity( data.damageSource );
+				return weapon != null && this.enchantment.get().hasEnchantment( weapon );
+			}
 
-				return false;
-			};
+			return false;
 		}
 	}
 }
