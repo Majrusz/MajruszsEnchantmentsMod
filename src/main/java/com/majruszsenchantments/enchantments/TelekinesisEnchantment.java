@@ -17,8 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.function.Predicate;
-
 public class TelekinesisEnchantment extends CustomEnchantment {
 	public TelekinesisEnchantment() {
 		this.rarity( Rarity.UNCOMMON )
@@ -68,7 +66,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			assert player != null && data.level != null;
 			if( data.generatedLoot.removeIf( player::addItem ) ) {
 				SoundHandler.ITEM_PICKUP.play( data.level, player.position(), SoundHandler.randomized( 0.25f ) );
-				Vec3 from = data.origin;
+				Vec3 from = VectorHelper.add( data.origin, new Vec3( 0.0, data.entity != null ? data.entity.getBbHeight() * 0.5 : 0.0, 0.0 ) );
 				Vec3 to = VectorHelper.add( player.position(), new Vec3( 0.0, player.getBbHeight() * 0.5, 0.0 ) );
 				PARTICLE.spawnLine( data.level, from, to, 1, ParticleHandler.offset( 0.05f ) );
 			}
