@@ -87,7 +87,7 @@ public class Registries {
 	public static final BasicTrigger BASIC_TRIGGER = BasicTrigger.createRegisteredInstance( HELPER );
 
 	static {
-		// must stay below all instances because otherwise modifiers can access them too fast
+		// must stay below all instances because otherwise modifiers can access registry objects too fast
 		AnnotationHandler annotationHandler = new AnnotationHandler( MajruszsEnchantments.MOD_ID );
 		GAME_MODIFIERS = annotationHandler.getInstances( GameModifier.class );
 	}
