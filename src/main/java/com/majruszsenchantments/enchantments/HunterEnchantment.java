@@ -60,6 +60,9 @@ public class HunterEnchantment extends CustomEnchantment {
 			float damageMultiplier = level * ( this.penaltyMultiplier.asFloat() + distance * this.distanceMultiplier.asFloat() );
 
 			data.extraDamage += data.damage * damageMultiplier;
+			if( damageMultiplier > 0.0f ) {
+				data.spawnMagicParticles = true;
+			}
 		}
 
 		private int getEnchantmentLevel( DamageSource source ) {
