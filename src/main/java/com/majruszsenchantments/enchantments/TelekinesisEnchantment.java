@@ -4,6 +4,7 @@ import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.BooleanConfig;
 import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
@@ -13,7 +14,6 @@ import com.mlib.gamemodifiers.parameters.Priority;
 import com.mlib.math.VectorHelper;
 import com.mlib.mixininterfaces.IMixinProjectile;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -31,6 +31,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< TelekinesisEnchantment > {
 		static final ParticleHandler PARTICLE = new ParticleHandler( Registries.TELEKINESIS_PARTICLE, ParticleHandler.offset( 0.5f ), ParticleHandler.speed( 0.015f ) );
+		final BooleanConfig particlesVisibility = new BooleanConfig( true );
 
 		public Modifier() {
 			super( Registries.TELEKINESIS, Registries.Modifiers.ENCHANTMENT );
@@ -59,6 +60,7 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 				.addCondition( this::doesProjectileHasEnchantment )
 				.insertTo( this );
 
+			this.addConfig( this.particlesVisibility.name( "spawn_particles" ).comment( "Determines whether Telekinesis should spawn any particles." ) );
 			this.name( "Telekinesis" ).comment( "Adds acquired items directly to player's inventory." );
 		}
 
@@ -67,10 +69,16 @@ public class TelekinesisEnchantment extends CustomEnchantment {
 			assert player != null && data.level != null;
 			if( data.generatedLoot.removeIf( player::addItem ) ) {
 				SoundHandler.ITEM_PICKUP.play( data.level, player.position(), SoundHandler.randomized( 0.25f ) );
-				Vec3 from = VectorHelper.add( data.origin, new Vec3( 0.0, data.killer != null && data.entity != null ? data.entity.getBbHeight() * 0.75 : 0.0, 0.0 ) );
-				Vec3 to = VectorHelper.add( player.position(), new Vec3( 0.0, player.getBbHeight() * 0.5, 0.0 ) );
-				PARTICLE.spawnLine( data.level, from, to, 2 );
+				if( this.particlesVisibility.isEnabled() ) {
+					this.spawnParticles( data, player );
+				}
 			}
+		}
+
+		private void spawnParticles( OnLoot.Data data, Player player ) {
+			Vec3 from = VectorHelper.add( data.origin, new Vec3( 0.0, data.killer != null && data.entity != null ? data.entity.getBbHeight() * 0.75 : 0.0, 0.0 ) );
+			Vec3 to = VectorHelper.add( player.position(), new Vec3( 0.0, player.getBbHeight() * 0.5, 0.0 ) );
+			PARTICLE.spawnLine( data.level, from, to, 3 );
 		}
 
 		private boolean doesProjectileHasEnchantment( OnLoot.Data data ) {
