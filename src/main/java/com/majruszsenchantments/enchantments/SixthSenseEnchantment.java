@@ -43,7 +43,7 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 
 			new OnEntitySignalReceived.Context( this::highlightEntity )
 				.addCondition( data->data.player instanceof ServerPlayer )
-				.addCondition( data->data.owner != null )
+				.addCondition( data->data.owner != null && data.owner != data.player )
 				.addConfig( this.glowDuration.name( "glow_duration" )
 					.comment( "Determines how long the mob should be highlighted (this value stacks up with every sound emitted)." ) )
 				.insertTo( this );
