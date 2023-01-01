@@ -12,11 +12,21 @@ import com.mlib.entities.EntityHelper;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.contexts.OnEntitySignalCheck;
 import com.mlib.gamemodifiers.contexts.OnEntitySignalReceived;
+import com.mlib.gamemodifiers.contexts.OnLoot;
 import com.mlib.gamemodifiers.contexts.OnPlayerTick;
 import com.mlib.math.Range;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.server.ServerLifecycleHooks;
+
+import java.util.List;
 
 public class SixthSenseEnchantment extends CustomEnchantment {
 	public SixthSenseEnchantment() {
@@ -28,8 +38,24 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
 	}
 
+	@Override
+	public boolean isTradeable() {
+		return false;
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable( ItemStack itemStack ) {
+		return false;
+	}
+
+	@Override
+	public boolean isTreasureOnly() {
+		return true;
+	}
+
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< SixthSenseEnchantment > {
+		static final ResourceLocation LOOT_ID = Registries.getLocation( "chests/ancient_city_sixth_sense" );
 		final DoubleConfig glowDuration = new DoubleConfig( 2.0, new Range<>( 0.5, 15.0 ) );
 
 		public Modifier() {
@@ -56,6 +82,12 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 				.addCondition( new Condition.IsOnGround<>() )
 				.insertTo( this );
 
+			new OnLoot.Context( this::addToChest )
+				.addCondition( new Condition.IsServer<>() )
+				.addCondition( OnLoot.HAS_ORIGIN )
+				.addCondition( data->data.context.getQueriedLootTableId().equals( BuiltInLootTables.ANCIENT_CITY ) )
+				.insertTo( this );
+
 			this.name( "SixthSense" ).comment( "Adds acquired items directly to player's inventory." );
 		}
 
@@ -65,6 +97,18 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 
 		private void playSound( OnPlayerTick.Data data ) {
 			SoundHandler.HEARTBEAT.play( data.level, data.player.position(), SoundHandler.randomized( 0.25f ) );
+		}
+
+		private void addToChest( OnLoot.Data data ) {
+			List< ItemStack > itemStacks = ServerLifecycleHooks.getCurrentServer()
+				.getLootTables()
+				.get( LOOT_ID )
+				.getRandomItems( new LootContext.Builder( data.level )
+					.withParameter( LootContextParams.ORIGIN, data.origin )
+					.create( LootContextParamSets.CHEST )
+				);
+
+			data.generatedLoot.addAll( itemStacks );
 		}
 	}
 }
