@@ -20,13 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.server.ServerLifecycleHooks;
-
-import java.util.List;
 
 public class SixthSenseEnchantment extends CustomEnchantment {
 	public SixthSenseEnchantment() {
@@ -84,11 +78,11 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 
 			new OnLoot.Context( this::addToChest )
 				.addCondition( new Condition.IsServer<>() )
+				.addCondition( new IsAncientCityChest() )
 				.addCondition( OnLoot.HAS_ORIGIN )
-				.addCondition( data->data.context.getQueriedLootTableId().equals( BuiltInLootTables.ANCIENT_CITY ) )
 				.insertTo( this );
 
-			this.name( "SixthSense" ).comment( "Adds acquired items directly to player's inventory." );
+			this.name( "SixthSense" ).comment( "Highlights nearby mobs that emit any sound if the player is sneaking nearby." );
 		}
 
 		private void highlightEntity( OnEntitySignalReceived.Data data ) {
@@ -100,15 +94,15 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 		}
 
 		private void addToChest( OnLoot.Data data ) {
-			List< ItemStack > itemStacks = ServerLifecycleHooks.getCurrentServer()
-				.getLootTables()
-				.get( LOOT_ID )
-				.getRandomItems( new LootContext.Builder( data.level )
-					.withParameter( LootContextParams.ORIGIN, data.origin )
-					.create( LootContextParamSets.CHEST )
-				);
+			data.addAsChestLoot( LOOT_ID );
+		}
+	}
 
-			data.generatedLoot.addAll( itemStacks );
+	private static class IsAncientCityChest extends OnLoot.Is {
+		public IsAncientCityChest() {
+			super( BuiltInLootTables.ANCIENT_CITY, BuiltInLootTables.ANCIENT_CITY_ICE_BOX );
+
+			this.ids.comment( "Determines which chests should contain this enchantment." );
 		}
 	}
 }
