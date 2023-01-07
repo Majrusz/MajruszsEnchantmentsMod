@@ -10,7 +10,6 @@ import com.mlib.effects.ParticleHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
 import com.mlib.gamemodifiers.configs.EffectConfig;
-import com.mlib.gamemodifiers.configs.StackableEffectConfig;
 import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.gamemodifiers.contexts.OnPlayerInteract;
 import com.mlib.levels.LevelHelper;
@@ -39,8 +38,8 @@ public class VampirismCurse extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Modifier extends EnchantmentModifier< VampirismCurse > {
-		final EffectConfig weakness = new StackableEffectConfig( MobEffects.WEAKNESS, 0, 20.0, 120.0 );
-		final EffectConfig hunger = new StackableEffectConfig( MobEffects.HUNGER, 0, 20.0, 120.0 );
+		final EffectConfig weakness = new EffectConfig( MobEffects.WEAKNESS, 0, 20.0 ).stackable( 120.0 );
+		final EffectConfig hunger = new EffectConfig( MobEffects.HUNGER, 0, 20.0 ).stackable( 120.0 );
 		final DoubleConfig fireDuration = new DoubleConfig( 5.0, new Range<>( 1.0, 60.0 ) );
 		final BooleanConfig scalesWithLevel = new BooleanConfig( true );
 
