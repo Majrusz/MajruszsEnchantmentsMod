@@ -40,7 +40,8 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 
 			new OnEquipmentChanged.Context( this::giveAdvancement )
 				.addCondition( data->data.entity instanceof ServerPlayer )
-				.addCondition( data->this.enchantment.get().getEnchantmentSum( data.entity, EquipmentSlots.ARMOR ) == 8 );
+				.addCondition( data->this.enchantment.get().getEnchantmentSum( data.entity, EquipmentSlots.ARMOR ) == 8 )
+				.insertTo( this );
 
 			this.name( "Enlightenment" ).comment( "Increases the experience gained from any source." );
 		}
