@@ -75,7 +75,7 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 
 			new OnPlayerTick.Context( this::playSound )
 				.addCondition( new Condition.IsServer<>() )
-				.addCondition( new Condition.Cooldown< OnPlayerTick.Data >( Utility.secondsToTicks( 1.25 ), Dist.DEDICATED_SERVER ).setConfigurable( false ) )
+				.addCondition( new Condition.Cooldown< OnPlayerTick.Data >( Utility.secondsToTicks( 1.25 ), Dist.DEDICATED_SERVER ).configurable( false ) )
 				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
 				.addCondition( new Condition.IsShiftKeyDown<>() )
 				.addCondition( new Condition.IsOnGround<>() )
