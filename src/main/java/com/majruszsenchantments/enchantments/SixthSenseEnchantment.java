@@ -95,7 +95,7 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 		}
 
 		private void playSound( OnPlayerTick.Data data ) {
-			SoundHandler.HEARTBEAT.play( data.level, data.player.position(), SoundHandler.randomized( 0.25f ) );
+			SoundHandler.HEARTBEAT.play( data.level, data.player.position(), SoundHandler.randomized( 0.3f ) );
 		}
 
 		private void addToChest( OnLoot.Data data ) {
