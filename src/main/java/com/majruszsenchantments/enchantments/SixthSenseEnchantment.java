@@ -38,6 +38,11 @@ public class SixthSenseEnchantment extends CustomEnchantment {
 	}
 
 	@Override
+	public boolean canEnchant( ItemStack itemStack ) {
+		return this.category.canEnchant( itemStack.getItem() );
+	}
+
+	@Override
 	public boolean canApplyAtEnchantingTable( ItemStack itemStack ) {
 		return false;
 	}
