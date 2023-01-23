@@ -107,6 +107,9 @@ public class Registries {
 		HELPER.registerAll();
 		modEventBus.addListener( PacketHandler::registerPacket );
 		DistExecutor.unsafeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::initialize );
+		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_MINECRAFT, MELEE );
+		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN, TOOLS );
+		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
 
 		SERVER_CONFIG.register( ModLoadingContext.get() );
 		CLIENT_CONFIG.register( ModLoadingContext.get() );
