@@ -16,7 +16,7 @@ import com.mlib.levels.LevelHelper;
 import com.mlib.math.Range;
 import com.mlib.math.VectorHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.*;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -101,7 +101,7 @@ public class VampirismCurse extends CustomEnchantment {
 		private void blockSleep( OnPlayerInteract.Data data ) {
 			data.event.setCancellationResult( InteractionResult.FAIL );
 			data.event.setCanceled( true );
-			data.player.displayClientMessage( Component.translatable( "enchantment.majruszsenchantments.vampirism_curse.block_sleep" ), true );
+			data.player.displayClientMessage( new TranslatableComponent( "enchantment.majruszsenchantments.vampirism_curse.block_sleep" ), true );
 		}
 
 		private static boolean isBedCondition( OnPlayerInteract.Data data ) {

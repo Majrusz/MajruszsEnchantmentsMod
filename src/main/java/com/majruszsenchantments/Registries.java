@@ -68,7 +68,6 @@ public class Registries {
 	public static final RegistryObject< LeechEnchantment > LEECH = ENCHANTMENTS.register( "leech", LeechEnchantment::new );
 	public static final RegistryObject< MagicProtectionEnchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", MagicProtectionEnchantment::new );
 	public static final RegistryObject< MisanthropyEnchantment > MISANTHROPY = ENCHANTMENTS.register( "misanthropy", MisanthropyEnchantment::new );
-	public static final RegistryObject< SixthSenseEnchantment > SIXTH_SENSE = ENCHANTMENTS.register( "sixth_sense", SixthSenseEnchantment::new );
 	public static final RegistryObject< SmelterEnchantment > SMELTER = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new );
 	public static final RegistryObject< TelekinesisEnchantment > TELEKINESIS = ENCHANTMENTS.register( "telekinesis", TelekinesisEnchantment::new );
 

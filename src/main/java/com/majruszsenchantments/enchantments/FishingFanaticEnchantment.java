@@ -18,7 +18,7 @@ import com.mlib.gamemodifiers.parameters.Priority;
 import com.mlib.items.ItemHelper;
 import com.mlib.math.Range;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -52,7 +52,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 	@Override
 	public Component getFullname( int level ) {
 		if( level == this.getMaxLevel() ) {
-			return Component.translatable( "enchantment.majruszsenchantments.fishing_fanatic.true" )
+			return new TranslatableComponent( "enchantment.majruszsenchantments.fishing_fanatic.true" )
 				.withStyle( ChatFormatting.GRAY, ChatFormatting.BOLD );
 		}
 
@@ -187,7 +187,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 		private static void sendLevelUpMessage( Player player ) {
 			String keyId = "enchantment.majruszsenchantments.fishing_fanatic.level_up";
 
-			player.displayClientMessage( Component.translatable( keyId ).withStyle( ChatFormatting.BOLD ), true );
+			player.displayClientMessage( new TranslatableComponent( keyId ).withStyle( ChatFormatting.BOLD ), true );
 		}
 
 		public static class HasBestFishingEnchantments extends Condition< OnEquipmentChanged.Data > {
@@ -198,7 +198,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 					.allMatch( enchantment->{
 						return enchantment.isCurse()
 							|| !enchantment.canApplyAtEnchantingTable( new ItemStack( Items.FISHING_ROD ) )
-							|| EnchantmentHelper.getTagEnchantmentLevel( enchantment, data.event.getTo() ) == enchantment.getMaxLevel();
+							|| EnchantmentHelper.getItemEnchantmentLevel( enchantment, data.event.getTo() ) == enchantment.getMaxLevel();
 					} );
 			}
 		}

@@ -2,9 +2,10 @@ package com.majruszsenchantments.particles;
 
 import com.majruszsenchantments.Registries;
 import com.majruszsenchantments.MajruszsEnchantments;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -12,8 +13,8 @@ import net.minecraftforge.fml.common.Mod;
 public class ParticleUtil {
 	@OnlyIn( Dist.CLIENT )
 	@SubscribeEvent
-	public static void registerParticles( RegisterParticleProvidersEvent event ) {
-		event.register( Registries.DODGE_PARTICLE.get(), DodgeParticle.Factory::new );
-		event.register( Registries.TELEKINESIS_PARTICLE.get(), TelekinesisParticle.Factory::new );
+	public static void registerParticles( ParticleFactoryRegisterEvent event ) {
+		Minecraft.getInstance().particleEngine.register( Registries.DODGE_PARTICLE.get(), DodgeParticle.Factory::new );
+		Minecraft.getInstance().particleEngine.register( Registries.TELEKINESIS_PARTICLE.get(), TelekinesisParticle.Factory::new );
 	}
 }
