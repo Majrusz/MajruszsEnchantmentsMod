@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.8.0'
+version = '1.8.1'
 group = 'com.majruszsenchantments'
 archivesBaseName = 'majruszs-enchantments-1.18.2'
 

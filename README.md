@@ -9,7 +9,7 @@
 - [Modrinth](https://modrinth.com/mod/majruszs-enchantments)
 
 ## Current Mod Releases (Source Code)
-- [v1.8.0 for Minecraft 1.19.3](https://github.com/Majrusz/MajruszsEnchantmentsMod/tree/1.19.X)
+- [v1.8.1 for Minecraft 1.19.3](https://github.com/Majrusz/MajruszsEnchantmentsMod/tree/1.19.X)
 - [v1.6.3 for Minecraft 1.18.2](https://github.com/Majrusz/MajruszsEnchantmentsMod/tree/1.18.X) *(not supported anymore)*
 - [v1.5.2 for Minecraft 1.17.1](https://github.com/Majrusz/MajruszsEnchantmentsMod/tree/1.17.1) *(not supported anymore)*
 - [v1.3.5 for Minecraft 1.16.5](https://github.com/Majrusz/MajruszsEnchantmentsMod/tree/1.16.4) *(not supported anymore)*
