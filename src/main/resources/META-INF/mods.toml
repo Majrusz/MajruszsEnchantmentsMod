@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/Majrusz/MajruszsEnchantmentsMod/issues"
 
 [[mods]]
     modId="majruszsenchantments"
-    version="1.8.1"
+    version="1.8.2-unfinished"
     displayName="Majrusz's Enchantments"
     updateJSONURL="https://raw.githubusercontent.com/Majrusz/MinecraftCommon/main/Enchantments/update.json"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/wonderful-enchantments"
