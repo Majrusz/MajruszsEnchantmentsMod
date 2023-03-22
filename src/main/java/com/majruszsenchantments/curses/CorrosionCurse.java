@@ -1,12 +1,14 @@
 package com.majruszsenchantments.curses;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.levels.LevelHelper;
 import com.mlib.math.Range;
@@ -17,6 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.api.distmarker.Dist;
 
+import java.util.function.Supplier;
+
 public class CorrosionCurse extends CustomEnchantment {
 	public CorrosionCurse() {
 		this.rarity( Rarity.RARE )
@@ -24,26 +28,31 @@ public class CorrosionCurse extends CustomEnchantment {
 			.slots( EquipmentSlots.ARMOR )
 			.curse()
 			.minLevelCost( level->10 )
-			.maxLevelCost( level->50 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->50 );
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< CorrosionCurse > {
+	public static class Handler {
 		final DoubleConfig damageAmount = new DoubleConfig( 0.25, new Range<>( 0.0, 10.0 ) );
+		final Supplier< CorrosionCurse > enchantment = Registries.CORROSION;
 
-		public Modifier() {
-			super( Registries.CORROSION, Registries.Modifiers.CURSE );
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.CURSE )
+				.name( "Corrosion" )
+				.comment( "Gradually destroys the item and inflicts damage to the owner when in water." );
 
-			new OnEntityTick.Context( this::damageOnContactWithWater )
-				.addCondition( new Condition.IsServer<>() )
-				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
-				.addCondition( new Condition.Cooldown<>( 3.0, Dist.DEDICATED_SERVER ) )
-				.addCondition( data->LevelHelper.isEntityOutsideWhenItIsRaining( data.entity ) || data.entity.isInWater() )
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
+
+			OnEntityTick.listen( this::damageOnContactWithWater )
+				.addCondition( Condition.isServer() )
+				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.entity ) )
+				.addCondition( Condition.cooldown( 3.0, Dist.DEDICATED_SERVER ) )
+				.addCondition( Condition.predicate( data->LevelHelper.isRainingAt( data.entity ) || data.entity.isInWater() ) )
 				.addConfig( this.damageAmount.name( "damage_amount" ).comment( "Damage dealt to the player every tick per each enchantment level." ) )
-				.insertTo( this );
-
-			this.name( "Corrosion" ).comment( "Gradually destroys the item and inflicts damage to the owner when in water." );
+				.insertTo( group );
 		}
 
 		private void damageOnContactWithWater( OnEntityTick.Data data ) {

@@ -1,12 +1,16 @@
 package com.majruszsenchantments.curses;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+
+import java.util.function.Supplier;
 
 public class IncompatibilityCurse extends CustomEnchantment {
 	public IncompatibilityCurse() {
@@ -15,8 +19,7 @@ public class IncompatibilityCurse extends CustomEnchantment {
 			.slots( EquipmentSlots.ALL )
 			.curse()
 			.minLevelCost( level->10 )
-			.maxLevelCost( level->50 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->50 );
 	}
 
 	@Override
@@ -25,11 +28,18 @@ public class IncompatibilityCurse extends CustomEnchantment {
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< IncompatibilityCurse > {
-		public Modifier() {
-			super( Registries.INCOMPATIBILITY, Registries.Modifiers.CURSE );
+	public static class Handler {
+		final Supplier< IncompatibilityCurse > enchantment = Registries.INCOMPATIBILITY;
 
-			this.name( "Incompatibility" ).comment( "Makes all other enchantments incompatible with this one." );
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.CURSE )
+				.name( "Incompatibility" )
+				.comment( "Makes all other enchantments incompatible with this one." );
+
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
 		}
 	}
 }
