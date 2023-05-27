@@ -1,16 +1,20 @@
 package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import com.mlib.levels.LevelHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.animal.Animal;
+
+import java.util.function.Supplier;
 
 public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 	public HorseFrostWalkerEnchantment() {
@@ -19,8 +23,7 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 			.slots( EquipmentSlots.ARMOR )
 			.maxLevel( 2 )
 			.minLevelCost( level->level * 10 )
-			.maxLevelCost( level->level * 10 + 15 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->level * 10 + 15 );
 	}
 
 	@Override
@@ -29,24 +32,31 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< HorseFrostWalkerEnchantment > {
-		public Modifier() {
-			super( Registries.HORSE_FROST_WALKER, Registries.Modifiers.ENCHANTMENT );
+	public static class Handler {
+		final Supplier< HorseFrostWalkerEnchantment > enchantment = Registries.HORSE_FROST_WALKER;
 
-			new OnEntityTick.Context( this::freezeNearbyWater )
-				.addCondition( new Condition.IsServer<>() )
-				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
-				.addCondition( data->data.entity instanceof Animal )
-				.insertTo( this );
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.ENCHANTMENT )
+				.name( "HorseFrostWalker" )
+				.comment( "Creates a path of ice when walking over water on a horse." );
 
-			new OnPreDamaged.Context( OnPreDamaged.CANCEL )
-				.addCondition( new Condition.IsServer<>() )
-				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
-				.addCondition( data->DamageSource.HOT_FLOOR.equals( data.source ) )
-				.addCondition( data->data.entity instanceof Animal )
-				.insertTo( this );
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
 
-			this.name( "HorseFrostWalker" ).comment( "Creates a path of ice when walking over water on a horse." );
+			OnEntityTick.listen( this::freezeNearbyWater )
+				.addCondition( Condition.isServer() )
+				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.entity ) )
+				.addCondition( Condition.predicate( data->data.entity instanceof Animal ) )
+				.insertTo( group );
+
+			OnPreDamaged.listen( OnPreDamaged.CANCEL )
+				.addCondition( Condition.isServer() )
+				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.target ) )
+				.addCondition( Condition.predicate( data->DamageSource.HOT_FLOOR.equals( data.source ) ) )
+				.addCondition( Condition.predicate( data->data.target instanceof Animal ) )
+				.insertTo( group );
 		}
 
 		private void freezeNearbyWater( OnEntityTick.Data data ) {

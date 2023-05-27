@@ -2,40 +2,36 @@ package com.majruszsenchantments;
 
 import com.majruszsenchantments.curses.*;
 import com.majruszsenchantments.enchantments.*;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.annotations.AnnotationHandler;
-import com.mlib.gamemodifiers.GameModifier;
+import com.mlib.gamemodifiers.ModConfigs;
 import com.mlib.items.ItemHelper;
 import com.mlib.registries.RegistryHelper;
 import com.mlib.triggers.BasicTrigger;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.HorseArmorItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.List;
-import java.util.function.Supplier;
 
 import static com.majruszsenchantments.MajruszsEnchantments.CLIENT_CONFIG;
 import static com.majruszsenchantments.MajruszsEnchantments.SERVER_CONFIG;
 
 public class Registries {
 	private static final RegistryHelper HELPER = new RegistryHelper( MajruszsEnchantments.MOD_ID );
-	public static final List< GameModifier > GAME_MODIFIERS;
 
 	static {
-		GameModifier.addNewGroup( SERVER_CONFIG, Modifiers.ENCHANTMENT ).name( "Enchantments" );
-		GameModifier.addNewGroup( SERVER_CONFIG, Modifiers.CURSE ).name( "Curses" );
+		ModConfigs.init( SERVER_CONFIG, Groups.ENCHANTMENT ).name( "Enchantments" );
+		ModConfigs.init( SERVER_CONFIG, Groups.CURSE ).name( "Curses" );
 	}
 
 	// Groups
@@ -83,12 +79,11 @@ public class Registries {
 	public static final RegistryObject< SimpleParticleType > TELEKINESIS_PARTICLE = PARTICLE_TYPES.register( "telekinesis_particle", ()->new SimpleParticleType( true ) );
 
 	// Triggers
-	public static final BasicTrigger BASIC_TRIGGER = BasicTrigger.createRegisteredInstance( HELPER );
+	public static final BasicTrigger BASIC_TRIGGER = HELPER.registerBasicTrigger();
 
 	static {
 		// must stay below all instances because otherwise modifiers can access registry objects too fast
-		AnnotationHandler annotationHandler = new AnnotationHandler( MajruszsEnchantments.MOD_ID );
-		GAME_MODIFIERS = annotationHandler.getInstances( GameModifier.class );
+		new AnnotationHandler( MajruszsEnchantments.MOD_ID );
 	}
 
 	public static ResourceLocation getLocation( String register ) {
@@ -100,11 +95,7 @@ public class Registries {
 	}
 
 	public static void initialize() {
-		FMLJavaModLoadingContext modLoadingContext = FMLJavaModLoadingContext.get();
-		final IEventBus modEventBus = modLoadingContext.getModEventBus();
-
 		HELPER.registerAll();
-		modEventBus.addListener( PacketHandler::registerPacket );
 		DistExecutor.unsafeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::initialize );
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_MINECRAFT, MELEE );
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN, TOOLS );
@@ -114,16 +105,7 @@ public class Registries {
 		CLIENT_CONFIG.register( ModLoadingContext.get() );
 	}
 
-	public static < Type extends EnchantmentModifier< ? > > Supplier< Boolean > getEnabledSupplier( Class< Type > clazz ) {
-		var enchantmentModifier = GAME_MODIFIERS.stream()
-			.filter( modifier->clazz.equals( modifier.getClass() ) )
-			.findFirst()
-			.orElseThrow();
-
-		return clazz.cast( enchantmentModifier ).getEnabledSupplier();
-	}
-
-	public static class Modifiers {
+	public static class Groups {
 		public static final String ENCHANTMENT = Registries.getLocationString( "enchantment" );
 		public static final String CURSE = Registries.getLocationString( "curse" );
 	}
