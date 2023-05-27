@@ -1,17 +1,22 @@
 package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import com.mlib.gamemodifiers.contexts.OnLootLevel;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import com.mlib.math.Range;
 import com.mlib.mixininterfaces.IMixinProjectile;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.function.Supplier;
 
 public class HunterEnchantment extends CustomEnchantment {
 	public HunterEnchantment() {
@@ -20,33 +25,38 @@ public class HunterEnchantment extends CustomEnchantment {
 			.slots( EquipmentSlots.BOTH_HANDS )
 			.maxLevel( 3 )
 			.minLevelCost( level->level * 9 + 6 )
-			.maxLevelCost( level->level * 9 + 26 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->level * 9 + 26 );
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< HunterEnchantment > {
+	public static class Handler {
 		final DoubleConfig penaltyMultiplier = new DoubleConfig( -0.10, new Range<>( -0.33, 0.0 ) );
 		final DoubleConfig distanceMultiplier = new DoubleConfig( 0.01, new Range<>( 0.0, 1.0 ) );
+		final Supplier< HunterEnchantment > enchantment = Registries.HUNTER;
 
-		public Modifier() {
-			super( Registries.HUNTER, Registries.Modifiers.ENCHANTMENT );
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.ENCHANTMENT )
+				.name( "Hunter" )
+				.comment( "Increases mob drops and makes the damage to scale with a distance." );
 
-			new OnLootLevel.Context( this::increaseLootingLevel )
-				.addCondition( data->data.source != null && data.source.isProjectile() )
-				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 )
-				.insertTo( this );
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
 
-			new OnPreDamaged.Context( this::modifyDamage )
-				.addCondition( data->data.attacker != null )
-				.addCondition( data->data.source.isProjectile() )
-				.addCondition( data->this.getEnchantmentLevel( data.source ) > 0 )
+			OnLootLevel.listen( this::increaseLootingLevel )
+				.addCondition( Condition.predicate( data->data.source != null && data.source.isProjectile() ) )
+				.addCondition( Condition.predicate( data->this.getEnchantmentLevel( data.source ) > 0 ) )
+				.insertTo( group );
+
+			OnPreDamaged.listen( this::modifyDamage )
+				.addCondition( Condition.predicate( data->data.attacker != null ) )
+				.addCondition( Condition.predicate( data->data.source.isProjectile() ) )
+				.addCondition( Condition.predicate( data->this.getEnchantmentLevel( data.source ) > 0 ) )
 				.addConfig( this.penaltyMultiplier.name( "penalty_multiplier" ).comment( "Damage multiplier penalty per enchantment level." ) )
 				.addConfig( this.distanceMultiplier.name( "extra_multiplier" )
 					.comment( "Extra damage multiplier bonus per each block to a target and per enchantment level." )
-				).insertTo( this );
-
-			this.name( "Hunter" ).comment( "Increases mob drops and makes the damage to scale with a distance." );
+				).insertTo( group );
 		}
 
 		private void increaseLootingLevel( OnLootLevel.Data data ) {

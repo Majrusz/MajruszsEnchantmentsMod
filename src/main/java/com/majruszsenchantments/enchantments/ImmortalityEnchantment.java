@@ -1,15 +1,19 @@
 package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.entities.EntityHelper;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.ModConfigs;
 import com.mlib.gamemodifiers.contexts.OnDeath;
+import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+
+import java.util.function.Supplier;
 
 public class ImmortalityEnchantment extends CustomEnchantment {
 	public ImmortalityEnchantment() {
@@ -17,21 +21,27 @@ public class ImmortalityEnchantment extends CustomEnchantment {
 			.category( Registries.SHIELD )
 			.slots( EquipmentSlots.BOTH_HANDS )
 			.minLevelCost( level->20 )
-			.maxLevelCost( level->50 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->50 );
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< ImmortalityEnchantment > {
-		public Modifier() {
-			super( Registries.IMMORTALITY, Registries.Modifiers.ENCHANTMENT );
+	public static class Handler {
+		final Supplier< ImmortalityEnchantment > enchantment = Registries.IMMORTALITY;
 
-			new OnDeath.Context( this::cancelDeath )
-				.addCondition( new Condition.IsServer<>() )
-				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
-				.insertTo( this );
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.ENCHANTMENT )
+				.name( "Immortality" )
+				.comment( "Cheats death on a fatal hit at the cost of this enchantment." );
 
-			this.name( "Immortality" ).comment( "Cheats death on a fatal hit at the cost of this enchantment." );
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
+
+			OnDeath.listen( this::cancelDeath )
+				.addCondition( Condition.isServer() )
+				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.target ) )
+				.insertTo( group );
 		}
 
 		private void cancelDeath( OnDeath.Data data ) {

@@ -1,20 +1,17 @@
 package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleArrayConfig;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.GameModifier;
-import com.mlib.gamemodifiers.contexts.OnEquipmentChanged;
-import com.mlib.gamemodifiers.contexts.OnExtraFishingLootCheck;
-import com.mlib.gamemodifiers.contexts.OnItemFished;
-import com.mlib.gamemodifiers.contexts.OnPreDamaged;
-import com.mlib.gamemodifiers.parameters.Priority;
+import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.gamemodifiers.Priority;
+import com.mlib.gamemodifiers.contexts.*;
 import com.mlib.items.ItemHelper;
 import com.mlib.math.Range;
 import net.minecraft.ChatFormatting;
@@ -45,8 +42,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			.slots( EquipmentSlots.BOTH_HANDS )
 			.maxLevel( 8 )
 			.minLevelCost( level->level * 10 )
-			.maxLevelCost( level->level * 10 + 20 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->level * 10 + 20 );
 	}
 
 	@Override
@@ -80,7 +76,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< FishingFanaticEnchantment > {
+	public static class Handler {
 		static final ResourceLocation SPECIAL_LOOT_TABLE = Registries.getLocation( "gameplay/fishing/fishing_fanatic_extra" );
 		static final Function< Integer, String > LEVEL_FORMAT = idx->String.format( "level_%d", idx + 1 );
 		final DoubleArrayConfig levelUpChances = new DoubleArrayConfig( LEVEL_FORMAT, Range.CHANCE, 0.06, 0.05, 0.04, 0.03, 0.02, 0.01, 0.004, 0.002 );
@@ -88,37 +84,43 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 		final DoubleConfig extraLootChance = new DoubleConfig( 0.33333, Range.CHANCE );
 		final DoubleConfig rainMultiplier = new DoubleConfig( 2.0, new Range<>( 1.0, 10.0 ) );
 		final DoubleConfig damageBonus = new DoubleConfig( 1.0, new Range<>( 0.0, 5.0 ) );
+		final Supplier< FishingFanaticEnchantment > enchantment = Registries.FISHING_FANATIC;
 
-		public Modifier() {
-			super( Registries.FISHING_FANATIC, Registries.Modifiers.ENCHANTMENT );
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.ENCHANTMENT )
+				.name( "FishingFanatic" )
+				.comment( "Gives a chance to catch additional items from fishing." );
 
-			new OnExtraFishingLootCheck.Context( this::increaseLoot )
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
+
+			OnExtraFishingLootCheck.listen( this::increaseLoot )
 				.name( "Loot" )
-				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.player ) )
-				.addCondition( this::isEnchantmentEnabled )
+				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.player ) )
+				.addCondition( Condition.predicate( data->OnEnchantmentAvailabilityCheck.dispatch( this.enchantment.get() ).isEnabled() ) )
 				.addConfig( this.specialDropChance.name( "SpecialDropChances" ).comment( "Chance for each extra item to be replaced with a better one." ) )
 				.addConfig( this.extraLootChance.name( "extra_loot_chance" ).comment( "Independent chance for extra loot per enchantment level." ) )
-				.insertTo( this );
+				.insertTo( group );
 
-			new OnItemFished.Context( this::tryToLevelUp )
+			OnItemFished.listen( this::tryToLevelUp )
 				.priority( Priority.LOWEST )
 				.name( "LevelUp" )
-				.addCondition( this::isEnchantmentEnabled )
+				.addCondition( Condition.predicate( data->OnEnchantmentAvailabilityCheck.dispatch( this.enchantment.get() ).isEnabled() ) )
 				.addConfig( this.levelUpChances.name( "Chances" ).comment( "Chances to acquire given enchantment level when an item is fished out." ) )
 				.addConfig( this.rainMultiplier.name( "rain_multiplier" ).comment( "Chance multiplier when it rains." ) )
-				.insertTo( this );
+				.insertTo( group );
 
-			new OnEquipmentChanged.Context( Modifier::giveExtremeAdvancement )
-				.addCondition( new HasBestFishingEnchantments() )
-				.addCondition( data->data.entity instanceof ServerPlayer )
-				.insertTo( this );
+			OnEquipmentChanged.listen( Handler::giveExtremeAdvancement )
+				.addCondition( Handler.hasBestFishingEnchantments() )
+				.addCondition( Condition.predicate( data->data.entity instanceof ServerPlayer ) )
+				.insertTo( group );
 
-			new OnPreDamaged.Context( this::increaseDamageDealt )
-				.addCondition( new Condition.HasEnchantment<>( this.enchantment, data->data.attacker ) )
+			OnPreDamaged.listen( this::increaseDamageDealt )
+				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.attacker ) )
 				.addConfig( this.damageBonus.name( "damage_bonus" ).comment( "Amount of extra damage dealt by the fishing rod per enchantment level." ) )
-				.insertTo( this );
-
-			this.name( "FishingFanatic" ).comment( "Gives a chance to catch additional items from fishing." );
+				.insertTo( group );
 		}
 
 		private void increaseLoot( OnExtraFishingLootCheck.Data data ) {
@@ -148,7 +150,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 		}
 
 		private void tryToLevelUp( OnItemFished.Data data ) {
-			boolean isRaining = data.level.isRaining();
+			boolean isRaining = data.getLevel().isRaining();
 			double rainMultiplier = isRaining ? this.rainMultiplier.get() : 1.0;
 			ItemStack fishingRod = ItemHelper.getMatchingHandItem( data.player, itemStack->itemStack.getItem() instanceof FishingRodItem );
 			int fanaticLevel = this.enchantment.get().getEnchantmentLevel( fishingRod );
@@ -190,9 +192,8 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			player.displayClientMessage( Component.translatable( keyId ).withStyle( ChatFormatting.BOLD ), true );
 		}
 
-		public static class HasBestFishingEnchantments extends Condition< OnEquipmentChanged.Data > {
-			@Override
-			public boolean check( GameModifier feature, OnEquipmentChanged.Data data ) {
+		private static Condition< OnEquipmentChanged.Data > hasBestFishingEnchantments() {
+			return new Condition<>( data->{
 				return ForgeRegistries.ENCHANTMENTS.getValues()
 					.stream()
 					.allMatch( enchantment->{
@@ -200,7 +201,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 							|| !enchantment.canApplyAtEnchantingTable( new ItemStack( Items.FISHING_ROD ) )
 							|| EnchantmentHelper.getTagEnchantmentLevel( enchantment, data.event.getTo() ) == enchantment.getMaxLevel();
 					} );
-			}
+			} );
 		}
 	}
 }

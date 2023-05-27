@@ -1,14 +1,18 @@
 package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.enchantments.CustomEnchantment;
+import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+
+import java.util.function.Supplier;
 
 public class MagicProtectionEnchantment extends CustomEnchantment {
 	public MagicProtectionEnchantment() {
@@ -17,8 +21,7 @@ public class MagicProtectionEnchantment extends CustomEnchantment {
 			.slots( EquipmentSlots.ARMOR )
 			.maxLevel( 4 )
 			.minLevelCost( level->level * 11 - 10 )
-			.maxLevelCost( level->level * 11 + 1 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->level * 11 + 1 );
 	}
 
 	@Override
@@ -32,11 +35,18 @@ public class MagicProtectionEnchantment extends CustomEnchantment {
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< MagicProtectionEnchantment > {
-		public Modifier() {
-			super( Registries.MAGIC_PROTECTION, Registries.Modifiers.ENCHANTMENT );
+	public static class Handler {
+		final Supplier< MagicProtectionEnchantment > enchantment = Registries.MAGIC_PROTECTION;
 
-			this.name( "MagicProtection" ).comment( "Protects against magical damage like Evoker Fangs, Guardians and Instant Damage potions." );
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.ENCHANTMENT )
+				.name( "MagicProtection" )
+				.comment( "Protects against magical damage like Evoker Fangs, Guardians and Instant Damage potions." );
+
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
 		}
 	}
 }

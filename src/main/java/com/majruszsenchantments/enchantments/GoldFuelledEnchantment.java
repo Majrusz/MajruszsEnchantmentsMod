@@ -1,19 +1,23 @@
 package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.gamemodifiers.Priority;
+import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import com.mlib.gamemodifiers.contexts.OnItemHurt;
-import com.mlib.gamemodifiers.parameters.Priority;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.function.Supplier;
 
 public class GoldFuelledEnchantment extends CustomEnchantment {
 	public GoldFuelledEnchantment() {
@@ -21,32 +25,38 @@ public class GoldFuelledEnchantment extends CustomEnchantment {
 			.category( Registries.GOLDEN )
 			.slots( EquipmentSlots.ALL )
 			.minLevelCost( level->15 )
-			.maxLevelCost( level->45 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->45 );
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< GoldFuelledEnchantment > {
-		public Modifier() {
-			super( Registries.GOLD_FUELLED, Registries.Modifiers.ENCHANTMENT );
+	public static class Handler {
+		final Supplier< GoldFuelledEnchantment > enchantment = Registries.GOLD_FUELLED;
 
-			new OnItemHurt.Context( this::restoreItem )
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.ENCHANTMENT )
+				.name( "GoldFuelled" )
+				.comment( "Completely repairs gold tools and armour for one gold ingot when the item is about to be destroyed." );
+
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
+
+			OnItemHurt.listen( this::restoreItem )
 				.priority( Priority.LOWEST )
-				.addCondition( new Condition.IsServer<>() )
-				.addCondition( data->data.player != null )
-				.addCondition( data->this.enchantment.get().hasEnchantment( data.itemStack ) )
-				.addCondition( data->data.event.isAboutToBroke() )
-				.insertTo( this );
-
-			this.name( "GoldFuelled" ).comment( "Completely repairs gold tools and armour for one gold ingot when the item is about to be destroyed." );
+				.addCondition( Condition.isServer() )
+				.addCondition( Condition.predicate( data->data.player != null ) )
+				.addCondition( Condition.predicate( data->this.enchantment.get().hasEnchantment( data.itemStack ) ) )
+				.addCondition( Condition.predicate( OnItemHurt.Data::isAboutToBroke ) )
+				.insertTo( group );
 		}
 
 		private void restoreItem( OnItemHurt.Data data ) {
 			assert data.player != null;
 			if( this.consumeGoldIngot( data.player ) ) {
 				Vec3 position = data.player.position();
-				SoundHandler.ITEM_BREAK.play( data.level, position );
-				data.event.extraDamage = -data.itemStack.getMaxDamage(); // restores initial durability
+				SoundHandler.ITEM_BREAK.play( data.getLevel(), position );
+				data.extraDamage = -data.itemStack.getMaxDamage(); // restores initial durability
 			}
 		}
 
