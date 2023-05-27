@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.8.1'
+version = '1.8.2'
 group = 'com.majruszsenchantments'
 archivesBaseName = 'majruszs-enchantments-1.19.2'
 
@@ -98,7 +98,7 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.19.2-43.2.0'
-    implementation fg.deobf( 'com.mlib:majrusz-library-1.19.2:3.2.0' )
+    implementation fg.deobf( 'com.mlib:majrusz-library-1.19.2:4.0.0' )
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

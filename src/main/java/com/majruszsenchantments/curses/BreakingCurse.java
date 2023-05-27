@@ -1,18 +1,22 @@
 package com.majruszsenchantments.curses;
 
 import com.majruszsenchantments.Registries;
-import com.majruszsenchantments.gamemodifiers.EnchantmentModifier;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
 import com.mlib.annotations.AutoInstance;
+import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.Condition;
+import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import com.mlib.gamemodifiers.contexts.OnItemHurt;
 import com.mlib.math.Range;
 import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+
+import java.util.function.Supplier;
 
 public class BreakingCurse extends CustomEnchantment {
 	public BreakingCurse() {
@@ -22,8 +26,7 @@ public class BreakingCurse extends CustomEnchantment {
 			.curse()
 			.maxLevel( 3 )
 			.minLevelCost( level->10 )
-			.maxLevelCost( level->50 )
-			.setEnabledSupplier( Registries.getEnabledSupplier( Modifier.class ) );
+			.maxLevelCost( level->50 );
 	}
 
 	@Override
@@ -32,25 +35,30 @@ public class BreakingCurse extends CustomEnchantment {
 	}
 
 	@AutoInstance
-	public static class Modifier extends EnchantmentModifier< BreakingCurse > {
+	public static class Handler {
 		final DoubleConfig damageMultiplier = new DoubleConfig( 1.0, new Range<>( 0.0, 10.0 ) );
+		final Supplier< BreakingCurse > enchantment = Registries.BREAKING;
 
-		public Modifier() {
-			super( Registries.BREAKING, Registries.Modifiers.CURSE );
+		public Handler() {
+			ConfigGroup group = ModConfigs.registerSubgroup( Registries.Groups.CURSE )
+				.name( "Breaking" )
+				.comment( "Makes all items break faster." );
 
-			new OnItemHurt.Context( this::dealExtraDamage )
-				.addCondition( data->data.player != null )
-				.addCondition( new Condition.HasEnchantment<>( this.enchantment ) )
+			OnEnchantmentAvailabilityCheck.listen( OnEnchantmentAvailabilityCheck.ENABLE )
+				.addCondition( OnEnchantmentAvailabilityCheck.is( this.enchantment ) )
+				.addCondition( OnEnchantmentAvailabilityCheck.excludable() )
+				.insertTo( group );
+
+			OnItemHurt.listen( this::dealExtraDamage )
+				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.player ) )
 				.addConfig( this.damageMultiplier.name( "damage_multiplier" ).comment( "Extra damage multiplier per enchantment level." ) )
-				.insertTo( this );
-
-			this.name( "Breaking" ).comment( "Makes all items break faster." );
+				.insertTo( group );
 		}
 
 		private void dealExtraDamage( OnItemHurt.Data data ) {
 			assert data.player != null;
 			double damageMultiplier = this.enchantment.get().getEnchantmentLevel( data.itemStack ) * this.damageMultiplier.get();
-			data.event.extraDamage += Random.roundRandomly( data.event.damage * damageMultiplier );
+			data.extraDamage += Random.roundRandomly( data.damage * damageMultiplier );
 		}
 	}
 }
