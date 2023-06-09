@@ -75,7 +75,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 				.addCondition( OnLoot.hasEntity() )
 				.addCondition( OnLoot.hasTool() )
 				.addCondition( OnLoot.hasOrigin() )
-				.addCondition( Condition.predicate( data->BlockHelper.isCropAtMaxAge( data.getLevel(), new BlockPos( data.origin ) ) ) )
+				.addCondition( Condition.predicate( data->BlockHelper.isCropAtMaxAge( data.getLevel(), BlockPos.containing( data.origin ) ) ) )
 				.insertTo( group );
 
 			OnFarmlandTillCheck.listen( OnFarmlandTillCheck.INCREASE_AREA )
@@ -129,7 +129,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 
 		private void replant( OnLoot.Data data ) {
 			assert data.origin != null && data.blockState != null && data.getLevel() != null;
-			BlockPos position = new BlockPos( data.origin );
+			BlockPos position = BlockPos.containing( data.origin );
 			Block block = data.blockState.getBlock();
 			Item seedItem = getSeedItem( data.getLevel(), data.blockState, position );
 			for( ItemStack itemStack : data.generatedLoot ) {

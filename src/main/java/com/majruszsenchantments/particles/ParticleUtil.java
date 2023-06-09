@@ -13,7 +13,7 @@ public class ParticleUtil {
 	@OnlyIn( Dist.CLIENT )
 	@SubscribeEvent
 	public static void registerParticles( RegisterParticleProvidersEvent event ) {
-		event.register( Registries.DODGE_PARTICLE.get(), DodgeParticle.Factory::new );
-		event.register( Registries.TELEKINESIS_PARTICLE.get(), TelekinesisParticle.Factory::new );
+		event.registerSpriteSet( Registries.DODGE_PARTICLE.get(), DodgeParticle.Factory::new );
+		event.registerSpriteSet( Registries.TELEKINESIS_PARTICLE.get(), TelekinesisParticle.Factory::new );
 	}
 }

@@ -12,6 +12,8 @@ import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import com.mlib.levels.LevelHelper;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.animal.Animal;
 
 import java.util.function.Supplier;
@@ -54,7 +56,7 @@ public class HorseFrostWalkerEnchantment extends CustomEnchantment {
 			OnPreDamaged.listen( OnPreDamaged.CANCEL )
 				.addCondition( Condition.isServer() )
 				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.target ) )
-				.addCondition( Condition.predicate( data->DamageSource.HOT_FLOOR.equals( data.source ) ) )
+				.addCondition( Condition.predicate( data->data.source.is( DamageTypes.HOT_FLOOR ) ) )
 				.addCondition( Condition.predicate( data->data.target instanceof Animal ) )
 				.insertTo( group );
 		}

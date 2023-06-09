@@ -26,6 +26,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -134,7 +135,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 		}
 
 		private List< ItemStack > spawnExtraLoot( OnExtraFishingLootCheck.Data data, int fanaticLevel ) {
-			LootContext lootContext = data.generateLootContext();
+			LootParams lootParams = data.generateLootParams();
 			LootTable standardLootTable = getLootTable( BuiltInLootTables.FISHING );
 			LootTable specialLootTable = getLootTable( SPECIAL_LOOT_TABLE );
 			List< ItemStack > extraLoot = new ArrayList<>();
@@ -142,7 +143,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			for( int i = 0; i < fanaticLevel; i++ ) {
 				if( Random.tryChance( this.extraLootChance.get() ) ) {
 					LootTable lootTable = Random.tryChance( this.specialDropChance.get( fanaticLevel - 1 ) ) ? specialLootTable : standardLootTable;
-					extraLoot.addAll( lootTable.getRandomItems( lootContext ) );
+					extraLoot.addAll( lootTable.getRandomItems( lootParams ) );
 				}
 			}
 
@@ -183,7 +184,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 		}
 
 		private static LootTable getLootTable( ResourceLocation location ) {
-			return ServerLifecycleHooks.getCurrentServer().getLootTables().get( location );
+			return ServerLifecycleHooks.getCurrentServer().getLootData().getLootTable( location );
 		}
 
 		private static void sendLevelUpMessage( Player player ) {

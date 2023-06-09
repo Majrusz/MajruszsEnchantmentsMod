@@ -12,7 +12,6 @@ import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import com.mlib.gamemodifiers.contexts.OnEntityTick;
 import com.mlib.levels.LevelHelper;
 import com.mlib.math.Range;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -64,7 +63,7 @@ public class CorrosionCurse extends CustomEnchantment {
 		private void attackOwner( LivingEntity entity ) {
 			float damage = this.damageAmount.asFloat();
 			if( damage > 0.0f ) {
-				entity.hurt( DamageSource.MAGIC, damage * this.enchantment.get().getEnchantmentSum( entity, EquipmentSlots.ARMOR ) );
+				entity.hurt( entity.level().damageSources().magic(), damage * this.enchantment.get().getEnchantmentSum( entity, EquipmentSlots.ARMOR ) );
 			}
 		}
 

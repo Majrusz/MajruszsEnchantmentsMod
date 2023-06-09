@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
@@ -16,7 +16,7 @@ apply plugin: 'org.spongepowered.mixin'
 
 version = '1.8.2'
 group = 'com.majruszsenchantments'
-archivesBaseName = 'majruszs-enchantments-1.19.3'
+archivesBaseName = 'majruszs-enchantments-1.20'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 compileJava {
@@ -24,7 +24,7 @@ compileJava {
 }
 
 minecraft {
-    mappings channel: 'official', version: '1.19.3'
+    mappings channel: 'official', version: '1.20'
 
     accessTransformer = file( 'src/main/resources/META-INF/accesstransformer.cfg' ) // Currently, this location cannot be changed from the default.
 
@@ -97,8 +97,8 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.3-44.0.18'
-    implementation fg.deobf( 'com.mlib:majrusz-library-1.19.3:4.0.0' )
+    minecraft 'net.minecraftforge:forge:1.20-46.0.1'
+    implementation fg.deobf( 'com.mlib:majrusz-library-1.20:4.3.0' )
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

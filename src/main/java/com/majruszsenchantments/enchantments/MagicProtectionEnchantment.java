@@ -8,6 +8,7 @@ import com.mlib.enchantments.CustomEnchantment;
 import com.mlib.gamemodifiers.ModConfigs;
 import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
@@ -26,7 +27,7 @@ public class MagicProtectionEnchantment extends CustomEnchantment {
 
 	@Override
 	public int getDamageProtection( int level, DamageSource source ) {
-		return !source.isCreativePlayer() && source.isMagic() ? level * 2 : 0;
+		return !source.isCreativePlayer() && source.is( DamageTypes.MAGIC ) ? level * 2 : 0;
 	}
 
 	@Override

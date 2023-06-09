@@ -18,6 +18,7 @@ import com.mlib.math.AnyPos;
 import com.mlib.mobeffects.MobEffectHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -81,7 +82,7 @@ public class LeechEnchantment extends CustomEnchantment {
 		}
 
 		private boolean leechHealth( LivingEntity attacker, LivingEntity target ) {
-			target.hurt( DamageSource.MAGIC, 1.0f );
+			target.hurt( attacker.level().damageSources().magic(), 1.0f );
 			attacker.heal( 1.0f );
 			return true;
 		}

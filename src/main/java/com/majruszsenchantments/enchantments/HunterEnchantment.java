@@ -13,6 +13,7 @@ import com.mlib.gamemodifiers.contexts.OnLootLevel;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import com.mlib.math.Range;
 import com.mlib.mixininterfaces.IMixinProjectile;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
 
@@ -45,13 +46,13 @@ public class HunterEnchantment extends CustomEnchantment {
 				.insertTo( group );
 
 			OnLootLevel.listen( this::increaseLootingLevel )
-				.addCondition( Condition.predicate( data->data.source != null && data.source.isProjectile() ) )
+				.addCondition( Condition.predicate( data->data.source != null && data.source.is( DamageTypeTags.IS_PROJECTILE ) ) )
 				.addCondition( Condition.predicate( data->this.getEnchantmentLevel( data.source ) > 0 ) )
 				.insertTo( group );
 
 			OnPreDamaged.listen( this::modifyDamage )
 				.addCondition( Condition.predicate( data->data.attacker != null ) )
-				.addCondition( Condition.predicate( data->data.source.isProjectile() ) )
+				.addCondition( Condition.predicate( data->data.source.is( DamageTypeTags.IS_PROJECTILE ) ) )
 				.addCondition( Condition.predicate( data->this.getEnchantmentLevel( data.source ) > 0 ) )
 				.addConfig( this.penaltyMultiplier.name( "penalty_multiplier" ).comment( "Damage multiplier penalty per enchantment level." ) )
 				.addConfig( this.distanceMultiplier.name( "extra_multiplier" )
