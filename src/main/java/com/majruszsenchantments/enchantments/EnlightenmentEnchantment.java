@@ -58,10 +58,8 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 		private void increaseExperience( OnPickupXp.Data data ) {
 			int enlightenmentSum = this.enchantment.get().getEnchantmentSum( data.player, EquipmentSlots.ARMOR );
 			int experiencePoints = Random.roundRandomly( enlightenmentSum * this.experienceMultiplier.get() * data.event.getOrb().getValue() );
-			if( experiencePoints > 1 ) {
-				data.player.giveExperiencePoints( Random.nextInt( 1, experiencePoints ) );
-			} else if( experiencePoints > 0 ) {
-				data.player.giveExperiencePoints( 1 );
+			if( experiencePoints > 0 ) {
+				data.player.giveExperiencePoints( experiencePoints );
 			}
 		}
 

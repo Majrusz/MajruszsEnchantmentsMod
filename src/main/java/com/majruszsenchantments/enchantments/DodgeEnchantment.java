@@ -14,9 +14,7 @@ import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
 import com.mlib.gamemodifiers.contexts.OnPreDamaged;
 import com.mlib.math.Range;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.phys.Vec3;
 
@@ -34,8 +32,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Handler {
-		final DoubleConfig chance = new DoubleConfig( 0.125, new Range<>( 0.01, 0.4 ) );
-		final DoubleConfig pantsDamageMultiplier = new DoubleConfig( 0.5, new Range<>( 0.0, 10.0 ) );
+		final DoubleConfig chance = new DoubleConfig( 0.125, new Range<>( 0.01, 0.5 ) );
 		final Supplier< DodgeEnchantment > enchantment = Registries.DODGE;
 
 		public Handler() {
@@ -54,7 +51,6 @@ public class DodgeEnchantment extends CustomEnchantment {
 				.addCondition( OnPreDamaged.willTakeFullDamage() )
 				.addCondition( Condition.predicate( this::tryToDodge ) )
 				.addConfig( this.chance.name( "chance" ).comment( "Chance to completely ignore the damage per enchantment level." ) )
-				.addConfig( this.pantsDamageMultiplier.name( "pants_damage_multiplier" ).comment( "Percent of damage transferred to pants." ) )
 				.insertTo( group );
 		}
 
@@ -62,7 +58,6 @@ public class DodgeEnchantment extends CustomEnchantment {
 			if( data.getLevel() instanceof ServerLevel level ) {
 				this.spawnEffects( data.target, level );
 			}
-			this.damagePants( data.target, data.damage );
 
 			OnPreDamaged.CANCEL.accept( data );
 		}
@@ -75,15 +70,6 @@ public class DodgeEnchantment extends CustomEnchantment {
 				}
 			}
 			SoundHandler.FIRE_EXTINGUISH.play( level, entity.position() );
-		}
-
-		private void damagePants( LivingEntity entity, float damage ) {
-			float multiplier = this.pantsDamageMultiplier.asFloat();
-			if( multiplier > 0.0f ) {
-				ItemStack pants = entity.getItemBySlot( EquipmentSlot.LEGS );
-				int totalDamage = Math.max( 1, ( int )( damage * multiplier ) );
-				pants.hurtAndBreak( totalDamage, entity, owner->owner.broadcastBreakEvent( EquipmentSlot.LEGS ) );
-			}
 		}
 
 		private boolean tryToDodge( OnPreDamaged.Data data ) {
