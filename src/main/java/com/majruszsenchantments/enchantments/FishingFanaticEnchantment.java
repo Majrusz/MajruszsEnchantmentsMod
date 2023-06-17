@@ -130,7 +130,6 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 			List< ItemStack > extraLoot = this.spawnExtraLoot( data, fanaticLevel );
 
 			data.extraExperience += extraLoot.size() + Random.nextInt( 1, 2 * extraLoot.size() + 1 );
-			data.extraRodDamage += extraLoot.size();
 			data.extraLoot.addAll( extraLoot );
 		}
 

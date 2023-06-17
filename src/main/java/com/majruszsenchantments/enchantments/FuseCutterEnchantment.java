@@ -78,7 +78,6 @@ public class FuseCutterEnchantment extends CustomEnchantment {
 
 				ItemStack itemStack = ItemHelper.getCurrentlyUsedItem( livingEntity );
 				if( this.enchantment.get().hasEnchantment( itemStack ) ) {
-					itemStack.hurtAndBreak( data.radius.intValue(), player, owner->owner.broadcastBreakEvent( livingEntity.getUsedItemHand() ) );
 					EntityHelper.disableCurrentItem( player, data.radius.doubleValue() * this.cooldownRatio.get() );
 					return true;
 				}
