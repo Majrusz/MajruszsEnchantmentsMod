@@ -160,9 +160,9 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 
 			this.enchantment.get().increaseEnchantmentLevel( fishingRod );
 			if( data.player instanceof ServerPlayer player ) {
-				giveAdvancement( player, "nothing_can_stop_me", ()->isRaining );
 				giveAdvancement( player, "fishing_fanatic", ()->fanaticLevel + 1 == 1 );
 				giveAdvancement( player, "fishing_fanatic_true", ()->fanaticLevel + 1 == this.enchantment.get().getMaxLevel() );
+				giveAdvancement( player, "nothing_can_stop_me", ()->isRaining );
 			}
 			sendLevelUpMessage( data.player );
 		}
