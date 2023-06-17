@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
@@ -94,6 +94,13 @@ repositories {
     flatDir {
         dir 'libs'
     }
+}
+
+processResources {
+    filesMatching('META-INF/mods.toml') {
+        expand project.properties
+    }
+    outputs.upToDateWhen { false }
 }
 
 dependencies {
