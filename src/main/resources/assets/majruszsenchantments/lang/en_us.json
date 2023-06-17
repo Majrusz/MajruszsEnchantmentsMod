@@ -65,6 +65,10 @@
 	"enchantment.majruszsenchantments.misanthropy.desc": "Increases the damage against villagers, pillagers, witches and other players.",
 	"enchantment.majruszsenchantments.misanthropy.description": "Increases the damage against villagers, pillagers, witches and other players.",
 
+	"enchantment.majruszsenchantments.repulsion": "Repulsion",
+	"enchantment.majruszsenchantments.repulsion.desc": "Knocks back mobs when blocking their attack.",
+	"enchantment.majruszsenchantments.repulsion.description": "Knocks back mobs when blocking their attack.",
+
 	"enchantment.majruszsenchantments.sixth_sense": "Sixth Sense",
 	"enchantment.majruszsenchantments.sixth_sense.desc": "Highlights nearby mobs that emit any sound if the player is sneaking nearby.",
 	"enchantment.majruszsenchantments.sixth_sense.description": "Highlights nearby mobs that emit any sound if the player is sneaking nearby.",

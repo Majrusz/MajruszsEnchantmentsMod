@@ -65,6 +65,10 @@
 	"enchantment.majruszsenchantments.misanthropy.desc": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 	"enchantment.majruszsenchantments.misanthropy.description": "Zwiększa obrażenia zadawane osadnikom, rozbójnikom, wiedźmom i innym graczom.",
 
+	"enchantment.majruszsenchantments.repulsion": "Odepchnięcie",
+	"enchantment.majruszsenchantments.repulsion.desc": "Odrzuca przeciwników gdy ich atak zostanie zablokowany tarczą.",
+	"enchantment.majruszsenchantments.repulsion.description": "Odrzuca przeciwników gdy ich atak zostanie zablokowany tarczą.",
+
 	"enchantment.majruszsenchantments.sixth_sense": "Szósty zmysł",
 	"enchantment.majruszsenchantments.sixth_sense.desc": "Podświetla pobliskie moby, które wydają dźwięki, jeżeli gracz się skrada w pobliżu.",
 	"enchantment.majruszsenchantments.sixth_sense.description": "Podświetla pobliskie moby, które wydają dźwięki, jeżeli gracz się skrada w pobliżu.",
