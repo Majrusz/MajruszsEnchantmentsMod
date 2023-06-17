@@ -18,7 +18,7 @@
 	"enchantment.majruszsenchantments.fishing_fanatic": "Fishing Fanatic",
 	"enchantment.majruszsenchantments.fishing_fanatic.desc": "Gives a chance to catch additional items from fishing.",
 	"enchantment.majruszsenchantments.fishing_fanatic.description": "Gives a chance to catch additional items from fishing.",
-	"enchantment.majruszsenchantments.fishing_fanatic.level_up": "You have become greater Fishing Fanatic!",
+	"enchantment.majruszsenchantments.fishing_fanatic.level_up": "You have become more addicted to fishing!",
 	"enchantment.majruszsenchantments.fishing_fanatic.true": "True Fishing Fanatic",
 
 	"enchantment.majruszsenchantments.fuse_cutter": "Fuse Cutter",
@@ -65,6 +65,10 @@
 	"enchantment.majruszsenchantments.misanthropy.desc": "Increases the damage against villagers, pillagers, witches and other players.",
 	"enchantment.majruszsenchantments.misanthropy.description": "Increases the damage against villagers, pillagers, witches and other players.",
 
+	"enchantment.majruszsenchantments.repulsion": "Repulsion",
+	"enchantment.majruszsenchantments.repulsion.desc": "Knocks back mobs when blocking their attack.",
+	"enchantment.majruszsenchantments.repulsion.description": "Knocks back mobs when blocking their attack.",
+
 	"enchantment.majruszsenchantments.sixth_sense": "Sixth Sense",
 	"enchantment.majruszsenchantments.sixth_sense.desc": "Highlights nearby mobs that emit any sound if the player is sneaking nearby.",
 	"enchantment.majruszsenchantments.sixth_sense.description": "Highlights nearby mobs that emit any sound if the player is sneaking nearby.",
@@ -92,6 +96,10 @@
 	"enchantment.majruszsenchantments.incompatibility_curse": "Curse of Incompatibility",
 	"enchantment.majruszsenchantments.incompatibility_curse.desc": "Makes the item unenchantable.",
 	"enchantment.majruszsenchantments.incompatibility_curse.description": "Makes the item unenchantable.",
+
+	"enchantment.majruszsenchantments.slippery_curse": "Curse of Slippery",
+	"enchantment.majruszsenchantments.slippery_curse.desc": "Makes the item occasionally drop out of hand.",
+	"enchantment.majruszsenchantments.slippery_curse.description": "Makes the item occasionally drop out of hand.",
 
 	"enchantment.majruszsenchantments.vampirism_curse": "Curse of Vampirism",
 	"enchantment.majruszsenchantments.vampirism_curse.desc": "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger.",

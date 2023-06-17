@@ -20,7 +20,6 @@ import com.mlib.math.AnyPos;
 import com.mlib.math.Range;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +45,6 @@ public class HarvesterEnchantment extends CustomEnchantment {
 
 	@AutoInstance
 	public static class Handler {
-		final DoubleConfig durabilityPenalty = new DoubleConfig( 1.0, new Range<>( 0.0, 10.0 ) );
 		final DoubleConfig growChance = new DoubleConfig( 0.04, Range.CHANCE );
 		final Supplier< HarvesterEnchantment > enchantment = Registries.HARVESTER;
 
@@ -65,7 +63,6 @@ public class HarvesterEnchantment extends CustomEnchantment {
 				.addCondition( Condition.predicate( data->this.enchantment.get().hasEnchantment( data.itemStack ) ) )
 				.addCondition( Condition.predicate( data->data.event instanceof PlayerInteractEvent.RightClickBlock ) )
 				.addCondition( Condition.predicate( data->BlockHelper.isCropAtMaxAge( data.getLevel(), new BlockPos( data.event.getPos() ) ) ) )
-				.addConfig( this.durabilityPenalty.name( "durability_penalty" ).comment( "Durability penalty per each successful increase of nearby crops." ) )
 				.addConfig( this.growChance.name( "extra_grow_chance" ).comment( "Chance to increase an age of nearby crops." ) )
 				.insertTo( group );
 
@@ -85,7 +82,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 
 		private void increaseAgeOfNearbyCrops( OnPlayerInteract.Data data ) {
 			this.collectCrop( data.getServerLevel(), data.player, data.position, data.itemStack );
-			this.tickNearbyCrops( data.getServerLevel(), data.player, data.position, data.itemStack, data.event.getHand() );
+			this.tickNearbyCrops( data.getServerLevel(), data.position, data.itemStack );
 			SoundHandler.BONE_MEAL.play( data.getLevel(), AnyPos.from( data.position ).vec3() );
 		}
 
@@ -95,11 +92,8 @@ public class HarvesterEnchantment extends CustomEnchantment {
 			block.playerDestroy( level, player, position, blockState, null, itemStack );
 		}
 
-		private void tickNearbyCrops( ServerLevel level, Player player, BlockPos position, ItemStack itemStack,
-			InteractionHand hand
-		) {
+		private void tickNearbyCrops( ServerLevel level, BlockPos position, ItemStack itemStack ) {
 			int range = this.enchantment.get().getEnchantmentLevel( itemStack );
-			double totalDamage = 0;
 			for( int z = -range; z <= range; ++z ) {
 				for( int x = -range; x <= range; ++x ) {
 					if( x == 0 && z == 0 )
@@ -114,16 +108,11 @@ public class HarvesterEnchantment extends CustomEnchantment {
 					int particlesCount = 1;
 					if( Random.tryChance( this.growChance.get() ) ) {
 						BlockHelper.growCrop( level, neighbourPosition );
-						totalDamage += this.durabilityPenalty.get();
 						particlesCount = 3;
 					}
 
 					ParticleHandler.AWARD.spawn( level, AnyPos.from( position ).vec3(), particlesCount );
 				}
-			}
-			int finalDamage = Random.roundRandomly( totalDamage );
-			if( finalDamage > 0 ) {
-				itemStack.hurtAndBreak( finalDamage, player, owner->owner.broadcastBreakEvent( hand ) );
 			}
 		}
 
