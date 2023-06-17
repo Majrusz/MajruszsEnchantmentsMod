@@ -61,6 +61,7 @@ public class Registries {
 	public static final RegistryObject< LeechEnchantment > LEECH = ENCHANTMENTS.register( "leech", LeechEnchantment::new );
 	public static final RegistryObject< MagicProtectionEnchantment > MAGIC_PROTECTION = ENCHANTMENTS.register( "magic_protection", MagicProtectionEnchantment::new );
 	public static final RegistryObject< MisanthropyEnchantment > MISANTHROPY = ENCHANTMENTS.register( "misanthropy", MisanthropyEnchantment::new );
+	public static final RegistryObject< RepulsionEnchantment > REPULSION = ENCHANTMENTS.register( "repulsion", RepulsionEnchantment::new );
 	public static final RegistryObject< SixthSenseEnchantment > SIXTH_SENSE = ENCHANTMENTS.register( "sixth_sense", SixthSenseEnchantment::new );
 	public static final RegistryObject< SmelterEnchantment > SMELTER = ENCHANTMENTS.register( "smelter", SmelterEnchantment::new );
 	public static final RegistryObject< TelekinesisEnchantment > TELEKINESIS = ENCHANTMENTS.register( "telekinesis", TelekinesisEnchantment::new );
@@ -70,6 +71,7 @@ public class Registries {
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse::new );
 	public static final RegistryObject< FatigueCurse > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
 	public static final RegistryObject< IncompatibilityCurse > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse::new );
+	public static final RegistryObject< SlipperyCurse > SLIPPERY = ENCHANTMENTS.register( "slippery_curse", SlipperyCurse::new );
 	public static final RegistryObject< VampirismCurse > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse::new );
 
 	// Particles
