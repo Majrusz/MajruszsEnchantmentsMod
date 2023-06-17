@@ -97,6 +97,10 @@
 	"enchantment.majruszsenchantments.incompatibility_curse.desc": "Makes the item unenchantable.",
 	"enchantment.majruszsenchantments.incompatibility_curse.description": "Makes the item unenchantable.",
 
+	"enchantment.majruszsenchantments.slippery_curse": "Curse of Slippery",
+	"enchantment.majruszsenchantments.slippery_curse.desc": "Makes the item occasionally drop out of hand.",
+	"enchantment.majruszsenchantments.slippery_curse.description": "Makes the item occasionally drop out of hand.",
+
 	"enchantment.majruszsenchantments.vampirism_curse": "Curse of Vampirism",
 	"enchantment.majruszsenchantments.vampirism_curse.desc": "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger.",
 	"enchantment.majruszsenchantments.vampirism_curse.description": "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger.",

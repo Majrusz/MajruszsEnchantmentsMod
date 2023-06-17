@@ -74,6 +74,7 @@ public class Registries {
 	public static final RegistryObject< CorrosionCurse > CORROSION = ENCHANTMENTS.register( "corrosion_curse", CorrosionCurse::new );
 	public static final RegistryObject< FatigueCurse > FATIGUE = ENCHANTMENTS.register( "fatigue_curse", FatigueCurse::new );
 	public static final RegistryObject< IncompatibilityCurse > INCOMPATIBILITY = ENCHANTMENTS.register( "incompatibility_curse", IncompatibilityCurse::new );
+	public static final RegistryObject< SlipperyCurse > SLIPPERY = ENCHANTMENTS.register( "slippery_curse", SlipperyCurse::new );
 	public static final RegistryObject< VampirismCurse > VAMPIRISM = ENCHANTMENTS.register( "vampirism_curse", VampirismCurse::new );
 
 	// Particles
