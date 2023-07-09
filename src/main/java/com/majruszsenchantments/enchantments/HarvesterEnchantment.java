@@ -20,6 +20,7 @@ import com.mlib.math.AnyPos;
 import com.mlib.math.Range;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -83,6 +84,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 		private void increaseAgeOfNearbyCrops( OnPlayerInteract.Data data ) {
 			this.collectCrop( data.getServerLevel(), data.player, data.position, data.itemStack );
 			this.tickNearbyCrops( data.getServerLevel(), data.position, data.itemStack );
+			this.damageHoe( data.itemStack, data.player, data.hand );
 			SoundHandler.BONE_MEAL.play( data.getLevel(), AnyPos.from( data.position ).vec3() );
 		}
 
@@ -114,6 +116,11 @@ public class HarvesterEnchantment extends CustomEnchantment {
 					ParticleHandler.AWARD.spawn( level, AnyPos.from( position ).vec3(), particlesCount );
 				}
 			}
+		}
+
+		private void damageHoe( ItemStack itemStack, Player player, InteractionHand hand ) {
+			player.swing( hand, true );
+			itemStack.hurtAndBreak( 1, player, owner->owner.broadcastBreakEvent( hand ) );
 		}
 
 		private void replant( OnLoot.Data data ) {
