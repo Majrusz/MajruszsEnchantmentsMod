@@ -64,7 +64,7 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 		}
 
 		private void giveAdvancement( OnEquipmentChanged.Data data ) {
-			Registries.BASIC_TRIGGER.trigger( ( ServerPlayer )data.entity, "enlightenment_8" );
+			Registries.HELPER.triggerAchievement( ( ServerPlayer )data.entity, "enlightenment_8" );
 		}
 	}
 }

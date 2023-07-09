@@ -174,7 +174,7 @@ public class FishingFanaticEnchantment extends CustomEnchantment {
 
 		private static void giveAdvancement( ServerPlayer player, String type, Supplier< Boolean > check ) {
 			if( check.get() ) {
-				Registries.BASIC_TRIGGER.trigger( player, type );
+				Registries.HELPER.triggerAchievement( player, type );
 			}
 		}
 
