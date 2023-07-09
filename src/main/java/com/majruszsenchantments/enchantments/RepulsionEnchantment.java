@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class RepulsionEnchantment extends CustomEnchantment {
 	public RepulsionEnchantment() {
-		this.rarity( Rarity.RARE )
+		this.rarity( Rarity.UNCOMMON )
 			.category( Registries.SHIELD )
 			.slots( EquipmentSlots.BOTH_HANDS )
 			.maxLevel( 1 )
