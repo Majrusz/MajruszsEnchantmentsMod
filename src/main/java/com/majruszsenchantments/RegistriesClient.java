@@ -33,7 +33,9 @@ public class RegistriesClient {
 
 	private static void register( final FMLClientSetupEvent event ) {
 		if( UNIQUE_BOOK_TEXTURE.isEnabled() ) {
-			ItemProperties.register( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ), RegistriesClient::enchantmentBookPredicate );
+			event.enqueueWork( ()->{
+				ItemProperties.register( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ), RegistriesClient::enchantmentBookPredicate );
+			} );
 		}
 	}
 
