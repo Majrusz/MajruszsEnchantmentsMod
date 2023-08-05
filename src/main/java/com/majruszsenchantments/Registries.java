@@ -3,7 +3,7 @@ package com.majruszsenchantments;
 import com.majruszsenchantments.curses.*;
 import com.majruszsenchantments.enchantments.*;
 import com.mlib.config.ConfigHandler;
-import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.contexts.base.ModConfigs;
 import com.mlib.items.ItemHelper;
 import com.mlib.modhelper.ModHelper;
 import net.minecraft.core.particles.ParticleType;

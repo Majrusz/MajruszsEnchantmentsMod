@@ -2,13 +2,13 @@ package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.Registries;
 import com.mlib.EquipmentSlots;
-import com.mlib.annotations.AutoInstance;
+import com.mlib.modhelper.AutoInstance;
 import com.mlib.config.ConfigGroup;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.ModConfigs;
-import com.mlib.gamemodifiers.contexts.OnBlockSmeltCheck;
-import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
+import com.mlib.contexts.base.Condition;
+import com.mlib.contexts.base.ModConfigs;
+import com.mlib.contexts.OnBlockSmeltCheck;
+import com.mlib.contexts.OnEnchantmentAvailabilityCheck;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.UntouchingEnchantment;
