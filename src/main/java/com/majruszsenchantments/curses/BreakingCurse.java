@@ -3,14 +3,14 @@ package com.majruszsenchantments.curses;
 import com.majruszsenchantments.Registries;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
-import com.mlib.annotations.AutoInstance;
+import com.mlib.modhelper.AutoInstance;
 import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.ModConfigs;
-import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
-import com.mlib.gamemodifiers.contexts.OnItemHurt;
+import com.mlib.contexts.base.Condition;
+import com.mlib.contexts.base.ModConfigs;
+import com.mlib.contexts.OnEnchantmentAvailabilityCheck;
+import com.mlib.contexts.OnItemHurt;
 import com.mlib.math.Range;
 import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -58,7 +58,7 @@ public class BreakingCurse extends CustomEnchantment {
 		private void dealExtraDamage( OnItemHurt.Data data ) {
 			assert data.player != null;
 			double damageMultiplier = this.enchantment.get().getEnchantmentLevel( data.itemStack ) * this.damageMultiplier.get();
-			data.extraDamage += Random.roundRandomly( data.damage * damageMultiplier );
+			data.extraDamage += Random.round( data.damage * damageMultiplier );
 		}
 	}
 }

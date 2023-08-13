@@ -3,15 +3,15 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
-import com.mlib.annotations.AutoInstance;
+import com.mlib.modhelper.AutoInstance;
 import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.ModConfigs;
-import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
-import com.mlib.gamemodifiers.contexts.OnEquipmentChanged;
-import com.mlib.gamemodifiers.contexts.OnPickupXp;
+import com.mlib.contexts.base.Condition;
+import com.mlib.contexts.base.ModConfigs;
+import com.mlib.contexts.OnEnchantmentAvailabilityCheck;
+import com.mlib.contexts.OnEquipmentChanged;
+import com.mlib.contexts.OnPickupXp;
 import com.mlib.math.Range;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -57,14 +57,14 @@ public class EnlightenmentEnchantment extends CustomEnchantment {
 
 		private void increaseExperience( OnPickupXp.Data data ) {
 			int enlightenmentSum = this.enchantment.get().getEnchantmentSum( data.player, EquipmentSlots.ARMOR );
-			int experiencePoints = Random.roundRandomly( enlightenmentSum * this.experienceMultiplier.get() * data.event.getOrb().getValue() );
+			int experiencePoints = Random.round( enlightenmentSum * this.experienceMultiplier.get() * data.event.getOrb().getValue() );
 			if( experiencePoints > 0 ) {
 				data.player.giveExperiencePoints( experiencePoints );
 			}
 		}
 
 		private void giveAdvancement( OnEquipmentChanged.Data data ) {
-			Registries.BASIC_TRIGGER.trigger( ( ServerPlayer )data.entity, "enlightenment_8" );
+			Registries.HELPER.triggerAchievement( ( ServerPlayer )data.entity, "enlightenment_8" );
 		}
 	}
 }

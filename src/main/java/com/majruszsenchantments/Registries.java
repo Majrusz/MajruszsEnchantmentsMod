@@ -2,11 +2,10 @@ package com.majruszsenchantments;
 
 import com.majruszsenchantments.curses.*;
 import com.majruszsenchantments.enchantments.*;
-import com.mlib.annotations.AnnotationHandler;
-import com.mlib.gamemodifiers.ModConfigs;
+import com.mlib.config.ConfigHandler;
+import com.mlib.contexts.base.ModConfigs;
 import com.mlib.items.ItemHelper;
-import com.mlib.registries.RegistryHelper;
-import com.mlib.triggers.BasicTrigger;
+import com.mlib.modhelper.ModHelper;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
@@ -18,16 +17,17 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import static com.majruszsenchantments.MajruszsEnchantments.CLIENT_CONFIG;
-import static com.majruszsenchantments.MajruszsEnchantments.SERVER_CONFIG;
-
 public class Registries {
-	private static final RegistryHelper HELPER = new RegistryHelper( MajruszsEnchantments.MOD_ID );
+	public static final ModHelper HELPER = ModHelper.create( MajruszsEnchantments.MOD_ID );
+
+	// Configs
+	public static final ConfigHandler SERVER_CONFIG = HELPER.createConfig( ModConfig.Type.SERVER );
+	public static final ConfigHandler CLIENT_CONFIG = HELPER.createConfig( ModConfig.Type.CLIENT );
 
 	static {
 		ModConfigs.init( SERVER_CONFIG, Groups.ENCHANTMENT ).name( "Enchantments" );
@@ -81,14 +81,6 @@ public class Registries {
 	public static final RegistryObject< SimpleParticleType > DODGE_PARTICLE = PARTICLE_TYPES.register( "dodge_particle", ()->new SimpleParticleType( true ) );
 	public static final RegistryObject< SimpleParticleType > TELEKINESIS_PARTICLE = PARTICLE_TYPES.register( "telekinesis_particle", ()->new SimpleParticleType( true ) );
 
-	// Triggers
-	public static final BasicTrigger BASIC_TRIGGER = HELPER.registerBasicTrigger();
-
-	static {
-		// must stay below all instances because otherwise modifiers can access registry objects too fast
-		new AnnotationHandler( MajruszsEnchantments.MOD_ID );
-	}
-
 	public static ResourceLocation getLocation( String register ) {
 		return HELPER.getLocation( register );
 	}
@@ -98,11 +90,9 @@ public class Registries {
 	}
 
 	public static void initialize() {
-		HELPER.registerAll();
 		DistExecutor.unsafeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::initialize );
 
-		SERVER_CONFIG.register( ModLoadingContext.get() );
-		CLIENT_CONFIG.register( ModLoadingContext.get() );
+		HELPER.register();
 	}
 
 	public static class Groups {
