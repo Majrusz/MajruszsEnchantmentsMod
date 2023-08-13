@@ -27,13 +27,15 @@ public class RegistriesClient {
 			.comment( "Should the Enchanted Book has a different texture when it has any of the new enchantments on it (disabling it may fix some bugs with other mods)?" )
 			.requiresWorldRestart( true );
 
-		MajruszsEnchantments.CLIENT_CONFIG.addConfig( UNIQUE_BOOK_TEXTURE );
+		Registries.CLIENT_CONFIG.addConfig( UNIQUE_BOOK_TEXTURE );
 		FMLJavaModLoadingContext.get().getModEventBus().addListener( RegistriesClient::register );
 	}
 
 	private static void register( final FMLClientSetupEvent event ) {
 		if( UNIQUE_BOOK_TEXTURE.isEnabled() ) {
-			ItemProperties.register( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ), RegistriesClient::enchantmentBookPredicate );
+			event.enqueueWork( ()->{
+				ItemProperties.register( Items.ENCHANTED_BOOK, new ResourceLocation( "book_type" ), RegistriesClient::enchantmentBookPredicate );
+			} );
 		}
 	}
 
