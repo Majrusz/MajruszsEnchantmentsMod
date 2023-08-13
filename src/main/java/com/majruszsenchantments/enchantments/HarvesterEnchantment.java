@@ -3,23 +3,24 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.Registries;
 import com.mlib.EquipmentSlots;
 import com.mlib.Random;
-import com.mlib.annotations.AutoInstance;
+import com.mlib.modhelper.AutoInstance;
 import com.mlib.blocks.BlockHelper;
 import com.mlib.config.ConfigGroup;
 import com.mlib.config.DoubleConfig;
 import com.mlib.effects.ParticleHandler;
 import com.mlib.effects.SoundHandler;
 import com.mlib.enchantments.CustomEnchantment;
-import com.mlib.gamemodifiers.Condition;
-import com.mlib.gamemodifiers.ModConfigs;
-import com.mlib.gamemodifiers.contexts.OnEnchantmentAvailabilityCheck;
-import com.mlib.gamemodifiers.contexts.OnFarmlandTillCheck;
-import com.mlib.gamemodifiers.contexts.OnLoot;
-import com.mlib.gamemodifiers.contexts.OnPlayerInteract;
+import com.mlib.contexts.base.Condition;
+import com.mlib.contexts.base.ModConfigs;
+import com.mlib.contexts.OnEnchantmentAvailabilityCheck;
+import com.mlib.contexts.OnFarmlandTillCheck;
+import com.mlib.contexts.OnLoot;
+import com.mlib.contexts.OnPlayerInteract;
 import com.mlib.math.AnyPos;
 import com.mlib.math.Range;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -83,6 +84,7 @@ public class HarvesterEnchantment extends CustomEnchantment {
 		private void increaseAgeOfNearbyCrops( OnPlayerInteract.Data data ) {
 			this.collectCrop( data.getServerLevel(), data.player, data.position, data.itemStack );
 			this.tickNearbyCrops( data.getServerLevel(), data.position, data.itemStack );
+			this.damageHoe( data.itemStack, data.player, data.hand );
 			SoundHandler.BONE_MEAL.play( data.getLevel(), AnyPos.from( data.position ).vec3() );
 		}
 
@@ -114,6 +116,11 @@ public class HarvesterEnchantment extends CustomEnchantment {
 					ParticleHandler.AWARD.spawn( level, AnyPos.from( position ).vec3(), particlesCount );
 				}
 			}
+		}
+
+		private void damageHoe( ItemStack itemStack, Player player, InteractionHand hand ) {
+			player.swing( hand, true );
+			itemStack.hurtAndBreak( 1, player, owner->owner.broadcastBreakEvent( hand ) );
 		}
 
 		private void replant( OnLoot.Data data ) {
