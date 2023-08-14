@@ -1,7 +1,7 @@
 {
 	"enchantment.majruszsenchantments.absorber": "吸収体",
-	"enchantment.majruszsenchantments.absorber.desc": "盾は耐久性を犠牲にしてあらゆるマイナス効果を吸収します。",
-	"enchantment.majruszsenchantments.absorber.description": "盾は耐久性を犠牲にしてあらゆるマイナス効果を吸収します。",
+	"enchantment.majruszsenchantments.absorber.desc": "盾の耐久性を犠牲にする代わりに、あらゆるマイナス効果を吸収します。",
+	"enchantment.majruszsenchantments.absorber.description": "盾の耐久性を犠牲にする代わりに、あらゆるマイナス効果を吸収します。",
 
 	"enchantment.majruszsenchantments.death_wish": "死の願望",
 	"enchantment.majruszsenchantments.death_wish.desc": "失われた体力の割合に応じて与えるダメージが増加します。",
@@ -38,42 +38,42 @@
 	"enchantment.majruszsenchantments.horse_frost_walker.description": "馬に乗って水の上を歩くと氷の道ができます。",
 
 	"enchantment.majruszsenchantments.horse_protection": "アーマードキャラバン",
-	"enchantment.majruszsenchantments.horse_protection.desc": "Reduces the amount of damage the horse receives.",
-	"enchantment.majruszsenchantments.horse_protection.description": "Reduces the amount of damage the horse receives.",
+	"enchantment.majruszsenchantments.horse_protection.desc": "馬が受けるダメージを軽減されます。",
+	"enchantment.majruszsenchantments.horse_protection.description": "馬が受けるダメージを軽減されます。",
 
 	"enchantment.majruszsenchantments.horse_swiftness": "素早さ",
-	"enchantment.majruszsenchantments.horse_swiftness.desc": "Increases the horse's movement speed.",
-	"enchantment.majruszsenchantments.horse_swiftness.description": "Increases the horse's movement speed.",
+	"enchantment.majruszsenchantments.horse_swiftness.desc": "馬の移動速度が速くなります。",
+	"enchantment.majruszsenchantments.horse_swiftness.description": "馬の移動速度が速くなります。",
 
 	"enchantment.majruszsenchantments.hunter": "猟師",
-	"enchantment.majruszsenchantments.hunter.desc": "Increases mob drops and causes damage to scale with distance.",
-	"enchantment.majruszsenchantments.hunter.description": "Increases mob drops and causes damage to scale with distance.",
+	"enchantment.majruszsenchantments.hunter.desc": "モブのドロップ量が増加し、距離に応じてダメージが増加します。",
+	"enchantment.majruszsenchantments.hunter.description": "モブのドロップ量が増加し、距離に応じてダメージが増加します。",
 
-	"enchantment.majruszsenchantments.immortality": "Immortality",
-	"enchantment.majruszsenchantments.immortality.desc": "Cheats death on a fatal hit at the cost of a shield.",
+	"enchantment.majruszsenchantments.immortality": "不死身",
+	"enchantment.majruszsenchantments.immortality.desc": "シールドを犠牲にする代わりに、致命的な打撃での死を欺きます。",
 	"enchantment.majruszsenchantments.immortality.description": "Cheats death on a fatal hit at the cost of a shield.",
 
-	"enchantment.majruszsenchantments.leech": "Leech",
+	"enchantment.majruszsenchantments.leech": "リーチ",
 	"enchantment.majruszsenchantments.leech.desc": "Gives a chance to steal positive effects, health and hunger points from enemies.",
 	"enchantment.majruszsenchantments.leech.description": "Gives a chance to steal positive effects, health and hunger points from enemies.",
 
-	"enchantment.majruszsenchantments.magic_protection": "Magic Protection",
+	"enchantment.majruszsenchantments.magic_protection": "マジックプロテクション",
 	"enchantment.majruszsenchantments.magic_protection.desc": "Protects against magical damage including Evoker Fangs, Guardians and Instant Damage potions.",
 	"enchantment.majruszsenchantments.magic_protection.description": "Protects against magical damage including Evoker Fangs, Guardians and Instant Damage potions.",
 
-	"enchantment.majruszsenchantments.misanthropy": "Misanthropy",
+	"enchantment.majruszsenchantments.misanthropy": "人嫌い",
 	"enchantment.majruszsenchantments.misanthropy.desc": "Increases the damage against villagers, pillagers, witches and other players.",
 	"enchantment.majruszsenchantments.misanthropy.description": "Increases the damage against villagers, pillagers, witches and other players.",
 
-	"enchantment.majruszsenchantments.repulsion": "Repulsion",
+	"enchantment.majruszsenchantments.repulsion": "反発",
 	"enchantment.majruszsenchantments.repulsion.desc": "Knocks back mobs when blocking their attack.",
 	"enchantment.majruszsenchantments.repulsion.description": "Knocks back mobs when blocking their attack.",
 
-	"enchantment.majruszsenchantments.sixth_sense": "Sixth Sense",
+	"enchantment.majruszsenchantments.sixth_sense": "第六感",
 	"enchantment.majruszsenchantments.sixth_sense.desc": "Highlights nearby mobs that emit any sound if the player is sneaking nearby.",
 	"enchantment.majruszsenchantments.sixth_sense.description": "Highlights nearby mobs that emit any sound if the player is sneaking nearby.",
 
-	"enchantment.majruszsenchantments.smelter": "Smelter",
+	"enchantment.majruszsenchantments.smelter": "製錬所",
 	"enchantment.majruszsenchantments.smelter.desc": "Destroyed blocks are automatically smelted.",
 	"enchantment.majruszsenchantments.smelter.description": "Destroyed blocks are automatically smelted.",
 
