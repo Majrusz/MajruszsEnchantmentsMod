@@ -50,12 +50,12 @@
 	"enchantment.majruszsenchantments.hunter.description": "モブのドロップ量が増加し、距離に応じてダメージが増加します。",
 
 	"enchantment.majruszsenchantments.immortality": "不死身",
-	"enchantment.majruszsenchantments.immortality.desc": "シールドを犠牲にする代わりに、致命的な打撃での死を欺きます。",
-	"enchantment.majruszsenchantments.immortality.description": "Cheats death on a fatal hit at the cost of a shield.",
+	"enchantment.majruszsenchantments.immortality.desc": "盾を犠牲にする代わりに、致命的な打撃での死を欺きます。",
+	"enchantment.majruszsenchantments.immortality.description": "盾を犠牲にする代わりに、致命的な打撃での死を欺きます。",
 
 	"enchantment.majruszsenchantments.leech": "リーチ",
-	"enchantment.majruszsenchantments.leech.desc": "Gives a chance to steal positive effects, health and hunger points from enemies.",
-	"enchantment.majruszsenchantments.leech.description": "Gives a chance to steal positive effects, health and hunger points from enemies.",
+	"enchantment.majruszsenchantments.leech.desc": "敵からプラス効果、体力、満腹度を奪う機会があります。",
+	"enchantment.majruszsenchantments.leech.description": "敵からプラス効果、体力、満腹度を奪う機会があります。",
 
 	"enchantment.majruszsenchantments.magic_protection": "マジックプロテクション",
 	"enchantment.majruszsenchantments.magic_protection.desc": "Protects against magical damage including Evoker Fangs, Guardians and Instant Damage potions.",
@@ -77,36 +77,36 @@
 	"enchantment.majruszsenchantments.smelter.desc": "Destroyed blocks are automatically smelted.",
 	"enchantment.majruszsenchantments.smelter.description": "Destroyed blocks are automatically smelted.",
 
-	"enchantment.majruszsenchantments.telekinesis": "Telekinesis",
+	"enchantment.majruszsenchantments.telekinesis": "念力",
 	"enchantment.majruszsenchantments.telekinesis.desc": "Adds acquired items directly to player's inventory.",
 	"enchantment.majruszsenchantments.telekinesis.description": "Adds acquired items directly to player's inventory.",
 
-	"enchantment.majruszsenchantments.breaking_curse": "Curse of Breaking",
+	"enchantment.majruszsenchantments.breaking_curse": "呪いの破戒",
 	"enchantment.majruszsenchantments.breaking_curse.desc": "Makes the item break down faster.",
 	"enchantment.majruszsenchantments.breaking_curse.description": "Makes the item break down faster.",
 
-	"enchantment.majruszsenchantments.corrosion_curse": "Curse of Corrosion",
+	"enchantment.majruszsenchantments.corrosion_curse": "腐食の呪縛",
 	"enchantment.majruszsenchantments.corrosion_curse.desc": "Gradually destroys armor and inflicts damage to the user when in water.",
 	"enchantment.majruszsenchantments.corrosion_curse.description": "Gradually destroys armor and inflicts damage to the user when in water.",
 
-	"enchantment.majruszsenchantments.fatigue_curse": "Curse of Fatigue",
+	"enchantment.majruszsenchantments.fatigue_curse": "疲労の呪縛",
 	"enchantment.majruszsenchantments.fatigue_curse.desc": "Effectively reduces the player's movement speed and use time of items.",
 	"enchantment.majruszsenchantments.fatigue_curse.description": "Effectively reduces the player's movement speed and use time of items.",
 
-	"enchantment.majruszsenchantments.incompatibility_curse": "Curse of Incompatibility",
+	"enchantment.majruszsenchantments.incompatibility_curse": "相容れない呪い",
 	"enchantment.majruszsenchantments.incompatibility_curse.desc": "Makes the item unenchantable.",
 	"enchantment.majruszsenchantments.incompatibility_curse.description": "Makes the item unenchantable.",
 
-	"enchantment.majruszsenchantments.slippery_curse": "Curse of Slippery",
+	"enchantment.majruszsenchantments.slippery_curse": "滑りやすい呪い",
 	"enchantment.majruszsenchantments.slippery_curse.desc": "Makes the item occasionally drop out of hand.",
 	"enchantment.majruszsenchantments.slippery_curse.description": "Makes the item occasionally drop out of hand.",
 
-	"enchantment.majruszsenchantments.vampirism_curse": "Curse of Vampirism",
+	"enchantment.majruszsenchantments.vampirism_curse": "吸血鬼の呪い",
 	"enchantment.majruszsenchantments.vampirism_curse.desc": "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger.",
 	"enchantment.majruszsenchantments.vampirism_curse.description": "Weakens and ignites the player when in daylight, but makes Leech enchantment stronger.",
 	"enchantment.majruszsenchantments.vampirism_curse.block_sleep": "You do not feel the need to sleep...",
 
-	"advancements.majruszsenchantments.scholar.title": "Scholar",
+	"advancements.majruszsenchantments.scholar.title": "学者",
 	"advancements.majruszsenchantments.scholar.description": "Acquire Enlightenment II on all armor pieces",
 	"advancements.majruszsenchantments.nothing_can_stop_me.title": "Nothing Can Stop Me",
 	"advancements.majruszsenchantments.nothing_can_stop_me.description": "Obtain the next level of Fishing Fanatic while it rains",
