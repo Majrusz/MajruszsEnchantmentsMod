@@ -66,8 +66,8 @@
 	"enchantment.majruszsenchantments.misanthropy.description": "村人、ピリジャー‌、ウィッチや他のプレイヤーに対するダメージが増加します。",
 
 	"enchantment.majruszsenchantments.repulsion": "反発",
-	"enchantment.majruszsenchantments.repulsion.desc": "Knocks back mobs when blocking their attack.",
-	"enchantment.majruszsenchantments.repulsion.description": "Knocks back mobs when blocking their attack.",
+	"enchantment.majruszsenchantments.repulsion.desc": "モブの攻撃をガードした際にモブをノックバックさせます。",
+	"enchantment.majruszsenchantments.repulsion.description": "モブの攻撃をガードした際にモブをノックバックさせます。",
 
 	"enchantment.majruszsenchantments.sixth_sense": "第六感",
 	"enchantment.majruszsenchantments.sixth_sense.desc": "プレイヤーが近くで忍び込んでいる場合、何らかの音を出ている近くのモブを表示します。",
