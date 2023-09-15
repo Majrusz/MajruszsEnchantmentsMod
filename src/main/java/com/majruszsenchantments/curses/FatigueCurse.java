@@ -87,7 +87,7 @@ public class FatigueCurse extends CustomEnchantment {
 		}
 
 		private void reduceMiningSpeed( OnBreakSpeed.Data data ) {
-			data.event.setNewSpeed( data.event.getNewSpeed() * this.getItemMultiplier( this.miningMultiplier, data.player ) );
+			data.newSpeed *= this.getItemMultiplier( this.miningMultiplier, data.player );
 		}
 
 		private void reduceAttackSpeed( OnEquipmentChanged.Data data ) {

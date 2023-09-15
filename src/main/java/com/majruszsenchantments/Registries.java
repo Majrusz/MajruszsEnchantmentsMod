@@ -12,8 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -24,7 +22,6 @@ public class Registries {
 
 	// Configs
 	public static final ConfigHandler SERVER_CONFIG = HELPER.createConfig( ModConfig.Type.SERVER );
-	public static final ConfigHandler CLIENT_CONFIG = HELPER.createConfig( ModConfig.Type.CLIENT );
 
 	static {
 		ModConfigs.init( SERVER_CONFIG, Groups.ENCHANTMENT ).name( "Enchantments" );
@@ -87,7 +84,6 @@ public class Registries {
 	}
 
 	public static void initialize() {
-		DistExecutor.unsafeRunWhenOn( Dist.CLIENT, ()->RegistriesClient::initialize );
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_COMBAT, SHIELD, BOW_AND_CROSSBOW, MELEE_MINECRAFT, MELEE );
 		ItemHelper.addEnchantmentTypesToItemGroup( CreativeModeTab.TAB_TOOLS, HOE, GOLDEN, TOOLS );
 		ItemHelper.addEnchantmentTypeToItemGroup( CreativeModeTab.TAB_MISC, HORSE_ARMOR );
