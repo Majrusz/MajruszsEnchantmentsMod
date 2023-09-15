@@ -49,6 +49,7 @@ public class DodgeEnchantment extends CustomEnchantment {
 				.addCondition( Condition.hasEnchantment( this.enchantment, data->data.target ) )
 				.addCondition( OnPreDamaged.dealtAnyDamage() )
 				.addCondition( OnPreDamaged.willTakeFullDamage() )
+				.addCondition( Condition.predicate( data->data.attacker != null ) )
 				.addCondition( Condition.predicate( this::tryToDodge ) )
 				.addConfig( this.chance.name( "chance" ).comment( "Chance to completely ignore the damage per enchantment level." ) )
 				.insertTo( group );
