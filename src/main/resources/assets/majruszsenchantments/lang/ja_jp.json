@@ -1,0 +1,119 @@
+{
+	"enchantment.majruszsenchantments.absorber": "吸収体",
+	"enchantment.majruszsenchantments.absorber.desc": "盾の耐久性を犠牲にする代わりに、あらゆるマイナス効果を吸収します。",
+	"enchantment.majruszsenchantments.absorber.description": "盾の耐久性を犠牲にする代わりに、あらゆるマイナス効果を吸収します。",
+
+	"enchantment.majruszsenchantments.death_wish": "死の願望",
+	"enchantment.majruszsenchantments.death_wish.desc": "失われた体力の割合に応じて与えるダメージが増加します。",
+	"enchantment.majruszsenchantments.death_wish.description": "失った体力の割合に応じて与えるダメージが増加します。",
+
+	"enchantment.majruszsenchantments.dodge": "回避",
+	"enchantment.majruszsenchantments.dodge.desc": "あらゆるダメージを完全に回避する機会を与えます。",
+	"enchantment.majruszsenchantments.dodge.description": "あらゆるダメージを完全に回避する機会を与えます。",
+
+	"enchantment.majruszsenchantments.enlightenment": "啓発",
+	"enchantment.majruszsenchantments.enlightenment.desc": "あらゆるソースから獲得できる経験値が増加します。",
+	"enchantment.majruszsenchantments.enlightenment.description": "あらゆるソースから得られる経験値が増加します。",
+
+	"enchantment.majruszsenchantments.fishing_fanatic": "フィッシングマニア",
+	"enchantment.majruszsenchantments.fishing_fanatic.desc": "釣りで追加のアイテムを釣れるチャンスが与えられます。",
+	"enchantment.majruszsenchantments.fishing_fanatic.description": "釣りで追加のアイテムを釣れるチャンスが与えられます。",
+	"enchantment.majruszsenchantments.fishing_fanatic.level_up": "釣りに夢中になってしまったね！",
+	"enchantment.majruszsenchantments.fishing_fanatic.true": "真のフィシングマニア",
+
+	"enchantment.majruszsenchantments.fuse_cutter": "ヒューズカッター",
+	"enchantment.majruszsenchantments.fuse_cutter.desc": "近くで爆発が起きても、ブロックは破壊されず、ダメージもありません。",
+	"enchantment.majruszsenchantments.fuse_cutter.description": "近くで爆発が起きても、ブロックは破壊されず、ダメージもありません。",
+
+	"enchantment.majruszsenchantments.gold_fuelled": "ゴールド・フュエルド",
+	"enchantment.majruszsenchantments.gold_fuelled.desc": "壊れそうになった金の道具や防具を、金のインゴット1個で完全に修理します。",
+	"enchantment.majruszsenchantments.gold_fuelled.description": "壊れそうになった金の道具や防具を、金のインゴット1個で完全に修理します。",
+
+	"enchantment.majruszsenchantments.harvester": "収穫機",
+	"enchantment.majruszsenchantments.harvester.desc": "右クリックで収穫ができるようになり、近くの作物を栽培できるようになりました。",
+	"enchantment.majruszsenchantments.harvester.description": "右クリックで収穫ができるようになり、近くの作物を栽培できるようになりました。",
+
+	"enchantment.majruszsenchantments.horse_frost_walker": "フロストライダー",
+	"enchantment.majruszsenchantments.horse_frost_walker.desc": "馬に乗って水の上を歩くと氷の道ができます。",
+	"enchantment.majruszsenchantments.horse_frost_walker.description": "馬に乗って水の上を歩くと氷の道ができます。",
+
+	"enchantment.majruszsenchantments.horse_protection": "アーマードキャラバン",
+	"enchantment.majruszsenchantments.horse_protection.desc": "馬が受けるダメージを軽減されます。",
+	"enchantment.majruszsenchantments.horse_protection.description": "馬が受けるダメージを軽減されます。",
+
+	"enchantment.majruszsenchantments.horse_swiftness": "素早さ",
+	"enchantment.majruszsenchantments.horse_swiftness.desc": "馬の移動速度が速くなります。",
+	"enchantment.majruszsenchantments.horse_swiftness.description": "馬の移動速度が速くなります。",
+
+	"enchantment.majruszsenchantments.hunter": "猟師",
+	"enchantment.majruszsenchantments.hunter.desc": "モブのドロップ量が増加し、距離に応じてダメージが増加します。",
+	"enchantment.majruszsenchantments.hunter.description": "モブのドロップ量が増加し、距離に応じてダメージが増加します。",
+
+	"enchantment.majruszsenchantments.immortality": "不死身",
+	"enchantment.majruszsenchantments.immortality.desc": "盾を犠牲にする代わりに、致命的な打撃での死を欺きます。",
+	"enchantment.majruszsenchantments.immortality.description": "盾を犠牲にする代わりに、致命的な打撃での死を欺きます。",
+
+	"enchantment.majruszsenchantments.leech": "リーチ",
+	"enchantment.majruszsenchantments.leech.desc": "敵からプラス効果、体力、満腹度を奪う機会があります。",
+	"enchantment.majruszsenchantments.leech.description": "敵からプラス効果、体力、満腹度を奪う機会があります。",
+
+	"enchantment.majruszsenchantments.magic_protection": "マジックプロテクション",
+	"enchantment.majruszsenchantments.magic_protection.desc": "エヴォーカー、ガーディアン、負傷のポーションなどの魔法ダメージから守ります。",
+	"enchantment.majruszsenchantments.magic_protection.description": "エヴォーカー、ガーディアン、負傷のポーションなどの魔法ダメージから守ります。",
+
+	"enchantment.majruszsenchantments.misanthropy": "人嫌い",
+	"enchantment.majruszsenchantments.misanthropy.desc": "村人、ピリジャー‌、ウィッチや他のプレイヤーに対するダメージが増加します。",
+	"enchantment.majruszsenchantments.misanthropy.description": "村人、ピリジャー‌、ウィッチや他のプレイヤーに対するダメージが増加します。",
+
+	"enchantment.majruszsenchantments.repulsion": "反発",
+	"enchantment.majruszsenchantments.repulsion.desc": "モブの攻撃をガードした際にモブをノックバックさせます。",
+	"enchantment.majruszsenchantments.repulsion.description": "モブの攻撃をガードした際にモブをノックバックさせます。",
+
+	"enchantment.majruszsenchantments.sixth_sense": "第六感",
+	"enchantment.majruszsenchantments.sixth_sense.desc": "プレイヤーが近くで忍び込んでいる場合、何らかの音を出ている近くのモブを表示します。",
+	"enchantment.majruszsenchantments.sixth_sense.description": "プレイヤーが近くで忍び込んでいる場合、何らかの音を出ている近くのモブを表示します。",
+
+	"enchantment.majruszsenchantments.smelter": "製錬所",
+	"enchantment.majruszsenchantments.smelter.desc": "破壊されたブロックは自動的に製錬されます。",
+	"enchantment.majruszsenchantments.smelter.description": "破壊されたブロックは自動的に製錬されます。",
+
+	"enchantment.majruszsenchantments.telekinesis": "念力",
+	"enchantment.majruszsenchantments.telekinesis.desc": "獲得したアイテムをプレイヤーのインベントリに直接追加します。",
+	"enchantment.majruszsenchantments.telekinesis.description": "獲得したアイテムをプレイヤーのインベントリに直接追加します。",
+
+	"enchantment.majruszsenchantments.breaking_curse": "呪いの破戒",
+	"enchantment.majruszsenchantments.breaking_curse.desc": "アイテムの壊れる速度が速くなります。",
+	"enchantment.majruszsenchantments.breaking_curse.description": "アイテムの壊れる速度が速くなります。",
+
+	"enchantment.majruszsenchantments.corrosion_curse": "腐食の呪縛",
+	"enchantment.majruszsenchantments.corrosion_curse.desc": "水中では防具を徐々に破壊し、使用者にダメージを与えます。",
+	"enchantment.majruszsenchantments.corrosion_curse.description": "水中では防具を徐々に破壊し、使用者にダメージを与えます。",
+
+	"enchantment.majruszsenchantments.fatigue_curse": "疲労の呪縛",
+	"enchantment.majruszsenchantments.fatigue_curse.desc": "プレイヤーの移動速度とアイテムの使用時間を効果的に減少させます。",
+	"enchantment.majruszsenchantments.fatigue_curse.description": "プレイヤーの移動速度とアイテムの使用時間を効果的に減少させます。",
+
+	"enchantment.majruszsenchantments.incompatibility_curse": "相容れない呪い",
+	"enchantment.majruszsenchantments.incompatibility_curse.desc": "アイテムにエンチャントをすることが出来なくなります。",
+	"enchantment.majruszsenchantments.incompatibility_curse.description": "アイテムにエンチャントをすることが出来なくなります。",
+
+	"enchantment.majruszsenchantments.slippery_curse": "滑りやすい呪い",
+	"enchantment.majruszsenchantments.slippery_curse.desc": "時々、アイテムを手元から落としてしまうことがあります。",
+	"enchantment.majruszsenchantments.slippery_curse.description": "時々、アイテムを手元から落としてしまうことがあります。",
+
+	"enchantment.majruszsenchantments.vampirism_curse": "吸血鬼の呪い",
+	"enchantment.majruszsenchantments.vampirism_curse.desc": "昼間はプレイヤーを弱体化し、燃えますが、リーチエンチャントは強くなります。",
+	"enchantment.majruszsenchantments.vampirism_curse.description": "昼間はプレイヤーを弱体化し、燃えますが、リーチエンチャントは強くなります。",
+	"enchantment.majruszsenchantments.vampirism_curse.block_sleep": "眠る必要性を全く感じない...",
+
+	"advancements.majruszsenchantments.scholar.title": "学者",
+	"advancements.majruszsenchantments.scholar.description": "すべての防具でEnlightenment IIを獲得する",
+	"advancements.majruszsenchantments.nothing_can_stop_me.title": "誰にも止める事が出来ない",
+	"advancements.majruszsenchantments.nothing_can_stop_me.description": "雨が降っている間にフィッシングマニアの次のレベルを取得しましょう",
+	"advancements.majruszsenchantments.fishing_fanatic.title": "やあ、なかなかいいね！",
+	"advancements.majruszsenchantments.fishing_fanatic.description": "フィッシングマニアの最初のレベルを取得する",
+	"advancements.majruszsenchantments.fishing_fanatic_true.title": "そうですね...私は依存しています",
+	"advancements.majruszsenchantments.fishing_fanatic_true.description": "フィッシングマニアのレベル8を取得",
+	"advancements.majruszsenchantments.fishing_fanatic_extreme.title": "究極のフィッシング",
+	"advancements.majruszsenchantments.fishing_fanatic_extreme.description": "最高の釣りのエンチャントを1本の釣竿で手に入れよう"
+}
