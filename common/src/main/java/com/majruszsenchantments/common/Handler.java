@@ -5,8 +5,6 @@ import com.mlib.data.Serializable;
 import com.mlib.item.CustomEnchantment;
 import com.mlib.registry.RegistryObject;
 
-import java.util.function.Supplier;
-
 public class Handler {
 	protected final RegistryObject< ? extends CustomEnchantment > enchantment;
 	protected final Serializable config;
@@ -17,7 +15,7 @@ public class Handler {
 		this.config = new Serializable();
 		this.config.defineBoolean( "is_enabled", ()->this.isEnabled, x->{
 			this.isEnabled = x;
-			this.enchantment.get().setEnabled( this.isEnabled );
+			this.enchantment.ifPresent( y->y.setEnabled( this.isEnabled ) );
 		} );
 
 		Serializable config = isCurse ? MajruszsEnchantments.CONFIG.curses : MajruszsEnchantments.CONFIG.enchantments;
