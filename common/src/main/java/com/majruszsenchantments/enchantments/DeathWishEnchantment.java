@@ -4,9 +4,9 @@ import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
 import com.mlib.annotation.AutoInstance;
 import com.mlib.contexts.OnEntityPreDamaged;
-import com.mlib.contexts.base.Condition;
 import com.mlib.entity.EntityHelper;
 import com.mlib.item.CustomEnchantment;
+import com.mlib.item.EnchantmentHelper;
 import com.mlib.item.EquipmentSlots;
 import com.mlib.math.Range;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -29,10 +29,10 @@ public class DeathWishEnchantment extends Handler {
 		super( MajruszsEnchantments.DEATH_WISH, false );
 
 		OnEntityPreDamaged.listen( this::increaseDamageDealt )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.attacker ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
 		OnEntityPreDamaged.listen( this::increaseDamageReceived )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.target ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.target ) );
 
 		this.config.defineFloatRange( "damage_multiplier_range", ()->this.damage, x->this.damage = Range.of( 0.0f, 10.0f ).clamp( x ) );
 		this.config.defineFloatRange( "vulnerability_multiplier_range", ()->this.vulnerability, x->this.vulnerability = Range.of( 0.0f, 10.0f ).clamp( x ) );

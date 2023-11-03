@@ -13,6 +13,7 @@ import com.mlib.emitter.SoundEmitter;
 import com.mlib.entity.EntityHelper;
 import com.mlib.entity.EntityNoiseListener;
 import com.mlib.item.CustomEnchantment;
+import com.mlib.item.EnchantmentHelper;
 import com.mlib.item.EquipmentSlots;
 import com.mlib.item.LootHelper;
 import com.mlib.math.Range;
@@ -67,7 +68,7 @@ public class SixthSenseEnchantment extends Handler {
 
 		OnEntityNoiseCheck.listen( OnEntityNoiseCheck::makeAudible )
 			.addCondition( data->data.listener instanceof ServerPlayer )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->( ServerPlayer )data.listener ) )
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, ( ServerPlayer )data.listener ) )
 			.addCondition( Condition.isShiftKeyDown( data->( ServerPlayer )data.listener ) )
 			.addCondition( Condition.isOnGround( data->data.listener ) );
 
@@ -79,7 +80,7 @@ public class SixthSenseEnchantment extends Handler {
 		OnPlayerTicked.listen( this::playSound )
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( Condition.cooldown( 1.25f ) )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.player ) )
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.player ) )
 			.addCondition( Condition.isShiftKeyDown( data->data.player ) )
 			.addCondition( Condition.isOnGround( data->data.player ) );
 

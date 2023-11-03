@@ -37,7 +37,7 @@ public class SlipperyCurse extends Handler {
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( Condition.cooldown( ()->this.cooldown ) )
 			.addCondition( Condition.chance( ()->this.chance ) )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.entity ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) );
 
 		this.config.defineFloat( "drop_chance", ()->this.chance, x->this.chance = Range.CHANCE.clamp( x ) );
 		this.config.defineFloat( "drop_cooldown", ()->this.cooldown, x->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( x ) );

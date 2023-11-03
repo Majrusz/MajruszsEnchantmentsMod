@@ -7,7 +7,6 @@ import com.mlib.contexts.OnBreakSpeedGet;
 import com.mlib.contexts.OnItemEquipped;
 import com.mlib.contexts.OnItemSwingDurationGet;
 import com.mlib.contexts.OnItemUseTicked;
-import com.mlib.contexts.base.Condition;
 import com.mlib.entity.AttributeHandler;
 import com.mlib.item.CustomEnchantment;
 import com.mlib.item.EnchantmentHelper;
@@ -51,18 +50,18 @@ public class FatigueCurse extends Handler {
 		this.movementSpeed = new AttributeHandler( "%s_movement_speed".formatted( this.enchantment.getId() ), ()->Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
 
 		OnBreakSpeedGet.listen( this::reduceMiningSpeed )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.player ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.player ) );
 
 		OnItemEquipped.listen( this::reduceAttackSpeed );
 
 		OnItemEquipped.listen( this::reduceMovementSpeed );
 
 		OnItemUseTicked.listen( this::reduceUseSpeed )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.entity ) )
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) )
 			.addCondition( data->Random.check( 1.0f - this.getItemMultiplier( this.usingMultiplier, data.entity ) ) );
 
 		OnItemSwingDurationGet.listen( this::increaseSwingDuration )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.entity ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) );
 
 		this.config.defineCustom( "speed_multiplier_per_level", subconfig->{
 			subconfig.defineFloat( "mining", ()->this.miningMultiplier, x->this.miningMultiplier = MULTIPLIER.clamp( x ) );

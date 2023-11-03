@@ -8,6 +8,7 @@ import com.mlib.contexts.base.Condition;
 import com.mlib.emitter.ParticleEmitter;
 import com.mlib.emitter.SoundEmitter;
 import com.mlib.item.CustomEnchantment;
+import com.mlib.item.EnchantmentHelper;
 import com.mlib.item.EquipmentSlots;
 import com.mlib.math.AnyPos;
 import com.mlib.math.Random;
@@ -44,7 +45,7 @@ public class LeechEnchantment extends Handler {
 
 		OnEntityDamaged.listen( this::tryToLeechAnything )
 			.addCondition( Condition.isLogicalServer() )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.attacker ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
 		this.config.defineFloat( "health_chance", ()->this.healthChance, x->this.healthChance = Range.CHANCE.clamp( x ) );
 		this.config.defineFloat( "hunger_chance", ()->this.hungerChance, x->this.hungerChance = Range.CHANCE.clamp( x ) );

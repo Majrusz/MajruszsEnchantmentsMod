@@ -8,7 +8,6 @@ import com.mlib.contexts.OnEntityPreDamaged;
 import com.mlib.contexts.OnFishingExtraItemsGet;
 import com.mlib.contexts.OnItemEquipped;
 import com.mlib.contexts.OnItemFished;
-import com.mlib.contexts.base.Condition;
 import com.mlib.contexts.base.Priority;
 import com.mlib.entity.AttributeHandler;
 import com.mlib.item.*;
@@ -97,11 +96,11 @@ public class FishingFanaticEnchantment extends Handler {
 		this.attackSpeed = new AttributeHandler( "%s_attack_speed".formatted( this.enchantment.getId() ), ()->Attributes.ATTACK_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
 
 		OnFishingExtraItemsGet.listen( this::increaseLoot )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.player ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.player ) );
 
 		OnEntityPreDamaged.listen( this::increaseDamage )
 			.addCondition( OnEntityPreDamaged::willTakeFullDamage )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.attacker ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
 		OnItemEquipped.listen( this::reduceAttackSpeed );
 

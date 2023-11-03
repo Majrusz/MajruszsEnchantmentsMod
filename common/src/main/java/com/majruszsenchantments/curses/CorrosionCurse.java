@@ -36,7 +36,7 @@ public class CorrosionCurse extends Handler {
 		OnEntityTicked.listen( this::dealDamage )
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( Condition.cooldown( ()->this.cooldown ) )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.entity ) )
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) )
 			.addCondition( data->LevelHelper.isRainingAt( data.getLevel(), data.entity.blockPosition() ) || data.entity.isInWater() );
 
 		this.config.defineFloat( "damage_dealt_per_level", ()->this.damage, x->this.damage = Range.of( 0.0f, 10.0f ).clamp( x ) );

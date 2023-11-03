@@ -5,7 +5,6 @@ import com.majruszsenchantments.common.Handler;
 import com.mlib.annotation.AutoInstance;
 import com.mlib.contexts.OnExpOrbPickedUp;
 import com.mlib.contexts.OnItemEquipped;
-import com.mlib.contexts.base.Condition;
 import com.mlib.item.CustomEnchantment;
 import com.mlib.item.EnchantmentHelper;
 import com.mlib.item.EquipmentSlots;
@@ -33,7 +32,7 @@ public class EnlightenmentEnchantment extends Handler {
 		super( MajruszsEnchantments.ENLIGHTENMENT, false );
 
 		OnExpOrbPickedUp.listen( this::increaseExperience )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.player ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.player ) );
 
 		OnItemEquipped.listen( this::giveAdvancement )
 			.addCondition( data->data.entity instanceof ServerPlayer )

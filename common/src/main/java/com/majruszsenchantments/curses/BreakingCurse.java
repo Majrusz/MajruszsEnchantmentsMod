@@ -4,7 +4,6 @@ import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
 import com.mlib.annotation.AutoInstance;
 import com.mlib.contexts.OnItemDamaged;
-import com.mlib.contexts.base.Condition;
 import com.mlib.contexts.base.Priority;
 import com.mlib.item.CustomEnchantment;
 import com.mlib.item.EnchantmentHelper;
@@ -36,7 +35,7 @@ public class BreakingCurse extends Handler {
 
 		OnItemDamaged.listen( this::dealExtraDamage )
 			.priority( Priority.HIGH )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.player ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.player ) );
 
 		this.config.defineFloat( "damage_multiplier_per_level", ()->this.damageMultiplier, x->this.damageMultiplier = Range.of( 0.0f, 10.0f ).clamp( x ) );
 	}

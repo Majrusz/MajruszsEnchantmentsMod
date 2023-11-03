@@ -28,7 +28,7 @@ public class ImmortalityEnchantment extends Handler {
 
 		OnEntityDied.listen( this::cheatDeath )
 			.addCondition( Condition.isLogicalServer() )
-			.addCondition( Condition.hasEnchantment( this.enchantment, data->data.target ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.target ) );
 	}
 
 	private void cheatDeath( OnEntityDied data ) {
