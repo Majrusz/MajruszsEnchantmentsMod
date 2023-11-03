@@ -8,6 +8,7 @@ import com.mlib.time.TimeHelper;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.util.Mth;
 
 @OnlyIn( Dist.CLIENT )
 public class DodgeParticle extends CustomParticle {
@@ -17,19 +18,27 @@ public class DodgeParticle extends CustomParticle {
 		super( level, x, y, z, xSpeed, ySpeed, zSpeed );
 
 		this.spriteSet = spriteSet;
-		this.xd = this.xd * 0.0025 + xSpeed;
-		this.yd = this.yd * 0.0200 + ySpeed;
-		this.zd = this.zd * 0.0025 + zSpeed;
-		this.xdFormula = xd->xd + Random.nextFloat( -0.0002f, 0.0002f );
-		this.ydFormula = yd->yd - 0.00002f;
-		this.zdFormula = zd->zd + Random.nextFloat( -0.0002f, 0.0002f );
-		this.alphaFormula = alpha->Math.max( 0.0f, alpha - 0.04f );
-		this.scaleFormula = lifeRatio->1.0f - 0.1f * lifeRatio;
-		this.lifetime = this.random.nextInt( TimeHelper.toTicks( 0.5f ) ) + TimeHelper.toTicks( 1.5f );
+		this.xd = xSpeed;
+		this.yd = ySpeed;
+		this.zd = zSpeed;
+		this.xdFormula = xd->xd * 0.9;
+		this.ydFormula = yd->yd * 0.0;
+		this.zdFormula = zd->zd * 0.9;
+		this.lifetime = TimeHelper.toTicks( Random.nextFloat( 1.0f, 1.5f ) );
+		this.alpha = 0.0f;
+		this.alphaFormula = alpha->Mth.clamp( 3.0f * ( 1.0f - Math.abs( 2.0f * this.age / this.lifetime - 1.0f ) ), 0.0f, 1.0f );
+		this.scaleFormula = lifeRatio->1.0f;
 
-		this.scale( 2.0f );
-		this.setSize( 0.125f, 0.125f );
-		this.pickSprite( spriteSet );
+		float color = Random.nextFloat( 0.7f, 1.0f );
+		this.setSpriteFromAge( this.spriteSet );
+		this.setColor( color, color, color );
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		this.setSpriteFromAge( this.spriteSet );
 	}
 
 	@Override

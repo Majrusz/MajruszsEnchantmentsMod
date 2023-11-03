@@ -10,6 +10,7 @@ import com.mlib.emitter.SoundEmitter;
 import com.mlib.item.CustomEnchantment;
 import com.mlib.item.EnchantmentHelper;
 import com.mlib.item.EquipmentSlots;
+import com.mlib.math.AnyPos;
 import com.mlib.math.Random;
 import com.mlib.math.Range;
 import net.minecraft.sounds.SoundEvents;
@@ -47,8 +48,9 @@ public class DodgeEnchantment extends Handler {
 
 		ParticleEmitter.of( MajruszsEnchantments.DODGE_PARTICLE )
 			.sizeBased( data.target )
-			.count( 20 )
-			.speed( 0.005f )
+			.count( 40 )
+			.offset( ()->AnyPos.from( data.target.getBbWidth(), data.target.getBbHeight(), data.target.getBbWidth() ).mul( 0.35f, 0.25f, 0.35f ).vec3() )
+			.speed( 0.1f )
 			.emit( data.getServerLevel() );
 
 		SoundEmitter.of( SoundEvents.FIRE_EXTINGUISH )

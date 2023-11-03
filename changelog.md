@@ -1,4 +1,5 @@
 - changed required Majrusz Library version from 5.0.0+ to 6.1.0+
+- added new Dodge particles
 - added 50% attack speed penalty per level of Fishing Fanatic
 - removed Extreme Fishing advancement
 - made Immortality give the same effects as Totem of Undying instead of 10 hearts
