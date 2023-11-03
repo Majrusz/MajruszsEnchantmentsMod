@@ -3,6 +3,7 @@
 - removed Extreme Fishing advancement
 - made Immortality give the same effects as Totem of Undying instead of 10 hearts
 - made Curse of Fatigue also apply movement speed penalty for holded item
+- fixed game crash with Hunter enchantment (reported by @ximemt01)
 - fixed bug with Enlightenment giving 25% experience bonus per enchantment level instead of 12.5%
 - fixed bug with Harvester replant ability working without the enchantment on a hoe
 - fixed bug with Hunter and Telekinesis not working properly when used on bows held in the second hand

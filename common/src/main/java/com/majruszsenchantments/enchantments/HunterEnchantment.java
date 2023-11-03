@@ -40,6 +40,7 @@ public class HunterEnchantment extends Handler {
 
 		OnEntityPreDamaged.listen( this::modifyDamage )
 			.addCondition( data->data.attacker != null )
+			.addCondition( data->data.source != null )
 			.addCondition( data->data.source.is( DamageTypeTags.IS_PROJECTILE ) )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, this.getItemStack( data.source ) ) );
 
