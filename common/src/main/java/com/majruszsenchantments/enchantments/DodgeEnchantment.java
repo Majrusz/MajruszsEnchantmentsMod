@@ -46,11 +46,21 @@ public class DodgeEnchantment extends Handler {
 	private void dodge( OnEntityPreDamaged data ) {
 		data.cancelDamage();
 
+		float width = data.target.getBbWidth();
+		float height = data.target.getBbHeight();
+
 		ParticleEmitter.of( MajruszsEnchantments.DODGE_PARTICLE )
 			.sizeBased( data.target )
-			.count( 40 )
-			.offset( ()->AnyPos.from( data.target.getBbWidth(), data.target.getBbHeight(), data.target.getBbWidth() ).mul( 0.35f, 0.25f, 0.35f ).vec3() )
-			.speed( 0.1f )
+			.count( 10 )
+			.offset( ()->AnyPos.from( width, height, width ).mul( 0.35f, 0.25f, 0.35f ).vec3() )
+			.speed( 0.075f )
+			.emit( data.getServerLevel() );
+
+		ParticleEmitter.of( MajruszsEnchantments.DODGE_PARTICLE )
+			.sizeBased( data.target )
+			.count( 20 )
+			.offset( ()->AnyPos.from( width, height, width ).mul( 1.0f, 0.25f, 1.0f ).vec3() )
+			.speed( 0.025f )
 			.emit( data.getServerLevel() );
 
 		SoundEmitter.of( SoundEvents.FIRE_EXTINGUISH )
