@@ -2,17 +2,20 @@ package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
+import com.mlib.MajruszLibrary;
 import com.mlib.annotation.AutoInstance;
 import com.mlib.contexts.OnEntityPreDamaged;
 import com.mlib.contexts.base.Condition;
 import com.mlib.emitter.ParticleEmitter;
 import com.mlib.emitter.SoundEmitter;
+import com.mlib.entity.EntityHelper;
 import com.mlib.item.CustomEnchantment;
 import com.mlib.item.EnchantmentHelper;
 import com.mlib.item.EquipmentSlots;
 import com.mlib.math.AnyPos;
 import com.mlib.math.Random;
 import com.mlib.math.Range;
+import com.mlib.time.TimeHelper;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -44,28 +47,35 @@ public class DodgeEnchantment extends Handler {
 	}
 
 	private void dodge( OnEntityPreDamaged data ) {
-		data.cancelDamage();
+		int invisibleDuration = TimeHelper.toTicks( 1.0 ); // TODO: test on server
 
+		data.cancelDamage();
+		this.spawnEffects( data, invisibleDuration );
+		MajruszLibrary.ENTITY_INVISIBLE.sendToClients( new EntityHelper.EntityInvisible( data.target, invisibleDuration ) );
+	}
+
+	private void spawnEffects( OnEntityPreDamaged data, int invisibleDuration ) {
+		TimeHelper.slider( invisibleDuration, slider->{
+			boolean isFirstOrLastTick = slider.getTicksLeft() == slider.getTicksTotal() || slider.getTicksLeft() == 0;
+
+			this.spawnParticles( data, isFirstOrLastTick ? 20 : 1 );
+		} );
+
+		SoundEmitter.of( SoundEvents.FIRE_EXTINGUISH )
+			.position( data.target.position() )
+			.volume( SoundEmitter.randomized( 0.4f ) )
+			.emit( data.getServerLevel() );
+	}
+
+	private void spawnParticles( OnEntityPreDamaged data, int count ) {
 		float width = data.target.getBbWidth();
 		float height = data.target.getBbHeight();
 
 		ParticleEmitter.of( MajruszsEnchantments.DODGE_PARTICLE )
 			.sizeBased( data.target )
-			.count( 10 )
-			.offset( ()->AnyPos.from( width, height, width ).mul( 0.35f, 0.25f, 0.35f ).vec3() )
-			.speed( 0.075f )
-			.emit( data.getServerLevel() );
-
-		ParticleEmitter.of( MajruszsEnchantments.DODGE_PARTICLE )
-			.sizeBased( data.target )
-			.count( 20 )
+			.count( count )
 			.offset( ()->AnyPos.from( width, height, width ).mul( 1.0f, 0.25f, 1.0f ).vec3() )
 			.speed( 0.025f )
-			.emit( data.getServerLevel() );
-
-		SoundEmitter.of( SoundEvents.FIRE_EXTINGUISH )
-			.position( data.target.position() )
-			.volume( SoundEmitter.randomized( 0.4f ) )
 			.emit( data.getServerLevel() );
 	}
 }
