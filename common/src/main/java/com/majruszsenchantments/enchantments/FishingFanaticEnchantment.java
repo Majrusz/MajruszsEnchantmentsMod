@@ -100,6 +100,7 @@ public class FishingFanaticEnchantment extends Handler {
 
 		OnEntityPreDamaged.listen( this::increaseDamage )
 			.addCondition( OnEntityPreDamaged::willTakeFullDamage )
+			.addCondition( data->data.attacker != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
 		OnItemEquipped.listen( this::reduceAttackSpeed );

@@ -35,6 +35,7 @@ public class BreakingCurse extends Handler {
 
 		OnItemDamaged.listen( this::dealExtraDamage )
 			.priority( Priority.HIGH )
+			.addCondition( data->data.player != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.player ) );
 
 		this.config.defineFloat( "damage_multiplier_per_level", ()->this.damageMultiplier, x->this.damageMultiplier = Range.of( 0.0f, 10.0f ).clamp( x ) );

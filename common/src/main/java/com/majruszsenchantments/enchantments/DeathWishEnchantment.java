@@ -29,6 +29,7 @@ public class DeathWishEnchantment extends Handler {
 		super( MajruszsEnchantments.DEATH_WISH, false );
 
 		OnEntityPreDamaged.listen( this::increaseDamageDealt )
+			.addCondition( data->data.attacker != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
 		OnEntityPreDamaged.listen( this::increaseDamageReceived )

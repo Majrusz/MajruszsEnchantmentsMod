@@ -45,6 +45,7 @@ public class LeechEnchantment extends Handler {
 
 		OnEntityDamaged.listen( this::tryToLeechAnything )
 			.addCondition( Condition.isLogicalServer() )
+			.addCondition( data->data.attacker != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
 		this.config.defineFloat( "health_chance", ()->this.healthChance, x->this.healthChance = Range.CHANCE.clamp( x ) );
