@@ -57,25 +57,25 @@ public class DodgeEnchantment extends Handler {
 	private void spawnEffects( OnEntityPreDamaged data, int invisibleDuration ) {
 		TimeHelper.slider( invisibleDuration, slider->{
 			boolean isFirstOrLastTick = slider.getTicksLeft() == slider.getTicksTotal() || slider.getTicksLeft() == 0;
+			float width = data.target.getBbWidth();
+			float height = data.target.getBbHeight();
+			int count = 1;
 
-			this.spawnParticles( data, isFirstOrLastTick ? 20 : 1 );
+			if( isFirstOrLastTick ) {
+				count = 20;
+				SoundEmitter.of( SoundEvents.FIRE_EXTINGUISH )
+					.position( data.target.position() )
+					.volume( SoundEmitter.randomized( 0.25f ) )
+					.pitch( SoundEmitter.randomized( 0.4f ) )
+					.emit( data.getServerLevel() );
+			}
+
+			ParticleEmitter.of( MajruszsEnchantments.DODGE_PARTICLE )
+				.sizeBased( data.target )
+				.count( count )
+				.offset( ()->AnyPos.from( width, height, width ).mul( 1.0f, 0.25f, 1.0f ).vec3() )
+				.speed( 0.025f )
+				.emit( data.getServerLevel() );
 		} );
-
-		SoundEmitter.of( SoundEvents.FIRE_EXTINGUISH )
-			.position( data.target.position() )
-			.volume( SoundEmitter.randomized( 0.4f ) )
-			.emit( data.getServerLevel() );
-	}
-
-	private void spawnParticles( OnEntityPreDamaged data, int count ) {
-		float width = data.target.getBbWidth();
-		float height = data.target.getBbHeight();
-
-		ParticleEmitter.of( MajruszsEnchantments.DODGE_PARTICLE )
-			.sizeBased( data.target )
-			.count( count )
-			.offset( ()->AnyPos.from( width, height, width ).mul( 1.0f, 0.25f, 1.0f ).vec3() )
-			.speed( 0.025f )
-			.emit( data.getServerLevel() );
 	}
 }
