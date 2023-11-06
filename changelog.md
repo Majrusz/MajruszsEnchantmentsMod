@@ -3,6 +3,7 @@
 - added 1 second invisibility after successful dodge
 - added 50% attack speed penalty per level of Fishing Fanatic
 - removed Extreme Fishing advancement
+- removed Curse of Vampirism
 - made Immortality give the same effects as Totem of Undying instead of 10 hearts
 - made Curse of Fatigue also apply movement speed penalty for holded item
 - fixed game crash with Hunter enchantment (reported by @ximemt01)
