@@ -63,7 +63,7 @@ public class FatigueCurse extends Handler {
 		OnItemSwingDurationGet.listen( this::increaseSwingDuration )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) );
 
-		this.config.defineCustom( "speed_multiplier_per_level", subconfig->{
+		this.config.define( "speed_multiplier_per_level", subconfig->{
 			subconfig.defineFloat( "mining", s->this.miningMultiplier, ( s, v )->this.miningMultiplier = MULTIPLIER.clamp( v ) );
 			subconfig.defineFloat( "attacking", s->this.attackMultiplier, ( s, v )->this.attackMultiplier = MULTIPLIER.clamp( v ) );
 			subconfig.defineFloat( "moving", s->this.movingMultiplier, ( s, v )->this.movingMultiplier = MULTIPLIER.clamp( v ) );
