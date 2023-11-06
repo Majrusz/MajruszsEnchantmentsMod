@@ -1,0 +1,1 @@
+- fixed bug with Harvester not working properly when combined with Telekinesis
