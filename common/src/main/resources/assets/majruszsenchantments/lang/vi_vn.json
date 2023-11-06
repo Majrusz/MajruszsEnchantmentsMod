@@ -1,0 +1,117 @@
+{
+	"enchantment.majruszsenchantments.death_wish": "Death Wish",
+	"enchantment.majruszsenchantments.death_wish.desc": "Tăng sát thương gây ra tương đương với phần trăm máu đã mất.",
+	"enchantment.majruszsenchantments.death_wish.description": "Tăng sát thương gây ra tương đương với phần trăm máu đã mất.",
+
+	"enchantment.majruszsenchantments.dodge": "Dodge",
+	"enchantment.majruszsenchantments.dodge.desc": "Tạo cơ hội để tránh hoàn toàn bất kỳ loại thiệt hại nào.",
+	"enchantment.majruszsenchantments.dodge.description": "Tạo cơ hội để tránh hoàn toàn bất kỳ loại thiệt hại nào.",
+
+	"enchantment.majruszsenchantments.enlightenment": "Enlightenment",
+	"enchantment.majruszsenchantments.enlightenment.desc": "Tăng kinh nghiệm nhận được từ bất kỳ nguồn nào.",
+	"enchantment.majruszsenchantments.enlightenment.description": "Tăng kinh nghiệm nhận được từ bất kỳ nguồn nào.",
+
+	"enchantment.majruszsenchantments.fishing_fanatic": "Fishing Fanatic",
+	"enchantment.majruszsenchantments.fishing_fanatic.desc": "Mang lại cơ hội bắt được các vật phẩm bổ sung từ việc câu cá.",
+	"enchantment.majruszsenchantments.fishing_fanatic.description": "Mang lại cơ hội bắt được các vật phẩm bổ sung từ việc câu cá.",
+	"enchantment.majruszsenchantments.fishing_fanatic.level_up": "Bạn đã trở thành Người cuồng câu cá vĩ đại hơn!",
+	"enchantment.majruszsenchantments.fishing_fanatic.true": "True Fishing Fanatic",
+
+	"enchantment.majruszsenchantments.fuse_cutter": "Fuse Cutter",
+	"enchantment.majruszsenchantments.fuse_cutter.desc": "Các vụ nổ gần đó sẽ không phá hủy các khối hoặc gây sát thương.",
+	"enchantment.majruszsenchantments.fuse_cutter.description": "Nearby explosions will not destroy blocks or deal damage.",
+
+	"enchantment.majruszsenchantments.gold_fuelled": "Gold-Fuelled",
+	"enchantment.majruszsenchantments.gold_fuelled.desc": "Sửa chữa hoàn toàn các công cụ vàng và áo giáp cho một thỏi vàng khi vật phẩm sắp bị phá hủy.",
+	"enchantment.majruszsenchantments.gold_fuelled.description": "Sửa chữa hoàn toàn các công cụ vàng và áo giáp cho một thỏi vàng khi vật phẩm sắp bị phá hủy.",
+
+	"enchantment.majruszsenchantments.harvester": "Harvester",
+	"enchantment.majruszsenchantments.harvester.desc": "Cung cấp tùy chọn thu hoạch bằng cách nhấp chuột phải và cơ hội trồng các loại cây trồng gần đó.",
+	"enchantment.majruszsenchantments.harvester.description": "Cung cấp tùy chọn thu hoạch bằng cách nhấp chuột phải và cơ hội trồng các loại cây trồng gần đó.",
+
+	"enchantment.majruszsenchantments.horse_frost_walker": "Frost Rider",
+	"enchantment.majruszsenchantments.horse_frost_walker.desc": "Tạo đường băng khi cưỡi ngựa đi trên mặt nước.",
+	"enchantment.majruszsenchantments.horse_frost_walker.description": "Tạo đường băng khi cưỡi ngựa đi trên mặt nước.",
+
+	"enchantment.majruszsenchantments.horse_protection": "Armored Caravan",
+	"enchantment.majruszsenchantments.horse_protection.desc": "Giảm lượng sát thương mà ngựa nhận được.",
+	"enchantment.majruszsenchantments.horse_protection.description": "Giảm lượng sát thương mà ngựa nhận được.",
+
+	"enchantment.majruszsenchantments.horse_swiftness": "Swiftness",
+	"enchantment.majruszsenchantments.horse_swiftness.desc": "Tăng tốc độ di chuyển của ngựa.",
+	"enchantment.majruszsenchantments.horse_swiftness.description": "Tăng tốc độ di chuyển của ngựa.",
+
+	"enchantment.majruszsenchantments.hunter": "Hunter",
+	"enchantment.majruszsenchantments.hunter.desc": "Tăng số lượng mob drops và gây sát thương theo quy mô theo khoảng cách.",
+	"enchantment.majruszsenchantments.hunter.description": "Tăng số lượng mob drops và gây sát thương theo quy mô theo khoảng cách.",
+
+	"enchantment.majruszsenchantments.immortality": "Immortality",
+	"enchantment.majruszsenchantments.immortality.desc": "Đánh lừa cái chết của một đòn chí mạng với cái giá phải trả là một chiếc khiên.",
+	"enchantment.majruszsenchantments.immortality.description": "Đánh lừa cái chết của một đòn chí mạng với cái giá phải trả là một chiếc khiên.",
+
+	"enchantment.majruszsenchantments.leech": "Leech",
+	"enchantment.majruszsenchantments.leech.desc": "Cho cơ hội ăn cắp các hiệu ứng tích cực, điểm máu và điểm đói từ kẻ thù.",
+	"enchantment.majruszsenchantments.leech.description": "Cho cơ hội ăn cắp các hiệu ứng tích cực, điểm máu và điểm đói từ kẻ thù.",
+
+	"enchantment.majruszsenchantments.magic_protection": "Magic Protection",
+	"enchantment.majruszsenchantments.magic_protection.desc": "Bảo vệ khỏi sát thương phép thuật bao gồm Evoker Fangs, Guardians và thuốc sát thương tức thì.",
+	"enchantment.majruszsenchantments.magic_protection.description": "Bảo vệ khỏi sát thương phép thuật bao gồm Evoker Fangs, Guardians và thuốc sát thương tức thì.",
+
+	"enchantment.majruszsenchantments.misanthropy": "Misanthropy",
+	"enchantment.majruszsenchantments.misanthropy.desc": "Tăng sát thương chống lại dân làng, kẻ cướp bóc, phù thủy và những người chơi khác.",
+	"enchantment.majruszsenchantments.misanthropy.description": "Tăng sát thương chống lại dân làng, kẻ cướp bóc, phù thủy và những người chơi khác.",
+
+	"enchantment.majruszsenchantments.smelter": "Smelter",
+	"enchantment.majruszsenchantments.smelter.desc": "Các khối bị phá hủy được nấu chảy tự động.",
+	"enchantment.majruszsenchantments.smelter.description": "Các khối bị phá hủy được nấu chảy tự động.",
+
+	"enchantment.majruszsenchantments.telekinesis": "Telekinesis",
+	"enchantment.majruszsenchantments.telekinesis.desc": "Thêm các vật phẩm có được trực tiếp vào kho của người chơi.",
+	"enchantment.majruszsenchantments.telekinesis.description": "Thêm các vật phẩm có được trực tiếp vào kho của người chơi.",
+
+	"enchantment.majruszsenchantments.absorber": "Absorber",
+	"enchantment.majruszsenchantments.absorber.desc": "Tấm chắn hấp thụ tất cả các tác động tiêu cực với chi phí bền.",
+	"enchantment.majruszsenchantments.absorber.description": "Tấm chắn hấp thụ tất cả các tác động tiêu cực với chi phí bền.",
+
+	"enchantment.majruszsenchantments.elder_guardian_favor": "Favor of Elder Guardian",
+	"enchantment.majruszsenchantments.elder_guardian_favor.desc": "Sau khi tấn công thành công, kẻ thù sẽ bị phát ra một tia laze không thể né tránh hoặc chặn được.",
+	"enchantment.majruszsenchantments.elder_guardian_favor.description": "Sau khi tấn công thành công, kẻ thù sẽ bị phát ra một tia laze không thể né tránh hoặc chặn được.",
+
+	"enchantment.majruszsenchantments.sixth_sense": "Sixth Sense",
+	"enchantment.majruszsenchantments.sixth_sense.desc": "Đánh dấu quái vật xung quanh sau khi đứng yên một lúc.",
+	"enchantment.majruszsenchantments.sixth_sense.description": "Đánh dấu quái vật xung quanh sau khi đứng yên một lúc.",
+
+	"enchantment.majruszsenchantments.guardian_angel": "Guardian Angel",
+	"enchantment.majruszsenchantments.guardian_angel.desc": "Chuyển hướng một phần thiệt hại từ động vật và dân làng đã được thuần hóa sang người chơi và áp dụng giảm thiệt hại cho chúng.",
+	"enchantment.majruszsenchantments.guardian_angel.description": "Chuyển hướng một phần thiệt hại từ động vật và dân làng đã được thuần hóa sang người chơi và áp dụng giảm thiệt hại cho chúng.",
+
+	"enchantment.majruszsenchantments.breaking_curse": "Curse of Breaking",
+	"enchantment.majruszsenchantments.breaking_curse.desc": "Làm cho vật phẩm bị hỏng nhanh hơn.",
+	"enchantment.majruszsenchantments.breaking_curse.description": "Làm cho vật phẩm bị hỏng nhanh hơn.",
+
+	"enchantment.majruszsenchantments.corrosion_curse": "Curse of Corrosion",
+	"enchantment.majruszsenchantments.corrosion_curse.desc": "Phá hủy dần áo giáp và gây sát thương cho người sử dụng khi ở trong nước.",
+	"enchantment.majruszsenchantments.corrosion_curse.description": "Phá hủy dần áo giáp và gây sát thương cho người sử dụng khi ở trong nước.",
+
+	"enchantment.majruszsenchantments.fatigue_curse": "Curse of Fatigue",
+	"enchantment.majruszsenchantments.fatigue_curse.desc": "Giảm hiệu quả tốc độ di chuyển của người chơi và thời gian sử dụng vật phẩm.",
+	"enchantment.majruszsenchantments.fatigue_curse.description": "Giảm hiệu quả tốc độ di chuyển của người chơi và thời gian sử dụng vật phẩm.",
+
+	"enchantment.majruszsenchantments.incompatibility_curse": "Curse of Incompatibility",
+	"enchantment.majruszsenchantments.incompatibility_curse.desc": "Làm cho mục không thể mở được.",
+	"enchantment.majruszsenchantments.incompatibility_curse.description": "Làm cho mục không thể mở được.",
+
+	"enchantment.majruszsenchantments.vampirism_curse": "Curse of Vampirism",
+	"enchantment.majruszsenchantments.vampirism_curse.desc": "Làm suy yếu và bắt lửa người chơi khi ở dưới ánh sáng ban ngày, nhưng làm cho bùa lợi Leech mạnh hơn.",
+	"enchantment.majruszsenchantments.vampirism_curse.description": "Làm suy yếu và bắt lửa người chơi khi ở dưới ánh sáng ban ngày, nhưng làm cho bùa lợi Leech mạnh hơn.",
+	"enchantment.majruszsenchantments.vampirism_curse.block_sleep": "Bạn không cảm thấy cần phải ngủ...",
+
+	"advancements.majruszsenchantments.scholar.title": "Học giả",
+	"advancements.majruszsenchantments.scholar.description": "Có được sự khai sáng II trên tất cả các mảnh áo giáp",
+	"advancements.majruszsenchantments.fishing_fanatic.title": "Tôi khá thích nó",
+	"advancements.majruszsenchantments.fishing_fanatic.description": "Đạt được cấp độ đầu tiên của Người cuồng câu cá",
+	"advancements.majruszsenchantments.fishing_fanatic_rain.title": "Không có gì có thể ngăn cản tôi",
+	"advancements.majruszsenchantments.fishing_fanatic_rain.description": "Đạt được cấp độ tiếp theo của Người cuồng câu cá ngay cả khi trời mưa",
+	"advancements.majruszsenchantments.fishing_fanatic_true.title": "Chà ... tôi bị nghiện",
+	"advancements.majruszsenchantments.fishing_fanatic_true.description": "Đạt được cấp độ thứ tám của Người cuồng câu cá"
+}
