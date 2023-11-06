@@ -48,9 +48,9 @@ public class LeechEnchantment extends Handler {
 			.addCondition( data->data.attacker != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
-		this.config.defineFloat( "health_chance", ()->this.healthChance, x->this.healthChance = Range.CHANCE.clamp( x ) );
-		this.config.defineFloat( "hunger_chance", ()->this.hungerChance, x->this.hungerChance = Range.CHANCE.clamp( x ) );
-		this.config.defineFloat( "effect_chance", ()->this.effectChance, x->this.effectChance = Range.CHANCE.clamp( x ) );
+		this.config.defineFloat( "health_chance", s->this.healthChance, ( s, v )->this.healthChance = Range.CHANCE.clamp( v ) );
+		this.config.defineFloat( "hunger_chance", s->this.hungerChance, ( s, v )->this.hungerChance = Range.CHANCE.clamp( v ) );
+		this.config.defineFloat( "effect_chance", s->this.effectChance, ( s, v )->this.effectChance = Range.CHANCE.clamp( v ) );
 	}
 
 	private void tryToLeechAnything( OnEntityDamaged data ) {

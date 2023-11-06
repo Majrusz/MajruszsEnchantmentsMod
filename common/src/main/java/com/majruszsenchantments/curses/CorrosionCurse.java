@@ -39,8 +39,8 @@ public class CorrosionCurse extends Handler {
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) )
 			.addCondition( data->LevelHelper.isRainingAt( data.getLevel(), data.entity.blockPosition() ) || data.entity.isInWater() );
 
-		this.config.defineFloat( "damage_dealt_per_level", ()->this.damage, x->this.damage = Range.of( 0.0f, 10.0f ).clamp( x ) );
-		this.config.defineFloat( "damage_cooldown", ()->this.cooldown, x->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( x ) );
+		this.config.defineFloat( "damage_dealt_per_level", s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 10.0f ).clamp( v ) );
+		this.config.defineFloat( "damage_cooldown", s->this.cooldown, ( s, v )->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( v ) );
 	}
 
 	private void dealDamage( OnEntityTicked data ) {

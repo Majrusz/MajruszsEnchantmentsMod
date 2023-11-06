@@ -90,9 +90,9 @@ public class SixthSenseEnchantment extends Handler {
 			.addCondition( data->data.origin != null )
 			.addCondition( data->this.chestIds.contains( data.lootId ) );
 
-		this.config.defineFloat( "glow_duration", ()->this.glowDuration, x->this.glowDuration = Range.of( 0.5f, 30.0f ).clamp( x ) );
-		this.config.defineLocation( "chest_ids", ()->this.chestIds, x->this.chestIds = x );
-		this.config.defineLocation( "loot_id", ()->this.lootId, x->this.lootId = x );
+		this.config.defineFloat( "glow_duration", s->this.glowDuration, ( s, v )->this.glowDuration = Range.of( 0.5f, 30.0f ).clamp( v ) );
+		this.config.defineLocationList( "chest_ids", s->this.chestIds, ( s, v )->this.chestIds = v );
+		this.config.defineLocation( "loot_id", s->this.lootId, ( s, v )->this.lootId = v );
 	}
 
 	private void highlight( OnEntityNoiseReceived data ) {

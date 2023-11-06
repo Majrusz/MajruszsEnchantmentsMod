@@ -44,9 +44,9 @@ public class HunterEnchantment extends Handler {
 			.addCondition( data->data.source.is( DamageTypeTags.IS_PROJECTILE ) )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, this.getItemStack( data.source ) ) );
 
-		this.config.defineFloat( "penalty_multiplier_per_level", ()->this.penaltyMultiplier, x->this.penaltyMultiplier = Range.of( -1.0f, 0.0f ).clamp( x ) );
-		this.config.defineFloat( "distance_multiplier_per_level", ()->this.distanceMultiplier, x->this.distanceMultiplier = Range.of( 0.0f, 10.0f )
-			.clamp( x ) );
+		this.config.defineFloat( "penalty_multiplier_per_level", s->this.penaltyMultiplier, ( s, v )->this.penaltyMultiplier = Range.of( -1.0f, 0.0f ).clamp( v ) );
+		this.config.defineFloat( "distance_multiplier_per_level", s->this.distanceMultiplier, ( s, v )->this.distanceMultiplier = Range.of( 0.0f, 10.0f )
+			.clamp( v ) );
 	}
 
 	private void increaseLevel( OnLootingLevelGet data ) {

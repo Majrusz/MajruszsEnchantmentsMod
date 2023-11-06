@@ -37,7 +37,7 @@ public class MisanthropyEnchantment extends Handler {
 			.addCondition( data->EntityHelper.isHuman( data.target ) )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
-		this.config.defineFloat( "damage_bonus_per_level", ()->this.damage, x->this.damage = Range.of( 0.0f, 100.0f ).clamp( x ) );
+		this.config.defineFloat( "damage_bonus_per_level", s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 100.0f ).clamp( v ) );
 	}
 
 	private void increaseDamage( OnEntityPreDamaged data ) {

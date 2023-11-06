@@ -42,8 +42,8 @@ public class FuseCutterEnchantment extends Handler {
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( this::isAnyoneBlockingNearby );
 
-		this.config.defineFloat( "max_distance", ()->this.maxDistance, x->this.maxDistance = Range.of( 1.0f, 64.0f ).clamp( x ) );
-		this.config.defineFloat( "shield_cooldown_ratio", ()->this.cooldownRatio, x->this.cooldownRatio = Range.of( 0.0f, 10.0f ).clamp( x ) );
+		this.config.defineFloat( "max_distance", s->this.maxDistance, ( s, v )->this.maxDistance = Range.of( 1.0f, 64.0f ).clamp( v ) );
+		this.config.defineFloat( "shield_cooldown_ratio", s->this.cooldownRatio, ( s, v )->this.cooldownRatio = Range.of( 0.0f, 10.0f ).clamp( v ) );
 	}
 
 	private void cancel( OnExploded data ) {

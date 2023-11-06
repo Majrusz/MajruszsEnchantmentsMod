@@ -39,7 +39,7 @@ public class HorseSwiftnessEnchantment extends Handler {
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( data->data.entity instanceof Animal ); // checks for the animal class instead of horse to have a compatibility with other mods
 
-		this.config.defineFloat( "speed_multiplier_per_level", ()->this.multiplier, x->this.multiplier = Range.of( 0.0f, 10.0f ).clamp( x ) );
+		this.config.defineFloat( "speed_multiplier_per_level", s->this.multiplier, ( s, v )->this.multiplier = Range.of( 0.0f, 10.0f ).clamp( v ) );
 	}
 
 	private void updateSpeed( OnItemEquipped data ) {

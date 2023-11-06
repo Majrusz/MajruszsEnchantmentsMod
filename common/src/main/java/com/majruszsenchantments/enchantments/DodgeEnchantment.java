@@ -43,7 +43,7 @@ public class DodgeEnchantment extends Handler {
 			.addCondition( data->data.attacker != null )
 			.addCondition( data->Random.check( EnchantmentHelper.getLevel( this.enchantment, data.target ) * this.chance ) );
 
-		this.config.defineFloat( "dodge_chance_per_level", ()->this.chance, x->this.chance = Range.CHANCE.clamp( x ) );
+		this.config.defineFloat( "dodge_chance_per_level", s->this.chance, ( s, v )->this.chance = Range.CHANCE.clamp( v ) );
 	}
 
 	private void dodge( OnEntityPreDamaged data ) {

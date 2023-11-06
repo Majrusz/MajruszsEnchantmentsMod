@@ -35,7 +35,7 @@ public class RepulsionEnchantment extends Handler {
 			.addCondition( data->data.attacker != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, ItemHelper.getCurrentlyUsedItem( data.target ) ) );
 
-		this.config.defineFloat( "knockback_strength", ()->this.strength, x->this.strength = Range.of( 0.0f, 100.0f ).clamp( x ) );
+		this.config.defineFloat( "knockback_strength", s->this.strength, ( s, v )->this.strength = Range.of( 0.0f, 100.0f ).clamp( v ) );
 	}
 
 	private void knockback( OnEntityDamageBlocked data ) {

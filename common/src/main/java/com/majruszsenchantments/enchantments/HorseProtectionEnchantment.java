@@ -39,7 +39,7 @@ public class HorseProtectionEnchantment extends Handler {
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( data->data.entity instanceof Animal ); // checks for the animal class instead of horse to have a compatibility with other mods
 
-		this.config.defineFloat( "armor_bonus_per_level", ()->this.armor, x->this.armor = Range.of( 0.0f, 100.0f ).clamp( x ) );
+		this.config.defineFloat( "armor_bonus_per_level", s->this.armor, ( s, v )->this.armor = Range.of( 0.0f, 100.0f ).clamp( v ) );
 	}
 
 	private void updateArmor( OnItemEquipped data ) {

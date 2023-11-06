@@ -108,13 +108,13 @@ public class FishingFanaticEnchantment extends Handler {
 		OnItemFished.listen( this::tryToLevelUp )
 			.priority( Priority.LOW );
 
-		this.config.defineFloat( "extra_loot_chance", ()->this.extraLootChance, x->this.extraLootChance = Range.CHANCE.clamp( x ) );
-		this.config.defineFloat( "level_up_chance", ()->this.levelUpChance, x->this.levelUpChance = Range.CHANCE.clamp( DefaultMap.of( x ) ) );
-		this.config.defineFloat( "level_up_chance_rain_multiplier", ()->this.rainMultiplier, x->this.rainMultiplier = Range.of( 1.0f, 10.0f ).clamp( x ) );
-		this.config.defineFloat( "special_drop_chance", ()->this.specialDropChance, x->this.specialDropChance = Range.CHANCE.clamp( DefaultMap.of( x ) ) );
-		this.config.defineLocation( "special_drop_id", ()->this.specialDropId, x->this.specialDropId = x );
-		this.config.defineFloat( "damage_bonus_per_level", ()->this.damageBonus, x->this.damageBonus = Range.of( 0.0f, 10.0f ).clamp( x ) );
-		this.config.defineFloat( "attack_speed_multiplier_per_level", ()->this.attackSpeedMultiplier, x->this.attackSpeedMultiplier = Range.CHANCE.clamp( x ) );
+		this.config.defineFloat( "extra_loot_chance", s->this.extraLootChance, ( s, v )->this.extraLootChance = Range.CHANCE.clamp( v ) );
+		this.config.defineFloatMap( "level_up_chance", s->this.levelUpChance, ( s, v )->this.levelUpChance = Range.CHANCE.clamp( DefaultMap.of( v ) ) );
+		this.config.defineFloat( "level_up_chance_rain_multiplier", s->this.rainMultiplier, ( s, v )->this.rainMultiplier = Range.of( 1.0f, 10.0f ).clamp( v ) );
+		this.config.defineFloatMap( "special_drop_chance", s->this.specialDropChance, ( s, v )->this.specialDropChance = Range.CHANCE.clamp( DefaultMap.of( v ) ) );
+		this.config.defineLocation( "special_drop_id", s->this.specialDropId, ( s, v )->this.specialDropId = v );
+		this.config.defineFloat( "damage_bonus_per_level", s->this.damageBonus, ( s, v )->this.damageBonus = Range.of( 0.0f, 10.0f ).clamp( v ) );
+		this.config.defineFloat( "attack_speed_multiplier_per_level", s->this.attackSpeedMultiplier, ( s, v )->this.attackSpeedMultiplier = Range.CHANCE.clamp( v ) );
 	}
 
 	private void increaseLoot( OnFishingExtraItemsGet data ) {

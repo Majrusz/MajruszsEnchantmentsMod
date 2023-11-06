@@ -39,8 +39,8 @@ public class SlipperyCurse extends Handler {
 			.addCondition( Condition.chance( ()->this.chance ) )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) );
 
-		this.config.defineFloat( "drop_chance", ()->this.chance, x->this.chance = Range.CHANCE.clamp( x ) );
-		this.config.defineFloat( "drop_cooldown", ()->this.cooldown, x->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( x ) );
+		this.config.defineFloat( "drop_chance", s->this.chance, ( s, v )->this.chance = Range.CHANCE.clamp( v ) );
+		this.config.defineFloat( "drop_cooldown", s->this.cooldown, ( s, v )->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( v ) );
 	}
 
 	private void dropItem( OnEntityTicked data ) {

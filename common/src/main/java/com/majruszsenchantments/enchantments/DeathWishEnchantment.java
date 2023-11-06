@@ -35,8 +35,8 @@ public class DeathWishEnchantment extends Handler {
 		OnEntityPreDamaged.listen( this::increaseDamageReceived )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.target ) );
 
-		this.config.defineFloatRange( "damage_multiplier_range", ()->this.damage, x->this.damage = Range.of( 0.0f, 10.0f ).clamp( x ) );
-		this.config.defineFloatRange( "vulnerability_multiplier_range", ()->this.vulnerability, x->this.vulnerability = Range.of( 0.0f, 10.0f ).clamp( x ) );
+		this.config.defineFloatRange( "damage_multiplier_range", s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 10.0f ).clamp( v ) );
+		this.config.defineFloatRange( "vulnerability_multiplier_range", s->this.vulnerability, ( s, v )->this.vulnerability = Range.of( 0.0f, 10.0f ).clamp( v ) );
 	}
 
 	private void increaseDamageDealt( OnEntityPreDamaged data ) {

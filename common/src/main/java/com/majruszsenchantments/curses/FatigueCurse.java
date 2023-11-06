@@ -64,11 +64,11 @@ public class FatigueCurse extends Handler {
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) );
 
 		this.config.defineCustom( "speed_multiplier_per_level", subconfig->{
-			subconfig.defineFloat( "mining", ()->this.miningMultiplier, x->this.miningMultiplier = MULTIPLIER.clamp( x ) );
-			subconfig.defineFloat( "attacking", ()->this.attackMultiplier, x->this.attackMultiplier = MULTIPLIER.clamp( x ) );
-			subconfig.defineFloat( "moving", ()->this.movingMultiplier, x->this.movingMultiplier = MULTIPLIER.clamp( x ) );
-			subconfig.defineFloat( "item_using", ()->this.usingMultiplier, x->this.usingMultiplier = MULTIPLIER.clamp( x ) );
-			subconfig.defineFloat( "item_swinging", ()->this.swingingMultiplier, x->this.swingingMultiplier = MULTIPLIER.clamp( x ) );
+			subconfig.defineFloat( "mining", s->this.miningMultiplier, ( s, v )->this.miningMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.defineFloat( "attacking", s->this.attackMultiplier, ( s, v )->this.attackMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.defineFloat( "moving", s->this.movingMultiplier, ( s, v )->this.movingMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.defineFloat( "item_using", s->this.usingMultiplier, ( s, v )->this.usingMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.defineFloat( "item_swinging", s->this.swingingMultiplier, ( s, v )->this.swingingMultiplier = MULTIPLIER.clamp( v ) );
 		} );
 	}
 

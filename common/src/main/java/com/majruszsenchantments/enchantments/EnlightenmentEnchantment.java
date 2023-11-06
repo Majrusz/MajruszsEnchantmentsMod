@@ -38,7 +38,7 @@ public class EnlightenmentEnchantment extends Handler {
 			.addCondition( data->data.entity instanceof ServerPlayer )
 			.addCondition( data->EnchantmentHelper.getLevelSum( this.enchantment, data.entity ) >= 8 );
 
-		this.config.defineFloat( "experience_multiplier_per_level", ()->this.multiplier, x->this.multiplier = Range.of( 0.0f, 10.0f ).clamp( x ) );
+		this.config.defineFloat( "experience_multiplier_per_level", s->this.multiplier, ( s, v )->this.multiplier = Range.of( 0.0f, 10.0f ).clamp( v ) );
 	}
 
 	private void increaseExperience( OnExpOrbPickedUp data ) {
