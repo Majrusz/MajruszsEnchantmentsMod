@@ -4,6 +4,7 @@ import com.majruszsenchantments.config.Config;
 import com.majruszsenchantments.curses.*;
 import com.majruszsenchantments.enchantments.*;
 import com.majruszsenchantments.particles.DodgeParticle;
+import com.majruszsenchantments.particles.SmelterParticle;
 import com.mlib.annotation.Dist;
 import com.mlib.annotation.OnlyIn;
 import com.mlib.contexts.OnParticlesRegistered;
@@ -71,6 +72,7 @@ public class MajruszsEnchantments {
 
 	// Particles
 	public static final RegistryObject< SimpleParticleType > DODGE_PARTICLE = PARTICLES.create( "dodge", ()->new SimpleParticleType( true ) {} );
+	public static final RegistryObject< SimpleParticleType > SMELTER_PARTICLE = PARTICLES.create( "smelter", ()->new SimpleParticleType( true ) {} );
 
 	private MajruszsEnchantments() {}
 
@@ -78,6 +80,7 @@ public class MajruszsEnchantments {
 	public static class Client {
 		static {
 			OnParticlesRegistered.listen( data->data.register( DODGE_PARTICLE.get(), DodgeParticle.Factory::new ) );
+			OnParticlesRegistered.listen( data->data.register( SMELTER_PARTICLE.get(), SmelterParticle.Factory::new ) );
 		}
 	}
 }

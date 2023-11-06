@@ -5,11 +5,13 @@ import com.majruszsenchantments.common.Handler;
 import com.mlib.annotation.AutoInstance;
 import com.mlib.contexts.OnLootGenerated;
 import com.mlib.contexts.base.Priority;
+import com.mlib.emitter.ParticleEmitter;
 import com.mlib.entity.EntityHelper;
 import com.mlib.item.CustomEnchantment;
 import com.mlib.item.EnchantmentHelper;
 import com.mlib.item.EquipmentSlots;
 import com.mlib.item.ItemHelper;
+import com.mlib.math.AnyPos;
 import com.mlib.math.Random;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -36,6 +38,7 @@ public class SmelterEnchantment extends Handler {
 		OnLootGenerated.listen( this::smelt )
 			.priority( Priority.LOW )
 			.addCondition( data->data.blockState != null )
+			.addCondition( data->data.origin != null )
 			.addCondition( data->data.tool != null )
 			.addCondition( data->data.entity instanceof Player player && !player.isCrouching() )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.tool ) );
@@ -56,6 +59,13 @@ public class SmelterEnchantment extends Handler {
 			EntityHelper.spawnExperience( data.getLevel(), data.origin, totalExperience );
 		}
 
-		// TODO: particles
+		if( experience > 0.0f ) {
+			ParticleEmitter.of( MajruszsEnchantments.SMELTER_PARTICLE )
+				.count( 10 )
+				.offset( ParticleEmitter.offset( 0.2f ) )
+				.speed( 0.01f )
+				.position( AnyPos.from( data.origin ).center().vec3() )
+				.emit( data.getServerLevel() );
+		}
 	}
 }
