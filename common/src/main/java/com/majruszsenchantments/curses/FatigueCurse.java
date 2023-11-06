@@ -97,6 +97,6 @@ public class FatigueCurse extends Handler {
 	}
 
 	private float getArmorMultiplier( float multiplier, LivingEntity entity ) {
-		return ( float )Math.pow( multiplier, EnchantmentHelper.getLevelSum( this.enchantment, entity ) );
+		return ( float )Math.pow( multiplier, EnchantmentHelper.getLevelSum( this.enchantment, entity, EquipmentSlots.ARMOR ) );
 	}
 }

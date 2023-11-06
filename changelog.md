@@ -7,7 +7,6 @@
 - removed Extreme Fishing advancement
 - removed Curse of Vampirism
 - made Immortality give the same effects as Totem of Undying instead of 10 hearts
-- made Curse of Fatigue also apply movement speed penalty for holded item
 - fixed game crash with Hunter enchantment (reported by @ximemt01)
 - fixed bug with Dodge enchantment not granting immunity frames after successful dodge
 - fixed bug with Enlightenment giving 25% experience bonus per enchantment level instead of 12.5%
