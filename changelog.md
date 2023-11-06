@@ -1,1 +1,2 @@
 - fixed bug with Harvester not working properly when combined with Telekinesis
+- fixed bug with Fuse Cutter particles being spawned too low

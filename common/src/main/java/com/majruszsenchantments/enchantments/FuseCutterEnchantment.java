@@ -12,6 +12,7 @@ import com.mlib.item.CustomEnchantment;
 import com.mlib.item.EnchantmentHelper;
 import com.mlib.item.EquipmentSlots;
 import com.mlib.item.ItemHelper;
+import com.mlib.math.AnyPos;
 import com.mlib.math.Random;
 import com.mlib.math.Range;
 import net.minecraft.core.particles.ParticleTypes;
@@ -20,6 +21,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 @AutoInstance
 public class FuseCutterEnchantment extends Handler {
@@ -47,24 +49,26 @@ public class FuseCutterEnchantment extends Handler {
 	}
 
 	private void cancel( OnExploded data ) {
+		Vec3 position = AnyPos.from( data.position ).add( 0.0, 0.5, 0.0 ).vec3();
+
 		data.cancelExplosion();
 
 		ParticleEmitter.of( ParticleTypes.SMOKE )
 			.offset( ParticleEmitter.offset( 0.125f * data.radius ) )
 			.speed( 0.025f )
 			.count( Random.round( 12 * data.radius ) )
-			.position( data.position )
+			.position( position )
 			.emit( data.getServerLevel() );
 
 		ParticleEmitter.of( ParticleTypes.LARGE_SMOKE )
 			.offset( ParticleEmitter.offset( 0.125f * data.radius ) )
 			.speed( 0.025f )
 			.count( Random.round( 8 * data.radius ) )
-			.position( data.position )
+			.position( position )
 			.emit( data.getServerLevel() );
 
 		SoundEmitter.of( SoundEvents.FIRE_EXTINGUISH )
-			.position( data.position )
+			.position( position )
 			.emit( data.getServerLevel() );
 	}
 
