@@ -5,6 +5,8 @@ import com.majruszsenchantments.curses.*;
 import com.majruszsenchantments.enchantments.*;
 import com.majruszsenchantments.particles.DodgeParticle;
 import com.majruszsenchantments.particles.SmelterParticle;
+import com.majruszsenchantments.particles.TelekinesisParticle;
+import com.majruszsenchantments.particles.TelekinesisParticleType;
 import com.mlib.annotation.Dist;
 import com.mlib.annotation.OnlyIn;
 import com.mlib.contexts.OnParticlesRegistered;
@@ -73,6 +75,7 @@ public class MajruszsEnchantments {
 	// Particles
 	public static final RegistryObject< SimpleParticleType > DODGE_PARTICLE = PARTICLES.create( "dodge", ()->new SimpleParticleType( true ) {} );
 	public static final RegistryObject< SimpleParticleType > SMELTER_PARTICLE = PARTICLES.create( "smelter", ()->new SimpleParticleType( true ) {} );
+	public static final RegistryObject< TelekinesisParticleType > TELEKINESIS_PARTICLE = PARTICLES.create( "telekinesis", TelekinesisParticleType::new );
 
 	private MajruszsEnchantments() {}
 
@@ -81,6 +84,7 @@ public class MajruszsEnchantments {
 		static {
 			OnParticlesRegistered.listen( data->data.register( DODGE_PARTICLE.get(), DodgeParticle.Factory::new ) );
 			OnParticlesRegistered.listen( data->data.register( SMELTER_PARTICLE.get(), SmelterParticle.Factory::new ) );
+			OnParticlesRegistered.listen( data->data.register( TELEKINESIS_PARTICLE.get(), TelekinesisParticle.Factory::new ) );
 		}
 	}
 }
