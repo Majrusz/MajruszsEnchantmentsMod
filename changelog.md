@@ -3,7 +3,7 @@
 - added new Telekinesis particles
 - added new Smelter particles
 - added 1 second invisibility after successful dodge
-- added 50% attack speed penalty per level of Fishing Fanatic
+- added x0.5 attack speed penalty per level of Fishing Fanatic
 - removed Extreme Fishing advancement
 - removed Curse of Vampirism
 - made Immortality give the same effects as Totem of Undying instead of 10 hearts
