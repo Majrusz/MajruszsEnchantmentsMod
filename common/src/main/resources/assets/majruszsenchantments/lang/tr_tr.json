@@ -4,121 +4,92 @@
   "enchantment.majruszsenchantments.fishing_fanatic.description": "Balıkçılıktan ek öğeler yakalama şansı verir.",
   "enchantment.majruszsenchantments.fishing_fanatic.level_up": "Daha iyi bir Balıkçılık Meraklısı oldun!",
   "enchantment.majruszsenchantments.fishing_fanatic.true": "Gerçek Balıkçılık Meraklısı",
-
   "enchantment.majruszsenchantments.misanthropy": "Büyüler İnsanlığa Karşı",
   "enchantment.majruszsenchantments.misanthropy.desc": "Köylülere, Yağmacılara, Cadılara ve diğer oyunculara vuruş hasarını artırır.",
   "enchantment.majruszsenchantments.misanthropy.description": "Köylülere, Yağmacılara, Cadılara ve diğer oyunculara vuruş hasarını artırır.",
-
   "enchantment.majruszsenchantments.dodge": "Savuşturma",
   "enchantment.majruszsenchantments.dodge.desc": "Bir hasarı tamamen savuşturma şansı verir.",
   "enchantment.majruszsenchantments.dodge.description": "Bir hasarı tamamen savuşturma şansı verir.",
-
   "enchantment.majruszsenchantments.enlightenment": "Aydınlanma",
   "enchantment.majruszsenchantments.enlightenment.desc": "Bütün kaynaklardan kazanılan deneyimi artırır.",
   "enchantment.majruszsenchantments.enlightenment.description": "Bütün kaynaklardan kazanılan deneyimi artırır.",
-
   "enchantment.majruszsenchantments.phoenix_dive": "Anka Dalışı",
   "enchantment.majruszsenchantments.phoenix_dive.desc": "Yüksekten düşmek ateş dalgası yayılmasına, yakındaki düşmanlara hasar vermesine ve yakmasına sebep olur. Ek olarak eğilme tuşuna (varsayılan SHIFT) basarken daha yükseğe zıplarsın!",
   "enchantment.majruszsenchantments.phoenix_dive.description": "Yüksekten düşmek ateş dalgası yayılmasına, yakındaki düşmanlara hasar vermesine ve yakmasına sebep olur. Ek olarak eğilme tuşuna (varsayılan SHIFT) basarken daha yükseğe zıplarsın!",
-
   "enchantment.majruszsenchantments.pufferfish_vengeance": "Kirpi Balığının İntikamı",
   "enchantment.majruszsenchantments.pufferfish_vengeance.desc": "Saldırılar, hedeflere birkaç olumsuz efekt uygular.",
   "enchantment.majruszsenchantments.pufferfish_vengeance.description": "Saldırılar, hedeflere birkaç olumsuz efekt uygular.",
-
   "enchantment.majruszsenchantments.immortality": "Ölümsüzlük",
   "enchantment.majruszsenchantments.immortality.desc": "Öldürücü bir darbede ölümü aldatırsın.",
   "enchantment.majruszsenchantments.immortality.description": "Öldürücü bir darbede ölümü aldatırsın.",
-
   "enchantment.majruszsenchantments.smelter": "Eritici",
   "enchantment.majruszsenchantments.smelter.desc": "Kırılan bloklar otomatik eritilir.",
   "enchantment.majruszsenchantments.smelter.description": "Kırılan bloklar otomatik eritilir.",
-
   "enchantment.majruszsenchantments.gotta_mine_fast": "Hızlı Kazmalı",
   "enchantment.majruszsenchantments.gotta_mine_fast.desc": "Sol fare tuşuna uzun basıldıkça kazış hızı artar.",
   "enchantment.majruszsenchantments.gotta_mine_fast.description": "Sol fare tuşuna uzun basıldıkça kazış hızı artar.",
-
   "enchantment.majruszsenchantments.leech": "Sülük",
   "enchantment.majruszsenchantments.leech.desc": "Düşmanlardan pozitif efektler ve can çalma şansı verir.",
   "enchantment.majruszsenchantments.leech.description": "Düşmanlardan pozitif efektler ve can çalma şansı verir.",
-
   "enchantment.majruszsenchantments.magic_protection": "Büyü Koruması",
   "enchantment.majruszsenchantments.magic_protection.desc": "Uyandırıcı Kapanları, Gardiyanlar ve Anında Hasar iksirlerini kapsayan büyü hasarlarına karşı korur.",
   "enchantment.majruszsenchantments.magic_protection.description": "Uyandırıcı Kapanları, Gardiyanlar ve Anında Hasar iksirlerini kapsayan büyü hasarlarına karşı korur.",
-
   "enchantment.majruszsenchantments.horse_swiftness": "Sürat",
   "enchantment.majruszsenchantments.horse_swiftness.desc": "Atın hareket hızını artırır.",
   "enchantment.majruszsenchantments.horse_swiftness.description": "Atın hareket hızını artırır.",
-
   "enchantment.majruszsenchantments.horse_protection": "At Koruması",
   "enchantment.majruszsenchantments.horse_protection.desc": "Atın aldığı hasarı azaltır.",
   "enchantment.majruszsenchantments.horse_protection.description": "Atın aldığı hasarı azaltır.",
-
   "enchantment.majruszsenchantments.horse_frost_walker": "Kırağılaştırıcı Binici",
   "enchantment.majruszsenchantments.horse_frost_walker.desc": "Atla suyun üstünde yürürken buzdan bir yol yaratır.",
   "enchantment.majruszsenchantments.horse_frost_walker.description": "Atla suyun üstünde yürürken buzdan bir yol yaratır.",
-
   "enchantment.majruszsenchantments.telekinesis": "Telekinezi",
   "enchantment.majruszsenchantments.telekinesis.desc": "Kırılan blokları direk oyuncunun envanterine ekler.",
   "enchantment.majruszsenchantments.telekinesis.description": "Kırılan blokları doğrudan oyuncunun envanterine ekler.",
-
   "enchantment.majruszsenchantments.absorber": "Emici",
   "enchantment.majruszsenchantments.absorber.desc": "Kalkanlar bütün olumsuz efektleri emer ve dayanıklılığını azaltır.",
   "enchantment.majruszsenchantments.absorber.description": "Kalkanlar bütün olumsuz efektleri emer ve dayanıklılığını azaltır.",
-
   "enchantment.majruszsenchantments.hunter": "Avcı",
   "enchantment.majruszsenchantments.hunter.desc": "Yararatıkların düşürdüklerini artırır ve uzaklaştıkça verilen hasarı artırır.",
   "enchantment.majruszsenchantments.hunter.description": "Yararatıkların düşürdüklerini artırır ve uzaklaştıkça verilen hasarı artırır.",
-
   "enchantment.majruszsenchantments.elder_guardian_favor": "Yaşlı Gardiyanın İsteği",
   "enchantment.majruszsenchantments.elder_guardian_favor.desc": "Bararılı bir vuruştan sonra düşmanlar kaçılamayan yada savuşturulamayan bir lazer ışını tarafından vurulurlar.",
   "enchantment.majruszsenchantments.elder_guardian_favor.description": "Bararılı bir vuruştan sonra düşmanlar kaçılamayan yada savuşturulamayan bir lazer ışını tarafından vurulurlar.",
-
   "enchantment.majruszsenchantments.harvester": "Hasatçı",
   "enchantment.majruszsenchantments.harvester.desc": "Sağ fare tuşuyla hasat yapma ve yakındaki ekinleri büyütebilme hakkı verir.",
   "enchantment.majruszsenchantments.harvester.description": "Sağ fare tuşuyla hasat yapma ve yakındaki ekinleri büyütebilme hakkı verir.",
-
   "enchantment.majruszsenchantments.mithridatism": "Mitridatizm",
   "enchantment.majruszsenchantments.mithridatism.desc": "Bazı olumsuz etkilerden kaynaklanan hasarı azaltır ve olumsuz etkiler uygulandığında Emiş verir.",
   "enchantment.majruszsenchantments.mithridatism.description": "Bazı olumsuz etkilerden kaynaklanan hasarı azaltır ve olumsuz etkiler uygulandığında Emiş verir.",
   "effect.majruszsenchantments.mithridatism_protection": "Mitridatism",
   "majruszsenchantments.mithridatism_level_up": "Olumsuz efektere karşı daha fazla direnç geliştirdiniz!",
-
   "enchantment.majruszsenchantments.fuse_cutter": "Fitil Kesici",
   "enchantment.majruszsenchantments.fuse_cutter.desc": "Yakındaki patlamalar blok yok etmeyecek veya hasar vermeyecek.",
   "enchantment.majruszsenchantments.fuse_cutter.description": "Yakındaki patlamalar blok yok etmeyecek veya hasar vermeyecek.",
-
   "enchantment.majruszsenchantments.sixth_sense": "Altıncı His",
   "enchantment.majruszsenchantments.sixth_sense.desc": "Bir süre hareketsiz kaldıktan sonra yakındaki canavarları belirtir.",
   "enchantment.majruszsenchantments.sixth_sense.description": "Bir süre hareketsiz kaldıktan sonra yakındaki canavarları belirtir.",
-
   "enchantment.majruszsenchantments.death_wish": "Ölüm Dileği",
   "enchantment.majruszsenchantments.death_wish.desc": "Verilen hasarı, kaybedilen sağlık yüzdesine eşit olarak artırır.",
   "enchantment.majruszsenchantments.death_wish.description": "Verilen hasarı, kaybedilen sağlık yüzdesine eşit olarak artırır.",
-
   "enchantment.majruszsenchantments.guardian_angel": "Koruyucu Melek",
   "enchantment.majruszsenchantments.guardian_angel.desc": "Evcilleştirilmiş hayvanlardan ve köylülerden gelen hasarın bir kısmını oyuncuya yönlendirir ve onlara verilen hasarı azaltır.",
   "enchantment.majruszsenchantments.guardian_angel.description": "Evcilleştirilmiş hayvanlardan ve köylülerden gelen hasarın bir kısmını oyuncuya yönlendirir ve onlara verilen hasarı azaltır.",
-
   "enchantment.majruszsenchantments.slowness_curse": "Yavaşlık Laneti",
   "enchantment.majruszsenchantments.slowness_curse.desc": "Oyuncunun hareket hızını azaltır.",
   "enchantment.majruszsenchantments.slowness_curse.description": "Oyuncunun hareket hızını azaltır.",
-
   "enchantment.majruszsenchantments.fatigue_curse": "Yorgunluk Laneti",
   "enchantment.majruszsenchantments.fatigue_curse.desc": "Oyuncunun kazış hızını azaltır.",
   "enchantment.majruszsenchantments.fatigue_curse.description": "Oyuncunun kazış hızını azaltır.",
-
   "enchantment.majruszsenchantments.incompatibility_curse": "Uyuşmazlık Laneti",
   "enchantment.majruszsenchantments.incompatibility_curse.desc": "Eşyayı büyülenemez yapar.",
   "enchantment.majruszsenchantments.incompatibility_curse.description": "Eşyayı büyülenemez yapar.",
-
   "enchantment.majruszsenchantments.vampirism_curse": "Vampirlik Laneti",
   "enchantment.majruszsenchantments.vampirism_curse.desc": "Gün ışığında oynatıcıyı zayıflatır ve yakar. Sülük büyüsünü güçlendirir.",
   "enchantment.majruszsenchantments.vampirism_curse.description": "Gün ışığında oynatıcıyı zayıflatır ve yakar. Sülük büyüsünü güçlendirir.",
-
   "enchantment.majruszsenchantments.corrosion_curse": "Aşınma Laneti",
   "enchantment.majruszsenchantments.corrosion_curse.desc": "Yavaş yavaş zırhı yok eder ve sudayken kullanıcıya hasar verir.",
   "enchantment.majruszsenchantments.corrosion_curse.description": "Yavaş yavaş zırhı yok eder ve sudayken kullanıcıya hasar verir.",
-
   "item.majruszsenchantments.wonderful_book": "Harika Kitap",
   "item.majruszsenchantments.wonderful_book.enchanting_energy": "Büyü enerjisi:",
   "item.majruszsenchantments.wonderful_book.enchanting_energy_max": "Maximum büyü enerjisi!",
@@ -127,7 +98,6 @@
   "item.majruszsenchantments.wonderful_book.levels": "seviye",
   "item.majruszsenchantments.wonderful_book.hint": "Çalışma Masası'nda Lapis Lazuli ile büyü enerjinizi artırabilirsiniz.",
   "item.majruszsenchantments.wonderful_book.transmute": "Tutarken büyülü bir kitaba dönüştürmek için farenin sağ tuşuna basın...",
-
   "advancements.majruszsenchantments.scholar.title": "Bilge",
   "advancements.majruszsenchantments.scholar.description": "Tüm zırh parçalarına Aydınlanma II uygulayın.",
   "advancements.majruszsenchantments.fishing_fanatic.title": "Oldukça Beğendim",
