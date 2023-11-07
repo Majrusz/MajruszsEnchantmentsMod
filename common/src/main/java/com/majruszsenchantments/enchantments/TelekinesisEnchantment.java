@@ -53,6 +53,7 @@ public class TelekinesisEnchantment extends Handler {
 			.priority( Priority.LOWEST )
 			.addCondition( data->data.killer instanceof Player )
 			.addCondition( data->data.origin != null )
+			.addCondition( data->data.damageSource != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, IMixinProjectile.mlib$getProjectileWeapon( data.damageSource.getDirectEntity() ) ) );
 	}
 

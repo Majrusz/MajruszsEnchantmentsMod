@@ -143,7 +143,7 @@ modrinth {
     projectId.set(modrinth_project_id)
     changelog.set(changelogText)
     versionNumber.set(mod_version)
-    versionName.set("${mod_archives_name}-neoforge-${minecraft_version}-${mod_version}")
+    versionName.set("${mod_display_name} ${mod_version}")
     versionType.set('release')
     uploadFile.set(file("build/libs/${mod_archives_name}-neoforge-${minecraft_version}-${mod_version}.jar"))
     gameVersions.set([minecraft_version])
@@ -159,7 +159,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     apiToken = System.getenv('CURSEFORGE_TOKEN')
 
     def file = upload(curseforge_project_id, file("build/libs/${mod_archives_name}-neoforge-${minecraft_version}-${mod_version}.jar"))
-    file.displayName = "${mod_archives_name}-neoforge-${minecraft_version}-${mod_version}"
+    file.displayName = "${mod_display_name} ${mod_version} (NeoForge)"
     file.changelog = changelogText
     file.changelogType = 'markdown'
     file.addModLoader('NeoForge')

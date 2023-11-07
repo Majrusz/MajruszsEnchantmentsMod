@@ -16,6 +16,7 @@ import com.mlib.platform.Side;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -85,8 +86,17 @@ public class HarvesterEnchantment extends Handler {
 			.withParameter( LootContextParams.ORIGIN, AnyPos.from( blockPos ).center().vec3() )
 			.withParameter( LootContextParams.TOOL, data.itemStack )
 			.withParameter( LootContextParams.BLOCK_STATE, blockState )
+			.withParameter( LootContextParams.THIS_ENTITY, data.player )
 		);
 		for( ItemStack itemStack : itemStacks ) {
+			if( itemStack.is( seed ) ) {
+				itemStack.setCount( itemStack.getCount() - 1 );
+				level.setBlockAndUpdate( blockPos, block.defaultBlockState() );
+				return itemStacks;
+			}
+		}
+		for( Slot slot : data.player.inventoryMenu.slots ) {
+			ItemStack itemStack = slot.getItem();
 			if( itemStack.is( seed ) ) {
 				itemStack.setCount( itemStack.getCount() - 1 );
 				level.setBlockAndUpdate( blockPos, block.defaultBlockState() );
