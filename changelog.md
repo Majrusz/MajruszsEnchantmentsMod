@@ -1,2 +1,3 @@
 - fixed bug with Harvester not working properly when combined with Telekinesis
 - fixed bug with Fuse Cutter particles being spawned too low
+- fixed bug with being unable to fish anything on server (reported by @NeuTraLZer, @MiracleBelief)
