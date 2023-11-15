@@ -122,8 +122,10 @@ public class FishingFanaticEnchantment extends Handler {
 		int level = EnchantmentHelper.getLevel( this.enchantment, fishingRod );
 		List< ItemStack > loot = this.spawnExtraLoot( data, level );
 
-		data.extraExperience += loot.size() + Random.nextInt( 2 * loot.size() ) + 1;
-		data.extraItems.addAll( loot );
+		if( !loot.isEmpty() ) {
+			data.extraExperience += loot.size() + Random.nextInt( 2 * loot.size() ) + 1;
+			data.extraItems.addAll( loot );
+		}
 	}
 
 	private List< ItemStack > spawnExtraLoot( OnFishingExtraItemsGet data, int level ) {

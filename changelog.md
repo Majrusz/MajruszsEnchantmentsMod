@@ -1,0 +1,1 @@
+- fixed bug with Fishing Fanatic enchantment breaking the fishing rod (reported by @Colours)
