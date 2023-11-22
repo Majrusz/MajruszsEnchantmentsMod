@@ -63,7 +63,7 @@ public class HarvesterEnchantment extends Handler {
 			this.tickNearbyCrops( data );
 			this.damageHoe( data );
 		}
-		data.cancelInteraction( InteractionResult.CONSUME );
+		data.finish();
 	}
 
 	private void collectCrop( OnPlayerInteracted data ) {
@@ -139,7 +139,6 @@ public class HarvesterEnchantment extends Handler {
 	}
 
 	private void damageHoe( OnPlayerInteracted data ) {
-		data.player.swing( data.hand, true );
 		ItemHelper.damage( data.player, data.hand, 1 );
 	}
 }
