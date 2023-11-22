@@ -9,10 +9,10 @@ import com.majruszsenchantments.particles.TelekinesisParticle;
 import com.majruszsenchantments.particles.TelekinesisParticleType;
 import com.mlib.annotation.Dist;
 import com.mlib.annotation.OnlyIn;
-import com.mlib.contexts.OnParticlesRegistered;
 import com.mlib.item.CustomEnchantment;
 import com.mlib.item.ItemHelper;
 import com.mlib.modhelper.ModHelper;
+import com.mlib.registry.Custom;
 import com.mlib.registry.RegistryGroup;
 import com.mlib.registry.RegistryObject;
 import net.minecraft.core.particles.ParticleType;
@@ -82,9 +82,11 @@ public class MajruszsEnchantments {
 	@OnlyIn( Dist.CLIENT )
 	public static class Client {
 		static {
-			OnParticlesRegistered.listen( data->data.register( DODGE_PARTICLE.get(), DodgeParticle.Factory::new ) );
-			OnParticlesRegistered.listen( data->data.register( SMELTER_PARTICLE.get(), SmelterParticle.Factory::new ) );
-			OnParticlesRegistered.listen( data->data.register( TELEKINESIS_PARTICLE.get(), TelekinesisParticle.Factory::new ) );
+			HELPER.create( Custom.Particles.class, particles->{
+				particles.register( DODGE_PARTICLE.get(), DodgeParticle.Factory::new );
+				particles.register( SMELTER_PARTICLE.get(), SmelterParticle.Factory::new );
+				particles.register( TELEKINESIS_PARTICLE.get(), TelekinesisParticle.Factory::new );
+			} );
 		}
 	}
 }

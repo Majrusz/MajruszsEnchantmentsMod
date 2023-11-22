@@ -1,2 +1,3 @@
 - changed required Majrusz Library version from 6.1.0+ to 6.1.7+
+- fixed game crash `java.lang.NullPointerException: Registry Object not present` (reported by @Maddogkyler, @Note, @'RQ)
 - fixed Korean translation not working properly
