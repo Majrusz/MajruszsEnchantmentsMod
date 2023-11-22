@@ -1,1 +1,4 @@
-- fixed bug with Fishing Fanatic enchantment breaking the fishing rod (reported by @Colours)
+- changed required Majrusz Library version from 6.1.0+ to 6.1.7+
+- fixed game crash `java.lang.NullPointerException: Registry Object not present` (reported by @Maddogkyler, @Note, @'RQ)
+- fixed Korean translation not working properly
+- fixed bug when right-clicking a hoe with Harvester enchantment not working properly on a server
