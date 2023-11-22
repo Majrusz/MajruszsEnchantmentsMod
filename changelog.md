@@ -1,0 +1,1 @@
+- fixed Korean translation not working properly
