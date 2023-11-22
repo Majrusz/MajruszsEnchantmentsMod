@@ -1,1 +1,2 @@
+- changed required Majrusz Library version from 6.1.0+ to 6.1.7+
 - fixed Korean translation not working properly
