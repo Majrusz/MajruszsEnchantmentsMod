@@ -1,15 +1,16 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.events.OnEntityPreDamaged;
+import com.majruszlibrary.events.OnLootingLevelGet;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.Range;
+import com.majruszlibrary.mixininterfaces.IMixinProjectile;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityPreDamaged;
-import com.mlib.contexts.OnLootingLevelGet;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.Range;
-import com.mlib.mixininterfaces.IMixinProjectile;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +32,7 @@ public class HunterEnchantment extends Handler {
 	}
 
 	public HunterEnchantment() {
-		super( MajruszsEnchantments.HUNTER, false );
+		super( MajruszsEnchantments.HUNTER, HunterEnchantment.class, false );
 
 		OnLootingLevelGet.listen( this::increaseLevel )
 			.addCondition( data->data.source != null )
@@ -44,9 +45,10 @@ public class HunterEnchantment extends Handler {
 			.addCondition( data->data.source.is( DamageTypeTags.IS_PROJECTILE ) )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, this.getItemStack( data.source ) ) );
 
-		this.config.defineFloat( "penalty_multiplier_per_level", s->this.penaltyMultiplier, ( s, v )->this.penaltyMultiplier = Range.of( -1.0f, 0.0f ).clamp( v ) );
-		this.config.defineFloat( "distance_multiplier_per_level", s->this.distanceMultiplier, ( s, v )->this.distanceMultiplier = Range.of( 0.0f, 10.0f )
-			.clamp( v ) );
+		this.config.define( "penalty_multiplier_per_level", Reader.number(), s->this.penaltyMultiplier, ( s, v )->this.penaltyMultiplier = Range.of( -1.0f, 0.0f )
+				.clamp( v ) )
+			.define( "distance_multiplier_per_level", Reader.number(), s->this.distanceMultiplier, ( s, v )->this.distanceMultiplier = Range.of( 0.0f, 10.0f )
+				.clamp( v ) );
 	}
 
 	private void increaseLevel( OnLootingLevelGet data ) {
@@ -65,6 +67,6 @@ public class HunterEnchantment extends Handler {
 	}
 
 	private ItemStack getItemStack( DamageSource source ) {
-		return IMixinProjectile.mlib$getProjectileWeapon( source.getDirectEntity() );
+		return IMixinProjectile.majruszlibrary$getProjectileWeapon( source.getDirectEntity() );
 	}
 }

@@ -1,20 +1,21 @@
 package com.majruszsenchantments.particles;
 
+import com.majruszlibrary.data.Reader;
 import com.majruszsenchantments.MajruszsEnchantments;
-import com.mlib.data.Serializables;
-import com.mlib.particles.CustomParticleOptions;
-import com.mlib.particles.CustomParticleType;
+import com.majruszlibrary.data.Serializables;
+import com.majruszlibrary.particles.CustomParticleOptions;
+import com.majruszlibrary.particles.CustomParticleType;
 
 public class TelekinesisParticleType extends CustomParticleType< TelekinesisParticleType.Options > {
 	static {
 		Serializables.get( Options.class )
-			.defineInteger( "age", s->s.age, ( s, v )->s.age = v )
-			.defineInteger( "lifetime", s->s.lifetime, ( s, v )->s.lifetime = v )
-			.defineFloat( "pulse_speed", s->s.pulseSpeed, ( s, v )->s.pulseSpeed = v );
+			.define( "age", Reader.integer(), s->s.age, ( s, v )->s.age = v )
+			.define( "lifetime", Reader.integer(), s->s.lifetime, ( s, v )->s.lifetime = v )
+			.define( "pulse_speed", Reader.number(), s->s.pulseSpeed, ( s, v )->s.pulseSpeed = v );
 	}
 
 	public TelekinesisParticleType() {
-		super( Options.class, Options::new );
+		super( Options::new );
 	}
 
 	public static class Options extends CustomParticleOptions< Options > {
@@ -23,7 +24,7 @@ public class TelekinesisParticleType extends CustomParticleType< TelekinesisPart
 		public float pulseSpeed;
 
 		public Options() {
-			super( Options.class, MajruszsEnchantments.TELEKINESIS_PARTICLE );
+			super( MajruszsEnchantments.TELEKINESIS_PARTICLE );
 		}
 
 		public Options( int age, int lifetime, float pulseSpeed ) {

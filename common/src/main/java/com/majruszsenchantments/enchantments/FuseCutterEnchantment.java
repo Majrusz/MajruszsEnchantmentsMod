@@ -1,20 +1,21 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.emitter.ParticleEmitter;
+import com.majruszlibrary.emitter.SoundEmitter;
+import com.majruszlibrary.entity.EntityHelper;
+import com.majruszlibrary.events.OnExploded;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.item.ItemHelper;
+import com.majruszlibrary.math.AnyPos;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnExploded;
-import com.mlib.contexts.base.Condition;
-import com.mlib.emitter.ParticleEmitter;
-import com.mlib.emitter.SoundEmitter;
-import com.mlib.entity.EntityHelper;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.item.ItemHelper;
-import com.mlib.math.AnyPos;
-import com.mlib.math.Random;
-import com.mlib.math.Range;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -38,14 +39,14 @@ public class FuseCutterEnchantment extends Handler {
 	}
 
 	public FuseCutterEnchantment() {
-		super( MajruszsEnchantments.FUSE_CUTTER, false );
+		super( MajruszsEnchantments.FUSE_CUTTER, FuseCutterEnchantment.class, false );
 
 		OnExploded.listen( this::cancel )
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( this::isAnyoneBlockingNearby );
 
-		this.config.defineFloat( "max_distance", s->this.maxDistance, ( s, v )->this.maxDistance = Range.of( 1.0f, 64.0f ).clamp( v ) );
-		this.config.defineFloat( "shield_cooldown_ratio", s->this.cooldownRatio, ( s, v )->this.cooldownRatio = Range.of( 0.0f, 10.0f ).clamp( v ) );
+		this.config.define( "max_distance", Reader.number(), s->this.maxDistance, ( s, v )->this.maxDistance = Range.of( 1.0f, 64.0f ).clamp( v ) )
+			.define( "shield_cooldown_ratio", Reader.number(), s->this.cooldownRatio, ( s, v )->this.cooldownRatio = Range.of( 0.0f, 10.0f ).clamp( v ) );
 	}
 
 	private void cancel( OnExploded data ) {

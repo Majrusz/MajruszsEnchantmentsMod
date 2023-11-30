@@ -1,14 +1,15 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.events.OnEntityTicked;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityTicked;
-import com.mlib.contexts.base.Condition;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.Range;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +32,7 @@ public class SlipperyCurse extends Handler {
 	}
 
 	public SlipperyCurse() {
-		super( MajruszsEnchantments.SLIPPERY, true );
+		super( MajruszsEnchantments.SLIPPERY, SlipperyCurse.class, true );
 
 		OnEntityTicked.listen( this::dropItem )
 			.addCondition( Condition.isLogicalServer() )
@@ -39,8 +40,8 @@ public class SlipperyCurse extends Handler {
 			.addCondition( Condition.chance( ()->this.chance ) )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) );
 
-		this.config.defineFloat( "drop_chance", s->this.chance, ( s, v )->this.chance = Range.CHANCE.clamp( v ) );
-		this.config.defineFloat( "drop_cooldown", s->this.cooldown, ( s, v )->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( v ) );
+		this.config.define( "drop_chance", Reader.number(), s->this.chance, ( s, v )->this.chance = Range.CHANCE.clamp( v ) )
+			.define( "drop_cooldown", Reader.number(), s->this.cooldown, ( s, v )->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( v ) );
 	}
 
 	private void dropItem( OnEntityTicked data ) {

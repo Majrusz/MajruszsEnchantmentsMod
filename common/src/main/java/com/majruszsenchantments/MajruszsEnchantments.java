@@ -1,20 +1,20 @@
 package com.majruszsenchantments;
 
-import com.majruszsenchantments.config.Config;
+import com.majruszlibrary.annotation.Dist;
+import com.majruszlibrary.annotation.OnlyIn;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.ItemHelper;
+import com.majruszlibrary.modhelper.ModHelper;
+import com.majruszlibrary.registry.Custom;
+import com.majruszlibrary.registry.RegistryGroup;
+import com.majruszlibrary.registry.RegistryObject;
 import com.majruszsenchantments.curses.*;
+import com.majruszsenchantments.data.Config;
 import com.majruszsenchantments.enchantments.*;
 import com.majruszsenchantments.particles.DodgeParticle;
 import com.majruszsenchantments.particles.SmelterParticle;
 import com.majruszsenchantments.particles.TelekinesisParticle;
 import com.majruszsenchantments.particles.TelekinesisParticleType;
-import com.mlib.annotation.Dist;
-import com.mlib.annotation.OnlyIn;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.ItemHelper;
-import com.mlib.modhelper.ModHelper;
-import com.mlib.registry.Custom;
-import com.mlib.registry.RegistryGroup;
-import com.mlib.registry.RegistryObject;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -28,7 +28,9 @@ public class MajruszsEnchantments {
 	public static final ModHelper HELPER = ModHelper.create( MOD_ID );
 
 	// Configs
-	public static final Config CONFIG = HELPER.config( Config::new ).autoSync().create();
+	static {
+		HELPER.config( Config.class ).autoSync().create();
+	}
 
 	// Registry Groups
 	public static final RegistryGroup< Enchantment > ENCHANTMENTS = HELPER.create( BuiltInRegistries.ENCHANTMENT );

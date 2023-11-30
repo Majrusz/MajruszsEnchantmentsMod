@@ -1,15 +1,16 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.data.Reader;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityDamageBlocked;
-import com.mlib.contexts.base.Condition;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.item.ItemHelper;
-import com.mlib.math.Range;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnEntityDamageBlocked;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.item.ItemHelper;
+import com.majruszlibrary.math.Range;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -27,7 +28,7 @@ public class RepulsionEnchantment extends Handler {
 	}
 
 	public RepulsionEnchantment() {
-		super( MajruszsEnchantments.REPULSION, false );
+		super( MajruszsEnchantments.REPULSION, RepulsionEnchantment.class, false );
 
 		OnEntityDamageBlocked.listen( this::knockback )
 			.addCondition( Condition.isLogicalServer() )
@@ -35,7 +36,7 @@ public class RepulsionEnchantment extends Handler {
 			.addCondition( data->data.attacker != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, ItemHelper.getCurrentlyUsedItem( data.target ) ) );
 
-		this.config.defineFloat( "knockback_strength", s->this.strength, ( s, v )->this.strength = Range.of( 0.0f, 100.0f ).clamp( v ) );
+		this.config.define( "knockback_strength", Reader.number(), s->this.strength, ( s, v )->this.strength = Range.of( 0.0f, 100.0f ).clamp( v ) );
 	}
 
 	private void knockback( OnEntityDamageBlocked data ) {

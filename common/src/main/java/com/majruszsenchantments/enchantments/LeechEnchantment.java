@@ -1,19 +1,20 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.emitter.ParticleEmitter;
+import com.majruszlibrary.emitter.SoundEmitter;
+import com.majruszlibrary.events.OnEntityDamaged;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.AnyPos;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.math.Range;
+import com.majruszlibrary.time.TimeHelper;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityDamaged;
-import com.mlib.contexts.base.Condition;
-import com.mlib.emitter.ParticleEmitter;
-import com.mlib.emitter.SoundEmitter;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.AnyPos;
-import com.mlib.math.Random;
-import com.mlib.math.Range;
-import com.mlib.time.TimeHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffect;
@@ -41,16 +42,16 @@ public class LeechEnchantment extends Handler {
 	}
 
 	public LeechEnchantment() {
-		super( MajruszsEnchantments.LEECH, false );
+		super( MajruszsEnchantments.LEECH, LeechEnchantment.class, false );
 
 		OnEntityDamaged.listen( this::tryToLeechAnything )
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( data->data.attacker != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
-		this.config.defineFloat( "health_chance", s->this.healthChance, ( s, v )->this.healthChance = Range.CHANCE.clamp( v ) );
-		this.config.defineFloat( "hunger_chance", s->this.hungerChance, ( s, v )->this.hungerChance = Range.CHANCE.clamp( v ) );
-		this.config.defineFloat( "effect_chance", s->this.effectChance, ( s, v )->this.effectChance = Range.CHANCE.clamp( v ) );
+		this.config.define( "health_chance", Reader.number(), s->this.healthChance, ( s, v )->this.healthChance = Range.CHANCE.clamp( v ) )
+			.define( "hunger_chance", Reader.number(), s->this.hungerChance, ( s, v )->this.hungerChance = Range.CHANCE.clamp( v ) )
+			.define( "effect_chance", Reader.number(), s->this.effectChance, ( s, v )->this.effectChance = Range.CHANCE.clamp( v ) );
 	}
 
 	private void tryToLeechAnything( OnEntityDamaged data ) {

@@ -1,9 +1,9 @@
 package com.majruszsenchantments.particles;
 
-import com.mlib.annotation.Dist;
-import com.mlib.annotation.OnlyIn;
-import com.mlib.client.CustomParticle;
-import com.mlib.math.Random;
+import com.majruszlibrary.annotation.Dist;
+import com.majruszlibrary.annotation.OnlyIn;
+import com.majruszlibrary.client.CustomParticle;
+import com.majruszlibrary.math.Random;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;

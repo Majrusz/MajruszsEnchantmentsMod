@@ -1,14 +1,15 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.entity.EntityHelper;
+import com.majruszlibrary.events.OnEntityPreDamaged;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityPreDamaged;
-import com.mlib.entity.EntityHelper;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.Range;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 @AutoInstance
@@ -26,7 +27,7 @@ public class DeathWishEnchantment extends Handler {
 	}
 
 	public DeathWishEnchantment() {
-		super( MajruszsEnchantments.DEATH_WISH, false );
+		super( MajruszsEnchantments.DEATH_WISH, DeathWishEnchantment.class, false );
 
 		OnEntityPreDamaged.listen( this::increaseDamageDealt )
 			.addCondition( data->data.attacker != null )
@@ -35,8 +36,10 @@ public class DeathWishEnchantment extends Handler {
 		OnEntityPreDamaged.listen( this::increaseDamageReceived )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.target ) );
 
-		this.config.defineFloatRange( "damage_multiplier_range", s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 10.0f ).clamp( v ) );
-		this.config.defineFloatRange( "vulnerability_multiplier_range", s->this.vulnerability, ( s, v )->this.vulnerability = Range.of( 0.0f, 10.0f ).clamp( v ) );
+		this.config.define( "damage_multiplier_range", Reader.range( Reader.number() ), s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 10.0f )
+			.clamp( v ) );
+		this.config.define( "vulnerability_multiplier_range", Reader.range( Reader.number() ), s->this.vulnerability, ( s, v )->this.vulnerability = Range.of( 0.0f, 10.0f )
+			.clamp( v ) );
 	}
 
 	private void increaseDamageDealt( OnEntityPreDamaged data ) {

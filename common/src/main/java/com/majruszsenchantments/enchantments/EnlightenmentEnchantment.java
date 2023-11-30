@@ -1,15 +1,16 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.data.Reader;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnExpOrbPickedUp;
-import com.mlib.contexts.OnItemEquipped;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.Random;
-import com.mlib.math.Range;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnExpOrbPickedUp;
+import com.majruszlibrary.events.OnItemEquipped;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.math.Range;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -29,7 +30,7 @@ public class EnlightenmentEnchantment extends Handler {
 	}
 
 	public EnlightenmentEnchantment() {
-		super( MajruszsEnchantments.ENLIGHTENMENT, false );
+		super( MajruszsEnchantments.ENLIGHTENMENT, EnlightenmentEnchantment.class, false );
 
 		OnExpOrbPickedUp.listen( this::increaseExperience )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.player ) );
@@ -38,7 +39,7 @@ public class EnlightenmentEnchantment extends Handler {
 			.addCondition( data->data.entity instanceof ServerPlayer )
 			.addCondition( data->EnchantmentHelper.getLevelSum( this.enchantment, data.entity ) >= 8 );
 
-		this.config.defineFloat( "experience_multiplier_per_level", s->this.multiplier, ( s, v )->this.multiplier = Range.of( 0.0f, 10.0f ).clamp( v ) );
+		this.config.define( "experience_multiplier_per_level", Reader.number(), s->this.multiplier, ( s, v )->this.multiplier = Range.of( 0.0f, 10.0f ).clamp( v ) );
 	}
 
 	private void increaseExperience( OnExpOrbPickedUp data ) {

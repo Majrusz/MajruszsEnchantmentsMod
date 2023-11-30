@@ -1,26 +1,27 @@
 package com.majruszsenchantments.common;
 
-import com.majruszsenchantments.config.Config;
-import com.mlib.data.Serializable;
-import com.mlib.data.Serializables;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.registry.RegistryObject;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.data.SerializableObject;
+import com.majruszlibrary.data.Serializables;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.registry.RegistryObject;
+import com.majruszsenchantments.data.Config;
 
 public class Handler {
 	protected final RegistryObject< ? extends CustomEnchantment > enchantment;
-	protected final Serializable< ? > config;
+	protected final SerializableObject< ? > config;
 	protected boolean isEnabled = true;
 
-	public < Type extends CustomEnchantment > Handler( RegistryObject< Type > enchantment, boolean isCurse ) {
+	public < Type extends CustomEnchantment > Handler( RegistryObject< Type > enchantment, Class< ? extends Handler > clazz, boolean isCurse ) {
 		this.enchantment = enchantment;
-		this.config = new Serializable<>();
-		this.config.defineBoolean( "is_enabled", s->this.isEnabled, ( s, v )->{
+		this.config = Serializables.getStatic( clazz );
+		this.config.define( "is_enabled", Reader.bool(), s->this.isEnabled, ( s, v )->{
 			this.isEnabled = v;
 			this.enchantment.ifPresent( y->y.setEnabled( this.isEnabled ) );
 		} );
 
-		Class< ? > clazz = isCurse ? Config.Curses.class : Config.Enchantments.class;
-		Serializables.get( clazz )
-			.defineCustom( enchantment.getId(), ()->this.config );
+		Class< ? > parent = isCurse ? Config.Curses.class : Config.Enchantments.class;
+		Serializables.getStatic( parent )
+			.define( enchantment.getId(), clazz );
 	}
 }

@@ -1,19 +1,20 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.collection.DefaultMap;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.entity.AttributeHandler;
+import com.majruszlibrary.events.OnEntityPreDamaged;
+import com.majruszlibrary.events.OnFishingExtraItemsGet;
+import com.majruszlibrary.events.OnItemEquipped;
+import com.majruszlibrary.events.OnItemFished;
+import com.majruszlibrary.events.base.Priority;
+import com.majruszlibrary.item.*;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.math.Range;
+import com.majruszlibrary.text.TextHelper;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.collection.DefaultMap;
-import com.mlib.contexts.OnEntityPreDamaged;
-import com.mlib.contexts.OnFishingExtraItemsGet;
-import com.mlib.contexts.OnItemEquipped;
-import com.mlib.contexts.OnItemFished;
-import com.mlib.contexts.base.Priority;
-import com.mlib.entity.AttributeHandler;
-import com.mlib.item.*;
-import com.mlib.math.Random;
-import com.mlib.math.Range;
-import com.mlib.text.TextHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -91,7 +92,7 @@ public class FishingFanaticEnchantment extends Handler {
 	}
 
 	public FishingFanaticEnchantment() {
-		super( MajruszsEnchantments.FISHING_FANATIC, false );
+		super( MajruszsEnchantments.FISHING_FANATIC, FishingFanaticEnchantment.class, false );
 
 		this.attackSpeed = new AttributeHandler( "%s_attack_speed".formatted( this.enchantment.getId() ), ()->Attributes.ATTACK_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
 
@@ -108,13 +109,14 @@ public class FishingFanaticEnchantment extends Handler {
 		OnItemFished.listen( this::tryToLevelUp )
 			.priority( Priority.LOW );
 
-		this.config.defineFloat( "extra_loot_chance", s->this.extraLootChance, ( s, v )->this.extraLootChance = Range.CHANCE.clamp( v ) );
-		this.config.defineFloatMap( "level_up_chance", s->this.levelUpChance, ( s, v )->this.levelUpChance = Range.CHANCE.clamp( DefaultMap.of( v ) ) );
-		this.config.defineFloat( "level_up_chance_rain_multiplier", s->this.rainMultiplier, ( s, v )->this.rainMultiplier = Range.of( 1.0f, 10.0f ).clamp( v ) );
-		this.config.defineFloatMap( "special_drop_chance", s->this.specialDropChance, ( s, v )->this.specialDropChance = Range.CHANCE.clamp( DefaultMap.of( v ) ) );
-		this.config.defineLocation( "special_drop_id", s->this.specialDropId, ( s, v )->this.specialDropId = v );
-		this.config.defineFloat( "damage_bonus_per_level", s->this.damageBonus, ( s, v )->this.damageBonus = Range.of( 0.0f, 10.0f ).clamp( v ) );
-		this.config.defineFloat( "attack_speed_multiplier_per_level", s->this.attackSpeedMultiplier, ( s, v )->this.attackSpeedMultiplier = Range.CHANCE.clamp( v ) );
+		this.config.define( "extra_loot_chance", Reader.number(), s->this.extraLootChance, ( s, v )->this.extraLootChance = Range.CHANCE.clamp( v ) )
+			.define( "level_up_chance", Reader.map( Reader.number() ), s->this.levelUpChance, ( s, v )->this.levelUpChance = Range.CHANCE.clamp( DefaultMap.of( v ) ) )
+			.define( "level_up_chance_rain_multiplier", Reader.number(), s->this.rainMultiplier, ( s, v )->this.rainMultiplier = Range.of( 1.0f, 10.0f )
+				.clamp( v ) )
+			.define( "special_drop_chance", Reader.map( Reader.number() ), s->this.specialDropChance, ( s, v )->this.specialDropChance = Range.CHANCE.clamp( DefaultMap.of( v ) ) )
+			.define( "special_drop_id", Reader.location(), s->this.specialDropId, ( s, v )->this.specialDropId = v )
+			.define( "damage_bonus_per_level", Reader.number(), s->this.damageBonus, ( s, v )->this.damageBonus = Range.of( 0.0f, 10.0f ).clamp( v ) )
+			.define( "attack_speed_multiplier_per_level", Reader.number(), s->this.attackSpeedMultiplier, ( s, v )->this.attackSpeedMultiplier = Range.CHANCE.clamp( v ) );
 	}
 
 	private void increaseLoot( OnFishingExtraItemsGet data ) {

@@ -1,21 +1,22 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.data.Reader;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.MajruszLibrary;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityPreDamaged;
-import com.mlib.contexts.base.Condition;
-import com.mlib.emitter.ParticleEmitter;
-import com.mlib.emitter.SoundEmitter;
-import com.mlib.entity.EntityHelper;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.AnyPos;
-import com.mlib.math.Random;
-import com.mlib.math.Range;
-import com.mlib.time.TimeHelper;
+import com.majruszlibrary.MajruszLibrary;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnEntityPreDamaged;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.emitter.ParticleEmitter;
+import com.majruszlibrary.emitter.SoundEmitter;
+import com.majruszlibrary.entity.EntityHelper;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.AnyPos;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.math.Range;
+import com.majruszlibrary.time.TimeHelper;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -35,7 +36,7 @@ public class DodgeEnchantment extends Handler {
 	}
 
 	public DodgeEnchantment() {
-		super( MajruszsEnchantments.DODGE, false );
+		super( MajruszsEnchantments.DODGE, DodgeEnchantment.class, false );
 
 		OnEntityPreDamaged.listen( this::dodge )
 			.addCondition( Condition.isLogicalServer() )
@@ -43,7 +44,7 @@ public class DodgeEnchantment extends Handler {
 			.addCondition( data->data.attacker != null )
 			.addCondition( data->Random.check( EnchantmentHelper.getLevel( this.enchantment, data.target ) * this.chance ) );
 
-		this.config.defineFloat( "dodge_chance_per_level", s->this.chance, ( s, v )->this.chance = Range.CHANCE.clamp( v ) );
+		this.config.define( "dodge_chance_per_level", Reader.number(), s->this.chance, ( s, v )->this.chance = Range.CHANCE.clamp( v ) );
 	}
 
 	private void dodge( OnEntityPreDamaged data ) {
