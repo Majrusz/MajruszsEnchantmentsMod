@@ -3,18 +3,18 @@ package com.majruszsenchantments.enchantments;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
 import com.majruszsenchantments.particles.TelekinesisParticleType;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnLootGenerated;
-import com.mlib.contexts.base.Priority;
-import com.mlib.emitter.ParticleEmitter;
-import com.mlib.emitter.SoundEmitter;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.AnyPos;
-import com.mlib.math.Random;
-import com.mlib.mixininterfaces.IMixinProjectile;
-import com.mlib.time.TimeHelper;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnLootGenerated;
+import com.majruszlibrary.events.base.Priority;
+import com.majruszlibrary.emitter.ParticleEmitter;
+import com.majruszlibrary.emitter.SoundEmitter;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.AnyPos;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.mixininterfaces.IMixinProjectile;
+import com.majruszlibrary.time.TimeHelper;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -34,7 +34,7 @@ public class TelekinesisEnchantment extends Handler {
 	}
 
 	public TelekinesisEnchantment() {
-		super( MajruszsEnchantments.TELEKINESIS, false );
+		super( MajruszsEnchantments.TELEKINESIS, TelekinesisEnchantment.class, false );
 
 		OnLootGenerated.listen( data->this.addToInventory( data, ( Player )data.entity ) )
 			.priority( Priority.LOWEST )
@@ -54,7 +54,7 @@ public class TelekinesisEnchantment extends Handler {
 			.addCondition( data->data.killer instanceof Player )
 			.addCondition( data->data.origin != null )
 			.addCondition( data->data.damageSource != null )
-			.addCondition( data->EnchantmentHelper.has( this.enchantment, IMixinProjectile.mlib$getProjectileWeapon( data.damageSource.getDirectEntity() ) ) );
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, IMixinProjectile.majruszlibrary$getProjectileWeapon( data.damageSource.getDirectEntity() ) ) );
 	}
 
 	private void addToInventory( OnLootGenerated data, Player player ) {

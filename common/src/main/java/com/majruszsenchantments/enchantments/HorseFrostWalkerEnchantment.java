@@ -2,14 +2,14 @@ package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityPreDamaged;
-import com.mlib.contexts.OnEntityTicked;
-import com.mlib.contexts.base.Condition;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.level.LevelHelper;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnEntityPreDamaged;
+import com.majruszlibrary.events.OnEntityTicked;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.level.LevelHelper;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -32,7 +32,7 @@ public class HorseFrostWalkerEnchantment extends Handler {
 	}
 
 	public HorseFrostWalkerEnchantment() {
-		super( MajruszsEnchantments.HORSE_FROST_WALKER, false );
+		super( MajruszsEnchantments.HORSE_FROST_WALKER, HorseFrostWalkerEnchantment.class, false );
 
 		OnEntityTicked.listen( this::freezeNearbyWater )
 			.addCondition( Condition.isLogicalServer() )

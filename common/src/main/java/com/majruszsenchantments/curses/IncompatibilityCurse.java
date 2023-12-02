@@ -1,10 +1,10 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EquipmentSlots;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EquipmentSlots;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
@@ -22,6 +22,6 @@ public class IncompatibilityCurse extends Handler {
 	}
 
 	public IncompatibilityCurse() {
-		super( MajruszsEnchantments.INCOMPATIBILITY, true );
+		super( MajruszsEnchantments.INCOMPATIBILITY, IncompatibilityCurse.class, true );
 	}
 }

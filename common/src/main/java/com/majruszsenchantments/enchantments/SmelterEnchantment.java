@@ -2,17 +2,17 @@ package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnLootGenerated;
-import com.mlib.contexts.base.Priority;
-import com.mlib.emitter.ParticleEmitter;
-import com.mlib.entity.EntityHelper;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.item.ItemHelper;
-import com.mlib.math.AnyPos;
-import com.mlib.math.Random;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnLootGenerated;
+import com.majruszlibrary.events.base.Priority;
+import com.majruszlibrary.emitter.ParticleEmitter;
+import com.majruszlibrary.entity.EntityHelper;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.item.ItemHelper;
+import com.majruszlibrary.math.AnyPos;
+import com.majruszlibrary.math.Random;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -33,7 +33,7 @@ public class SmelterEnchantment extends Handler {
 	}
 
 	public SmelterEnchantment() {
-		super( MajruszsEnchantments.SMELTER, false );
+		super( MajruszsEnchantments.SMELTER, SmelterEnchantment.class, false );
 
 		OnLootGenerated.listen( this::smelt )
 			.priority( Priority.LOW )

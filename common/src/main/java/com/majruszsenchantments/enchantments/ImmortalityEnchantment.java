@@ -2,14 +2,14 @@ package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityDied;
-import com.mlib.contexts.base.Condition;
-import com.mlib.entity.EntityHelper;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.item.ItemHelper;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnEntityDied;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.entity.EntityHelper;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.item.ItemHelper;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 @AutoInstance
@@ -24,7 +24,7 @@ public class ImmortalityEnchantment extends Handler {
 	}
 
 	public ImmortalityEnchantment() {
-		super( MajruszsEnchantments.IMMORTALITY, false );
+		super( MajruszsEnchantments.IMMORTALITY, ImmortalityEnchantment.class, false );
 
 		OnEntityDied.listen( this::cheatDeath )
 			.addCondition( Condition.isLogicalServer() )

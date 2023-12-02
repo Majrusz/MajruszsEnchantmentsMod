@@ -21,8 +21,8 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=${minecraft_version}",
-    "mlib": "${fabric_mlib_version_range}"
+    "minecraft": "${fabric_minecraft_version_range}",
+    "majruszlibrary": "${fabric_majruszlibrary_version_range}"
   },
   "custom": {
     "update": "${mod_update}"

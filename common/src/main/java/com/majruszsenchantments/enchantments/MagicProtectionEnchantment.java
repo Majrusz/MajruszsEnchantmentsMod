@@ -2,9 +2,9 @@ package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EquipmentSlots;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EquipmentSlots;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -30,6 +30,6 @@ public class MagicProtectionEnchantment extends Handler {
 	}
 
 	public MagicProtectionEnchantment() {
-		super( MajruszsEnchantments.MAGIC_PROTECTION, false );
+		super( MajruszsEnchantments.MAGIC_PROTECTION, MagicProtectionEnchantment.class, false );
 	}
 }

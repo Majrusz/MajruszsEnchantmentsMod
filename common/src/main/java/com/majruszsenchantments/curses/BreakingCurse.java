@@ -1,15 +1,16 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.events.OnItemDamaged;
+import com.majruszlibrary.events.base.Priority;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnItemDamaged;
-import com.mlib.contexts.base.Priority;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.Random;
-import com.mlib.math.Range;
 import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -31,14 +32,14 @@ public class BreakingCurse extends Handler {
 	}
 
 	public BreakingCurse() {
-		super( MajruszsEnchantments.BREAKING, true );
+		super( MajruszsEnchantments.BREAKING, BreakingCurse.class, true );
 
 		OnItemDamaged.listen( this::dealExtraDamage )
 			.priority( Priority.HIGH )
 			.addCondition( data->data.player != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.player ) );
 
-		this.config.defineFloat( "damage_multiplier_per_level", s->this.damageMultiplier, ( s, v )->{
+		this.config.define( "damage_multiplier_per_level", Reader.number(), s->this.damageMultiplier, ( s, v )->{
 			this.damageMultiplier = Range.of( 0.0f, 10.0f ).clamp( v );
 		} );
 	}

@@ -1,15 +1,16 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.entity.EntityHelper;
+import com.majruszlibrary.events.OnEntityPreDamaged;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityPreDamaged;
-import com.mlib.contexts.base.Condition;
-import com.mlib.entity.EntityHelper;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.Range;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -29,7 +30,7 @@ public class MisanthropyEnchantment extends Handler {
 	}
 
 	public MisanthropyEnchantment() {
-		super( MajruszsEnchantments.MISANTHROPY, false );
+		super( MajruszsEnchantments.MISANTHROPY, MisanthropyEnchantment.class, false );
 
 		OnEntityPreDamaged.listen( this::increaseDamage )
 			.addCondition( Condition.isLogicalServer() )
@@ -37,7 +38,7 @@ public class MisanthropyEnchantment extends Handler {
 			.addCondition( data->EntityHelper.isHuman( data.target ) )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.attacker ) );
 
-		this.config.defineFloat( "damage_bonus_per_level", s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 100.0f ).clamp( v ) );
+		this.config.define( "damage_bonus_per_level", Reader.number(), s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 100.0f ).clamp( v ) );
 	}
 
 	private void increaseDamage( OnEntityPreDamaged data ) {

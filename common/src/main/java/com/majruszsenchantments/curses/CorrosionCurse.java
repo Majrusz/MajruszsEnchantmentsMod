@@ -1,15 +1,16 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.events.OnEntityTicked;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.level.LevelHelper;
+import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityTicked;
-import com.mlib.contexts.base.Condition;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.level.LevelHelper;
-import com.mlib.math.Range;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -31,7 +32,7 @@ public class CorrosionCurse extends Handler {
 	}
 
 	public CorrosionCurse() {
-		super( MajruszsEnchantments.CORROSION, true );
+		super( MajruszsEnchantments.CORROSION, CorrosionCurse.class, true );
 
 		OnEntityTicked.listen( this::dealDamage )
 			.addCondition( Condition.isLogicalServer() )
@@ -39,8 +40,8 @@ public class CorrosionCurse extends Handler {
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) )
 			.addCondition( data->LevelHelper.isRainingAt( data.getLevel(), data.entity.blockPosition() ) || data.entity.isInWater() );
 
-		this.config.defineFloat( "damage_dealt_per_level", s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 10.0f ).clamp( v ) );
-		this.config.defineFloat( "damage_cooldown", s->this.cooldown, ( s, v )->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( v ) );
+		this.config.define( "damage_dealt_per_level", Reader.number(), s->this.damage, ( s, v )->this.damage = Range.of( 0.0f, 10.0f ).clamp( v ) )
+			.define( "damage_cooldown", Reader.number(), s->this.cooldown, ( s, v )->this.cooldown = Range.of( 0.05f, 60.0f ).clamp( v ) );
 	}
 
 	private void dealDamage( OnEntityTicked data ) {

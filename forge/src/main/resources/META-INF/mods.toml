@@ -23,13 +23,13 @@ issueTrackerURL = "${mod_issues}"
 [[dependencies.${ mod_id }]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "${minecraft_version_range}"
+    versionRange = "${forge_minecraft_version_range}"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.${ mod_id }]]
-    modId = "mlib"
+    modId = "majruszlibrary"
     mandatory = true
-    versionRange = "${forge_mlib_version_range}"
+    versionRange = "${forge_majruszlibrary_version_range}"
     ordering = "NONE"
     side = "BOTH"

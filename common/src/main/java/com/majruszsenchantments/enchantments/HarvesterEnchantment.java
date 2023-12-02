@@ -2,17 +2,17 @@ package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnPlayerInteracted;
-import com.mlib.emitter.ParticleEmitter;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.item.ItemHelper;
-import com.mlib.level.BlockHelper;
-import com.mlib.math.AnyPos;
-import com.mlib.math.Random;
-import com.mlib.platform.Side;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnPlayerInteracted;
+import com.majruszlibrary.emitter.ParticleEmitter;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.item.ItemHelper;
+import com.majruszlibrary.level.BlockHelper;
+import com.majruszlibrary.math.AnyPos;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.platform.Side;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionResult;
@@ -46,7 +46,7 @@ public class HarvesterEnchantment extends Handler {
 	}
 
 	public HarvesterEnchantment() {
-		super( MajruszsEnchantments.HARVESTER, false );
+		super( MajruszsEnchantments.HARVESTER, HarvesterEnchantment.class, false );
 
 		OnPlayerInteracted.listen( this::apply )
 			.addCondition( data->data.blockResult != null )

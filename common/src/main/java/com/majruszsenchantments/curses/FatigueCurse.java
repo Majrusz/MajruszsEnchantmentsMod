@@ -1,18 +1,19 @@
 package com.majruszsenchantments.curses;
 
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.entity.AttributeHandler;
+import com.majruszlibrary.events.OnBreakSpeedGet;
+import com.majruszlibrary.events.OnItemEquipped;
+import com.majruszlibrary.events.OnItemSwingDurationGet;
+import com.majruszlibrary.events.OnItemUseTicked;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.math.Random;
+import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnBreakSpeedGet;
-import com.mlib.contexts.OnItemEquipped;
-import com.mlib.contexts.OnItemSwingDurationGet;
-import com.mlib.contexts.OnItemUseTicked;
-import com.mlib.entity.AttributeHandler;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.math.Random;
-import com.mlib.math.Range;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,7 +45,7 @@ public class FatigueCurse extends Handler {
 	}
 
 	public FatigueCurse() {
-		super( MajruszsEnchantments.FATIGUE, true );
+		super( MajruszsEnchantments.FATIGUE, FatigueCurse.class, true );
 
 		this.attackSpeed = new AttributeHandler( "%s_attack_speed".formatted( this.enchantment.getId() ), ()->Attributes.ATTACK_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
 		this.movementSpeed = new AttributeHandler( "%s_movement_speed".formatted( this.enchantment.getId() ), ()->Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL );
@@ -64,11 +65,11 @@ public class FatigueCurse extends Handler {
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) );
 
 		this.config.define( "speed_multiplier_per_level", subconfig->{
-			subconfig.defineFloat( "mining", s->this.miningMultiplier, ( s, v )->this.miningMultiplier = MULTIPLIER.clamp( v ) );
-			subconfig.defineFloat( "attacking", s->this.attackMultiplier, ( s, v )->this.attackMultiplier = MULTIPLIER.clamp( v ) );
-			subconfig.defineFloat( "moving", s->this.movingMultiplier, ( s, v )->this.movingMultiplier = MULTIPLIER.clamp( v ) );
-			subconfig.defineFloat( "item_using", s->this.usingMultiplier, ( s, v )->this.usingMultiplier = MULTIPLIER.clamp( v ) );
-			subconfig.defineFloat( "item_swinging", s->this.swingingMultiplier, ( s, v )->this.swingingMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.define( "mining", Reader.number(), s->this.miningMultiplier, ( s, v )->this.miningMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.define( "attacking", Reader.number(), s->this.attackMultiplier, ( s, v )->this.attackMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.define( "moving", Reader.number(), s->this.movingMultiplier, ( s, v )->this.movingMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.define( "item_using", Reader.number(), s->this.usingMultiplier, ( s, v )->this.usingMultiplier = MULTIPLIER.clamp( v ) );
+			subconfig.define( "item_swinging", Reader.number(), s->this.swingingMultiplier, ( s, v )->this.swingingMultiplier = MULTIPLIER.clamp( v ) );
 		} );
 	}
 

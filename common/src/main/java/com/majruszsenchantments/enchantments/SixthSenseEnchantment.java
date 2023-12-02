@@ -1,23 +1,24 @@
 package com.majruszsenchantments.enchantments;
 
+import com.majruszlibrary.MajruszLibrary;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.data.Reader;
+import com.majruszlibrary.emitter.SoundEmitter;
+import com.majruszlibrary.entity.EntityHelper;
+import com.majruszlibrary.entity.EntityNoiseListener;
+import com.majruszlibrary.events.OnEntityNoiseCheck;
+import com.majruszlibrary.events.OnEntityNoiseReceived;
+import com.majruszlibrary.events.OnLootGenerated;
+import com.majruszlibrary.events.OnPlayerTicked;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
+import com.majruszlibrary.item.LootHelper;
+import com.majruszlibrary.math.Range;
+import com.majruszlibrary.time.TimeHelper;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.MajruszLibrary;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnEntityNoiseCheck;
-import com.mlib.contexts.OnEntityNoiseReceived;
-import com.mlib.contexts.OnLootGenerated;
-import com.mlib.contexts.OnPlayerTicked;
-import com.mlib.contexts.base.Condition;
-import com.mlib.emitter.SoundEmitter;
-import com.mlib.entity.EntityHelper;
-import com.mlib.entity.EntityNoiseListener;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
-import com.mlib.item.LootHelper;
-import com.mlib.math.Range;
-import com.mlib.time.TimeHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -62,7 +63,7 @@ public class SixthSenseEnchantment extends Handler {
 	}
 
 	public SixthSenseEnchantment() {
-		super( MajruszsEnchantments.SIXTH_SENSE, false );
+		super( MajruszsEnchantments.SIXTH_SENSE, SixthSenseEnchantment.class, false );
 
 		EntityNoiseListener.add( ServerPlayer.class );
 
@@ -90,9 +91,9 @@ public class SixthSenseEnchantment extends Handler {
 			.addCondition( data->data.origin != null )
 			.addCondition( data->this.chestIds.contains( data.lootId ) );
 
-		this.config.defineFloat( "glow_duration", s->this.glowDuration, ( s, v )->this.glowDuration = Range.of( 0.5f, 30.0f ).clamp( v ) );
-		this.config.defineLocationList( "chest_ids", s->this.chestIds, ( s, v )->this.chestIds = v );
-		this.config.defineLocation( "loot_id", s->this.lootId, ( s, v )->this.lootId = v );
+		this.config.define( "glow_duration", Reader.number(), s->this.glowDuration, ( s, v )->this.glowDuration = Range.of( 0.5f, 30.0f ).clamp( v ) )
+			.define( "chest_ids", Reader.list( Reader.location() ), s->this.chestIds, ( s, v )->this.chestIds = v )
+			.define( "loot_id", Reader.location(), s->this.lootId, ( s, v )->this.lootId = v );
 	}
 
 	private void highlight( OnEntityNoiseReceived data ) {

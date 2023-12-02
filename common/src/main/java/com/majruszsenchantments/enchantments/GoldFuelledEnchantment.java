@@ -2,13 +2,13 @@ package com.majruszsenchantments.enchantments;
 
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import com.mlib.annotation.AutoInstance;
-import com.mlib.contexts.OnItemDamaged;
-import com.mlib.contexts.base.Condition;
-import com.mlib.contexts.base.Priority;
-import com.mlib.item.CustomEnchantment;
-import com.mlib.item.EnchantmentHelper;
-import com.mlib.item.EquipmentSlots;
+import com.majruszlibrary.annotation.AutoInstance;
+import com.majruszlibrary.events.OnItemDamaged;
+import com.majruszlibrary.events.base.Condition;
+import com.majruszlibrary.events.base.Priority;
+import com.majruszlibrary.item.CustomEnchantment;
+import com.majruszlibrary.item.EnchantmentHelper;
+import com.majruszlibrary.item.EquipmentSlots;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +27,7 @@ public class GoldFuelledEnchantment extends Handler {
 	}
 
 	public GoldFuelledEnchantment() {
-		super( MajruszsEnchantments.GOLD_FUELLED, false );
+		super( MajruszsEnchantments.GOLD_FUELLED, GoldFuelledEnchantment.class, false );
 
 		OnItemDamaged.listen( this::restoreInitialDurability )
 			.priority( Priority.LOW )
