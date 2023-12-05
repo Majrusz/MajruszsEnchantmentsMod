@@ -1,0 +1,1 @@
+- optimized Horse Frost Walker enchantment
