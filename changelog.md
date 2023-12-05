@@ -1,1 +1,0 @@
-- changed required Majrusz Library version from 6.1.7+ to 7.0.0+
