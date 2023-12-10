@@ -66,8 +66,7 @@ public class FishingFanaticEnchantment extends Handler {
 			@Override
 			public Component getFullname( int level ) {
 				if( level == this.getMaxLevel() ) {
-					return TextHelper.translatable( "enchantment.majruszsenchantments.fishing_fanatic.true" )
-						.withStyle( ChatFormatting.GRAY, ChatFormatting.BOLD );
+					return TextHelper.translatable( "enchantment.majruszsenchantments.fishing_fanatic.true" ).withStyle( ChatFormatting.GRAY );
 				}
 
 				return super.getFullname( level );

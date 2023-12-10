@@ -36,8 +36,9 @@ public class HorseFrostWalkerEnchantment extends Handler {
 
 		OnEntityTicked.listen( this::freezeNearbyWater )
 			.addCondition( Condition.isLogicalServer() )
-			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) )
-			.addCondition( Condition.predicate( data->data.entity instanceof Animal ) );
+			.addCondition( Condition.cooldown( 0.1f ) )
+			.addCondition( data->data.entity instanceof Animal )
+			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.entity ) );
 
 		OnEntityPreDamaged.listen( OnEntityPreDamaged::cancelDamage )
 			.addCondition( Condition.isLogicalServer() )
