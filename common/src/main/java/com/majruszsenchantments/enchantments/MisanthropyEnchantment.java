@@ -11,6 +11,8 @@ import com.majruszlibrary.item.EquipmentSlots;
 import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -19,7 +21,13 @@ public class MisanthropyEnchantment extends Handler {
 	float damage = 2.5f;
 
 	public static CustomEnchantment create() {
-		return new CustomEnchantment()
+		return new CustomEnchantment() {
+			@Override
+			public boolean canEnchantUsingEnchantingTable( ItemStack itemStack ) {
+				return super.canEnchantUsingEnchantingTable( itemStack )
+					&& itemStack.getItem() instanceof SwordItem;
+			}
+		}
 			.rarity( Enchantment.Rarity.UNCOMMON )
 			.category( MajruszsEnchantments.IS_MELEE_MINECRAFT )
 			.slots( EquipmentSlots.MAINHAND )

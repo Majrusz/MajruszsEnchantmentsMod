@@ -1,1 +1,2 @@
+- made Misanthropy not obtainable via enchanting table on axes to match other vanilla enchantments
 - optimized Horse Frost Walker enchantment
