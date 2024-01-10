@@ -1,4 +1,2 @@
-- updated Chinese translation (thanks to @UDTakerBean)
-- made Misanthropy not obtainable via enchanting table on axes to match other vanilla enchantments
-- changed final Fishing Fanatic level text formatting
-- optimized Horse Frost Walker enchantment
+- added config for enchantability of shields and horse armors
+- updated Chinese translation (thanks to @Fiocher)
