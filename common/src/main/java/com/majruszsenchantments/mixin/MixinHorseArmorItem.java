@@ -1,5 +1,6 @@
 package com.majruszsenchantments.mixin;
 
+import com.majruszsenchantments.data.Config;
 import net.minecraft.world.item.HorseArmorItem;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,7 +10,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinHorseArmorItem extends MixinItem {
 	@Override
 	protected void getEnchantmentValue( CallbackInfoReturnable< Integer > callback ) {
-		callback.setReturnValue( 1 );
+		if( Config.IS_HORSE_ARMOR_ENCHANTABLE ) {
+			callback.setReturnValue( 1 );
+		}
 	}
 
 	@Override

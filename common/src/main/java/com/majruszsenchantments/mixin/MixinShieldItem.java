@@ -1,5 +1,6 @@
 package com.majruszsenchantments.mixin;
 
+import com.majruszsenchantments.data.Config;
 import net.minecraft.world.item.ShieldItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -8,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinShieldItem extends MixinItem {
 	@Override
 	protected void getEnchantmentValue( CallbackInfoReturnable< Integer > callback ) {
-		callback.setReturnValue( 1 );
+		if( Config.IS_SHIELD_ENCHANTABLE ) {
+			callback.setReturnValue( 1 );
+		}
 	}
 }
