@@ -1,2 +1,1 @@
-- added config for enchantability of shields and horse armors
-- updated Chinese translation (thanks to @Fiocher)
+- backported mod to 1.19.4

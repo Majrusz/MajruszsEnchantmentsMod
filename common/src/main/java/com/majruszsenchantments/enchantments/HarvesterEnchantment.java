@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import java.util.List;
@@ -82,7 +82,7 @@ public class HarvesterEnchantment extends Handler {
 		BlockState blockState = level.getBlockState( blockPos );
 		Block block = blockState.getBlock();
 		Item seed = block.getCloneItemStack( level, blockPos, blockState ).getItem();
-		List< ItemStack > itemStacks = blockState.getDrops( new LootParams.Builder( data.getServerLevel() )
+		List< ItemStack > itemStacks = blockState.getDrops( new LootContext.Builder( data.getServerLevel() )
 			.withParameter( LootContextParams.ORIGIN, AnyPos.from( blockPos ).center().vec3() )
 			.withParameter( LootContextParams.TOOL, data.itemStack )
 			.withParameter( LootContextParams.BLOCK_STATE, blockState )

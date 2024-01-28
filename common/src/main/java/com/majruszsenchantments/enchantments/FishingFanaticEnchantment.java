@@ -27,7 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.ArrayList;
@@ -130,7 +130,7 @@ public class FishingFanaticEnchantment extends Handler {
 	}
 
 	private List< ItemStack > spawnExtraLoot( OnFishingExtraItemsGet data, int level ) {
-		LootParams lootParams = LootHelper.toGiftParams( data.player );
+		LootContext lootParams = LootHelper.toGiftParams( data.player );
 		LootTable standard = LootHelper.getLootTable( BuiltInLootTables.FISHING );
 		LootTable special = LootHelper.getLootTable( this.specialDropId );
 		List< ItemStack > extraLoot = new ArrayList<>();
