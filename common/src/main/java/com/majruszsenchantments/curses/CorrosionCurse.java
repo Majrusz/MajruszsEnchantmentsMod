@@ -11,6 +11,7 @@ import com.majruszlibrary.level.LevelHelper;
 import com.majruszlibrary.math.Range;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -53,7 +54,7 @@ public class CorrosionCurse extends Handler {
 		int levels = EnchantmentHelper.getLevelSum( this.enchantment, data.entity );
 		float damage = levels * this.damage;
 		if( damage > 0.0f ) {
-			data.entity.hurt( data.getLevel().damageSources().magic(), damage );
+			data.entity.hurt( DamageSource.MAGIC, damage );
 		}
 	}
 

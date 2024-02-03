@@ -32,7 +32,7 @@ public class RepulsionEnchantment extends Handler {
 
 		OnEntityDamageBlocked.listen( this::knockback )
 			.addCondition( Condition.isLogicalServer() )
-			.addCondition( data->!data.source.isIndirect() )
+			.addCondition( data->data.source.getEntity() == data.source.getDirectEntity() )
 			.addCondition( data->data.attacker != null )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, ItemHelper.getCurrentlyUsedItem( data.target ) ) );
 

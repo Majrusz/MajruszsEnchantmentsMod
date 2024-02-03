@@ -6,7 +6,6 @@ import com.majruszlibrary.annotation.AutoInstance;
 import com.majruszlibrary.item.CustomEnchantment;
 import com.majruszlibrary.item.EquipmentSlots;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
@@ -17,7 +16,7 @@ public class MagicProtectionEnchantment extends Handler {
 		return new CustomEnchantment() {
 			@Override
 			public int getDamageProtection( int level, DamageSource source ) {
-				return !source.isCreativePlayer() && ( source.is( DamageTypes.MAGIC ) || source.is( DamageTypes.INDIRECT_MAGIC ) ) ? level * 2 : 0;
+				return !source.isCreativePlayer() && source.isMagic() ? level * 2 : 0;
 			}
 		}
 			.rarity( Enchantment.Rarity.UNCOMMON )

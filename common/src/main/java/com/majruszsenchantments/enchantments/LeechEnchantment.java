@@ -17,6 +17,7 @@ import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
@@ -71,7 +72,7 @@ public class LeechEnchantment extends Handler {
 	}
 
 	private boolean leechHealth( OnEntityDamaged data ) {
-		data.target.hurt( data.getLevel().damageSources().magic(), 1.0f );
+		data.target.hurt( DamageSource.MAGIC, 1.0f );
 		data.attacker.heal( 1.0f );
 
 		return true;

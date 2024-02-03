@@ -10,7 +10,7 @@ import com.majruszlibrary.item.CustomEnchantment;
 import com.majruszlibrary.item.EnchantmentHelper;
 import com.majruszlibrary.item.EquipmentSlots;
 import com.majruszlibrary.level.LevelHelper;
-import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -43,7 +43,7 @@ public class HorseFrostWalkerEnchantment extends Handler {
 		OnEntityPreDamaged.listen( OnEntityPreDamaged::cancelDamage )
 			.addCondition( Condition.isLogicalServer() )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, data.target ) )
-			.addCondition( Condition.predicate( data->data.source.is( DamageTypes.HOT_FLOOR ) ) )
+			.addCondition( Condition.predicate( data->data.source.equals( DamageSource.HOT_FLOOR ) ) )
 			.addCondition( Condition.predicate( data->data.target instanceof Animal ) );
 	}
 

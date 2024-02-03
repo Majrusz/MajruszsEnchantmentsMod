@@ -11,7 +11,6 @@ import com.majruszlibrary.math.Range;
 import com.majruszlibrary.mixininterfaces.IMixinProjectile;
 import com.majruszsenchantments.MajruszsEnchantments;
 import com.majruszsenchantments.common.Handler;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -36,13 +35,13 @@ public class HunterEnchantment extends Handler {
 
 		OnLootingLevelGet.listen( this::increaseLevel )
 			.addCondition( data->data.source != null )
-			.addCondition( data->data.source.is( DamageTypeTags.IS_PROJECTILE ) )
+			.addCondition( data->data.source.isProjectile() )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, this.getItemStack( data.source ) ) );
 
 		OnEntityPreDamaged.listen( this::modifyDamage )
 			.addCondition( data->data.attacker != null )
 			.addCondition( data->data.source != null )
-			.addCondition( data->data.source.is( DamageTypeTags.IS_PROJECTILE ) )
+			.addCondition( data->data.source.isProjectile() )
 			.addCondition( data->EnchantmentHelper.has( this.enchantment, this.getItemStack( data.source ) ) );
 
 		this.config.define( "penalty_multiplier_per_level", Reader.number(), s->this.penaltyMultiplier, ( s, v )->this.penaltyMultiplier = Range.of( -1.0f, 0.0f )

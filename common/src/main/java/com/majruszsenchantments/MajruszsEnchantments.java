@@ -15,9 +15,9 @@ import com.majruszsenchantments.particles.DodgeParticle;
 import com.majruszsenchantments.particles.SmelterParticle;
 import com.majruszsenchantments.particles.TelekinesisParticle;
 import com.majruszsenchantments.particles.TelekinesisParticleType;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -33,8 +33,8 @@ public class MajruszsEnchantments {
 	}
 
 	// Registry Groups
-	public static final RegistryGroup< Enchantment > ENCHANTMENTS = HELPER.create( BuiltInRegistries.ENCHANTMENT );
-	public static final RegistryGroup< ParticleType< ? > > PARTICLES = HELPER.create( BuiltInRegistries.PARTICLE_TYPE );
+	public static final RegistryGroup< Enchantment > ENCHANTMENTS = HELPER.create( Registry.ENCHANTMENT );
+	public static final RegistryGroup< ParticleType< ? > > PARTICLES = HELPER.create( Registry.PARTICLE_TYPE );
 
 	// Enchantments
 	public static final RegistryObject< CustomEnchantment > DEATH_WISH = ENCHANTMENTS.create( "death_wish", DeathWishEnchantment::create );
