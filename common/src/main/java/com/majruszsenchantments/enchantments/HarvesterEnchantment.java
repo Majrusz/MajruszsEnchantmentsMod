@@ -1,21 +1,17 @@
 package com.majruszsenchantments.enchantments;
 
-import com.majruszsenchantments.MajruszsEnchantments;
-import com.majruszsenchantments.common.Handler;
 import com.majruszlibrary.annotation.AutoInstance;
 import com.majruszlibrary.events.OnPlayerInteracted;
-import com.majruszlibrary.emitter.ParticleEmitter;
 import com.majruszlibrary.item.CustomEnchantment;
 import com.majruszlibrary.item.EnchantmentHelper;
 import com.majruszlibrary.item.EquipmentSlots;
 import com.majruszlibrary.item.ItemHelper;
 import com.majruszlibrary.level.BlockHelper;
 import com.majruszlibrary.math.AnyPos;
-import com.majruszlibrary.math.Random;
 import com.majruszlibrary.platform.Side;
+import com.majruszsenchantments.MajruszsEnchantments;
+import com.majruszsenchantments.common.Handler;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,18 +19,16 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AutoInstance
 public class HarvesterEnchantment extends Handler {
-	float growChance = 0.04f;
-
 	public static CustomEnchantment create() {
 		return new CustomEnchantment()
 			.rarity( Enchantment.Rarity.UNCOMMON )
@@ -57,42 +51,69 @@ public class HarvesterEnchantment extends Handler {
 	}
 
 	private void apply( OnPlayerInteracted data ) {
-		this.collectCrop( data );
+		this.collectNearbyCrops( data );
 		if( Side.isLogicalServer() ) {
-			this.spawnItems( data, this.tryToReplant( data ) );
-			this.tickNearbyCrops( data );
-			this.damageHoe( data );
+			Result result = this.harvestNearbyCrops( data );
+			this.spawnItems( data, result );
+			this.damageHoe( data, result );
 		}
 		data.finish();
 	}
 
-	private void collectCrop( OnPlayerInteracted data ) {
-		BlockPos blockPos = data.blockResult.getBlockPos();
-		BlockState blockState = data.getLevel().getBlockState( blockPos );
-		blockState.getBlock().playerWillDestroy( data.getLevel(), blockPos, blockState, data.player );
+	private void collectNearbyCrops( OnPlayerInteracted data ) {
+		int range = EnchantmentHelper.getLevel( this.enchantment, data.itemStack ) - 1;
+		for( int z = -range; z <= range; ++z ) {
+			for( int x = -range; x <= range; ++x ) {
+				BlockPos blockPos = AnyPos.from( data.blockResult.getBlockPos() ).add( x, 0, z ).block();
+				BlockState blockState = data.getLevel().getBlockState( blockPos );
+				if( BlockHelper.isCropAtMaxAge( blockState ) ) {
+					blockState.getBlock().playerWillDestroy( data.getLevel(), blockPos, blockState, data.player );
+				}
+			}
+		}
 	}
 
-	private void spawnItems( OnPlayerInteracted data, List< ItemStack > itemStacks ) {
-		itemStacks.forEach( itemStack->Block.popResource( data.getLevel(), data.blockResult.getBlockPos(), itemStack ) );
+	private void spawnItems( OnPlayerInteracted data, Result result ) {
+		result.itemStacks.forEach( itemStack->Block.popResource( data.getLevel(), data.blockResult.getBlockPos(), itemStack ) );
 	}
 
-	private List< ItemStack > tryToReplant( OnPlayerInteracted data ) {
+	private Result harvestNearbyCrops( OnPlayerInteracted data ) {
+		List< ItemStack > itemStacks = new ArrayList<>();
+		int count = 0;
+		int range = EnchantmentHelper.getLevel( this.enchantment, data.itemStack ) - 1;
+		for( int z = -range; z <= range; ++z ) {
+			for( int x = -range; x <= range; ++x ) {
+				Optional< List< ItemStack > > drops = this.tryToHarvest( data, x, z );
+				if( drops.isPresent() ) {
+					++count;
+					itemStacks.addAll( drops.get() );
+				}
+			}
+		}
+
+		return new Result( itemStacks, count );
+	}
+
+	private Optional< List< ItemStack > > tryToHarvest( OnPlayerInteracted data, int x, int z ) {
 		Level level = data.getLevel();
-		BlockPos blockPos = data.blockResult.getBlockPos();
+		BlockPos blockPos = AnyPos.from( data.blockResult.getBlockPos() ).add( x, 0, z ).block();
 		BlockState blockState = level.getBlockState( blockPos );
+		if( !BlockHelper.isCropAtMaxAge( blockState ) ) {
+			return Optional.empty();
+		}
 		Block block = blockState.getBlock();
 		Item seed = block.getCloneItemStack( level, blockPos, blockState ).getItem();
-		List< ItemStack > itemStacks = blockState.getDrops( new LootParams.Builder( data.getServerLevel() )
+		List< ItemStack > drops = blockState.getDrops( new LootParams.Builder( data.getServerLevel() )
 			.withParameter( LootContextParams.ORIGIN, AnyPos.from( blockPos ).center().vec3() )
 			.withParameter( LootContextParams.TOOL, data.itemStack )
 			.withParameter( LootContextParams.BLOCK_STATE, blockState )
 			.withParameter( LootContextParams.THIS_ENTITY, data.player )
 		);
-		for( ItemStack itemStack : itemStacks ) {
+		for( ItemStack itemStack : drops ) {
 			if( itemStack.is( seed ) ) {
 				itemStack.setCount( itemStack.getCount() - 1 );
 				level.setBlockAndUpdate( blockPos, block.defaultBlockState() );
-				return itemStacks;
+				return Optional.of( drops );
 			}
 		}
 		for( Slot slot : data.player.inventoryMenu.slots ) {
@@ -100,45 +121,17 @@ public class HarvesterEnchantment extends Handler {
 			if( itemStack.is( seed ) ) {
 				itemStack.setCount( itemStack.getCount() - 1 );
 				level.setBlockAndUpdate( blockPos, block.defaultBlockState() );
-				return itemStacks;
+				return Optional.of( drops );
 			}
 		}
 
 		level.setBlockAndUpdate( blockPos, Blocks.AIR.defaultBlockState() );
-		return itemStacks;
+		return Optional.of( drops );
 	}
 
-	private void tickNearbyCrops( OnPlayerInteracted data ) {
-		BlockPos blockPos = data.blockResult.getBlockPos();
-		int range = EnchantmentHelper.getLevel( this.enchantment, data.itemStack );
-		for( int z = -range; z <= range; ++z ) {
-			for( int x = -range; x <= range; ++x ) {
-				if( x == 0 && z == 0 ) {
-					continue;
-				}
-
-				BlockPos neighbourPosition = blockPos.offset( x, 0, z );
-				BlockState blockState = data.getLevel().getBlockState( blockPos.offset( x, 0, z ) );
-				Block block = blockState.getBlock();
-				if( !( block instanceof CropBlock ) && !( block instanceof NetherWartBlock ) ) {
-					continue;
-				}
-
-				int particlesCount = 1;
-				if( Random.check( this.growChance ) ) {
-					BlockHelper.growCrop( data.getLevel(), neighbourPosition );
-					particlesCount = 3;
-				}
-
-				ParticleEmitter.of( ParticleTypes.HAPPY_VILLAGER )
-					.position( AnyPos.from( blockPos ).center().vec3() )
-					.count( particlesCount )
-					.emit( data.getServerLevel() );
-			}
-		}
+	private void damageHoe( OnPlayerInteracted data, Result result ) {
+		ItemHelper.damage( data.player, data.hand, result.cropsCount );
 	}
 
-	private void damageHoe( OnPlayerInteracted data ) {
-		ItemHelper.damage( data.player, data.hand, 1 );
-	}
+	private record Result( List< ItemStack > itemStacks, int cropsCount ) {}
 }
