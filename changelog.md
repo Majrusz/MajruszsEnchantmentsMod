@@ -1,2 +1,1 @@
-- added config for enchantability of shields and horse armors
-- updated Chinese translation (thanks to @Fiocher)
+- reworked Harvester enchantment
